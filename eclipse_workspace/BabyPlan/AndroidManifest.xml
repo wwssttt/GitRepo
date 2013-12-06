@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.wst.babyplan"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="10"
+        android:targetSdkVersion="10" />
+    <uses-permission android:name="android.permission.SEND_SMS"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/icon"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name="com.wst.babyplan.WelcomeActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.wst.babyplan.MainActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="com.wst.babyplan.StudentInfoActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="com.wst.babyplan.MathClassInfoActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="com.wst.babyplan.StudentListActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="com.wst.babyplan.MathListActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <receiver android:name="com.wst.babyplan.BabyServiceBootReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"></action>
+            </intent-filter>
+        </receiver>
+    </application>
+</manifest>

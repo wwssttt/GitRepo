@@ -1,0 +1,3 @@
+INDEX VERSION 1.126+/home/wst/GitRepo/eclipse_workspace/.metadata/.plugins/org.eclipse.jdt.core
+251319978.index
+256033587.index

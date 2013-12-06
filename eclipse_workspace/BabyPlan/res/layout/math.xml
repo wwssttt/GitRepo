@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout    
+  android:orientation="vertical" 
+  android:background="@color/white" 
+  android:layout_width="fill_parent" 
+  android:layout_height="fill_parent" 
+  xmlns:android="http://schemas.android.com/apk/res/android">
+  
+    <RelativeLayout 
+        android:orientation="vertical"
+        android:background="@color/orange" 
+        android:layout_width="fill_parent" 
+        android:layout_height="50dip">
+        <TextView android:id="@+id/classTitleText"
+            android:layout_centerInParent="true" 
+            android:textSize="@dimen/infoTitleSize" 
+            android:textColor="@color/white"  
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" 
+            android:text="@string/classTitle" />
+  </RelativeLayout>
+  
+  <LinearLayout 
+        android:orientation="vertical" 
+        android:background="@drawable/shape_bg" 
+        android:layout_width="fill_parent" 
+        android:layout_height="wrap_content" 
+        android:layout_marginLeft="10.0dip" 
+        android:layout_marginTop="20.0dip" 
+        android:layout_marginRight="10.0dip">
+        
+      <LinearLayout android:gravity="center_vertical" 
+            android:orientation="horizontal" 
+            android:layout_width="fill_parent" 
+            android:layout_height="50.0dip">
+            
+          <TextView android:id="@+id/dateText"
+                android:textSize="@dimen/infoSize" 
+                android:textColor="@android:color/black" 
+                android:paddingLeft="15.0dip" 
+                android:layout_width="1dp" 
+                android:layout_height="wrap_content" 
+                android:gravity="right" 
+                android:text="@string/datetime" 
+                android:layout_weight="1"/>
+          <TextView android:id="@+id/startDateTimeText"
+                android:textSize="16.0sp" 
+                android:textColor="#ff545454"   
+                android:paddingLeft="10.0dip" 
+                android:layout_width="1dp" 
+                android:layout_height="wrap_content" 
+                android:layout_marginLeft="10.0dip" 
+                android:layout_marginRight="15.0dip"
+                android:layout_weight="3"/>
+          <Button android:id="@+id/setDateTimeBtn"
+              android:layout_width="wrap_content" 
+              android:layout_height="wrap_content"
+              android:contentDescription="@string/chooseDateTimeTitle"
+              android:background="@anim/datetime_btn_selector"
+              android:layout_marginLeft="5.0dip" 
+              android:layout_marginRight="5.0dip"/>   
+      </LinearLayout>
+      
+      <View android:background="@drawable/shape_line" 
+            android:layout_width="fill_parent" 
+            android:layout_height="1.0px" />
+      
+      <LinearLayout android:gravity="center_vertical" 
+            android:orientation="horizontal" 
+            android:layout_width="fill_parent" 
+            android:layout_height="50.0dip">
+            
+          <TextView android:id="@+id/cgradeText"
+                android:textSize="18.0sp" 
+                android:textColor="@android:color/black" 
+                android:paddingLeft="15.0dip" 
+                android:layout_width="1dp" 
+                android:layout_height="wrap_content" 
+                android:gravity="right" 
+                android:text="@string/cgrade" 
+                android:layout_weight="1"/>
+            <Spinner android:id="@+id/cgradeSpinner"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:paddingLeft="10.0dip" 
+                android:layout_width="1dp"
+                android:layout_marginLeft="10.0dip" 
+                android:layout_marginRight="15.0dip"
+                android:layout_weight="3"/>
+            <Button
+              android:layout_width="wrap_content" 
+              android:layout_height="wrap_content"
+              android:contentDescription="@string/chooseStudent"
+              android:background="@anim/stu_btn_selector"
+              android:layout_marginLeft="5.0dip" 
+              android:layout_marginRight="5.0dip"
+              android:visibility="invisible"/>
+      </LinearLayout>
+      
+      <View android:background="@drawable/shape_line" 
+            android:layout_width="fill_parent" 
+            android:layout_height="1.0px" />
+      
+      <LinearLayout android:gravity="center_vertical" 
+            android:orientation="horizontal" 
+            android:layout_width="fill_parent" 
+            android:layout_height="50.0dip">
+            
+          <TextView android:id="@+id/croomText"
+                android:textSize="@dimen/infoSize" 
+                android:textColor="@android:color/black" 
+                android:paddingLeft="15.0dip" 
+                android:layout_width="1dp" 
+                android:layout_height="wrap_content" 
+                android:gravity="right" 
+                android:text="@string/croom" 
+                android:layout_weight="1"/>
+            <EditText android:id="@+id/croomEdit"
+                android:textSize="16.0sp" 
+                android:textColor="#ff545454"  
+                android:background="@android:color/white" 
+                android:paddingLeft="10.0dip" 
+                android:layout_width="1dp" 
+                android:layout_height="wrap_content" 
+                android:layout_marginLeft="10.0dip" 
+                android:layout_marginRight="15.0dip" 
+                android:hint="@string/croomHint" 
+                android:inputType="text" 
+                android:maxLength="20" 
+                android:maxLines="1"
+                android:layout_weight="3"/> 
+             <Button
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/chooseStudent"
+                android:background="@anim/stu_btn_selector"
+                android:layout_marginLeft="5.0dip" 
+                android:layout_marginRight="5.0dip"
+                android:visibility="invisible"/>  
+      </LinearLayout>
+      
+      <View android:background="@drawable/shape_line" 
+            android:layout_width="fill_parent" 
+            android:layout_height="1.0px" />
+      
+      <LinearLayout android:gravity="center_vertical" 
+            android:orientation="horizontal" 
+            android:layout_width="fill_parent" 
+            android:layout_height="50.0dip">
+            
+          <TextView android:id="@+id/cstudentText"
+                android:textSize="@dimen/infoSize" 
+                android:textColor="@android:color/black" 
+                android:paddingLeft="15.0dip" 
+                android:layout_width="1dp" 
+                android:layout_height="wrap_content" 
+                android:gravity="right" 
+                android:text="@string/cstudent" 
+                android:layout_weight="1"/>
+          <TextView android:id="@+id/cstudentList"
+                android:textSize="16.0sp" 
+                android:textColor="#ff545454"  
+                android:background="@android:color/white" 
+                android:paddingLeft="10.0dip" 
+                android:layout_width="1dp" 
+                android:layout_height="wrap_content" 
+                android:layout_marginLeft="10.0dip" 
+                android:layout_marginRight="15.0dip"
+                android:layout_weight="3"
+                android:text="@string/chooseStu"/>
+          <Button android:id="@+id/cChooseStudentBtn"
+              android:layout_width="wrap_content" 
+              android:layout_height="wrap_content"
+              android:contentDescription="@string/chooseStudent"
+              android:background="@anim/stu_btn_selector"
+              android:layout_marginLeft="5.0dip" 
+              android:layout_marginRight="5.0dip"/>   
+      </LinearLayout>
+      
+      <View android:background="@drawable/shape_line" 
+            android:layout_width="fill_parent" 
+            android:layout_height="1.0px" />
+      
+      <LinearLayout android:gravity="center_vertical" 
+            android:orientation="horizontal" 
+            android:layout_width="fill_parent" 
+            android:layout_height="50.0dip">
+            
+          <TextView android:id="@+id/cmoneyText"
+                android:textSize="@dimen/infoSize" 
+                android:textColor="@android:color/black" 
+                android:paddingLeft="15.0dip" 
+                android:layout_width="1dp" 
+                android:layout_height="wrap_content" 
+                android:gravity="right" 
+                android:text="@string/cmoney" 
+                android:layout_weight="1"/>
+            <EditText android:id="@+id/cmoneyView"
+                android:textSize="16.0sp" 
+                android:textColor="#ff545454"  
+                android:background="@android:color/white" 
+                android:paddingLeft="10.0dip" 
+                android:layout_width="1dp" 
+                android:layout_height="wrap_content" 
+                android:layout_marginLeft="10.0dip" 
+                android:layout_marginRight="15.0dip" 
+                android:hint="@string/croomHint" 
+                android:inputType="number" 
+                android:maxLength="20" 
+                android:maxLines="1"
+                android:layout_weight="3"/>
+            <Button
+              android:layout_width="wrap_content" 
+              android:layout_height="wrap_content"
+              android:contentDescription="@string/chooseStudent"
+              android:background="@anim/stu_btn_selector"
+              android:layout_marginLeft="5.0dip" 
+              android:layout_marginRight="5.0dip"
+              android:visibility="invisible"/>   
+      </LinearLayout>
+      
+      <View android:background="@drawable/shape_line" 
+            android:layout_width="fill_parent" 
+            android:layout_height="1.0px" />
+      
+      <LinearLayout android:gravity="center_vertical" 
+            android:orientation="horizontal" 
+            android:layout_width="fill_parent" 
+            android:layout_height="50.0dip">
+            
+          <TextView android:id="@+id/cremarkText"
+                android:textSize="@dimen/infoSize" 
+                android:textColor="@android:color/black" 
+                android:paddingLeft="15.0dip" 
+                android:layout_width="1dp" 
+                android:layout_height="wrap_content" 
+                android:gravity="right" 
+                android:text="@string/cremark" 
+                android:layout_weight="1"/>
+            <EditText android:id="@+id/cremarkEdit"
+                android:textSize="16.0sp" 
+                android:textColor="#ff545454"  
+                android:background="@android:color/white" 
+                android:paddingLeft="10.0dip" 
+                android:layout_width="1dp" 
+                android:layout_height="wrap_content" 
+                android:layout_marginLeft="10.0dip" 
+                android:layout_marginRight="15.0dip" 
+                android:hint="@string/sremarkHint" 
+                android:inputType="text" 
+                android:maxLength="20" 
+                android:maxLines="1"
+                android:layout_weight="3"/>
+            <Button
+              android:layout_width="wrap_content" 
+              android:layout_height="wrap_content"
+              android:contentDescription="@string/chooseStudent"
+              android:background="@anim/stu_btn_selector"
+              android:layout_marginLeft="5.0dip" 
+              android:layout_marginRight="5.0dip"
+              android:visibility="invisible"/>   
+      </LinearLayout>
+  </LinearLayout>
+  
+  <RelativeLayout 
+        android:orientation="horizontal"
+        android:background="@color/white" 
+        android:layout_width="fill_parent" 
+        android:layout_marginLeft="20.0dip"  
+        android:layout_marginRight="20.0dip"
+        android:layout_height="50dip">
+      
+       <Button android:id="@+id/csaveBtn"    
+            android:textSize="18.0sp" 
+            android:textColor="#ff000000"  
+            android:background="@anim/save_btn_selector" 
+            android:layout_width="150dp" 
+            android:layout_height="40dp" 
+            android:layout_marginLeft="10.0dip"  
+            android:layout_marginRight="10.0dip"
+            android:layout_marginTop="20.0dip"
+            android:layout_alignParentLeft="true"
+            android:text="@string/save"/>
+       
+       <Button android:id="@+id/ccancelBtn"    
+            android:textSize="18.0sp" 
+            android:textColor="#ff000000"  
+            android:background="@anim/cancel_btn_selector"  
+            android:layout_width="100dp" 
+            android:layout_height="40dp" 
+            android:layout_marginTop="20.0dip"  
+            android:layout_marginLeft="10.0dip"  
+            android:layout_marginRight="10.0dip" 
+            android:text="@string/cancel"
+            android:layout_alignParentRight="true"
+      />
+  </RelativeLayout>
+</LinearLayout>

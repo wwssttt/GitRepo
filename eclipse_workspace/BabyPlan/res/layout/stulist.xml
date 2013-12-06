@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout    
+  android:orientation="vertical" 
+  android:background="@color/white" 
+  android:layout_width="fill_parent" 
+  android:layout_height="fill_parent" 
+  xmlns:android="http://schemas.android.com/apk/res/android">
+  
+  <RelativeLayout 
+        android:orientation="vertical"
+        android:background="@color/orange" 
+        android:layout_width="fill_parent" 
+        android:layout_height="50dip">
+        <TextView android:id="@+id/stuListTitleText"
+            android:layout_centerInParent="true" 
+            android:textSize="@dimen/infoTitleSize" 
+            android:textColor="@color/white"  
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" 
+            android:text="@string/stuListTitle" />
+  </RelativeLayout>	
+   
+  <ScrollView android:id="@+id/stuScrollView" 
+		android:layout_width="fill_parent" 
+		android:layout_height="fill_parent"		
+		android:background="#ffd3d3d3">
+		
+		<br.com.dina.ui.widget.UITableView android:id="@+id/stuTableView" style="@style/UITableView" />
+	
+	</ScrollView>
+
+</LinearLayout> 

@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/black"
+    >
+   
+  <ScrollView android:layout_width="fill_parent" 
+		android:layout_height="wrap_content"		
+		android:background="#ffd3d3d3">
+		
+		<br.com.dina.ui.widget.UITableView android:id="@+id/menuTableView" style="@style/UITableView" />
+	
+  </ScrollView>
+  
+  <TableLayout android:id="@+id/stasTable" 
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content"
+    android:layout_marginTop="5dp">
+    
+      <TableRow android:gravity="center_horizontal">
+        <TextView 
+            android:text="@string/today" 
+            android:textSize="20sp"
+            android:textColor="@color/orange"
+            android:padding="@dimen/statPadding"  /> 
+        <TextView 
+            android:text="@string/done" 
+            android:padding="@dimen/statPadding"  />
+        <TextView 
+            android:id="@+id/todayCount"
+            android:text="@string/initmoney" 
+            android:textColor="#FF0000"
+            android:textSize="20sp"
+            android:padding="@dimen/statPadding"  /> 
+        <TextView 
+            android:text="@string/earn" 
+            android:padding="@dimen/statPadding"  /> 
+        <TextView 
+            android:id="@+id/todayMoney"
+            android:text="@string/initmoney" 
+            android:textColor="#FF0000"
+            android:textSize="20sp"
+            android:padding="@dimen/statPadding"  /> 
+        <TextView 
+            android:text="@string/yuan" 
+            android:padding="@dimen/statPadding"  /> 
+      </TableRow>
+      
+      <TableRow android:gravity="center_horizontal">
+        <TextView 
+            android:text="@string/week" 
+            android:textSize="20sp"
+            android:textColor="@color/white"
+            android:padding="@dimen/statPadding"  /> 
+            <TextView 
+            android:text="@string/done" 
+            android:padding="@dimen/statPadding"  />
+        <TextView 
+            android:id="@+id/weekCount"
+            android:text="@string/initmoney" 
+            android:textColor="#FF0000"
+            android:textSize="20sp"
+            android:padding="@dimen/statPadding"  /> 
+        <TextView 
+            android:text="@string/earn" 
+            android:padding="@dimen/statPadding"  /> 
+        <TextView 
+            android:id="@+id/weekMoney"
+            android:text="@string/initmoney" 
+            android:textColor="#FF0000"
+            android:textSize="20sp"
+            android:padding="@dimen/statPadding"  /> 
+        <TextView 
+            android:text="@string/yuan" 
+            android:padding="@dimen/statPadding"  /> 
+      </TableRow>
+      
+      <TableRow android:gravity="center_horizontal">
+          <TextView 
+            android:text="@string/month" 
+            android:textSize="20sp"
+            android:textColor="@color/orange"
+            android:padding="@dimen/statPadding"  />
+          <TextView 
+            android:text="@string/done" 
+            android:padding="@dimen/statPadding"  /> 
+        <TextView 
+            android:id="@+id/monthCount"
+            android:text="@string/initmoney" 
+            android:textColor="#FF0000"
+            android:textSize="20sp"
+            android:padding="@dimen/statPadding"  /> 
+        <TextView 
+            android:text="@string/earn" 
+            android:padding="@dimen/statPadding"  /> 
+        <TextView 
+            android:id="@+id/monthMoney"
+            android:text="@string/initmoney" 
+            android:textColor="#FF0000"
+            android:textSize="20sp"
+            android:padding="@dimen/statPadding"  /> 
+        <TextView 
+            android:text="@string/yuan" 
+            android:padding="@dimen/statPadding"  /> 
+      </TableRow>
+      
+      <TableRow android:gravity="center_horizontal">
+          <TextView 
+            android:text="@string/total"
+            android:textSize="20sp"
+            android:textColor="@color/white" 
+            android:padding="@dimen/statPadding"  />
+          <TextView 
+            android:text="@string/done" 
+            android:padding="@dimen/statPadding"  /> 
+        <TextView 
+            android:id="@+id/totalCount"
+            android:text="@string/initmoney" 
+            android:textColor="#FF0000"
+            android:textSize="20sp"
+            android:padding="@dimen/statPadding"  /> 
+        <TextView 
+            android:text="@string/earn" 
+            android:padding="@dimen/statPadding"  /> 
+        <TextView 
+            android:id="@+id/totalMoney"
+            android:text="@string/initmoney" 
+            android:textColor="#FF0000"
+            android:textSize="20sp"
+            android:padding="@dimen/statPadding"  /> 
+        <TextView 
+            android:text="@string/yuan" 
+            android:padding="@dimen/statPadding"  /> 
+      </TableRow>
+      
+    </TableLayout>
+</LinearLayout>

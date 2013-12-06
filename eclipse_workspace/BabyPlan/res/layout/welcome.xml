@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout    
+  android:orientation="vertical" 
+  android:background="@color/white" 
+  android:layout_width="fill_parent" 
+  android:layout_height="fill_parent" 
+  xmlns:android="http://schemas.android.com/apk/res/android">
+  
+        <ImageView android:layout_height="wrap_content"
+            android:contentDescription="@string/logo_name"
+            android:layout_width="match_parent"
+            android:src="@drawable/logo"
+            android:id="@+id/logoImage"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp">
+        </ImageView>
+        
+        <TextView android:text="@string/logo_name"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:textColor="@color/darkorange"
+            android:id="@+id/logoName"
+            android:layout_marginTop="25dp"
+            android:textSize="20sp"
+            android:gravity="center">
+        </TextView>
+        
+        <LinearLayout android:gravity="center_horizontal" 
+            android:orientation="horizontal" 
+            android:layout_width="fill_parent" 
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+            
+          <TextView android:text="@string/design_for"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content">
+          </TextView>   
+          
+          <TextView android:text="@string/dear"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content">
+          </TextView> 
+          
+          <TextView android:text="@string/pink"
+            android:textColor="@color/pink"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:textSize="20sp">
+          </TextView> 
+      </LinearLayout>
+</LinearLayout>

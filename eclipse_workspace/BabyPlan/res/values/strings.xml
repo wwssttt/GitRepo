@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">宝贝工资</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="logo_name">宝贝工资 V1.0</string>
+    <string name="design_for">Design for</string>
+    <string name="dear">我家最最亲爱的</string>
+    <string name="pink">粉嘟嘟</string>
+    <string name="addStudent">添 加 学 生</string>
+    <string name="addClass">添 加 课 时</string>
+    <string name="viewStudent">查 看 学 生</string>
+    <string name="viewClass">查 看 课 时</string>
+    <string name="abouteme">关于</string>
+    <string name="setting">设置</string>
+    
+    <string name="today">今日</string>
+    <string name="week">本周</string>
+    <string name="month">本月</string>
+    <string name="total">共计</string>
+    <string name="done">已上</string>
+    <string name="earn">节课，挣得</string>
+    <string name="yuan">元RMB</string>
+    <string name="initmoney">0</string>
+    
+    <string name="sms">短 信 小 猪 猪</string>
+    <string name="call">打电话告诉小猪猪我的成果</string>
+    
+    
+    <string name="infoTitle">学 生 信 息</string>
+    <string name="sname">姓 名</string>
+    <string name="ssex">性 别</string>
+    <string name="sage">年 龄</string>
+    <string name="sgrade">年 级</string>
+    <string name="sremark">备 注</string>
+    <string name="snameHint">请输入学生的姓名，不可为空</string>
+    <string name="sremarkHint">请输入学生的相关备注信息，可为空</string>
+    
+    <string name="save">保存</string>
+    <string name="cancel">取消</string>
+    
+    <string name="classTitle">课 时 信 息</string>
+    <string name="datetime">时 间</string>
+    <string name="startTime">时 间</string>
+    <string name="cgrade">年 级</string>
+    <string name="croom">教 室</string>
+    <string name="cstudent">学 生</string>
+    <string name="cremark">备 注</string>
+    <string name="cmoney">薪 酬</string>
+    <string name="cremarkHint">请输入课时的相关备注信息，可为空</string>
+    <string name="croomHint">请输入课时的上课教室信息，可为空</string>
+    <string name="nostudent">亲爱的，还没有选择学生哦，不可不选的</string>
+    <string name="chooseStu">点击右侧图标选择学生</string>
+    <string name="setTime">设置时间</string>
+    <string name="setDateTime">设置日期时间</string>
+    <string name="chooseStudent">选择学生</string>
+    <string name="chooseDateTimeTitle">请设定课程的日期时间</string>
+    <string name="chooseDateTitle">请选择日期</string>
+    <string name="chooseTimeTitle">请选择时间</string>
+    
+    <string name="stuListTitle">所 有 学 生</string>
+    <string name="noStu">亲爱的，你还录入没有任何学生信息哦</string>
+    <string name="noClass">亲爱的，你还没有任何上课记录哦</string>
+    <string name="classListTitle">所 有 课 时</string>
+</resources>

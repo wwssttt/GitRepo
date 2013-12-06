@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout    
+  android:orientation="vertical" 
+  android:background="@color/white" 
+  android:layout_width="fill_parent" 
+  android:layout_height="fill_parent" 
+  xmlns:android="http://schemas.android.com/apk/res/android">
+  
+  <RelativeLayout 
+        android:orientation="vertical"
+        android:background="@color/orange" 
+        android:layout_width="fill_parent" 
+        android:layout_height="50dip">
+        <TextView android:layout_centerInParent="true" 
+            android:textSize="@dimen/infoTitleSize" 
+            android:textColor="@color/white"  
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" 
+            android:text="@string/classListTitle" />
+  </RelativeLayout>	
+   
+  <ImageView android:id="@+id/noClassImage"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:layout_marginTop="50dp"
+      android:src="@drawable/lan"
+      android:contentDescription="@string/noStu" />
+  <TextView android:id="@+id/noClassText"
+      android:text="@string/noClass"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:textColor="@color/brown"
+      android:textSize="15sp" 
+      />
+  <Button android:id="@+id/addClassBtn"    
+            android:textSize="18.0sp" 
+            android:textColor="#ff000000"  
+            android:background="@anim/save_btn_selector" 
+            android:layout_width="200dp" 
+            android:layout_height="40dp" 
+            android:layout_marginLeft="10.0dip"  
+            android:layout_marginRight="10.0dip"
+            android:layout_marginTop="10.0dip"
+            android:layout_gravity="center"
+            android:text="@string/addClass"/>
+
+</LinearLayout> 
