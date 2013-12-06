@@ -1,0 +1,4 @@
+/usr/bin/scim -d
+XMODIFIERS="@im=SCIM"
+export XMODIFIERS
+export GTK_IM_MODULE=scim

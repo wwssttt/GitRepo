@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
+	<classpathentry kind="lib" path="/home/zxr/adt-bundle-linux-x86-20130219/libs/suanshu-2.0.0/suanshu-2.0.0.jar"/>
+	<classpathentry kind="lib" path="/home/zxr/adt-bundle-linux-x86-20130219/libs/RserveEngine.jar"/>
+	<classpathentry kind="lib" path="/home/zxr/adt-bundle-linux-x86-20130219/libs/REngine.jar"/>
+	<classpathentry kind="lib" path="/home/zxr/adt-bundle-linux-x86-20130219/libs/neuroph_2.3.1.jar"/>
+	<classpathentry kind="lib" path="/home/zxr/adt-bundle-linux-x86-20130219/libs/jmsl-5.0.jar"/>
+	<classpathentry kind="lib" path="/home/zxr/adt-bundle-linux-x86-20130219/libs/sspace-2.0.3.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
