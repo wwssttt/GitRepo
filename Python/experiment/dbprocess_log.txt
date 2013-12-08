@@ -140,3 +140,18 @@
 2013-12-08 15:44:03,681-INFO:length 28: 8 (8/1020 0.784314%)
 2013-12-08 15:44:03,681-INFO:length 29: 9 (9/1020 0.882353%)
 2013-12-08 15:44:03,681-INFO:length 30: 5 (5/1020 0.490196%)
+2013-12-08 17:56:38,114-DEBUG:there are 1020 playlists selected
+2013-12-08 17:56:38,145-DEBUG:There are 13097 songs in 1020 playlists
+2013-12-08 17:56:38,166-ERROR:Mysql Error 1064:You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where id = 65536' at line 1
+2013-12-08 17:57:05,101-DEBUG:there are 1020 playlists selected
+2013-12-08 17:57:05,132-DEBUG:There are 13097 songs in 1020 playlists
+2013-12-08 17:57:05,133-ERROR:Mysql Error 1064:You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where id = 65536' at line 1
+2013-12-08 17:59:39,026-DEBUG:there are 1020 playlists selected
+2013-12-08 17:59:39,057-DEBUG:There are 13097 songs in 1020 playlists
+2013-12-08 17:59:39,060-ERROR:Mysql Error 1064:You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where id = 65536' at line 1
+2013-12-08 18:00:31,591-DEBUG:there are 1020 playlists selected
+2013-12-08 18:00:31,623-DEBUG:There are 13097 songs in 1020 playlists
+2013-12-08 18:01:20,428-DEBUG:there are 1020 playlists selected
+2013-12-08 18:01:20,461-DEBUG:There are 13097 songs in 1020 playlists
+2013-12-08 18:01:50,693-DEBUG:there are 1020 playlists selected
+2013-12-08 18:01:50,723-DEBUG:There are 13097 songs in 1020 playlists

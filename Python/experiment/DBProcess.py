@@ -6,7 +6,6 @@
 ############################
 # connect to aotm db
 # get useful playlists and songs
-# generate documents of songs
 ############################
 
 import MySQLdb
