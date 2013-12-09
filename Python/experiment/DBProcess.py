@@ -20,7 +20,7 @@ import matplotlib.pyplot as plt
 reload(sys)
 sys.setdefaultencoding('utf-8')
 # set log's localtion and level
-logging.basicConfig(filename=os.path.join(os.getcwd(),'dbprocess_log.txt'),level=logging.DEBUG,format='%(asctime)s-%(levelname)s:%(message)s')
+logging.basicConfig(filename=os.path.join(os.getcwd(),'log/dbprocess_log.txt'),level=logging.DEBUG,format='%(asctime)s-%(levelname)s:%(message)s')
 
 # define some global varibale
 DBHOST = 'localhost'
@@ -108,7 +108,7 @@ def showStatistics():
   logging.debug('maxPlaylistLength = %d' % maxPlaylistLength)
   print 'minPlaylistLength = %d' % minPlaylistLength
   logging.debug('minPlaylistLength = %d' % minPlaylistLength)
-  #calculate how many songs in specific frequency
+  #calculate how many songs in specific frequency and draw the pie figure
   songFreqDict = {}
   playlistLenDict = {}
   for count in songDict.values():
@@ -142,9 +142,9 @@ def showStatistics():
   plt.legend(legends,loc=1,bbox_to_anchor = (1.25, 1.0))
   plt.title("Ratios of Songs with Different Frequencies(Total:%d)" % songNum)
   #text(1.25,1.25,"Result",fontsize=12) #text针对坐标轴的坐标
-  plt.savefig("songFreqPie.png")#must put it before show to avoid output blank image
+  plt.savefig("img/songFreqPie.png")#must put it before show to avoid output blank image
   #plt.show()
-  #calculate how many playlists in specific length
+  #calculate how many playlists in specific length and draw the bar figure
   for length in playlistDict.values():
     if length not in playlistLenDict:
       playlistLenDict[length] = 1
@@ -164,7 +164,7 @@ def showStatistics():
   plt.xlabel("Length")
   plt.ylabel("Playlist Number")
   plt.grid()
-  plt.savefig("PlaylistLenBar.png")
+  plt.savefig("img/playlistLenBar.png")
   plt.show()
   return songFreqDict,playlistLenDict
 

@@ -108,7 +108,7 @@ def showStatistics():
   logging.debug('maxPlaylistLength = %d' % maxPlaylistLength)
   print 'minPlaylistLength = %d' % minPlaylistLength
   logging.debug('minPlaylistLength = %d' % minPlaylistLength)
-  #calculate how many songs in specific frequency
+  #calculate how many songs in specific frequency and draw the pie figure
   songFreqDict = {}
   playlistLenDict = {}
   for count in songDict.values():
@@ -142,9 +142,9 @@ def showStatistics():
   plt.legend(legends,loc=1,bbox_to_anchor = (1.25, 1.0))
   plt.title("Ratios of Songs with Different Frequencies(Total:%d)" % songNum)
   #text(1.25,1.25,"Result",fontsize=12) #text针对坐标轴的坐标
-  plt.savefig("songFreqPie.png")#must put it before show to avoid output blank image
+  plt.savefig("img/songFreqPie.png")#must put it before show to avoid output blank image
   #plt.show()
-  #calculate how many playlists in specific length
+  #calculate how many playlists in specific length and draw the bar figure
   for length in playlistDict.values():
     if length not in playlistLenDict:
       playlistLenDict[length] = 1
@@ -163,7 +163,8 @@ def showStatistics():
   plt.title("Playlist Numbers of Different Lengths")
   plt.xlabel("Length")
   plt.ylabel("Playlist Number")
-  plt.savefig("PlaylistLenBar.png")
+  plt.grid()
+  plt.savefig("img/playlistLenBar.png")
   plt.show()
   return songFreqDict,playlistLenDict
 
