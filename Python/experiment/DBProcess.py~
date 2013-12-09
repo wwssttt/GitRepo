@@ -91,8 +91,8 @@ def genEffectivePlaylist():
     print 'Mysql Error %d:%s' % (e.args[0],e.args[1])
     logging.error('Mysql Error %d:%s' % (e.args[0],e.args[1]))
 
-#give the statistics of datas
-def getStatistics():
+#get the statistics of datas
+def showStatistics():
   songDict,playlistDict = genEffectivePlaylist()
   #get max and min frequency of songs
   maxSongFreq = max(songDict.values())
@@ -119,10 +119,31 @@ def getStatistics():
       new = old + 1
       songFreqDict[count] = new
   songNum = len(songDict)
+  fracs = []
+  total = 0
   for freq in songFreqDict.keys():
     ratio = songFreqDict[freq] * 100.0 / songNum
+    if total <= 99:
+      fracs.append(ratio)
+      total = total + ratio
     print 'freq %d : %d (%d/%d  %f%%)' % (freq,songFreqDict[freq],songFreqDict[freq],songNum,ratio)
     logging.info('freq %d : %d (%d/%d  %f%%)' % (freq,songFreqDict[freq],songFreqDict[freq],songNum,ratio))
+  fracs.append(100-total)
+  labels = ['%.2f%%' % frac for frac in fracs]
+  num = len(fracs)
+  plt.figure(1, figsize=(8,8)) #创建一个图形区域 长8 宽8
+  ax = plt.axes([0.0, 0.1, 0.8, 0.8])#坐标轴起始点为0.1,0.1从左下开始，长度占整个区域的0.6，高占0.8
+  plt.pie(fracs,labels=labels)
+  legends = []
+  for i in range(0,num-1):
+    legends.append('freq=%d(%.2f%%)' % (songFreqDict.keys()[i],fracs[i]))
+  legends.append('freq>%d(%.2f%%)' % (songFreqDict.keys()[num-2],fracs[num-1]))
+  print legends
+  plt.legend(legends,loc=1,bbox_to_anchor = (1.25, 1.0))
+  plt.title("Ratios of Songs with Different Frequencies(Total:%d)" % songNum)
+  #text(1.25,1.25,"Result",fontsize=12) #text针对坐标轴的坐标
+  plt.savefig("songFreqPie.png")#must put it before show to avoid output blank image
+  #plt.show()
   #calculate how many playlists in specific length
   for length in playlistDict.values():
     if length not in playlistLenDict:
@@ -136,14 +157,15 @@ def getStatistics():
     ratio = playlistLenDict[length] * 100.0 / playlistNum
     print 'length %d: %d (%d/%d %f%%)' % (length,playlistLenDict[length],playlistLenDict[length],playlistNum,ratio)
     logging.info('length %d: %d (%d/%d %f%%)' % (length,playlistLenDict[length],playlistLenDict[length],playlistNum,ratio))
+  plt.figure(2,figsize=(8,8))
+  ax = plt.axes([0.1,0.1,0.8,0.8])
+  plt.bar(playlistLenDict.keys(),playlistLenDict.values(),align="center",yerr=0.00000001)
+  plt.title("Playlist Numbers of Different Lengths")
+  plt.xlabel("Length")
+  plt.ylabel("Playlist Number")
+  plt.savefig("PlaylistLenBar.png")
+  plt.show()
   return songFreqDict,playlistLenDict
-
-def showStatistics():
-  songFreqDict,playlistLenDict = getStatistics()
-  plt.bar(left=songFreqDict.keys(),height=songFreqDict.values(),align="center")
-  plt.show()
-  plt.bar(left=songFreqDict.keys(),height=songFreqDict.values(),align="center")
-  plt.show()
 
 if __name__ == '__main__':
   showStatistics()
