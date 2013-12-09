@@ -14,6 +14,7 @@ import numpy
 import pylab as pl
 import logging
 import os
+import matplotlib.pyplot as plt
 
 # reload sys and set encoding to utf-8
 reload(sys)
@@ -29,7 +30,7 @@ DBPORT = 3306
 DBNAME = 'aotm'
 DBCHARSET = 'utf8'
 
-# get effective_playlists which part < 3
+# get effective_playlists which part < 2
 # @return: two dictionaries
 # the first dict contains songs in selected playlists,that is, the keys of the dict are effective_songs' ids and values are appearance count numbers of these songs in selected playlists
 # the second dict stands for length of each playlist like <pid:count>
@@ -53,7 +54,7 @@ def genEffectivePlaylist():
     #select db
     conn.select_db(DBNAME)
     #select effective playlists
-    count = cur.execute('select id,count,songs from effective_playlists where part != -1 and part < 3')
+    count = cur.execute('select id,count,songs from effective_playlists where part != -1 and part < 2')
     print 'there are %d playlists selected' % count
     logging.debug('there are %d playlists selected' % count)
     if count == 0:
@@ -91,7 +92,7 @@ def genEffectivePlaylist():
     logging.error('Mysql Error %d:%s' % (e.args[0],e.args[1]))
 
 #give the statistics of datas
-def showStatistics():
+def getStatistics():
   songDict,playlistDict = genEffectivePlaylist()
   #get max and min frequency of songs
   maxSongFreq = max(songDict.values())
@@ -136,6 +137,13 @@ def showStatistics():
     print 'length %d: %d (%d/%d %f%%)' % (length,playlistLenDict[length],playlistLenDict[length],playlistNum,ratio)
     logging.info('length %d: %d (%d/%d %f%%)' % (length,playlistLenDict[length],playlistLenDict[length],playlistNum,ratio))
   return songFreqDict,playlistLenDict
+
+def showStatistics():
+  songFreqDict,playlistLenDict = getStatistics()
+  plt.bar(left=songFreqDict.keys(),height=songFreqDict.values(),align="center")
+  plt.show()
+  plt.bar(left=playlistLenDict.keys(),height=playlistLenDict.values(),align="center")
+  plt.show()
 
 if __name__ == '__main__':
   showStatistics()

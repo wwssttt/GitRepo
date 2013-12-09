@@ -79,45 +79,60 @@ def addItemToDict(tagDict,tagStr,tagCount):
   for item in items:
     item = item.lower()
     item = st.stem(item)
-    if item not in stopwords:
+    if item not in stopwords and len(item) > 1:
       if item not in tagDict:
         tagDict[item] = tagCount
       else:
-        tagDict = tagDict[item] + tagCount
+        tagDict[item] = tagDict[item] + tagCount
       if item not in vocabulary:
-        vocalbulary[item] = 1
+        vocabulary[item] = 1
       else:
         vocabulary[item] = vocabulary[item] + 1
 
 #generate tag dictionary of given song
 def generateTagDictofSong(sname,aname,tags):
   tagDict = {}
+  #add sname to tagDict
   addItemToDict(tagDict,sname,50)
+  #add aname to tagDict
   addItemToDict(tagDict,aname,50)
+  #split tags<tag:count>
   tagInfos = tags.split("##==##")
+  #loop every tag Information
   for tagInfo in tagInfos:
-    items = tagInfo.split(":")
-    tagStr = items[0]
-    tagCount = int(items[1])
-    addItemToDict(tagDict,tagStr,tagCount)
+    #cannot use split(":") because some tag contains ":" like <hello:world:3>
+    #find : from right index
+    index = tagInfo.rfind(":")
+    tagStr = tagInfo[:index]
+    tagCount = tagInfo[index+1:]
+    #avoid some tags without count
+    #if a tag has no count, ignore it
+    if len(tagCount) == 0:
+      continue
+    else:
+      #add tag to dict
+      addItemToDict(tagDict,tagStr,int(tagCount))
   return tagDict
 
 #generate document of given song from its tagDict
-def generateDocofSong(tagDict):
+def generateDocofSong(sid,tagDict):
   if os.path.exists("songs/%d" % sid):
     print '%d is existing...' % sid
     logging.warning('%d is existing...' % sid)
     return
   sFile = open("songs/%d" % sid, "w")
   for tag in tagDict.keys():
-    count = tagDict[tag] / 25
+    count = (int)(tagDict[tag] / 4)
     content = ""
     for i in range(0,count):
       content = "%s %s" % (content,tag)
       sFile.write(content+'\n')
   sFile.close()
 
-def statisticsOfSongDB():
+#generate all docs of all songs
+#get statistics of tags,listener number and playcount
+def generateDocs():
+  #import global variable
   global DBHOST
   global DBUSER
   global DBPWD
@@ -125,29 +140,38 @@ def statisticsOfSongDB():
   global DBNAME
   global DBCHARSET
   try:
+    #connect db and select db name
     conn = MySQLdb.Connect(host=DBHOST,user=DBUSER,passwd=DBPWD,port=DBPORT,charset=DBCHARSET)
     cur = conn.cursor()
     conn.select_db(DBNAME)
+    #get song dict and playlist dict from DBProcess
     songDict,playlistDict = DBProcess.genEffectivePlaylist()
+    #tags'count:number
     countDict = {}
+    #listeners'count:number
     lisDict = {}
+    #playcount:number
     playDict = {}
     for sid in songDict.keys():
+      #select info of a song with sid
       cur.execute('select sname,aname,count,tags,listeners,playcount,useful from effective_song where id = %d' % sid)
       result = cur.fetchone()
       sname = result[0]
       aname = result[1]
       count = int(result[2])
+      #update count dict
       if count not in countDict:
         countDict[count] = 1
       else:
         countDict[count] = countDict[count] + 1
       tags = result[3]
+      #update listener dict
       listeners = int(result[4])
       if listeners not in lisDict:
         lisDict[listeners] = 1
       else:
         lisDict[listeners] = lisDict[listeners] + 1
+      #update playcount dict
       playcount = int(result[5])
       if playcount not in playDict:
         playDict[playcount] = 1
@@ -159,6 +183,10 @@ def statisticsOfSongDB():
         print '%d useful is 0...' % sid
         logging.warning('%d useful is 0...' % sid)
         return
+
+      tagDict = generateTagDictofSong(sname,aname,tags)
+      generateDocofSong(sid,tagDict)
+    
     conn.commit()
     cur.close()
     conn.close()
@@ -167,5 +195,5 @@ def statisticsOfSongDB():
     logging.error('Mysql Error %d:%s' % (e.args[0],e.args[1]))
 
 if __name__ == "__main__":
-  statisticsOfSongDB()
+  generateDocs()
 
