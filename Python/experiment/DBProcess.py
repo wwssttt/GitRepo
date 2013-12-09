@@ -30,7 +30,7 @@ DBPORT = 3306
 DBNAME = 'aotm'
 DBCHARSET = 'utf8'
 
-# get effective_playlists which part < 2
+# get effective_playlists which part < 1
 # @return: two dictionaries
 # the first dict contains songs in selected playlists,that is, the keys of the dict are effective_songs' ids and values are appearance count numbers of these songs in selected playlists
 # the second dict stands for length of each playlist like <pid:count>
@@ -54,7 +54,7 @@ def genEffectivePlaylist():
     #select db
     conn.select_db(DBNAME)
     #select effective playlists
-    count = cur.execute('select id,count,songs from effective_playlists where part != -1 and part < 2')
+    count = cur.execute('select id,count,songs from effective_playlists where part != -1 and part < 1')
     print 'there are %d playlists selected' % count
     logging.debug('there are %d playlists selected' % count)
     if count == 0:
@@ -160,7 +160,7 @@ def showStatistics():
   plt.figure(2,figsize=(8,8))
   ax = plt.axes([0.1,0.1,0.8,0.8])
   plt.bar(playlistLenDict.keys(),playlistLenDict.values(),align="center",yerr=0.00000001)
-  plt.title("Playlist Numbers of Different Lengths")
+  plt.title("Playlist Numbers of Different Lengths(Toyal:%d)" % playlistNum)
   plt.xlabel("Length")
   plt.ylabel("Playlist Number")
   plt.grid()

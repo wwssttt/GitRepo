@@ -20,7 +20,7 @@ import matplotlib.pyplot as plt
 reload(sys)
 sys.setdefaultencoding('utf-8')
 # set log's localtion and level
-logging.basicConfig(filename=os.path.join(os.getcwd(),'dbprocess_log.txt'),level=logging.DEBUG,format='%(asctime)s-%(levelname)s:%(message)s')
+logging.basicConfig(filename=os.path.join(os.getcwd(),'log/dbprocess_log.txt'),level=logging.DEBUG,format='%(asctime)s-%(levelname)s:%(message)s')
 
 # define some global varibale
 DBHOST = 'localhost'
@@ -160,7 +160,7 @@ def showStatistics():
   plt.figure(2,figsize=(8,8))
   ax = plt.axes([0.1,0.1,0.8,0.8])
   plt.bar(playlistLenDict.keys(),playlistLenDict.values(),align="center",yerr=0.00000001)
-  plt.title("Playlist Numbers of Different Lengths")
+  plt.title("Playlist Numbers of Different Lengths(Toyal:%d)" % playlistNum)
   plt.xlabel("Length")
   plt.ylabel("Playlist Number")
   plt.grid()
