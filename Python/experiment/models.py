@@ -6,6 +6,12 @@
 
 import math
 import os
+import DBProcess
+import sys
+
+#set default encoding
+reload(sys)
+sys.setdefaultencoding("utf-8")
 
 #calculate cosine similarity of two distribution
 #input are two topic dicts
@@ -63,7 +69,7 @@ def readSongFromFile():
   print 'I am reading songs from doc-topic file......'
   filename = "data/LDA/songs-doc-topics.txt"
   if os.path.exists(filename):
-    songs = {}
+    songDict = {}
     dtFile = open(filename,"r")
     content = dtFile.readlines()
     #remove the first extra info
@@ -92,12 +98,22 @@ def readSongFromFile():
         if j >= num:
           break
       song = Song(sid,topicDict)
-      songs[sid] = song
+      songDict[sid] = song
     print 'There are %d songs have been read.' % len(songs)
     dtFile.close()
+    return songDict
   else:
     print 'cannot find doc-topic file......'
   print 'Finish reading songs from doc-topic file......'
+
+#read playlists and construct dict of playlists
+def readPlaylistFromDB():
+  playlistDict = {}
+  effectivePlaylist = DBProcess.getEffectivePlaylist()
+  for pid in effectivePlaylist,keys():
+    pList = Playlist(pid,effectivePlaylist[pid])
+    playlistDict[pid] = pList
+  return playlistDict
 
 if __name__ == "__main__":
   readSongFromFile()
