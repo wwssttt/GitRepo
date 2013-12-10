@@ -159,11 +159,12 @@ def showStatistics():
     logging.info('length %d: %d (%d/%d %f%%)' % (length,playlistLenDict[length],playlistLenDict[length],playlistNum,ratio))
   plt.figure(2,figsize=(8,8))
   ax = plt.axes([0.1,0.1,0.8,0.8])
-  plt.bar(playlistLenDict.keys(),playlistLenDict.values(),align="center",yerr=0.00000001)
+  plt.bar(playlistLenDict.keys(),playlistLenDict.values(),align="center",yerr=0.00000001,label="Playlist Number")
   plt.title("Playlist Numbers of Different Lengths(Toyal:%d)" % playlistNum)
   plt.xlabel("Length")
   plt.ylabel("Playlist Number")
   plt.grid()
+  plt.legend(loc="upper right")
   plt.savefig("img/playlistLenBar.png")
   plt.show()
   return songFreqDict,playlistLenDict
