@@ -5,6 +5,7 @@
 ############################
 
 import math
+import os
 
 #calculate cosine similarity of two distribution
 #input are two topic dicts
@@ -39,8 +40,8 @@ class Song:
   #get the cosine similarity between self and other song or distribute
   def cosineSimilarity(topicDict):
     return cosineSim(self.topicDict,topicDict)
-  def cosineSimilarity(Song s):
-    return cosineSim(self.topicDict,s.getTopicDict())
+  def cosineSimilarity(another):
+    return cosineSim(self.topicDict,another.getTopicDict())
 
 #define model of playlist
 class Playlist:
@@ -59,5 +60,44 @@ class Playlist:
 #read all songs from file and construct them
 #output is a dict whose key is sid and value is song object
 def readSongFromFile():
-  
+  print 'I am reading songs from doc-topic file......'
+  filename = "data/LDA/songs-doc-topics.txt"
+  if os.path.exists(filename):
+    songs = {}
+    dtFile = open(filename,"r")
+    content = dtFile.readlines()
+    #remove the first extra info
+    del content[0]
+    count = len(content)
+    #loop all lines to construct all songs
+    for i in range(0,count):
+      items = content[i].rstrip('\n').split()
+      rIndex = items[1].rfind('/')
+      sid = int(items[1][rIndex+1:])
+      del items[0]
+      del items[0]
+      num = len(items)
+      j = 0
+      topicDict = {}
+      while 1:
+        #get tid
+        tid = int(items[j])
+        #move to next:topic pro
+        j = j + 1
+        #get topic pro
+        tpro = float(items[j])
+        #move to next topic pair
+        topicDict[tid] = tpro
+        j = j + 1
+        if j >= num:
+          break
+      song = Song(sid,topicDict)
+      songs[sid] = song
+    print 'There are %d songs have been read.' % len(songs)
+    dtFile.close()
+  else:
+    print 'cannot find doc-topic file......'
+  print 'Finish reading songs from doc-topic file......'
 
+if __name__ == "__main__":
+  readSongFromFile()
