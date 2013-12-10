@@ -91,6 +91,48 @@ def genEffectivePlaylist():
     print 'Mysql Error %d:%s' % (e.args[0],e.args[1])
     logging.error('Mysql Error %d:%s' % (e.args[0],e.args[1]))
 
+#get effective playlist and store it in a dict
+#the dict will be used to construct the trainingset
+def getEffectivePlaylist():
+  #init the dicts to be returned
+  playlistDict = {}
+
+  try:
+    #connect to db
+    conn = MySQLdb.Connect(host=DBHOST,user=DBUSER,passwd=DBPWD,port=DBPORT,charset=DBCHARSET)
+    #get the cursor of db
+    cur = conn.cursor()
+    #select db
+    conn.select_db(DBNAME)
+    #select effective playlists
+    count = cur.execute('select id,songs from effective_playlists where part != -1 and part < 1')
+    if count == 0:
+      print 'No effective playlists selected......'
+      logging.warning('No effective playlists selected......')
+      return
+    else:
+      #get all results
+      results = cur.fetchall()
+      #loop every playlist 
+      for result in results:
+        songList = []
+        pid = int(result[0])
+        songs = result[1]
+        songItems = songs.split('==>')
+        #add songs of a playlist to songDict
+        for song in songItems:
+          sid = int(song)
+          songList.append(sid)
+        playlistDict[pid] = songList
+
+    conn.commit()
+    cur.close()
+    conn.close()
+    return playlistDict       
+  except MySQLdb.Error,e:
+    print 'Mysql Error %d:%s' % (e.args[0],e.args[1])
+    logging.error('Mysql Error %d:%s' % (e.args[0],e.args[1]))
+
 #get the statistics of datas
 def showStatistics():
   songDict,playlistDict = genEffectivePlaylist()
@@ -164,13 +206,13 @@ def showStatistics():
   plt.xlabel("Length")
   plt.ylabel("Playlist Number")
   plt.grid()
-  plt.legend("Playlist Number",loc="upper right")
+  plt.legend(loc="upper right")
   plt.savefig("img/playlistLenBar.png")
   plt.show()
   return songFreqDict,playlistLenDict
 
 if __name__ == '__main__':
-  showStatistics()
+  print(len(getEffectivePlaylist()))
   
   
 

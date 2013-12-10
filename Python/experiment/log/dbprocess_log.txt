@@ -30336,3 +30336,5 @@
 2013-12-10 14:53:08,259-INFO:length 28: 4 (4/340 1.176471%)
 2013-12-10 14:53:08,259-INFO:length 29: 2 (2/340 0.588235%)
 2013-12-10 14:53:08,260-INFO:length 30: 2 (2/340 0.588235%)
+2013-12-10 16:17:49,198-DEBUG:there are 340 playlists selected
+2013-12-10 16:18:06,981-DEBUG:there are 340 playlists selected
