@@ -25,7 +25,7 @@ def cosineSim(topicDict1,topicDict2):
       print '%d is not in another dict...' % key
       return
     else:
-      dotProduct = dotPorduct + topicDict1[key] * topicDict2[key]
+      dotProduct = dotProduct + topicDict1[key] * topicDict2[key]
       dictPower1 = dictPower1 + topicDict1[key]**2
       dictPower2 = dictPower2 + topicDict2[key]**2
   similarity = dotProduct / (math.sqrt(dictPower1) * math.sqrt(dictPower2))
@@ -41,12 +41,12 @@ class Song:
     self.sid = sid
     for key in topicDict.keys():
       self.topicDict[key] = topicDict[key]
-  def getTopicDict():
+  def getTopicDict(self):
     return self.topicDict
   #get the cosine similarity between self and other song or distribute
-  def cosineSimilarity(topicDict):
+  def cosineSimilarityWithDict(self,topicDict):
     return cosineSim(self.topicDict,topicDict)
-  def cosineSimilarity(another):
+  def cosineSimilarityWithAno(self,another):
     return cosineSim(self.topicDict,another.getTopicDict())
 
 #define model of playlist
@@ -59,9 +59,64 @@ class Playlist:
   def __init__(self,pid,playlist):
     self.pid = pid
     count = len(playlist)
-    lastSid = playlist[count-1]
+    self.lastSid = playlist[count-1]
     for i in range(0,count-1):
       self.trainingList.append(playlist[i])
+  def getTrainingList(self):
+    return self.trainingList
+  def getPid(self):
+    return self.pid
+  def getLastSid(self):
+    return self.lastSid
+
+#get predicted topic dict of next song by averaging all songs' topic distribution
+#we treat it as the user's global preference
+def topicDictForNextSongByAverage(playlist,songDict):
+  #get playlist's training list
+  trainingList = playlist.getTrainingList()
+  count = len(trainingList)
+  topicDict = {}
+  #add each key of every song to topicDict
+  for i in range(0,count):
+    sTopicDict = songDict[trainingList[i]].getTopicDict()
+    for key in sTopicDict.keys():
+      if key not in topicDict:
+        topicDict[key] = sTopicDict[key]
+      else:
+        topicDict[key] = topicDict[key] + sTopicDict[key]
+  #average
+  for key in topicDict.keys():
+    topicDict[key] = topicDict[key] / count
+  return topicDict
+
+#return MAE and RMSE of testing set
+#mae = sum of abs of predict value and real value and then return sum divide count of testing set
+#RMSE = sum of square of similarity and divide N-1 and the sqrt
+# predictType means different methods to predict topic dict of next song
+def MAEandRMSE(playlistDict,songDict,predictType):
+  count = len(playlistDict)
+  mae = 0
+  rmse = 0
+  for pid in playlistDict.keys():
+    playlist = playlistDict[pid]
+    predictTopicDict = 0
+    if predictType == 1:
+      predictTopicDict = topicDictForNextSongByAverage(playlist,songDict)
+    elif predictType == 2:
+      predictTopicDict = topicDictForNextSongByMostSimilar(playlist,songDict)
+    elif predictType == 3:
+      predictTopicDict = topicDictForNextSongByColdLaw(playlist,songDict)
+    elif predictType == 4:
+      predictTopicDict = topicDictForNextSongByArima(playlist,songDict)
+    elif predictType == 5:
+      predictTopicDict = topicDictForNextSongByHybrid(playlist,songDict)
+    song = songDict[playlist.getLastSid()]
+    mae = mae + math.fabs(song.cosineSimilarityWithDict(predictTopicDict))
+    rmse = rmse + math.fabs(song.cosineSimilarityWithDict(predictTopicDict))**2
+  mae = mae / count
+  rmse = rmse / (count - 1)
+  rmse = math.sqrt(rmse)
+  return mae,rmse
 
 #read all songs from file and construct them
 #output is a dict whose key is sid and value is song object
@@ -99,21 +154,26 @@ def readSongFromFile():
           break
       song = Song(sid,topicDict)
       songDict[sid] = song
-    print 'There are %d songs have been read.' % len(songs)
+    print 'There are %d songs have been read.' % len(songDict)
     dtFile.close()
+    print 'Finish reading songs from doc-topic file......'
     return songDict
   else:
     print 'cannot find doc-topic file......'
-  print 'Finish reading songs from doc-topic file......'
 
 #read playlists and construct dict of playlists
 def readPlaylistFromDB():
   playlistDict = {}
   effectivePlaylist = DBProcess.getEffectivePlaylist()
-  for pid in effectivePlaylist,keys():
+  for pid in effectivePlaylist.keys():
     pList = Playlist(pid,effectivePlaylist[pid])
     playlistDict[pid] = pList
+  print 'Thare are %d playlist have been read.' % len(playlistDict)
   return playlistDict
 
 if __name__ == "__main__":
-  readSongFromFile()
+  songDict = readSongFromFile()
+  playlistDict = readPlaylistFromDB()
+  mae,rmse = MAEandRMSE(playlistDict,songDict,1)
+  print 'MAE = ',mae
+  print 'RMSE = ',rmse
