@@ -25,7 +25,7 @@ def cosineSim(topicDict1,topicDict2):
       print '%d is not in another dict...' % key
       return
     else:
-      dotProduct = dotPorduct + topicDict1[key] * topicDict2[key]
+      dotProduct = dotProduct + topicDict1[key] * topicDict2[key]
       dictPower1 = dictPower1 + topicDict1[key]**2
       dictPower2 = dictPower2 + topicDict2[key]**2
   similarity = dotProduct / (math.sqrt(dictPower1) * math.sqrt(dictPower2))
@@ -33,16 +33,16 @@ def cosineSim(topicDict1,topicDict2):
 
 #define model of song
 class Song:
-  #define basic attribute of Song
-  sid = 0
-  topicDict = {}
   #constructor
   def __init__(self,sid,topicDict):
     self.sid = sid
+    self.topicDict = {}
     for key in topicDict.keys():
       self.topicDict[key] = topicDict[key]
   def getTopicDict(self):
     return self.topicDict
+  def getSid(self):
+    return self.sid
   #get the cosine similarity between self and other song or distribute
   def cosineSimilarityWithDict(self,topicDict):
     return cosineSim(self.topicDict,topicDict)
@@ -51,15 +51,12 @@ class Song:
 
 #define model of playlist
 class Playlist:
-  #define basic attributes of Playlist
-  pid = 0
-  trainingList = []
-  lastSid = 0
   #constructor
   def __init__(self,pid,playlist):
     self.pid = pid
     count = len(playlist)
     self.lastSid = playlist[count-1]
+    self.trainingList = []
     for i in range(0,count-1):
       self.trainingList.append(playlist[i])
   def getTrainingList(self):
@@ -78,7 +75,8 @@ def topicDictForNextSongByAverage(playlist,songDict):
   topicDict = {}
   #add each key of every song to topicDict
   for i in range(0,count):
-    sTopicDict = songDict[trainingList[i]].getTopicDict()
+    sid = trainingList[i]
+    sTopicDict = songDict[sid].getTopicDict()
     for key in sTopicDict.keys():
       if key not in topicDict:
         topicDict[key] = sTopicDict[key]
@@ -89,17 +87,28 @@ def topicDictForNextSongByAverage(playlist,songDict):
     topicDict[key] = topicDict[key] / count
   return topicDict
 
+#get predicted topic dict of next song using most similar to last song
+def topicDictForNextSongByMostSimilar(playlist,songDict):
+  trainingList = playlist.getTrainingList()
+  count = len(trainingList)
+  sid = trainingList[count-1]
+  return songDict[sid].getTopicDict()
+
 #return MAE and RMSE of testing set
 #mae = sum of abs of predict value and real value and then return sum divide count of testing set
 #RMSE = sum of square of similarity and divide N-1 and the sqrt
 # predictType means different methods to predict topic dict of next song
+#1: average
+#2: most similar
+#3: cold law
+#4: arima
+#5: hybrid
 def MAEandRMSE(playlistDict,songDict,predictType):
   count = len(playlistDict)
   mae = 0
   rmse = 0
   for pid in playlistDict.keys():
     playlist = playlistDict[pid]
-    predictTopicDict = 0
     if predictType == 1:
       predictTopicDict = topicDictForNextSongByAverage(playlist,songDict)
     elif predictType == 2:
@@ -112,7 +121,7 @@ def MAEandRMSE(playlistDict,songDict,predictType):
       predictTopicDict = topicDictForNextSongByHybrid(playlist,songDict)
     song = songDict[playlist.getLastSid()]
     mae = mae + math.fabs(song.cosineSimilarityWithDict(predictTopicDict))
-    rmse = rmse + math.fabs(song.cosineSimilarityWithDict(predictTopicDict))**2
+    rmse = rmse + song.cosineSimilarityWithDict(predictTopicDict)**2
   mae = mae / count
   rmse = rmse / (count - 1)
   rmse = math.sqrt(rmse)
@@ -175,5 +184,8 @@ if __name__ == "__main__":
   songDict = readSongFromFile()
   playlistDict = readPlaylistFromDB()
   mae,rmse = MAEandRMSE(playlistDict,songDict,1)
+  print 'MAE = ',mae
+  print 'RMSE = ',rmse
+  mae,rmse = MAEandRMSE(playlistDict,songDict,2)
   print 'MAE = ',mae
   print 'RMSE = ',rmse
