@@ -8,6 +8,7 @@ import math
 import os
 import DBProcess
 import sys
+import matplotlib.pyplot as plt
 
 #set default encoding
 reload(sys)
@@ -95,12 +96,11 @@ def topicDictForNextSongByMostSimilar(playlist,songDict):
   return songDict[sid].getTopicDict()
 
 #get predicted topic dict of next song by cold law
-def topicDictForNextSongByColdLaw(playlist,songDict):
+def topicDictForNextSongByColdLaw(playlist,songDict,coeff):
   #get playlist's training list
   trainingList = playlist.getTrainingList()
   count = len(trainingList)
   topicDict = {}
-  coeff = 5.0
   totalWeight = 0
   #add each key of every song to topicDict
   for i in range(0,count):
@@ -128,7 +128,7 @@ def topicDictForNextSongByColdLaw(playlist,songDict):
 #3: cold law
 #4: arima
 #5: hybrid
-def MAEandRMSE(playlistDict,songDict,predictType):
+def MAEandRMSE(playlistDict,songDict,predictType,coeff=5.0):
   count = len(playlistDict)
   mae = 0
   rmse = 0
@@ -139,7 +139,7 @@ def MAEandRMSE(playlistDict,songDict,predictType):
     elif predictType == 2:
       predictTopicDict = topicDictForNextSongByMostSimilar(playlist,songDict)
     elif predictType == 3:
-      predictTopicDict = topicDictForNextSongByColdLaw(playlist,songDict)
+      predictTopicDict = topicDictForNextSongByColdLaw(playlist,songDict,coeff)
     elif predictType == 4:
       predictTopicDict = topicDictForNextSongByArima(playlist,songDict)
     elif predictType == 5:
@@ -204,6 +204,39 @@ def readPlaylistFromDB():
     playlistDict[pid] = pList
   print 'Thare are %d playlist have been read.' % len(playlistDict)
   return playlistDict
+
+#show mae and rmse trends of cold-law methods with different coefficients
+def showErrorTrendWithDifferentCoeff(playlistDict,songDict):
+  coeffs = [x / 10 for x in range(0,100,1)]
+  maes = []
+  rmses = []
+  for coeff in coeffs:
+    mae,rmse = MAEandRMSE(playlistDict,songDict,3,coeff)
+    maes.append(mae)
+    rmses.append(rmse)
+  plt.plot(coeffs,maes,label="MAE")
+  plt.plot(coeffs,rmses,label="RMSE")
+  plt.title("MAE and RMSE trends of Different Cold Coefficients")
+  plt.xlabel("coefficient")
+  plt.ylabel("error")
+  plt.legend(loc="upper right")
+  plt.savefig("img/coldlaw.png")
+  plt.show()
+
+#show weight trends of different coefficients
+def showColdLawWithDifferentCoeff():
+  coeffs = [0.25,0.5,0.75,1.0,5.0]
+  x = range(0,20,1)
+  for coeff in coeffs:
+    weight = [1*math.pow(math.e,-1*coeff*delta) for delta in x]
+    label = "coeff = %f" % coeff
+    plt.plot(x,weight,label=label)
+  plt.xlabel("time")
+  plt.ylabel("weight")
+  plt.title("Weight Trend of Cold Law with Different Coefficients")
+  plt.legend(loc = "upper right")
+  plt.savefig("img/cold-law.png")
+  plt.show()
 
 if __name__ == "__main__":
   songDict = readSongFromFile()
