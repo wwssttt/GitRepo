@@ -94,6 +94,31 @@ def topicDictForNextSongByMostSimilar(playlist,songDict):
   sid = trainingList[count-1]
   return songDict[sid].getTopicDict()
 
+#get predicted topic dict of next song by cold law
+def topicDictForNextSongByColdLaw(playlist,songDict):
+  #get playlist's training list
+  trainingList = playlist.getTrainingList()
+  count = len(trainingList)
+  topicDict = {}
+  coeff = 0.5
+  totalWeight = 0
+  #add each key of every song to topicDict
+  for i in range(0,count):
+    delta = count-i
+    weight = math.pow(math.e,-1*coeff*delta)
+    sid = trainingList[i]
+    sTopicDict = songDict[sid].getTopicDict()
+    for key in sTopicDict.keys():
+      if key not in topicDict:
+        topicDict[key] = sTopicDict[key] * weight
+      else:
+        topicDict[key] = topicDict[key] + sTopicDict[key] * weight
+    totalWeight = totalWeight + weight
+  #average
+  for key in topicDict.keys():
+    topicDict[key] = topicDict[key] / totalWeight
+  return topicDict
+
 #return MAE and RMSE of testing set
 #mae = sum of abs of predict value and real value and then return sum divide count of testing set
 #RMSE = sum of square of similarity and divide N-1 and the sqrt
@@ -189,5 +214,9 @@ if __name__ == "__main__":
   print 'RMSE = ',rmse
   print '################Most Similar####################'
   mae,rmse = MAEandRMSE(playlistDict,songDict,2)
+  print 'MAE = ',mae
+  print 'RMSE = ',rmse
+  print '################Cold Law####################'
+  mae,rmse = MAEandRMSE(playlistDict,songDict,3)
   print 'MAE = ',mae
   print 'RMSE = ',rmse
