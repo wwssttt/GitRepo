@@ -9,6 +9,8 @@ import os
 import DBProcess
 import sys
 import matplotlib.pyplot as plt
+import rpy2.robjects as robjects
+from rpy2.robjects.packages import importr
 
 #set default encoding
 reload(sys)
@@ -117,6 +119,44 @@ def topicDictForNextSongByColdLaw(playlist,songDict,coeff):
   #average
   for key in topicDict.keys():
     topicDict[key] = topicDict[key] / totalWeight
+  return topicDict
+
+#get predicted topic dict of next song by auto_arima
+def topicDictForNextSongByArima(playlist,songDict):
+  #get playlist's training list
+  trainingList = playlist.getTrainingList()
+  count = len(trainingList)
+  #predicted topic distribution
+  topicDict = {}
+  #multi-dimensional time series
+  #the number of topics is the dimension
+  tsDict = {}
+  #loop every song in training list
+  #add distribution of sids to tsDict to construct some time series
+  for i in range(0,count):
+    sid = trainingList[i]
+    sTopicDict = songDict[sid].getTopicDict()
+    for key in sTopicDict.keys():
+      #if the topic do not exist,new a list and append it to dict
+      if key not in tsDict:
+        tsDict[key] = []
+        tsDict[key].append(sTopicDict[key])
+      #else append it directly
+      else:
+        tsDict[key].append(sTopicDict[key])
+  #using auto arima to forecast the next value of all time series
+  total = 0
+  for key in tsDict.keys():
+    if total == 0:
+      total = len(tsDict[key])
+    if len(tsDict[key]) != total:
+      print '....Error:Time Series do not have same length......'
+      return
+    vec = robjects.FloatVector(tsDict[key])
+    ts = robjects.r['ts'](vec)
+    fit = robjects.r['auto.arima'](ts)
+    next = robjects.r['forecast'](fit,h=1)
+    topicDict[key] = float(next.rx('mean')[0][0])
   return topicDict
 
 #return MAE and RMSE of testing set
@@ -251,5 +291,10 @@ if __name__ == "__main__":
   print 'RMSE = ',rmse
   print '################Cold Law####################'
   mae,rmse = MAEandRMSE(playlistDict,songDict,3)
+  print 'MAE = ',mae
+  print 'RMSE = ',rmse
+  print '################ARIMA####################'
+  importr('forecast')
+  mae,rmse = MAEandRMSE(playlistDict,songDict,4)
   print 'MAE = ',mae
   print 'RMSE = ',rmse
