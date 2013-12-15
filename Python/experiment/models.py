@@ -124,6 +124,7 @@ def topicDictForNextSongByColdLaw(playlist,songDict,coeff):
 
 #get predicted topic dict of next song by auto_arima
 def topicDictForNextSongByArima(playlist,songDict):
+  importr("forecast")
   #get playlist's training list
   trainingList = playlist.getTrainingList()
   count = len(trainingList)
@@ -160,6 +161,55 @@ def topicDictForNextSongByArima(playlist,songDict):
     topicDict[key] = float(next.rx('mean')[0][0])
   return topicDict
 
+#write topic dict of Arima to file to avoid re-computation
+def writeTopicDictOfArimaToFile(playlistDict,songDict):
+  filename = "txt/arima.txt"
+  if os.path.exists(filename):
+    print '%s is existing......' % filename
+    return
+  print 'Begin to write topic dict to file......'
+  aFile = open(filename,"w")
+  index = 0
+  many = len(playlistDict)
+  for pid in playlistDict.keys():
+    print '%d/%d' % (index,many)
+    index += 1
+    playlist = playlistDict[pid]
+    predictTopicDict = topicDictForNextSongByArima(playlist,songDict)
+    content = '%d#' % pid
+    for topic in predictTopicDict.keys():
+      content = '%s%d:%f,' % (content,topic,predictTopicDict[topic])
+    content = content[:len(content)-1]
+    aFile.write(content+"\n")
+  aFile.close()
+  print 'End of writing topic dict to file......'
+
+#read Predicted Topic Dict Of Arima
+def readPredictedTopicDictOfArima():
+  print 'I am reading predicted topic dict of arima......'
+  filename = "txt/arima.txt"
+  if not os.path.exists(filename):
+    playlistDict = readPlaylistFromFile()
+    songDict = readSongFromFile()
+    writeTopicDictOfArimaToFile(playlistDict,songDict)
+  predictDict = {}
+  aFile = open(filename,"r")
+  lines = aFile.readlines()
+  for line in lines:
+    line = line.rstrip("\n")
+    items = line.split("#")
+    pid = int(items[0])
+    topicDict = {}
+    topics = items[1].split(",")
+    for topic in topics:
+      info = topic.split(":")
+      tid = int(info[0])
+      pro = float(info[1])
+      topicDict[tid] = pro
+    predictDict[pid] = topicDict
+  print 'Finish reading predicted topic dict of arima......'
+  return predictDict
+
 #return MAE and RMSE of testing set
 #mae = sum of abs of predict value and real value and then return sum divide count of testing set
 #RMSE = sum of square of similarity and divide N-1 and the sqrt
@@ -173,6 +223,10 @@ def MAEandRMSE(playlistDict,songDict,predictType,coeff=5.0):
   count = len(playlistDict)
   mae = 0
   rmse = 0
+  if predictType == 4:
+    predictedDict = readPredictedTopicDictOfArima()
+  else:
+    predictedDict = {}
   for pid in playlistDict.keys():
     playlist = playlistDict[pid]
     if predictType == 1:
@@ -182,7 +236,8 @@ def MAEandRMSE(playlistDict,songDict,predictType,coeff=5.0):
     elif predictType == 3:
       predictTopicDict = topicDictForNextSongByColdLaw(playlist,songDict,coeff)
     elif predictType == 4:
-      predictTopicDict = topicDictForNextSongByArima(playlist,songDict)
+      #predictTopicDict = topicDictForNextSongByArima(playlist,songDict)
+      predictTopicDict = predictedDict[pid]
     elif predictType == 5:
       predictTopicDict = topicDictForNextSongByHybrid(playlist,songDict)
     song = songDict[playlist.getLastSid()]
@@ -197,7 +252,7 @@ def MAEandRMSE(playlistDict,songDict,predictType,coeff=5.0):
 #output is a dict whose key is sid and value is song object
 def readSongFromFile():
   print 'I am reading songs from doc-topic file......'
-  filename = "data/LDA/songs-doc-topics.txt"
+  filename = "txt/songs-doc-topics.txt"
   if os.path.exists(filename):
     songDict = {}
     dtFile = open(filename,"r")
@@ -236,13 +291,53 @@ def readSongFromFile():
   else:
     print 'cannot find doc-topic file......'
 
-#read playlists and construct dict of playlists
+#read playlists from db and construct dict of playlists
 def readPlaylistFromDB():
   playlistDict = {}
   effectivePlaylist = DBProcess.getEffectivePlaylist()
   for pid in effectivePlaylist.keys():
     pList = Playlist(pid,effectivePlaylist[pid])
     playlistDict[pid] = pList
+  print 'Thare are %d playlist have been read.' % len(playlistDict)
+  return playlistDict
+
+#write playlists to file
+def writePlaylistsToFile():
+  filename = "txt/playlists.txt"
+  if os.path.exists(filename):
+    print '%s is existing......' % filename
+    return
+  else:
+    print 'Begin to write playlists......'
+    pFile = open(filename,"w")
+    effectivePlaylist = DBProcess.getEffectivePlaylist()
+    for pid in effectivePlaylist.keys():
+      pList = effectivePlaylist[pid]
+      content = "%d:" % pid
+      count = len(pList)
+      for i in range(0,count-1):
+        content = "%s%d," % (content,pList[i])
+      content = "%s%d" % (content,pList[count-1])
+      pFile.write(content+'\n')
+    pFile.close()
+    print 'End of writing playlists......'
+
+#read playlists from file and construct dict of playlists
+def readPlaylistFromFile():
+  filename = "txt/playlists.txt"
+  if not os.path.exists(filename):
+    writePlaylistsToFile()
+  pFile = open(filename,"r")
+  playlistDict = {}
+  lines = pFile.readlines()
+  for line in lines:
+    line = line.rstrip('\n')
+    items = line.split(":")
+    pid = int(items[0])
+    sids = items[1].split(",")
+    pList = [int(sid) for sid in sids]
+    playlist = Playlist(pid,pList)
+    playlistDict[pid] = playlist
   print 'Thare are %d playlist have been read.' % len(playlistDict)
   return playlistDict
 
@@ -282,7 +377,7 @@ def showColdLawWithDifferentCoeff():
 def testAverage():
   print '################Average####################'
   songDict = readSongFromFile()
-  playlistDict = readPlaylistFromDB()
+  playlistDict = readPlaylistFromFile()
   start_time = time.time()
   mae,rmse = MAEandRMSE(playlistDict,songDict,1)
   print 'MAE = ',mae
@@ -292,7 +387,7 @@ def testAverage():
 def testMostSimilar():
   print '################Most Similar####################'
   songDict = readSongFromFile()
-  playlistDict = readPlaylistFromDB()
+  playlistDict = readPlaylistFromFile()
   start_time = time.time()
   mae,rmse = MAEandRMSE(playlistDict,songDict,2)
   print 'MAE = ',mae
@@ -302,7 +397,7 @@ def testMostSimilar():
 def testColdLaw():
   print '################Cold Law####################'
   songDict = readSongFromFile()
-  playlistDict = readPlaylistFromDB()
+  playlistDict = readPlaylistFromFile()
   start_time = time.time()
   mae,rmse = MAEandRMSE(playlistDict,songDict,3)
   print 'MAE = ',mae
@@ -310,11 +405,14 @@ def testColdLaw():
   print 'Cold Law Consumed: %ds' % (time.time()-start_time)
 
 def testArima():
-  return
+  print '################ARIMA####################'
+  songDict = readSongFromFile()
+  playlistDict = readPlaylistFromFile()
+  start_time = time.time()
+  mae,rmse = MAEandRMSE(playlistDict,songDict,4)
+  print 'MAE = ',mae
+  print 'RMSE = ',rmse
+  print 'ARIMA Consumed: %ds' % (time.time()-start_time)
 
 if __name__ == "__main__":
-  testAverage()
-  testMostSimilar()
-  testColdLaw()
   testArima()
-  
