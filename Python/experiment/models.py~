@@ -11,6 +11,7 @@ import sys
 import matplotlib.pyplot as plt
 import rpy2.robjects as robjects
 from rpy2.robjects.packages import importr
+import time
 
 #set default encoding
 reload(sys)
@@ -150,7 +151,7 @@ def topicDictForNextSongByArima(playlist,songDict):
     if total == 0:
       total = len(tsDict[key])
     if len(tsDict[key]) != total:
-      print '....Time Series do not have same length......'
+      print '....Error:Time Series do not have same length......'
       return
     vec = robjects.FloatVector(tsDict[key])
     ts = robjects.r['ts'](vec)
@@ -278,23 +279,42 @@ def showColdLawWithDifferentCoeff():
   plt.savefig("img/cold-law.png")
   plt.show()
 
-if __name__ == "__main__":
+def testAverage():
+  print '################Average####################'
   songDict = readSongFromFile()
   playlistDict = readPlaylistFromDB()
-  print '################Average####################'
+  start_time = time.time()
   mae,rmse = MAEandRMSE(playlistDict,songDict,1)
   print 'MAE = ',mae
   print 'RMSE = ',rmse
+  print 'Average Consumed: %ds' % (time.time()-start_time)
+
+def testMostSimilar():
   print '################Most Similar####################'
+  songDict = readSongFromFile()
+  playlistDict = readPlaylistFromDB()
+  start_time = time.time()
   mae,rmse = MAEandRMSE(playlistDict,songDict,2)
   print 'MAE = ',mae
   print 'RMSE = ',rmse
+  print 'MostSimilar Consumed: %ds' % (time.time()-start_time)
+
+def testColdLaw():
   print '################Cold Law####################'
+  songDict = readSongFromFile()
+  playlistDict = readPlaylistFromDB()
+  start_time = time.time()
   mae,rmse = MAEandRMSE(playlistDict,songDict,3)
   print 'MAE = ',mae
   print 'RMSE = ',rmse
-  print '################ARIMA####################'
-  importr('forecast')
-  mae,rmse = MAEandRMSE(playlistDict,songDict,4)
-  print 'MAE = ',mae
-  print 'RMSE = ',rmse
+  print 'Cold Law Consumed: %ds' % (time.time()-start_time)
+
+def testArima():
+  return
+
+if __name__ == "__main__":
+  testAverage()
+  testMostSimilar()
+  testColdLaw()
+  testArima()
+  
