@@ -206,6 +206,11 @@ def readPredictedTopicDictOfArima():
       tid = int(info[0])
       pro = float(info[1])
       topicDict[tid] = pro
+    #normalize
+    #make sum of pro equals to 1
+    proSum = sum(topicDict.values())
+    for tid in topicDict.keys():
+      topicDict[tid] = topicDict[tid] / proSum
     predictDict[pid] = topicDict
   print 'Finish reading predicted topic dict of arima......'
   return predictDict
