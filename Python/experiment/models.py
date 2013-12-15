@@ -210,6 +210,42 @@ def readPredictedTopicDictOfArima():
   print 'Finish reading predicted topic dict of arima......'
   return predictDict
 
+#get predicted topic dict of next song by hybrid method
+def topicDictForNextSongByHybrid(playlist,songDict,arimaDict,lamda):
+  trainingList = playlist.getTrainingList()
+  pid = playlist.getPid()
+  count = len(trainingList)
+  sid = trainingList[count-1]
+  lastTopicDict =  songDict[sid].getTopicDict()
+  lastSum = sum(lastTopicDict.values())
+  arima = arimaDict[pid]
+  arimaSum = sum(arima.values())
+  topicDict = {}
+  for topic in lastTopicDict.keys():
+    pro = (lamda*lastTopicDict[topic] + (1 - lamda)*arimaSum) / (lastSum + arimaSum)
+    topicDict[topic] = pro
+  return topicDict
+
+#show mae and rmse trends of hybrid methods with different coefficients
+def showErrorTrendWithDifferentCoeff_Hybrid(playlistDict,songDict):
+  coeffs = [float(x) / 10 for x in range(0,10,1)]
+  print coeffs
+  maes = []
+  rmses = []
+  for coeff in coeffs:
+    mae,rmse = MAEandRMSE(playlistDict,songDict,5,0,coeff)
+    maes.append(mae)
+    rmses.append(rmse)
+    print mae,rmse
+  plt.plot(coeffs,maes,label="MAE")
+  plt.plot(coeffs,rmses,label="RMSE")
+  plt.title("MAE and RMSE trends of Different Hybrid Coefficients")
+  plt.xlabel("lambda")
+  plt.ylabel("error")
+  plt.legend(loc="upper right")
+  plt.savefig("img/hybrid.png")
+  plt.show()
+
 #return MAE and RMSE of testing set
 #mae = sum of abs of predict value and real value and then return sum divide count of testing set
 #RMSE = sum of square of similarity and divide N-1 and the sqrt
@@ -219,11 +255,11 @@ def readPredictedTopicDictOfArima():
 #3: cold law
 #4: arima
 #5: hybrid
-def MAEandRMSE(playlistDict,songDict,predictType,coeff=5.0):
+def MAEandRMSE(playlistDict,songDict,predictType,coeff=5.0,lamda = 0.5):
   count = len(playlistDict)
   mae = 0
   rmse = 0
-  if predictType == 4:
+  if predictType == 4 or predictType == 5:
     predictedDict = readPredictedTopicDictOfArima()
   else:
     predictedDict = {}
@@ -239,7 +275,7 @@ def MAEandRMSE(playlistDict,songDict,predictType,coeff=5.0):
       #predictTopicDict = topicDictForNextSongByArima(playlist,songDict)
       predictTopicDict = predictedDict[pid]
     elif predictType == 5:
-      predictTopicDict = topicDictForNextSongByHybrid(playlist,songDict)
+      predictTopicDict = topicDictForNextSongByHybrid(playlist,songDict,predictedDict,lamda)
     song = songDict[playlist.getLastSid()]
     mae = mae + math.fabs(song.cosineSimilarityWithDict(predictTopicDict))
     rmse = rmse + song.cosineSimilarityWithDict(predictTopicDict)**2
@@ -342,7 +378,7 @@ def readPlaylistFromFile():
   return playlistDict
 
 #show mae and rmse trends of cold-law methods with different coefficients
-def showErrorTrendWithDifferentCoeff(playlistDict,songDict):
+def showErrorTrendWithDifferentCoeff_ColdLaw(playlistDict,songDict):
   coeffs = [x / 10 for x in range(0,100,1)]
   maes = []
   rmses = []
@@ -414,5 +450,17 @@ def testArima():
   print 'RMSE = ',rmse
   print 'ARIMA Consumed: %ds' % (time.time()-start_time)
 
+def testHybrid():
+  print '################Hybrid####################'
+  songDict = readSongFromFile()
+  playlistDict = readPlaylistFromFile()
+  start_time = time.time()
+  mae,rmse = MAEandRMSE(playlistDict,songDict,5)
+  print 'MAE = ',mae
+  print 'RMSE = ',rmse
+  print 'Hybrid Consumed: %ds' % (time.time()-start_time)
+
 if __name__ == "__main__":
-  testArima()
+  songDict = readSongFromFile()
+  playlistDict = readPlaylistFromFile()
+  showErrorTrendWithDifferentCoeff_Hybrid(playlistDict,songDict)
