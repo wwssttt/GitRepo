@@ -227,7 +227,7 @@ def topicDictForNextSongByHybrid(playlist,songDict,arimaDict,lamda):
   arimaSum = sum(arima.values())
   topicDict = {}
   for topic in lastTopicDict.keys():
-    pro = (lamda*lastTopicDict[topic] + (1 - lamda)*arimaSum) / (lastSum + arimaSum)
+    pro = lamda*lastTopicDict[topic] + (1 - lamda)*arima[topic])
     topicDict[topic] = pro
   return topicDict
 
