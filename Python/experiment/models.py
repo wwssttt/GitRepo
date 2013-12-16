@@ -35,6 +35,29 @@ def cosineSim(topicDict1,topicDict2):
   similarity = dotProduct / (math.sqrt(dictPower1) * math.sqrt(dictPower2))
   return similarity
 
+#calculate KL distance of two distribution
+#input are two topic dicts
+#output is the cosine similarity
+def KLDis(topicDict1,topicDict2):
+  distance = 0
+  for key in topicDict1.keys():
+    if key not in topicDict2:
+      print '%d is not in another dict...' % key
+      return
+    else:
+      pro1 = topicDict1[key]
+      pro2 = topicDict2[key]
+      distance = distance + pro1 * math.log(pro1 / pro2)
+  return distance
+
+#calculate KL similarity of two distribution
+#input are two topic dicts
+#output is the cosine similarity
+def KLSim(topicDict1,topicDict2):
+  dis1 = KLDis(topicDict1,topicDict2)
+  dis2 = KLDis(topicDict2,topicDict1)
+  return (dis1 + dis2) / 2
+
 #define model of song
 class Song:
   #constructor
@@ -48,10 +71,16 @@ class Song:
   def getSid(self):
     return self.sid
   #get the cosine similarity between self and other song or distribute
-  def cosineSimilarityWithDict(self,topicDict):
-    return cosineSim(self.topicDict,topicDict)
-  def cosineSimilarityWithAno(self,another):
-    return cosineSim(self.topicDict,another.getTopicDict())
+  def compareWithDict(self,topicDict,simType = 0):
+    if simType == 1:
+      return cosineSim(self.topicDict,topicDict)
+    else:
+      return KLSim(self.topicDict,topicDict)
+  def compareWithAno(self,another,simType):
+    if simType == 1:
+      return cosineSim(self.topicDict,another.getTopicDict())
+    else:
+      return KLSim(self.topicDict,another.getTopicDict())
 
 #define model of playlist
 class Playlist:
@@ -227,13 +256,13 @@ def topicDictForNextSongByHybrid(playlist,songDict,arimaDict,lamda):
   arimaSum = sum(arima.values())
   topicDict = {}
   for topic in lastTopicDict.keys():
-    pro = lamda*lastTopicDict[topic] + (1 - lamda)*arima[topic])
+    pro = lamda*lastTopicDict[topic] + (1 - lamda)*arima[topic]
     topicDict[topic] = pro
   return topicDict
 
 #show mae and rmse trends of hybrid methods with different coefficients
 def showErrorTrendWithDifferentCoeff_Hybrid(playlistDict,songDict):
-  coeffs = [float(x) / 10 for x in range(0,10,1)]
+  coeffs = [float(x) / 10 for x in range(0,11,1)]
   print coeffs
   maes = []
   rmses = []
@@ -282,8 +311,8 @@ def MAEandRMSE(playlistDict,songDict,predictType,coeff=5.0,lamda = 0.5):
     elif predictType == 5:
       predictTopicDict = topicDictForNextSongByHybrid(playlist,songDict,predictedDict,lamda)
     song = songDict[playlist.getLastSid()]
-    mae = mae + math.fabs(song.cosineSimilarityWithDict(predictTopicDict))
-    rmse = rmse + song.cosineSimilarityWithDict(predictTopicDict)**2
+    mae = mae + math.fabs(song.compareWithDict(predictTopicDict))
+    rmse = rmse + song.compareWithDict(predictTopicDict)**2
   mae = mae / count
   rmse = rmse / (count - 1)
   rmse = math.sqrt(rmse)
