@@ -161,34 +161,24 @@ def topicDictForNextSongByArima(playlist,songDict):
   topicDict = {}
   #multi-dimensional time series
   #the number of topics is the dimension
-  tsDict = {}
+  baseDict = {}
+  tsList = []
   #loop every song in training list
   #add distribution of sids to tsDict to construct some time series
   for i in range(0,count):
     sid = trainingList[i]
     sTopicDict = songDict[sid].getTopicDict()
-    for key in sTopicDict.keys():
-      #if the topic do not exist,new a list and append it to dict
-      if key not in tsDict:
-        tsDict[key] = []
-        tsDict[key].append(sTopicDict[key])
-      #else append it directly
-      else:
-        tsDict[key].append(sTopicDict[key])
-  #using auto arima to forecast the next value of all time series
-  total = 0
-  for key in tsDict.keys():
-    if total == 0:
-      total = len(tsDict[key])
-    if len(tsDict[key]) != total:
-      print '....Error:Time Series do not have same length......'
-      return
-    vec = robjects.FloatVector(tsDict[key])
-    ts = robjects.r['ts'](vec)
-    fit = robjects.r['auto.arima'](ts)
-    next = robjects.r['forecast'](fit,h=1)
-    topicDict[key] = float(next.rx('mean')[0][0])
-  return topicDict
+    if len(baseDict) == 0:
+      length = len(sTopicDict)
+      for t in range(0,length):
+        baseDict[t] = 1.0 / length
+    tsList.append(songDict[sid].compareWithDict(baseDict))
+
+  vec = robjects.FloatVector(tsList)
+  ts = robjects.r['ts'](vec)
+  fit = robjects.r['auto.arima'](ts)
+  next = robjects.r['forecast'](fit,h=1)
+  return float(next.rx('mean')[0][0])
 
 #write topic dict of Arima to file to avoid re-computation
 def writeTopicDictOfArimaToFile(playlistDict,songDict):
@@ -207,7 +197,7 @@ def writeTopicDictOfArimaToFile(playlistDict,songDict):
     predictTopicDict = topicDictForNextSongByArima(playlist,songDict)
     content = '%d#' % pid
     for topic in predictTopicDict.keys():
-      content = '%s%d:%f,' % (content,topic,predictTopicDict[topic])
+      content = '%s%d:%f,' % (content,topic,math.pow(math.e,predictTopicDict[topic]))
     content = content[:len(content)-1]
     aFile.write(content+"\n")
   aFile.close()
@@ -293,26 +283,27 @@ def MAEandRMSE(playlistDict,songDict,predictType,coeff=5.0,lamda = 0.5):
   count = len(playlistDict)
   mae = 0
   rmse = 0
-  if predictType == 4 or predictType == 5:
-    predictedDict = readPredictedTopicDictOfArima()
-  else:
-    predictedDict = {}
+  baseDict = {}
   for pid in playlistDict.keys():
     playlist = playlistDict[pid]
+    song = songDict[playlist.getLastSid()]
+    if len(baseDict) == 0:
+      length = len(song.getTopicDict())
+      for t in range(0,length):
+        baseDict[t] = 1.0 / length
     if predictType == 1:
       predictTopicDict = topicDictForNextSongByAverage(playlist,songDict)
+      predictSim = KLSim(predictTopicDict,baseDict)
     elif predictType == 2:
       predictTopicDict = topicDictForNextSongByMostSimilar(playlist,songDict)
+      predictSim = KLSim(predictTopicDict,baseDict)
     elif predictType == 3:
       predictTopicDict = topicDictForNextSongByColdLaw(playlist,songDict,coeff)
+      predictSim = KLSim(predictTopicDict,baseDict)
     elif predictType == 4:
-      #predictTopicDict = topicDictForNextSongByArima(playlist,songDict)
-      predictTopicDict = predictedDict[pid]
-    elif predictType == 5:
-      predictTopicDict = topicDictForNextSongByHybrid(playlist,songDict,predictedDict,lamda)
-    song = songDict[playlist.getLastSid()]
-    mae = mae + math.fabs(song.compareWithDict(predictTopicDict))
-    rmse = rmse + song.compareWithDict(predictTopicDict)**2
+      predictSim = topicDictForNextSongByArima(playlist,songDict)
+    mae = mae + math.fabs(song.compareWithDict(baseDict) - predictSim)
+    rmse = rmse + (song.compareWithDict(baseDict) - predictSim)**2
   mae = mae / count
   rmse = rmse / (count - 1)
   rmse = math.sqrt(rmse)
@@ -498,4 +489,6 @@ def testHybrid():
   print 'Hybrid Consumed: %ds' % (time.time()-start_time)
 
 if __name__ == "__main__":
+  testArima()
   testMostSimilar()
+  testAverage()
