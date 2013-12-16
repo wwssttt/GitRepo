@@ -17,88 +17,6 @@ import time
 reload(sys)
 sys.setdefaultencoding("utf-8")
 
-#calculate cosine similarity of two distribution
-#input are two topic dicts
-#output is the cosine similarity
-def cosineSim(topicDict1,topicDict2):
-  dotProduct = 0
-  dictPower1 = 0
-  dictPower2 = 0
-  for key in topicDict1.keys():
-    if key not in topicDict2:
-      print '%d is not in another dict...' % key
-      return
-    else:
-      dotProduct = dotProduct + topicDict1[key] * topicDict2[key]
-      dictPower1 = dictPower1 + topicDict1[key]**2
-      dictPower2 = dictPower2 + topicDict2[key]**2
-  similarity = dotProduct / (math.sqrt(dictPower1) * math.sqrt(dictPower2))
-  return similarity
-
-#calculate KL distance of two distribution
-#input are two topic dicts
-#output is the cosine similarity
-def KLDis(topicDict1,topicDict2):
-  distance = 0
-  for key in topicDict1.keys():
-    if key not in topicDict2:
-      print '%d is not in another dict...' % key
-      return
-    else:
-      pro1 = topicDict1[key]
-      pro2 = topicDict2[key]
-      distance = distance + pro1 * math.log(pro1 / pro2)
-  return distance
-
-#calculate KL similarity of two distribution
-#input are two topic dicts
-#output is the cosine similarity
-def KLSim(topicDict1,topicDict2):
-  dis1 = KLDis(topicDict1,topicDict2)
-  dis2 = KLDis(topicDict2,topicDict1)
-  return (dis1 + dis2) / 2
-
-#define model of song
-class Song:
-  #constructor
-  def __init__(self,sid,topicDict):
-    self.sid = sid
-    self.topicDict = {}
-    for key in topicDict.keys():
-      self.topicDict[key] = topicDict[key]
-  def getTopicDict(self):
-    return self.topicDict
-  def getSid(self):
-    return self.sid
-  #get the cosine similarity between self and other song or distribute
-  def compareWithDict(self,topicDict,simType = 0):
-    if simType == 1:
-      return cosineSim(self.topicDict,topicDict)
-    else:
-      return KLSim(self.topicDict,topicDict)
-  def compareWithAno(self,another,simType):
-    if simType == 1:
-      return cosineSim(self.topicDict,another.getTopicDict())
-    else:
-      return KLSim(self.topicDict,another.getTopicDict())
-
-#define model of playlist
-class Playlist:
-  #constructor
-  def __init__(self,pid,playlist):
-    self.pid = pid
-    count = len(playlist)
-    self.lastSid = playlist[count-1]
-    self.trainingList = []
-    for i in range(0,count-1):
-      self.trainingList.append(playlist[i])
-  def getTrainingList(self):
-    return self.trainingList
-  def getPid(self):
-    return self.pid
-  def getLastSid(self):
-    return self.lastSid
-
 #get predicted topic dict of next song by averaging all songs' topic distribution
 #we treat it as the user's global preference
 def topicDictForNextSongByAverage(playlist,songDict):
@@ -189,6 +107,33 @@ def topicDictForNextSongByArima(playlist,songDict):
     next = robjects.r['forecast'](fit,h=1)
     topicDict[key] = float(next.rx('mean')[0][0])
   return topicDict
+
+#get predicted KL distance with base distribution by auto_arima
+def getPredictedKLDisByArima(playlist,songDict):
+  importr("forecast")
+  #get playlist's training list
+  trainingList = playlist.getTrainingList()
+  count = len(trainingList)
+  #define base diatribution and dis list
+  baseDict = {}
+  disList = []
+  #loop every song in training list
+  #add distribution of sids to tsDict to construct some time series
+  for i in range(0,count):
+    sid = trainingList[i]
+    sTopicDict = songDict[sid].getTopicDict()
+    if len(baseDict) == 0:
+      length = len(sTopicDict)
+      for t in range(0,length)
+        baseDict[t] = 1.0 / length
+    disList.append(KLSim(sTopicDict,baseDict))
+
+  #using auto arima to forecast the kl distance
+  vec = robjects.FloatVector(disList)
+  ts = robjects.r['ts'](vec)
+  fit = robjects.r['auto.arima'](ts)
+  next = robjects.r['forecast'](fit,h=1)
+  return float(next.rx('mean')[0][0])
 
 #write topic dict of Arima to file to avoid re-computation
 def writeTopicDictOfArimaToFile(playlistDict,songDict):
@@ -413,89 +358,3 @@ def readPlaylistFromFile():
     playlistDict[pid] = playlist
   print 'Thare are %d playlist have been read.' % len(playlistDict)
   return playlistDict
-
-#show mae and rmse trends of cold-law methods with different coefficients
-def showErrorTrendWithDifferentCoeff_ColdLaw(playlistDict,songDict):
-  coeffs = [x / 10 for x in range(0,100,1)]
-  maes = []
-  rmses = []
-  for coeff in coeffs:
-    mae,rmse = MAEandRMSE(playlistDict,songDict,3,coeff)
-    maes.append(mae)
-    rmses.append(rmse)
-  plt.plot(coeffs,maes,label="MAE")
-  plt.plot(coeffs,rmses,label="RMSE")
-  plt.title("MAE and RMSE trends of Different Cold Coefficients")
-  plt.xlabel("coefficient")
-  plt.ylabel("error")
-  plt.legend(loc="upper right")
-  plt.savefig("img/coldlaw.png")
-  plt.show()
-
-#show weight trends of different coefficients
-def showColdLawWithDifferentCoeff():
-  coeffs = [0.25,0.5,0.75,1.0,5.0]
-  x = range(0,20,1)
-  for coeff in coeffs:
-    weight = [1*math.pow(math.e,-1*coeff*delta) for delta in x]
-    label = "coeff = %f" % coeff
-    plt.plot(x,weight,label=label)
-  plt.xlabel("time")
-  plt.ylabel("weight")
-  plt.title("Weight Trend of Cold Law with Different Coefficients")
-  plt.legend(loc = "upper right")
-  plt.savefig("img/cold-law.png")
-  plt.show()
-
-def testAverage():
-  print '################Average####################'
-  songDict = readSongFromFile()
-  playlistDict = readPlaylistFromFile()
-  start_time = time.time()
-  mae,rmse = MAEandRMSE(playlistDict,songDict,1)
-  print 'MAE = ',mae
-  print 'RMSE = ',rmse
-  print 'Average Consumed: %ds' % (time.time()-start_time)
-
-def testMostSimilar():
-  print '################Most Similar####################'
-  songDict = readSongFromFile()
-  playlistDict = readPlaylistFromFile()
-  start_time = time.time()
-  mae,rmse = MAEandRMSE(playlistDict,songDict,2)
-  print 'MAE = ',mae
-  print 'RMSE = ',rmse
-  print 'MostSimilar Consumed: %ds' % (time.time()-start_time)
-
-def testColdLaw():
-  print '################Cold Law####################'
-  songDict = readSongFromFile()
-  playlistDict = readPlaylistFromFile()
-  start_time = time.time()
-  mae,rmse = MAEandRMSE(playlistDict,songDict,3)
-  print 'MAE = ',mae
-  print 'RMSE = ',rmse
-  print 'Cold Law Consumed: %ds' % (time.time()-start_time)
-
-def testArima():
-  print '################ARIMA####################'
-  songDict = readSongFromFile()
-  playlistDict = readPlaylistFromFile()
-  start_time = time.time()
-  mae,rmse = MAEandRMSE(playlistDict,songDict,4)
-  print 'MAE = ',mae
-  print 'RMSE = ',rmse
-  print 'ARIMA Consumed: %ds' % (time.time()-start_time)
-
-def testHybrid():
-  print '################Hybrid####################'
-  songDict = readSongFromFile()
-  playlistDict = readPlaylistFromFile()
-  start_time = time.time()
-  mae,rmse = MAEandRMSE(playlistDict,songDict,5)
-  print 'MAE = ',mae
-  print 'RMSE = ',rmse
-  print 'Hybrid Consumed: %ds' % (time.time()-start_time)
-
-if __name__ == "__main__":
-  testMostSimilar()
