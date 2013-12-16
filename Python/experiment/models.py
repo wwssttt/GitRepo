@@ -347,6 +347,9 @@ def readSongFromFile():
         j = j + 1
         #get topic pro
         tpro = float(items[j])
+        if tpro == 0:
+          print 'pro of topic must bigger than 0......'
+          return
         #move to next topic pair
         topicDict[tid] = tpro
         j = j + 1
@@ -495,6 +498,4 @@ def testHybrid():
   print 'Hybrid Consumed: %ds' % (time.time()-start_time)
 
 if __name__ == "__main__":
-  songDict = readSongFromFile()
-  playlistDict = readPlaylistFromFile()
-  showErrorTrendWithDifferentCoeff_Hybrid(playlistDict,songDict)
+  testMostSimilar()
