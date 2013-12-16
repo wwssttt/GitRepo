@@ -30,4 +30,4 @@ def showPerplexity(begin,end):
     print '%s do not exist...' % filename
 
 if __name__ == "__main__":
-  showPerplexity(50,800)
+  showPerplexity(100,200)

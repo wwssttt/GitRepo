@@ -4,7 +4,6 @@
 #give some useful function
 ############################
 
-
 #calculate hamming distance of two signal vector
 def hammingDis(sigDict1,sigDict2):
   count = 0

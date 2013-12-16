@@ -22,7 +22,7 @@ import matplotlib.pyplot as plt
 reload(sys)
 sys.setdefaultencoding('utf-8')
 # set log's localtion and level
-logging.basicConfig(filename=os.path.join(os.getcwd(),'docgenerate_log.txt'),level=logging.DEBUG,format='%(asctime)s-%(levelname)s:%(message)s')
+logging.basicConfig(filename=os.path.join(os.getcwd(),'log/docgenerate_log.txt'),level=logging.DEBUG,format='%(asctime)s-%(levelname)s:%(message)s')
 
 # define some global varibale
 DBHOST = 'localhost'
@@ -133,12 +133,12 @@ def rmDir(whichdir):
 #generate document of given song from its tagDict
 def generateDocofSong(sid,tagDict):
   #if song file exists, return
-  if os.path.exists("songs/%d" % sid):
+  if os.path.exists("data/songs/%d" % sid):
     print '%d is existing...' % sid
     logging.warning('%d is existing...' % sid)
     return
   #else new a file
-  sFile = open("songs/%d" % sid, "w")
+  sFile = open("data/songs/%d" % sid, "w")
   #repeat: write tag into file
   for tag in tagDict.keys():
     count = (int)(tagDict[tag] / 4)
@@ -161,9 +161,9 @@ def generateDocs():
   global DBCHARSET
 
   #rm folder songs
-  rmDir("songs")
+  rmDir("data/songs")
   #mkdir songs
-  os.mkdir("songs")  
+  os.mkdir("data/songs")  
 
   try:
     #connect db and select db name

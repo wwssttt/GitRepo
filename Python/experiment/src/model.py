@@ -1,3 +1,9 @@
+#!/usr/bin python
+#coding:utf-8
+############################
+#give definition of Song and Playlist
+############################
+
 #define model of song
 class Song:
   #constructor

@@ -1,7 +1,7 @@
 #!/usr/bin python
 #coding:utf-8
 ############################
-#give some useful function
+#give some test function
 ############################
 
 #show mae and rmse trends of cold-law methods with different coefficients

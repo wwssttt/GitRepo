@@ -212,7 +212,7 @@ def showStatistics():
   return songFreqDict,playlistLenDict
 
 if __name__ == '__main__':
-  print(len(getEffectivePlaylist()))
+  showStatistics()
   
   
 
