@@ -6,6 +6,17 @@
 
 import math
 
+#getHammingDict
+def getHammingDict(topicDict,baseDict):
+  hammingDict = {}
+  for topic in topicDict.keys():
+    delta = topicDict[key] - baseDict[key]
+    if delta >= 0:
+      hammingDict[topic] = 1
+    else:
+      hammingDict[key] = 0
+  return hammingDict
+
 #calculate hamming distance of two signal vector
 def hammingDis(sigDict1,sigDict2):
   count = 0
@@ -70,7 +81,7 @@ def getTopNIndex(recDict,playlistDict):
   recall = float(hit * 1.0) / testNum
   precision = float(hit * 1.0) / recNum
   f1 = 2 * ((recall * precision) / (recall + precision))
-  return reall,precision,f1
+  return recall,precision,f1
 
 #calculate mae and rmse
 def getMAEandRMSE(recDict,playlistDict,songDict):

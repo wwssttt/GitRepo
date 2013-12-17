@@ -6,6 +6,17 @@
 
 import math
 
+#getHammingDict
+def getHammingDict(topicDict,baseDict):
+  hammingDict = {}
+  for topic in topicDict.keys():
+    delta = topicDict[key] - baseDict[key]
+    if delta >= 0:
+      hammingDict[topic] = 1
+    else:
+      hammingDict[key] = 0
+  return hammingDict
+
 #calculate hamming distance of two signal vector
 def hammingDis(sigDict1,sigDict2):
   count = 0
@@ -57,7 +68,6 @@ def KLSim(topicDict1,topicDict2):
 
 #calculate recall,preision and F1-Score
 def getTopNIndex(recDict,playlistDict):
-  print 'I am in getTopNIndex......'
   hit = 0
   testNum = len(playlistDict)
   recNum = 0
@@ -71,12 +81,10 @@ def getTopNIndex(recDict,playlistDict):
   recall = float(hit * 1.0) / testNum
   precision = float(hit * 1.0) / recNum
   f1 = 2 * ((recall * precision) / (recall + precision))
-  print 'I am out getTopNIndex......'
-  return reall,precision,f1
+  return recall,precision,f1
 
 #calculate mae and rmse
 def getMAEandRMSE(recDict,playlistDict,songDict):
-  print 'I am in getMAEandRMSE......'
   mae = 0
   rmse = 0
   testNum = len(playlistDict)
@@ -98,5 +106,4 @@ def getMAEandRMSE(recDict,playlistDict,songDict):
   mae = mae / testNum
   rmse = rmse / (testNum - 1)
   rmse = math.sqrt(rmse)
-  print 'I am out getMAEandRMSE......'
   return mae,rmse

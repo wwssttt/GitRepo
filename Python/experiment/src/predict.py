@@ -147,7 +147,10 @@ def getRecDict(playlistDict,songDict,recType = 0,lamda = 0.5,topN = 10):
   recDict = {}
   if recType == 3 or recType == 4:
     arimaDict = readPredictedTopicDictOfArima()
+  index = 0
+  count = len(playlistDict)
   for pid in playlistDict.keys():
+    print '%d/%d' % (index,count)
     playlist = playlistDict[pid]
     if recType == 0:
       tarDict = topicDictForNextSongByMostSimilar(playlist,songDict)
@@ -163,6 +166,7 @@ def getRecDict(playlistDict,songDict,recType = 0,lamda = 0.5,topN = 10):
       tarDict = topicDictForNextSongByMostSimilar(playlist,songDict)
     recSong = getRecSongs(songDict,topN,tarDict)
     recDict[pid] = recSong
+    index = index + 1
   return recDict
 
 #get predicted KL distance with base distribution by auto_arima
@@ -191,3 +195,48 @@ def getPredictedKLDisByArima(playlist,songDict):
   fit = robjects.r['auto.arima'](ts)
   next = robjects.r['forecast'](fit,h=1)
   return float(next.rx('mean')[0][0])
+
+#get recommend songs list of playlist by hamming dis
+def getRecSongsOfHammingDis(lastSid,songDict,topN,tarDis):
+  recDict = {}
+  baseDict = {}
+  lastTopicDict = songDict[lastSid]
+  for sid in songDict.keys():
+    song = songDict[sid]
+    topicDict = song.getTopicDict()
+    if len(baseDict) == 0:
+      length = len(topicDict)
+      for i in range(0,length):
+        baseDict[i] = 1.0 / length
+      lastHammingDict = util.getHammingDict(lastTopicDict,baseDict) 
+    baseDis = util.KLSim(topicDict,baseDict)
+    curHammingDict = util.getHammingDict(topicDict,baseDict) 
+    hammingDis = util.hammingDis(lastHammingDict,curHammingDict)
+    value = math.fabs(baseDis-tarDis) * hammingDis
+    recDict[sid] = value
+  recList = sorted(recDict.iteritems(),key=lambda x:x[1])
+  result = []
+  for i in range(0,topN):
+    result.append(recList[i][0])
+  return result
+
+#generate rec dict
+#0: most similar
+#1: average
+#2: cold law
+#3: arima
+#4: hybrid
+#default: most similar
+def getRecDictOfHammingDis(playlistDict,songDict,topN = 10):
+  recDict = {}
+  index = 0
+  count = len(playlistDict)
+  for pid in playlistDict.keys():
+    print '%d/%d' % (index,count)
+    playlist = playlistDict[pid]
+    lastSid = playlist.getLastSid()
+    tarDis = getPredictedKLDisByArima(playlist,songDict)
+    recSong = getRecSongsOfHammingDis(lastSid,songDict,topN,tarDis)
+    recDict[pid] = recSong
+    index = index + 1
+  return recDict

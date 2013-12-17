@@ -62,7 +62,14 @@ def showColdLawWithDifferentCoeff():
   plt.savefig("../img/cold-law.png")
   plt.show()
 
+#test traditional method
 def testRecMethod(recType):
+  start_time = time.time()
+  songDict = persist.readSongFromFile()
+  playlistDict = persist.readPlaylistFromFile()
+  recDict = predict.getRecDict(playlistDict,songDict,recType)
+  recall,precision,f1 = util.getTopNIndex(recDict,playlistDict)
+  mse,rmse = util.getMAEandRMSE(recDict,playlistDict,songDict)
   if recType == 0:
     print '################Most Similar####################'
   elif recType == 1:
@@ -75,12 +82,22 @@ def testRecMethod(recType):
     print '################Hybrid####################'
   else:
     print '################Most Similar####################'
+  print 'Recall = ',recall
+  print 'Precision = ',precision
+  print 'F1-Score = ',f1
+  print 'MAE = ',mae
+  print 'RMSE = ',rmse
+  print 'Average Consumed: %ds' % (time.time()-start_time)
+
+#test hamming dis
+def testHammingMethod():
   start_time = time.time()
   songDict = persist.readSongFromFile()
   playlistDict = persist.readPlaylistFromFile()
-  recDict = predict.getRecDict(playlistDict,songDict,recType)
+  recDict = getRecDictOfHammingDis(playlistDict,songDict)
   recall,precision,f1 = util.getTopNIndex(recDict,playlistDict)
   mse,rmse = util.getMAEandRMSE(recDict,playlistDict,songDict)
+  print '################Hamming Dis####################'
   print 'Recall = ',recall
   print 'Precision = ',precision
   print 'F1-Score = ',f1
