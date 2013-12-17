@@ -10,11 +10,11 @@ import math
 def getHammingDict(topicDict,baseDict):
   hammingDict = {}
   for topic in topicDict.keys():
-    delta = topicDict[key] - baseDict[key]
+    delta = topicDict[topic] - baseDict[topic]
     if delta >= 0:
       hammingDict[topic] = 1
     else:
-      hammingDict[key] = 0
+      hammingDict[topic] = 0
   return hammingDict
 
 #calculate hamming distance of two signal vector
@@ -55,6 +55,10 @@ def KLDis(topicDict1,topicDict2):
     else:
       pro1 = topicDict1[key]
       pro2 = topicDict2[key]
+      if pro1 <= 0:
+        pro1 = 1.0 / 10000000
+      if pro2 <= 0:
+        pro2 = 1.0 / 10000000
       distance = distance + pro1 * math.log(pro1 / pro2)
   return distance
 
@@ -80,7 +84,11 @@ def getTopNIndex(recDict,playlistDict):
       hit = hit + 1
   recall = float(hit * 1.0) / testNum
   precision = float(hit * 1.0) / recNum
-  f1 = 2 * ((recall * precision) / (recall + precision))
+  if recall == 0 and precision == 0:
+    f1 = 0
+    print 'recall = 0 and precision = 0'
+  else:
+    f1 = 2 * ((recall * precision) / (recall + precision))
   return recall,precision,f1
 
 #calculate mae and rmse
