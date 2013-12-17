@@ -7,8 +7,8 @@
 import test
 
 if __name__ == "__main__":
-  test.testRecMethod(0)
-  test.testRecMethod(1)
-  test.testRecMethod(2)
-  test.testRecMethod(3)
-  test.testRecMethod(4)
+  testRecMethod(0)
+  testRecMethod(1)
+  testRecMethod(2)
+  testRecMethod(3)
+  testRecMethod(4)

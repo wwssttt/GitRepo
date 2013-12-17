@@ -26,7 +26,7 @@ def showErrorTrendWithDifferentCoeff_Hybrid(playlistDict,songDict):
   plt.xlabel("lambda")
   plt.ylabel("error")
   plt.legend(loc="upper right")
-  plt.savefig("../img/hybrid.png")
+  plt.savefig("img/hybrid.png")
   plt.show()
 
 #show mae and rmse trends of cold-law methods with different coefficients
@@ -44,7 +44,7 @@ def showErrorTrendWithDifferentCoeff_ColdLaw(playlistDict,songDict):
   plt.xlabel("coefficient")
   plt.ylabel("error")
   plt.legend(loc="upper right")
-  plt.savefig("../img/coldlaw.png")
+  plt.savefig("img/coldlaw.png")
   plt.show()
 
 #show weight trends of different coefficients
@@ -59,7 +59,7 @@ def showColdLawWithDifferentCoeff():
   plt.ylabel("weight")
   plt.title("Weight Trend of Cold Law with Different Coefficients")
   plt.legend(loc = "upper right")
-  plt.savefig("../img/cold-law.png")
+  plt.savefig("img/cold-law.png")
   plt.show()
 
 def testRecMethod(recType):

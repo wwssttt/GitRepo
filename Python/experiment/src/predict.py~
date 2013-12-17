@@ -18,6 +18,7 @@ sys.setdefaultencoding("utf-8")
 #get predicted topic dict of next song by averaging all songs' topic distribution
 #we treat it as the user's global preference
 def topicDictForNextSongByAverage(playlist,songDict):
+  print 'I am in topicDictForNextSongByAverage......'
   #get playlist's training list
   trainingList = playlist.getTrainingList()
   count = len(trainingList)
@@ -34,17 +35,21 @@ def topicDictForNextSongByAverage(playlist,songDict):
   #average
   for key in topicDict.keys():
     topicDict[key] = topicDict[key] / count
+  print 'I am out topicDictForNextSongByAverage......'
   return topicDict
 
 #get predicted topic dict of next song using most similar to last song
 def topicDictForNextSongByMostSimilar(playlist,songDict):
+  print 'I am in topicDictForNextSongByMostSimilar......'
   trainingList = playlist.getTrainingList()
   count = len(trainingList)
   sid = trainingList[count-1]
+  print 'I am out topicDictForNextSongByMostSimilar......'
   return songDict[sid].getTopicDict()
 
 #get predicted topic dict of next song by cold law
 def topicDictForNextSongByColdLaw(playlist,songDict,coeff):
+  print 'I am in topicDictForNextSongByColdLaw......'
   #get playlist's training list
   trainingList = playlist.getTrainingList()
   count = len(trainingList)
@@ -65,10 +70,12 @@ def topicDictForNextSongByColdLaw(playlist,songDict,coeff):
   #average
   for key in topicDict.keys():
     topicDict[key] = topicDict[key] / totalWeight
+  print 'I am out topicDictForNextSongByColdLaw......'
   return topicDict
 
 #get predicted topic dict of next song by auto_arima
 def topicDictForNextSongByArima(playlist,songDict):
+  print 'I am in topicDictForNextSongByArima......'
   importr("forecast")
   #get playlist's training list
   trainingList = playlist.getTrainingList()
@@ -104,10 +111,12 @@ def topicDictForNextSongByArima(playlist,songDict):
     fit = robjects.r['auto.arima'](ts)
     next = robjects.r['forecast'](fit,h=1)
     topicDict[key] = float(next.rx('mean')[0][0])
+  print 'I am out topicDictForNextSongByArima......'
   return topicDict
 
 #get predicted topic dict of next song by hybrid method
 def topicDictForNextSongByHybrid(playlist,songDict,arimaDict,lamda):
+  print 'I am in topicDictForNextSongByHybrid......'
   trainingList = playlist.getTrainingList()
   pid = playlist.getPid()
   count = len(trainingList)
@@ -120,10 +129,12 @@ def topicDictForNextSongByHybrid(playlist,songDict,arimaDict,lamda):
   for topic in lastTopicDict.keys():
     pro = lamda*lastTopicDict[topic] + (1 - lamda)*arima[topic]
     topicDict[topic] = pro
+  print 'I am out topicDictForNextSongByHybrid......'
   return topicDict
 
 #get recommend songs list of playlist comparing with target dict
 def getRecSongs(songDict,topN,tarDict):
+  print 'I am in getRecSongs......'
   recDict = {}
   for sid in songDict.keys():
     song = songDict[sid]
@@ -134,6 +145,7 @@ def getRecSongs(songDict,topN,tarDict):
   result = []
   for i in range(0,topN):
     result.append(recList[i][0])
+  print 'I am out getRecSongs......'
   return result
 
 #generate rec dict
@@ -144,6 +156,7 @@ def getRecSongs(songDict,topN,tarDict):
 #4: hybrid
 #default: most similar
 def getRecDict(playlistDict,songDict,recType = 0,lamda = 0.5,topN = 10):
+  print 'I am in getRecDict......'
   recDict = {}
   if recType == 3 or recType == 4:
     arimaDict = readPredictedTopicDictOfArima()
@@ -163,10 +176,12 @@ def getRecDict(playlistDict,songDict,recType = 0,lamda = 0.5,topN = 10):
       tarDict = topicDictForNextSongByMostSimilar(playlist,songDict)
     recSong = getRecSongs(songDict,topN,tarDict)
     recDict[pid] = recSong
+  print 'I am out getRecDict......'
   return recDict
 
 #get predicted KL distance with base distribution by auto_arima
 def getPredictedKLDisByArima(playlist,songDict):
+  print 'I am in getPredictedKLDisByArima......'
   importr("forecast")
   #get playlist's training list
   trainingList = playlist.getTrainingList()
@@ -190,4 +205,5 @@ def getPredictedKLDisByArima(playlist,songDict):
   ts = robjects.r['ts'](vec)
   fit = robjects.r['auto.arima'](ts)
   next = robjects.r['forecast'](fit,h=1)
+  print 'I am out getPredictedKLDisByArima......'
   return float(next.rx('mean')[0][0])
