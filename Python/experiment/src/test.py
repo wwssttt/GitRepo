@@ -8,6 +8,11 @@ import time
 import persist
 import predict
 import util
+import logging
+import os
+
+# set log's localtion and level
+logging.basicConfig(filename=os.path.join(os.getcwd(),'../log/test_log.txt'),level=logging.DEBUG,format='%(asctime)s-%(levelname)s:%(message)s')
 
 #show mae and rmse trends of hybrid methods with different coefficients
 def showErrorTrendWithDifferentCoeff_Hybrid(playlistDict,songDict):
@@ -71,23 +76,31 @@ def testRecMethod(recType):
   recall,precision,f1 = util.getTopNIndex(recDict,playlistDict)
   mse,rmse = util.getMAEandRMSE(recDict,playlistDict,songDict)
   if recType == 0:
-    print '################Most Similar####################'
+    info = '################Most Similar####################'
   elif recType == 1:
-    print '################Average####################'
+    info = '################Average####################'
   elif recType == 2:
-    print '################Cold Law####################'
+    info = '################Cold Law####################'
   elif recType == 3:
-    print '################Arima####################'
+    info = '################Arima####################'
   elif recType == 4:
-    print '################Hybrid####################'
+    info = '################Hybrid####################'
   else:
-    print '################Most Similar####################'
+    info = '################Most Similar####################'
+  print info
+  logging.info(info)
   print 'Recall = ',recall
+  logging.info('Recall = ',recall)
   print 'Precision = ',precision
+  logging.info('Precision = ',precision)
   print 'F1-Score = ',f1
+  logging.info('F1-Score = ',f1)
   print 'MAE = ',mae
+  logging.info('MAE = ',mae)
   print 'RMSE = ',rmse
+  logging.info('RMSE = ',rmse)
   print 'Average Consumed: %ds' % (time.time()-start_time)
+  logging.info('Average Consumed: %ds' % (time.time()-start_time))
 
 #test hamming dis
 def testHammingMethod():
@@ -98,9 +111,16 @@ def testHammingMethod():
   recall,precision,f1 = util.getTopNIndex(recDict,playlistDict)
   mse,rmse = util.getMAEandRMSE(recDict,playlistDict,songDict)
   print '################Hamming Dis####################'
+  logging.info('################Hamming Dis####################')
   print 'Recall = ',recall
+  logging.info('Recall = ',recall)
   print 'Precision = ',precision
+  logging.info('Precision = ',precision)
   print 'F1-Score = ',f1
+  logging.info('F1-Score = ',f1)
   print 'MAE = ',mae
+  logging.info('MAE = ',mae)
   print 'RMSE = ',rmse
+  logging.info('RMSE = ',rmse)
   print 'Average Consumed: %ds' % (time.time()-start_time)
+  logging.info('Average Consumed: %ds' % (time.time()-start_time))

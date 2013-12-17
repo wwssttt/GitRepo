@@ -149,8 +149,20 @@ def getRecDict(playlistDict,songDict,recType = 0,lamda = 0.5,topN = 10):
     arimaDict = readPredictedTopicDictOfArima()
   index = 0
   count = len(playlistDict)
+  if recType == 0:
+    typeName = "Most Similar"
+  elif recType == 1:
+    typeName = "Average"
+  elif recType == 2:
+    typeName = "Cold Law"
+  elif recType == 3:
+    typeName = "Arima"
+  elif recType == 4:
+    typeName = "Hybrid"
+  else:
+    typeName = "Most Similar"
   for pid in playlistDict.keys():
-    print '%d/%d' % (index,count)
+    print '%s:%d/%d' % (typeName,index,count)
     playlist = playlistDict[pid]
     if recType == 0:
       tarDict = topicDictForNextSongByMostSimilar(playlist,songDict)
@@ -232,7 +244,7 @@ def getRecDictOfHammingDis(playlistDict,songDict,topN = 10):
   index = 0
   count = len(playlistDict)
   for pid in playlistDict.keys():
-    print '%d/%d' % (index,count)
+    print 'Hamming:%d/%d' % (index,count)
     playlist = playlistDict[pid]
     lastSid = playlist.getLastSid()
     tarDis = getPredictedKLDisByArima(playlist,songDict)

@@ -97,8 +97,8 @@ def getMAEandRMSE(recDict,playlistDict,songDict):
     totalError = 0
     for i in range(0,recNum):
       recSid = recList[i]
-      recDict = songDict[recSid].getTopicDict()
-      recError = KLSim(recDict,tarDict)
+      recTopicDict = songDict[recSid].getTopicDict()
+      recError = KLSim(recTopicDict,tarDict)
       totalError = totalError + recError
     avgError = float(totalError*1.0) / recNum
     mae = mae + math.fabs(avgError)
