@@ -10,6 +10,7 @@ import rpy2.robjects as robjects
 from rpy2.robjects.packages import importr
 import persist
 import util
+import matplotlib.pyplot as plt
 
 #set default encoding
 reload(sys)
@@ -206,10 +207,11 @@ def getPredictedKLDisByArima(playlist,songDict):
   ts = robjects.r['ts'](vec)
   fit = robjects.r['auto.arima'](ts)
   next = robjects.r['forecast'](fit,h=1)
+  robjects.r['plot'](next)
   return float(next.rx('mean')[0][0])
 
-#get recommend songs list of playlist by hamming dis
-def getRecSongsOfHammingDis(playlist,songDict,topN,tarDis):
+#get recommend songs list of playlist by dis
+def getRecSongsOfDis(playlist,songDict,topN,tarDis):
   recDict = {}
   baseDict = {}
   trainingList = playlist.getTrainingList()
@@ -222,11 +224,8 @@ def getRecSongsOfHammingDis(playlist,songDict,topN,tarDis):
       length = len(topicDict)
       for i in range(0,length):
         baseDict[i] = 1.0 / length
-      lastHammingDict = util.getHammingDict(lastTopicDict,baseDict) 
     baseDis = util.KLSim(topicDict,baseDict)
-    curHammingDict = util.getHammingDict(topicDict,baseDict) 
-    hammingDis = util.hammingDis(lastHammingDict,curHammingDict)
-    value = math.fabs(baseDis-tarDis) * (hammingDis + 1)
+    value = math.fabs(baseDis-tarDis)
     recDict[sid] = value
   recList = sorted(recDict.iteritems(),key=lambda x:x[1])
   result = []
@@ -235,13 +234,7 @@ def getRecSongsOfHammingDis(playlist,songDict,topN,tarDis):
   return result
 
 #generate rec dict
-#0: most similar
-#1: average
-#2: cold law
-#3: arima
-#4: hybrid
-#default: most similar
-def getRecDictOfHammingDis(playlistDict,songDict,topN = 10):
+def getRecDictOfDis(playlistDict,songDict,topN = 10):
   recDict = {}
   index = 0
   count = len(playlistDict)
@@ -249,7 +242,68 @@ def getRecDictOfHammingDis(playlistDict,songDict,topN = 10):
     print 'Hamming:%d/%d' % (index,count)
     playlist = playlistDict[pid]
     tarDis = getPredictedKLDisByArima(playlist,songDict)
-    recSong = getRecSongsOfHammingDis(playlist,songDict,topN,tarDis)
+    recSong = getRecSongsOfDis(playlist,songDict,topN,tarDis)
     recDict[pid] = recSong
     index = index + 1
+  return recDict
+
+#get predicted sd by auto_arima
+def getPredictedSdByArima(playlist,songDict):
+  importr("forecast")
+  #get playlist's training list
+  trainingList = playlist.getTrainingList()
+  count = len(trainingList)
+  #sd list
+  sdList = []
+  #loop every song in training list
+  #add distribution of sids to tsDict to construct some time series
+  for i in range(0,count):
+    sid = trainingList[i]
+    sd = songDict[sid].getSd()
+    sdList.append(sd)
+
+  #using auto arima to forecast the kl distance
+  vec = robjects.FloatVector(sdList)
+  ts = robjects.r['ts'](vec)
+  fit = robjects.r['auto.arima'](ts)
+  next = robjects.r['forecast'](fit,h=1)
+  robjects.r['plot'](next)
+  return float(next.rx('mean')[0][0])
+
+#get recommend songs list of playlist by hamming dis
+def getRecSongsOfSd(playlist,songDict,topN,tarSd):
+  recDict = {}
+  trainingList = playlist.getTrainingList()
+  size = len(trainingList)
+  for sid in songDict.keys():
+    song = songDict[sid]
+    sd = song.getSd()
+    value = math.fabs(sd - tarSd)
+    recDict[sid] = value
+  recList = sorted(recDict.iteritems(),key=lambda x:x[1])
+  result = []
+  for i in range(0,topN):
+    result.append(recList[i][0])
+  return result
+
+#generate rec dict
+def getRecDictOfSd(playlistDict,songDict,topN = 10):
+  recDict = {}
+  index = 0
+  count = len(playlistDict)
+  preSds = []
+  realSds = []
+  for pid in playlistDict.keys():
+    print 'Sd:%d/%d' % (index,count)
+    playlist = playlistDict[pid]
+    tarSd = getPredictedSdByArima(playlist,songDict)
+    preSds.append(tarSd)
+    realSds.append(songDict[playlist.getLastSid()].getSd())
+    recSong = getRecSongsOfSd(playlist,songDict,topN,tarSd)
+    recDict[pid] = recSong
+    index = index + 1
+  plt.plot(preSds,label="predict Sds")
+  plt.plot(realSds,label="read Sds")
+  plt.legend()
+  plt.show()
   return recDict

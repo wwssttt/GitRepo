@@ -103,15 +103,38 @@ def testRecMethod(recType):
   logging.info('Average Consumed: %ds' % (time.time()-start_time))
 
 #test hamming dis
-def testHammingMethod():
+def testDisMethod():
   start_time = time.time()
   songDict = persist.readSongFromFile()
   playlistDict = persist.readPlaylistFromFile()
-  recDict = predict.getRecDictOfHammingDis(playlistDict,songDict)
+  recDict = predict.getRecDictOfDis(playlistDict,songDict)
   recall,precision,f1 = util.getTopNIndex(recDict,playlistDict)
   mae,rmse = util.getMAEandRMSE(recDict,playlistDict,songDict)
-  print '################Hamming Dis####################'
-  logging.info('################Hamming Dis####################')
+  print '################Dis####################'
+  logging.info('################Dis####################')
+  print 'Recall = ',recall
+  logging.info('Recall = %f' % recall)
+  print 'Precision = ',precision
+  logging.info('Precision = %f' % precision)
+  print 'F1-Score = ',f1
+  logging.info('F1-Score = %f' % f1)
+  print 'MAE = ',mae
+  logging.info('MAE = %f' % mae)
+  print 'RMSE = ',rmse
+  logging.info('RMSE = %f' % rmse)
+  print 'Average Consumed: %ds' % (time.time()-start_time)
+  logging.info('Average Consumed: %ds' % (time.time()-start_time))
+
+#test sd
+def testSdMethod():
+  start_time = time.time()
+  songDict = persist.readSongFromFile()
+  playlistDict = persist.readPlaylistFromFile()
+  recDict = predict.getRecDictOfSd(playlistDict,songDict)
+  recall,precision,f1 = util.getTopNIndex(recDict,playlistDict)
+  mae,rmse = util.getMAEandRMSE(recDict,playlistDict,songDict)
+  print '################Sd####################'
+  logging.info('################Sd####################')
   print 'Recall = ',recall
   logging.info('Recall = %f' % recall)
   print 'Precision = ',precision

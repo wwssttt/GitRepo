@@ -4,8 +4,6 @@
 #give definition of Song and Playlist
 ############################
 
-import math
-
 #define model of song
 class Song:
   #constructor

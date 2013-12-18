@@ -5,6 +5,8 @@
 ############################
 
 import test
+import persist
+import matplotlib.pyplot as plt
 
 if __name__ == "__main__":
   #test.testRecMethod(0)
@@ -12,4 +14,5 @@ if __name__ == "__main__":
   #test.testRecMethod(2)
   #test.testRecMethod(3)
   #test.testRecMethod(4)
-  test.testHammingMethod()
+  #test.testDisMethod()
+  test.testSdMethod()

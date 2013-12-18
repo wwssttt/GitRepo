@@ -79,8 +79,6 @@ def getTopNIndex(recDict,playlistDict):
     playlist = playlistDict[pid]
     lastSid = playlist.getLastSid()
     recList = recDict[pid]
-    print lastSid
-    print recList
     recNum = recNum + len(recList)
     if lastSid in recList:
       hit = hit + 1
