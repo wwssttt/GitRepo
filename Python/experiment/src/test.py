@@ -34,7 +34,7 @@ def showRecallTrendWithDifferentCoeff_Hybrid():
   plt.ylabel("Recall")
   plt.legend(loc="upper right")
   plt.savefig("../img/hybrid_trend.png")
-  plt.show()
+  #plt.show()
 
 #show mae and rmse trends of cold-law methods with different coefficients
 def showRecallTrendWithDifferentCoeff_ColdLaw():
@@ -53,7 +53,7 @@ def showRecallTrendWithDifferentCoeff_ColdLaw():
   plt.ylabel("Recall")
   plt.legend(loc="upper right")
   plt.savefig("../img/coldlaw_trend.png")
-  plt.show()
+  #plt.show()
 
 #show weight trends of different coefficients
 def showColdLawWithDifferentCoeff():
@@ -190,7 +190,7 @@ def showStatistics():
   plt.xlabel("Number of recommendations")
   plt.ylabel("Recall")
   plt.savefig("../img/recall.png")
-  plt.show()
+  #plt.show()
   plt.figure(2)
   plt.plot(most_precisions,label="MostSimilar")
   plt.plot(avg_precisions,label="Average")
@@ -204,7 +204,7 @@ def showStatistics():
   plt.xlabel("Number of recommendations")
   plt.ylabel("Precision")
   plt.savefig("../img/precision.png")
-  plt.show()
+  #plt.show()
   plt.figure(3)
   plt.plot(most_f1s,label="MostSimilar")
   plt.plot(avg_f1s,label="Average")
@@ -218,7 +218,7 @@ def showStatistics():
   plt.xlabel("Number of recommendations")
   plt.ylabel("F1-Score")
   plt.savefig("../img/f1.png")
-  plt.show()
+  #plt.show()
   plt.figure(4)
   plt.plot(most_maes,label="MostSimilar")
   plt.plot(avg_maes,label="Average")
@@ -232,7 +232,7 @@ def showStatistics():
   plt.xlabel("Number of recommendations")
   plt.ylabel("MAE")
   plt.savefig("../img/mae.png")
-  plt.show()
+  #plt.show()
   plt.figure(5)
   plt.plot(most_rmses,label="MostSimilar")
   plt.plot(avg_rmses,label="Average")
@@ -246,5 +246,5 @@ def showStatistics():
   plt.xlabel("Number of recommendations")
   plt.ylabel("RMSE")
   plt.savefig("../img/rmse.png")
-  plt.show()
+  #plt.show()
   logging.info('I am out showStatistics......')

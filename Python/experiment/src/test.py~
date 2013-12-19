@@ -14,7 +14,7 @@ import math
 import matplotlib.pyplot as plt
 
 # set log's localtion and level
-logging.basicConfig(filename=os.path.join(os.getcwd(),'test_log.txt'),level=logging.DEBUG,format='%(asctime)s-%(levelname)s:%(message)s')
+logging.basicConfig(filename=os.path.join(os.getcwd(),'../log/test_log.txt'),level=logging.DEBUG,format='%(asctime)s-%(levelname)s:%(message)s')
 
 #show mae and rmse trends of hybrid methods with different coefficients
 def showRecallTrendWithDifferentCoeff_Hybrid():
