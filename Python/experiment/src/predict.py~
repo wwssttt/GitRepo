@@ -11,6 +11,7 @@ from rpy2.robjects.packages import importr
 import persist
 import util
 import matplotlib.pyplot as plt
+from sklearn.svm import SVC
 
 #set default encoding
 reload(sys)
@@ -270,6 +271,29 @@ def getPredictedSdByArima(playlist,songDict):
   robjects.r['plot'](next)
   return float(next.rx('mean')[0][0])
 
+#get predicted sd by SVM
+def getPredictedSdBySVM(playlist,songDict):
+  #get playlist's training list
+  trainingList = playlist.getTrainingList()
+  count = len(trainingList)
+  #sd list
+  sdList = []
+  #loop every song in training list
+  #add distribution of sids to tsDict to construct some time series
+  for i in range(0,count):
+    sid = trainingList[i]
+    sd = songDict[sid].getSd()
+    sdList.append(sd)
+  
+  K = 2
+  trainingX = [sdList[i:K+i] for i in range(0,count-K)]
+  trainingY = [sdList[i] for i in range(K,count)]
+  testingX = sdList[count-K:count]
+  svc = SVC()
+  fit = svc.fit(trainingX,trainingY)
+  predict = fit.predict(testingX)
+  return float(predict)
+
 #get recommend songs list of playlist by hamming dis
 def getRecSongsOfSd(playlist,songDict,topN,tarSd):
   recDict = {}
@@ -287,7 +311,7 @@ def getRecSongsOfSd(playlist,songDict,topN,tarSd):
   return result
 
 #generate rec dict
-def getRecDictOfSd(playlistDict,songDict,topN = 10):
+def getRecDictOfSd(playlistDict,songDict,recType = 0,topN = 10):
   recDict = {}
   index = 0
   count = len(playlistDict)
@@ -296,7 +320,10 @@ def getRecDictOfSd(playlistDict,songDict,topN = 10):
   for pid in playlistDict.keys():
     print 'Sd:%d/%d' % (index,count)
     playlist = playlistDict[pid]
-    tarSd = getPredictedSdByArima(playlist,songDict)
+    if recType == 0:
+      tarSd = getPredictedSdByArima(playlist,songDict)
+    elif recType == 1:
+      tarSd = getPredictedSdBySVM(playlist,songDict)
     preSds.append(tarSd)
     realSds.append(songDict[playlist.getLastSid()].getSd())
     recSong = getRecSongsOfSd(playlist,songDict,topN,tarSd)
@@ -304,7 +331,13 @@ def getRecDictOfSd(playlistDict,songDict,topN = 10):
     index = index + 1
   plt.plot(preSds,label="predict Sds")
   plt.plot(realSds,label="real Sds")
+  plt.title("Predict Sds and Real Sds")
+  plt.xlabel("pid")
+  plt.ylabel("sd")
   plt.legend()
-  plt.savefig("../img/sdError.png")
+  if recType == 0:
+    plt.savefig("../img/sdArimarror.png")
+  elif recType == 1:
+    plt.savefig("../img/sdSVMError.png")
   plt.show()
   return recDict

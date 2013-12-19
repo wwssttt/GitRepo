@@ -15,4 +15,4 @@ if __name__ == "__main__":
   #test.testRecMethod(3)
   #test.testRecMethod(4)
   #test.testDisMethod()
-  test.testSdMethod()
+  test.testSdMethod(1)

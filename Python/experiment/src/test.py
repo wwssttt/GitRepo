@@ -126,11 +126,11 @@ def testDisMethod():
   logging.info('Average Consumed: %ds' % (time.time()-start_time))
 
 #test sd
-def testSdMethod():
+def testSdMethod(recType):
   start_time = time.time()
   songDict = persist.readSongFromFile()
   playlistDict = persist.readPlaylistFromFile()
-  recDict = predict.getRecDictOfSd(playlistDict,songDict)
+  recDict = predict.getRecDictOfSd(playlistDict,songDict,recType=recType)
   recall,precision,f1 = util.getTopNIndex(recDict,playlistDict)
   mae,rmse = util.getMAEandRMSE(recDict,playlistDict,songDict)
   print '################Sd####################'
