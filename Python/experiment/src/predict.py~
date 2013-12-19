@@ -145,7 +145,7 @@ def getRecSongs(songDict,topN,tarDict):
 #3: arima
 #4: hybrid
 #default: most similar
-def getRecDict(playlistDict,songDict,recType = 0,lamda = 0.5,topN = 10):
+def getRecDict(playlistDict,songDict,recType = 0,lamda = 0.5,coeff = 5.0,topN = 300):
   recDict = {}
   if recType == 3 or recType == 4:
     arimaDict = persist.readPredictedTopicDictOfArima()
@@ -171,7 +171,7 @@ def getRecDict(playlistDict,songDict,recType = 0,lamda = 0.5,topN = 10):
     elif recType == 1:
       tarDict = topicDictForNextSongByAverage(playlist,songDict)
     elif recType == 2:
-      tarDict = topicDictForNextSongByColdLaw(playlist,songDict)
+      tarDict = topicDictForNextSongByColdLaw(playlist,songDict,coeff)
     elif recType == 3:
       tarDict = arimaDict[pid]
     elif recType == 4:
@@ -208,7 +208,7 @@ def getPredictedKLDisByArima(playlist,songDict):
   ts = robjects.r['ts'](vec)
   fit = robjects.r['auto.arima'](ts)
   next = robjects.r['forecast'](fit,h=1)
-  robjects.r['plot'](next)
+  #robjects.r['plot'](next)
   return float(next.rx('mean')[0][0])
 
 #get recommend songs list of playlist by dis
@@ -235,7 +235,7 @@ def getRecSongsOfDis(playlist,songDict,topN,tarDis):
   return result
 
 #generate rec dict
-def getRecDictOfDis(playlistDict,songDict,topN = 10):
+def getRecDictOfDis(playlistDict,songDict,topN = 300):
   recDict = {}
   index = 0
   count = len(playlistDict)
@@ -268,7 +268,7 @@ def getPredictedSdByArima(playlist,songDict):
   ts = robjects.r['ts'](vec)
   fit = robjects.r['auto.arima'](ts)
   next = robjects.r['forecast'](fit,h=1)
-  robjects.r['plot'](next)
+  #robjects.r['plot'](next)
   return float(next.rx('mean')[0][0])
 
 #get predicted sd by SVM
@@ -285,7 +285,7 @@ def getPredictedSdBySVM(playlist,songDict):
     sd = songDict[sid].getSd()
     sdList.append(sd)
   
-  K = 2
+  K = 5
   trainingX = [sdList[i:K+i] for i in range(0,count-K)]
   trainingY = [sdList[i] for i in range(K,count)]
   testingX = sdList[count-K:count]
@@ -311,7 +311,7 @@ def getRecSongsOfSd(playlist,songDict,topN,tarSd):
   return result
 
 #generate rec dict
-def getRecDictOfSd(playlistDict,songDict,recType = 0,topN = 10):
+def getRecDictOfSd(playlistDict,songDict,recType = 0,topN = 300):
   recDict = {}
   index = 0
   count = len(playlistDict)

@@ -71,19 +71,28 @@ def KLSim(topicDict1,topicDict2):
   return (dis1 + dis2) / 2.0
 
 #calculate recall,preision and F1-Score
-def getTopNIndex(recDict,playlistDict):
+def getTopNIndex(recDict,playlistDict,topN = 10):
+  if topN < 0:
+    print 'topN should be > 0'
+    return 0
   hit = 0
   testNum = len(playlistDict)
-  recNum = 0
+  total = 0
   for pid in playlistDict.keys():
     playlist = playlistDict[pid]
     lastSid = playlist.getLastSid()
     recList = recDict[pid]
-    recNum = recNum + len(recList)
-    if lastSid in recList:
+    recNum = len(recList)
+    if recNum >= topN:
+      recNum = topN
+    newList = recList[0:recNum]
+    total = total + recNum
+    if lastSid in newList:
       hit = hit + 1
   recall = float(hit * 1.0) / testNum
-  precision = float(hit * 1.0) / recNum
+  if total == 0:
+    total = 1
+  precision = float(hit * 1.0) / total
   if recall == 0 and precision == 0:
     f1 = 0
     print 'recall = 0 and precision = 0'
@@ -92,7 +101,10 @@ def getTopNIndex(recDict,playlistDict):
   return recall,precision,f1
 
 #calculate mae and rmse
-def getMAEandRMSE(recDict,playlistDict,songDict):
+def getMAEandRMSE(recDict,playlistDict,songDict,topN = 10):
+  if topN < 0:
+    print 'topN should be > 0'
+    return 0
   mae = 0
   rmse = 0
   testNum = len(playlistDict)
@@ -102,12 +114,16 @@ def getMAEandRMSE(recDict,playlistDict,songDict):
     tarDict = songDict[lastSid].getTopicDict()
     recList = recDict[pid]
     recNum = len(recList)
+    if recNum >= topN:
+      recNum = topN
     totalError = 0
     for i in range(0,recNum):
       recSid = recList[i]
       recTopicDict = songDict[recSid].getTopicDict()
       recError = KLSim(recTopicDict,tarDict)
       totalError = totalError + recError
+    if recNum == 0:
+      recNum = 0.0001
     avgError = float(totalError*1.0) / recNum
     mae = mae + math.fabs(avgError)
     rmse = rmse + avgError**2
