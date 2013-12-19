@@ -302,8 +302,9 @@ def getRecDictOfSd(playlistDict,songDict,topN = 10):
     recSong = getRecSongsOfSd(playlist,songDict,topN,tarSd)
     recDict[pid] = recSong
     index = index + 1
-  plt.plot(tarSds,label="predict Sds")
-  plt.plot(realSds,label="read Sds")
+  plt.plot(preSds,label="predict Sds")
+  plt.plot(realSds,label="real Sds")
   plt.legend()
+  plt.savefig("../img/sdError.png")
   plt.show()
   return recDict
