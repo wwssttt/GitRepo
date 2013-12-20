@@ -40,7 +40,7 @@ def showRecallTrendWithDifferentCoeff_Hybrid():
 def showRecallTrendWithDifferentCoeff_ColdLaw():
   songDict = persist.readSongFromFile()
   playlistDict = persist.readPlaylistFromFile()
-  coeffs = [float(x) / 10 for x in range(0,100,5)]
+  coeffs = [float(x) / 10 for x in range(0,100,10)]
   recalls = []
   for coeff in coeffs:
     print 'coldlaw coeff = %f' % coeff
@@ -169,82 +169,244 @@ def getErrorOfRecMethod(recType = 0,subType = 0):
 
 def showStatistics():
   logging.info('I am in showStatistics......')
-  most_recalls,most_precisions,most_f1s,most_maes,most_rmses = getErrorOfRecMethod(0)
-  avg_recalls,avg_precisions,avg_f1s,avg_maes,avg_rmses = getErrorOfRecMethod(1)
-  cold_recalls,cold_precisions,cold_f1s,cold_maes,cold_rmses = getErrorOfRecMethod(2)
-  arima_recalls,arima_precisions,arima_f1s,arima_maes,arima_rmses = getErrorOfRecMethod(3)
-  hybrid_recalls,hybrid_precisions,hybrid_f1s,hybrid_maes,hybrid_rmses = getErrorOfRecMethod(4)
-  dis_recalls,dis_precisions,dis_f1s,dis_maes,dis_rmses = getErrorOfRecMethod(5)
-  sd_recalls,sd_precisions,sd_f1s,sd_maes,sd_rmses = getErrorOfRecMethod(6,0)
-  svm_recalls,svm_precisions,svm_f1s,svm_maes,svm_rmses = getErrorOfRecMethod(6,1)
+  filename = "../txt/testall.txt"
+  x = range(1,301,5)
+  if os.path.exists(filename):
+    print '%s is existing......' % filename
+    most_recalls = []
+    most_precisions = []
+    most_f1s = []
+    most_maes = []
+    most_rmses = []
+    avg_recalls = []
+    avg_precisions = [] 
+    avg_f1s = []
+    avg_maes = []
+    avg_rmses = []
+    cold_recalls = []
+    cold_precisions = []
+    cold_f1s = []
+    cold_maes = []
+    cold_rmses = []
+    arima_recalls = []
+    arima_precisions = []
+    arima_f1s = []
+    arima_maes = []
+    arima_rmses = []
+    hybrid_recalls = []
+    hybrid_precisions = []
+    hybrid_f1s = []
+    hybrid_maes = []
+    hybrid_rmses = []
+    dis_recalls = []
+    dis_precisions = []
+    dis_f1s = []
+    dis_maes = []
+    dis_rmses = []
+    sd_recalls = []
+    sd_precisions = []
+    sd_f1s = []
+    sd_maes = []
+    sd_rmses = []
+    svm_recalls = []
+    svm_precisions = []
+    svm_f1s = []
+    svm_maes = []
+    svm_rmses = []
+    rFile = open(filename,"r")
+    flag = False
+    lines = rFile.readlines()
+    for line in lines:
+      line = line.rstrip('\n')
+      items = line.split("INFO:")
+      line = items[1]
+      items = line.split(":")
+      ids = items[0]
+      values = items[1]
+      idItems = ids.split(">")
+      mid = int(idItems[0])
+      topN = int(idItems[1])
+      valueItems = values.split()
+      recall = float(valueItems[0])
+      precision = float(valueItems[1])
+      f1 = float(valueItems[2])
+      mae = float(valueItems[3])
+      rmse = float(valueItems[4])
+      if mid == 0:
+        most_recalls.append(recall)
+        most_precisions.append(precision)
+        most_f1s.append(f1)
+        most_maes.append(mae)
+        most_rmses.append(rmse)
+      elif mid == 1:
+        avg_recalls.append(recall)
+        avg_precisions.append(precision)
+        avg_f1s.append(f1)
+        avg_maes.append(mae)
+        avg_rmses.append(rmse)
+      elif mid == 2:
+        cold_recalls.append(recall)
+        cold_precisions.append(precision)
+        cold_f1s.append(f1)
+        cold_maes.append(mae)
+        cold_rmses.append(rmse)
+      elif mid == 3:
+        arima_recalls.append(recall)
+        arima_precisions.append(precision)
+        arima_f1s.append(f1)
+        arima_maes.append(mae)
+        arima_rmses.append(rmse)
+      elif mid == 4:
+        hybrid_recalls.append(recall)
+        hybrid_precisions.append(precision)
+        hybrid_f1s.append(f1)
+        hybrid_maes.append(mae)
+        hybrid_rmses.append(rmse)
+      elif mid == 5:
+        dis_recalls.append(recall)
+        dis_precisions.append(precision)
+        dis_f1s.append(f1)
+        dis_maes.append(mae)
+        dis_rmses.append(rmse)
+      elif mid == 6:
+        if not flag:
+          sd_recalls.append(recall)
+          sd_precisions.append(precision)
+          sd_f1s.append(f1)
+          sd_maes.append(mae)
+          sd_rmses.append(rmse)
+          if topN == x[len(x)-1]:
+            flag = True
+        else:
+          svm_recalls.append(recall)
+          svm_precisions.append(precision)
+          svm_f1s.append(f1)
+          svm_maes.append(mae)
+          svm_rmses.append(rmse)
+    rFile.close()
+  else:
+    most_recalls,most_precisions,most_f1s,most_maes,most_rmses = getErrorOfRecMethod(0)
+    avg_recalls,avg_precisions,avg_f1s,avg_maes,avg_rmses = getErrorOfRecMethod(1)
+    cold_recalls,cold_precisions,cold_f1s,cold_maes,cold_rmses = getErrorOfRecMethod(2)
+    arima_recalls,arima_precisions,arima_f1s,arima_maes,arima_rmses = getErrorOfRecMethod(3)
+    hybrid_recalls,hybrid_precisions,hybrid_f1s,hybrid_maes,hybrid_rmses = getErrorOfRecMethod(4)
+    dis_recalls,dis_precisions,dis_f1s,dis_maes,dis_rmses = getErrorOfRecMethod(5)
+    sd_recalls,sd_precisions,sd_f1s,sd_maes,sd_rmses = getErrorOfRecMethod(6,0)
+    svm_recalls,svm_precisions,svm_f1s,svm_maes,svm_rmses = getErrorOfRecMethod(6,1)
   plt.figure(1)
-  plt.plot(most_recalls,label="MostSimilar")
-  plt.plot(avg_recalls,label="Average")
-  plt.plot(cold_recalls,label="ColdLaw")
-  plt.plot(arima_recalls,label="Arima")
-  plt.plot(hybrid_recalls,label="Hybrid")
-  plt.plot(dis_recalls,label="Dis-Arima")
-  plt.plot(sd_recalls,label="Sd-Arima")
-  plt.plot(svm_recalls,label="Sd-SVM")
+  plt.plot(x,most_recalls,label="MostSimilar")
+  plt.plot(x,avg_recalls,label="Average")
+  plt.plot(x,cold_recalls,label="ColdLaw")
+  plt.plot(x,arima_recalls,label="Multi-Arima")
+  plt.plot(x,hybrid_recalls,label="Hybrid")
   plt.title("Recall of Different Recommend Algorithms")
   plt.xlabel("Number of recommendations")
   plt.ylabel("Recall")
+  plt.legend(loc="upper left")
   plt.savefig("../img/recall.png")
   #plt.show()
   plt.figure(2)
-  plt.plot(most_precisions,label="MostSimilar")
-  plt.plot(avg_precisions,label="Average")
-  plt.plot(cold_precisions,label="ColdLaw")
-  plt.plot(arima_precisions,label="Arima")
-  plt.plot(hybrid_precisions,label="Hybrid")
-  plt.plot(dis_precisions,label="Dis-Arima")
-  plt.plot(sd_precisions,label="Sd-Arima")
-  plt.plot(svm_precisions,label="Sd-SVM")
+  plt.plot(x,most_precisions,label="MostSimilar")
+  plt.plot(x,avg_precisions,label="Average")
+  plt.plot(x,cold_precisions,label="ColdLaw")
+  plt.plot(x,arima_precisions,label="Multi-Arima")
+  plt.plot(x,hybrid_precisions,label="Hybrid")
   plt.title("Precision of Different Recommend Algorithms")
   plt.xlabel("Number of recommendations")
   plt.ylabel("Precision")
+  plt.legend()
   plt.savefig("../img/precision.png")
   #plt.show()
   plt.figure(3)
-  plt.plot(most_f1s,label="MostSimilar")
-  plt.plot(avg_f1s,label="Average")
-  plt.plot(cold_f1s,label="ColdLaw")
-  plt.plot(arima_f1s,label="Arima")
-  plt.plot(hybrid_f1s,label="Hybrid")
-  plt.plot(dis_f1s,label="Dis-Arima")
-  plt.plot(sd_f1s,label="Sd-Arima")
-  plt.plot(svm_f1s,label="Sd-SVM")
+  plt.plot(x,most_f1s,label="MostSimilar")
+  plt.plot(x,avg_f1s,label="Average")
+  plt.plot(x,cold_f1s,label="ColdLaw")
+  plt.plot(x,arima_f1s,label="Multi-Arima")
+  plt.plot(x,hybrid_f1s,label="Hybrid")
   plt.title("F1-Score of Different Recommend Algorithms")
   plt.xlabel("Number of recommendations")
   plt.ylabel("F1-Score")
+  plt.legend()
   plt.savefig("../img/f1.png")
   #plt.show()
   plt.figure(4)
-  plt.plot(most_maes,label="MostSimilar")
-  plt.plot(avg_maes,label="Average")
-  plt.plot(cold_maes,label="ColdLaw")
-  plt.plot(arima_maes,label="Arima")
-  plt.plot(hybrid_maes,label="Hybrid")
-  plt.plot(dis_maes,label="Dis-Arima")
-  plt.plot(sd_maes,label="Sd-Arima")
-  plt.plot(svm_maes,label="Sd-SVM")
+  plt.plot(x,most_maes,label="MostSimilar")
+  plt.plot(x,avg_maes,label="Average")
+  plt.plot(x,cold_maes,label="ColdLaw")
+  plt.plot(x,arima_maes,label="Multi-Arima")
+  plt.plot(x,hybrid_maes,label="Hybrid")
   plt.title("MAE of Different Recommend Algorithms")
   plt.xlabel("Number of recommendations")
   plt.ylabel("MAE")
+  plt.legend()
   plt.savefig("../img/mae.png")
   #plt.show()
   plt.figure(5)
-  plt.plot(most_rmses,label="MostSimilar")
-  plt.plot(avg_rmses,label="Average")
-  plt.plot(cold_rmses,label="ColdLaw")
-  plt.plot(arima_rmses,label="Arima")
-  plt.plot(hybrid_rmses,label="Hybrid")
-  plt.plot(dis_rmses,label="Dis-Arima")
-  plt.plot(sd_rmses,label="Sd-Arima")
-  plt.plot(svm_rmses,label="Sd-SVM")
+  plt.plot(x,most_rmses,label="MostSimilar")
+  plt.plot(x,avg_rmses,label="Average")
+  plt.plot(x,cold_rmses,label="ColdLaw")
+  plt.plot(x,arima_rmses,label="Multi-Arima")
+  plt.plot(x,hybrid_rmses,label="Hybrid")
   plt.title("RMSE of Different Recommend Algorithms")
   plt.xlabel("Number of recommendations")
   plt.ylabel("RMSE")
+  plt.legend()
   plt.savefig("../img/rmse.png")
+  #plt.show()
+
+  plt.figure(6)
+  plt.plot(x,hybrid_recalls,label="Hybrid")
+  plt.plot(x,dis_recalls,label="Dis-Arima")
+  plt.plot(x,sd_recalls,label="Sd-Arima")
+  plt.plot(x,svm_recalls,label="Sd-SVM")
+  plt.title("Recall of Different Recommend Algorithms")
+  plt.xlabel("Number of recommendations")
+  plt.ylabel("Recall")
+  plt.legend(loc="upper left")
+  plt.savefig("../img/recall1.png")
+  #plt.show()
+  plt.figure(7)
+  plt.plot(x,hybrid_precisions,label="Hybrid")
+  plt.plot(x,dis_precisions,label="Dis-Arima")
+  plt.plot(x,sd_precisions,label="Sd-Arima")
+  plt.plot(x,svm_precisions,label="Sd-SVM")
+  plt.title("Precision of Different Recommend Algorithms")
+  plt.xlabel("Number of recommendations")
+  plt.ylabel("Precision")
+  plt.legend()
+  plt.savefig("../img/precision1.png")
+  #plt.show()
+  plt.figure(8)
+  plt.plot(x,hybrid_f1s,label="Hybrid")
+  plt.plot(x,dis_f1s,label="Dis-Arima")
+  plt.plot(x,sd_f1s,label="Sd-Arima")
+  plt.plot(x,svm_f1s,label="Sd-SVM")
+  plt.title("F1-Score of Different Recommend Algorithms")
+  plt.xlabel("Number of recommendations")
+  plt.ylabel("F1-Score")
+  plt.legend()
+  plt.savefig("../img/f11.png")
+  #plt.show()
+  plt.figure(9)
+  plt.plot(x,hybrid_maes,label="Hybrid")
+  plt.plot(x,dis_maes,label="Dis-Arima")
+  plt.plot(x,sd_maes,label="Sd-Arima")
+  plt.plot(x,svm_maes,label="Sd-SVM")
+  plt.title("MAE of Different Recommend Algorithms")
+  plt.xlabel("Number of recommendations")
+  plt.ylabel("MAE")
+  plt.legend()
+  plt.savefig("../img/mae1.png")
+  #plt.show()
+  plt.figure(10)
+  plt.plot(x,hybrid_rmses,label="Hybrid")
+  plt.plot(x,dis_rmses,label="Dis-Arima")
+  plt.plot(x,sd_rmses,label="Sd-Arima")
+  plt.plot(x,svm_rmses,label="Sd-SVM")
+  plt.title("RMSE of Different Recommend Algorithms")
+  plt.xlabel("Number of recommendations")
+  plt.ylabel("RMSE")
+  plt.legend()
+  plt.savefig("../img/rmse1.png")
   #plt.show()
   logging.info('I am out showStatistics......')

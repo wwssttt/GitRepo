@@ -145,7 +145,7 @@ def getRecSongs(songDict,topN,tarDict):
 #3: arima
 #4: hybrid
 #default: most similar
-def getRecDict(playlistDict,songDict,recType = 0,lamda = 0.5,coeff = 5.0,topN = 300):
+def getRecDict(playlistDict,songDict,recType = 0,lamda = 0.25,coeff = 5.0,topN = 300):
   recDict = {}
   if recType == 3 or recType == 4:
     arimaDict = persist.readPredictedTopicDictOfArima()
@@ -339,5 +339,5 @@ def getRecDictOfSd(playlistDict,songDict,recType = 0,topN = 300):
     plt.savefig("../img/sdArimarror.png")
   elif recType == 1:
     plt.savefig("../img/sdSVMError.png")
-  plt.show()
+  #plt.show()
   return recDict

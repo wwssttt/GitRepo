@@ -27,6 +27,4 @@ if __name__ == "__main__":
   test.testRecMethod(6,1)
   """
 
-  """
   test.showStatistics()
-  """
