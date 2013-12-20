@@ -8,7 +8,11 @@ import test
 
 if __name__ == "__main__":
   """
-  test.showRecallTrendWithDifferentCoeff_Hybrid()
+  test.showRecallTrendWithDifferentCoeff_MostSimilarHybrid()
+  """
+  
+  """
+  test.showRecallTrendWithDifferentCoeff_AverageHybrid()
   """
   
   """
@@ -26,5 +30,5 @@ if __name__ == "__main__":
   test.testRecMethod(6,0)
   test.testRecMethod(6,1)
   """
-
+  
   test.showStatistics()

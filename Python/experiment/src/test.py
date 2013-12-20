@@ -16,8 +16,8 @@ import matplotlib.pyplot as plt
 # set log's localtion and level
 logging.basicConfig(filename=os.path.join(os.getcwd(),'../log/test_log.txt'),level=logging.DEBUG,format='%(asctime)s-%(levelname)s:%(message)s')
 
-#show mae and rmse trends of hybrid methods with different coefficients
-def showRecallTrendWithDifferentCoeff_Hybrid():
+#show mae and rmse trends of most similarhybrid methods with different coefficients
+def showRecallTrendWithDifferentCoeff_MostSimilarHybrid():
   songDict = persist.readSongFromFile()
   playlistDict = persist.readPlaylistFromFile()
   coeffs = [float(x) / 10 for x in range(0,11,1)]
@@ -34,6 +34,26 @@ def showRecallTrendWithDifferentCoeff_Hybrid():
   plt.ylabel("Recall")
   plt.legend(loc="upper right")
   plt.savefig("../img/hybrid_trend.png")
+  #plt.show()
+
+#show mae and rmse trends of average hybrid methods with different coefficients
+def showRecallTrendWithDifferentCoeff_AverageHybrid():
+  songDict = persist.readSongFromFile()
+  playlistDict = persist.readPlaylistFromFile()
+  coeffs = [float(x) / 10 for x in range(0,11,1)]
+  print coeffs
+  recalls = []
+  for coeff in coeffs:
+    print 'hybrid  coeff = %f' % coeff
+    recDict = predict.getRecDict(playlistDict,songDict,7,coeff)
+    recall,precision,f1 = util.getTopNIndex(recDict,playlistDict)
+    recalls.append(recall)
+  plt.plot(coeffs,recalls,label="Recall")
+  plt.title("Recall trends of Different Hybrid Coefficients")
+  plt.xlabel("lambda")
+  plt.ylabel("Recall")
+  plt.legend(loc="upper right")
+  plt.savefig("../img/average_hybrid_trend.png")
   #plt.show()
 
 #show mae and rmse trends of cold-law methods with different coefficients
@@ -75,13 +95,13 @@ def showColdLawWithDifferentCoeff():
 #1: average
 #2: cold law
 #3: Arima
-#4: Hybrid
+#4: Most Similar Hybrid
 #5: Dis-Arima
-#6: Sd-Arima
-#7: Sd-SVM
+#6: Sd-Arima(0) Sd-SVM(1)
+#7: Average Hybrid
 def testRecMethod(recType,subType = 0):
   if recType < 0 or recType > 6:
-    print '0 <= recType <= 6'
+    print '0 <= recType <= 7'
     return
   if subType < 0 or subType > 1:
     print '0 <= subType <= 1'
@@ -106,7 +126,7 @@ def testRecMethod(recType,subType = 0):
   elif recType == 3:
     info = '################Arima####################'
   elif recType == 4:
-    info = '################Hybrid####################'
+    info = '################Most Similar Hybrid####################'
   elif recType == 5:
     info = '################Dis-Arima####################'
   elif recType == 6:
@@ -114,6 +134,8 @@ def testRecMethod(recType,subType = 0):
       info = '################Sd-Arima####################'
     else:
       info = '################Sd-SVM####################'
+  elif recType == 7:
+    info = '################Average Hybrid####################'
   else:
     info = '################Most Similar####################'
   print info
@@ -136,15 +158,15 @@ def testRecMethod(recType,subType = 0):
 #1: average
 #2: cold law
 #3: Arima
-#4: Hybrid
+#4: Most Similar Hybrid
 #5: Dis-Arima
-#6: Sd-Arima
-#7: Sd-SVM
+#6: Sd-Arima(0) Sd-SVM(1)
+#7: Average Hybrid
 def getErrorOfRecMethod(recType = 0,subType = 0):
   start_time = time.time()
   songDict = persist.readSongFromFile()
   playlistDict = persist.readPlaylistFromFile()
-  if recType < 5:
+  if recType < 5 or recType == 7:
     recDict = predict.getRecDict(playlistDict,songDict,recType)
   elif recType == 5:
     recDict = predict.getRecDictOfDis(playlistDict,songDict)
@@ -198,6 +220,11 @@ def showStatistics():
     hybrid_f1s = []
     hybrid_maes = []
     hybrid_rmses = []
+    average_hybrid_recalls = []
+    average_hybrid_precisions = []
+    average_hybrid_f1s = []
+    average_hybrid_maes = []
+    average_hybrid_rmses = []
     dis_recalls = []
     dis_precisions = []
     dis_f1s = []
@@ -283,6 +310,12 @@ def showStatistics():
           svm_f1s.append(f1)
           svm_maes.append(mae)
           svm_rmses.append(rmse)
+      elif mid == 7:
+        average_hybrid_recalls.append(recall)
+        average_hybrid_precisions.append(precision)
+        average_hybrid_f1s.append(f1)
+        average_hybrid_maes.append(mae)
+        average_hybrid_rmses.append(rmse)
     rFile.close()
   else:
     most_recalls,most_precisions,most_f1s,most_maes,most_rmses = getErrorOfRecMethod(0)
@@ -293,16 +326,18 @@ def showStatistics():
     dis_recalls,dis_precisions,dis_f1s,dis_maes,dis_rmses = getErrorOfRecMethod(5)
     sd_recalls,sd_precisions,sd_f1s,sd_maes,sd_rmses = getErrorOfRecMethod(6,0)
     svm_recalls,svm_precisions,svm_f1s,svm_maes,svm_rmses = getErrorOfRecMethod(6,1)
+    average_hybrid_recalls,average_hybrid_precisions,average_hybrid_f1s,average_hybrid_maes,average_hybrid_rmses = getErrorOfRecMethod(7)
   plt.figure(1)
   plt.plot(x,most_recalls,label="MostSimilar")
   plt.plot(x,avg_recalls,label="Average")
   plt.plot(x,cold_recalls,label="ColdLaw")
   plt.plot(x,arima_recalls,label="Multi-Arima")
-  plt.plot(x,hybrid_recalls,label="Hybrid")
+  plt.plot(x,hybrid_recalls,label="Neighbor+Arima")
+  plt.plot(x,average_hybrid_recalls,label="Average+Arima")
   plt.title("Recall of Different Recommend Algorithms")
   plt.xlabel("Number of recommendations")
   plt.ylabel("Recall")
-  plt.legend(loc="upper left")
+  plt.legend(loc="lower right")
   plt.savefig("../img/recall.png")
   #plt.show()
   plt.figure(2)
@@ -310,7 +345,8 @@ def showStatistics():
   plt.plot(x,avg_precisions,label="Average")
   plt.plot(x,cold_precisions,label="ColdLaw")
   plt.plot(x,arima_precisions,label="Multi-Arima")
-  plt.plot(x,hybrid_precisions,label="Hybrid")
+  plt.plot(x,hybrid_precisions,label="Neighbor+Arima")
+  plt.plot(x,average_hybrid_precisions,label="Average+Arima")
   plt.title("Precision of Different Recommend Algorithms")
   plt.xlabel("Number of recommendations")
   plt.ylabel("Precision")
@@ -322,7 +358,8 @@ def showStatistics():
   plt.plot(x,avg_f1s,label="Average")
   plt.plot(x,cold_f1s,label="ColdLaw")
   plt.plot(x,arima_f1s,label="Multi-Arima")
-  plt.plot(x,hybrid_f1s,label="Hybrid")
+  plt.plot(x,hybrid_f1s,label="Neighbor+Arima")
+  plt.plot(x,average_hybrid_f1s,label="Average+Arima")
   plt.title("F1-Score of Different Recommend Algorithms")
   plt.xlabel("Number of recommendations")
   plt.ylabel("F1-Score")
@@ -334,11 +371,12 @@ def showStatistics():
   plt.plot(x,avg_maes,label="Average")
   plt.plot(x,cold_maes,label="ColdLaw")
   plt.plot(x,arima_maes,label="Multi-Arima")
-  plt.plot(x,hybrid_maes,label="Hybrid")
+  plt.plot(x,hybrid_maes,label="Neighbor+Arima")
+  plt.plot(x,average_hybrid_maes,label="Average+Hybrid")
   plt.title("MAE of Different Recommend Algorithms")
   plt.xlabel("Number of recommendations")
   plt.ylabel("MAE")
-  plt.legend(loc="upper left")
+  plt.legend(loc="lower right")
   plt.savefig("../img/mae.png")
   #plt.show()
   plt.figure(5)
@@ -346,27 +384,30 @@ def showStatistics():
   plt.plot(x,avg_rmses,label="Average")
   plt.plot(x,cold_rmses,label="ColdLaw")
   plt.plot(x,arima_rmses,label="Multi-Arima")
-  plt.plot(x,hybrid_rmses,label="Hybrid")
+  plt.plot(x,hybrid_rmses,label="Neighbor+Arima")
+  plt.plot(x,average_hybrid_rmses,label="Average+Arima")
   plt.title("RMSE of Different Recommend Algorithms")
   plt.xlabel("Number of recommendations")
   plt.ylabel("RMSE")
-  plt.legend()
+  plt.legend(loc="lower right")
   plt.savefig("../img/rmse.png")
   #plt.show()
 
   plt.figure(6)
-  plt.plot(x,hybrid_recalls,label="Hybrid")
+  plt.plot(x,hybrid_recalls,label="Neighbor+Arima")
+  plt.plot(x,average_hybrid_recalls,label="Average+Arima")
   plt.plot(x,dis_recalls,label="Dis-Arima")
   plt.plot(x,sd_recalls,label="Sd-Arima")
   plt.plot(x,svm_recalls,label="Sd-SVM")
   plt.title("Recall of Different Recommend Algorithms")
   plt.xlabel("Number of recommendations")
   plt.ylabel("Recall")
-  plt.legend(loc="upper left")
+  plt.legend(loc="center right")
   plt.savefig("../img/recall1.png")
   #plt.show()
   plt.figure(7)
-  plt.plot(x,hybrid_precisions,label="Hybrid")
+  plt.plot(x,hybrid_precisions,label="Neighbor+Arima")
+  plt.plot(x,average_hybrid_precisions,label="Average+Arima")
   plt.plot(x,dis_precisions,label="Dis-Arima")
   plt.plot(x,sd_precisions,label="Sd-Arima")
   plt.plot(x,svm_precisions,label="Sd-SVM")
@@ -377,7 +418,8 @@ def showStatistics():
   plt.savefig("../img/precision1.png")
   #plt.show()
   plt.figure(8)
-  plt.plot(x,hybrid_f1s,label="Hybrid")
+  plt.plot(x,hybrid_f1s,label="Neighbor+Arima")
+  plt.plot(x,average_hybrid_f1s,label="Average+Arima")
   plt.plot(x,dis_f1s,label="Dis-Arima")
   plt.plot(x,sd_f1s,label="Sd-Arima")
   plt.plot(x,svm_f1s,label="Sd-SVM")
@@ -388,25 +430,27 @@ def showStatistics():
   plt.savefig("../img/f11.png")
   #plt.show()
   plt.figure(9)
-  plt.plot(x,hybrid_maes,label="Hybrid")
+  plt.plot(x,hybrid_maes,label="Neighbor+Arima")
+  plt.plot(x,average_hybrid_maes,label="Average+Arima")
   plt.plot(x,dis_maes,label="Dis-Arima")
   plt.plot(x,sd_maes,label="Sd-Arima")
   plt.plot(x,svm_maes,label="Sd-SVM")
   plt.title("MAE of Different Recommend Algorithms")
   plt.xlabel("Number of recommendations")
   plt.ylabel("MAE")
-  plt.legend()
+  plt.legend(loc="lower right")
   plt.savefig("../img/mae1.png")
   #plt.show()
   plt.figure(10)
-  plt.plot(x,hybrid_rmses,label="Hybrid")
+  plt.plot(x,hybrid_rmses,label="Neighbor+Arima")
+  plt.plot(x,average_hybrid_rmses,label="Average+Arima")
   plt.plot(x,dis_rmses,label="Dis-Arima")
   plt.plot(x,sd_rmses,label="Sd-Arima")
   plt.plot(x,svm_rmses,label="Sd-SVM")
   plt.title("RMSE of Different Recommend Algorithms")
   plt.xlabel("Number of recommendations")
   plt.ylabel("RMSE")
-  plt.legend()
+  plt.legend(loc="lower right")
   plt.savefig("../img/rmse1.png")
   #plt.show()
   logging.info('I am out showStatistics......')
