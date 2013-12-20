@@ -275,7 +275,7 @@ def showStatistics():
           sd_f1s.append(f1)
           sd_maes.append(mae)
           sd_rmses.append(rmse)
-          if topN == X[len(X)-1]:
+          if topN == x[len(x)-1]:
             flag = True
         else:
           svm_recalls.append(recall)

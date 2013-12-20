@@ -338,7 +338,7 @@ def showStatistics():
   plt.title("MAE of Different Recommend Algorithms")
   plt.xlabel("Number of recommendations")
   plt.ylabel("MAE")
-  plt.legend()
+  plt.legend(loc="upper left")
   plt.savefig("../img/mae.png")
   #plt.show()
   plt.figure(5)
