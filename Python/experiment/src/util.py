@@ -5,6 +5,8 @@
 ############################
 
 import math
+import smtplib
+from email.mime.text import MIMEText
 
 #getHammingDict
 def getHammingDict(topicDict,baseDict):
@@ -131,3 +133,30 @@ def getMAEandRMSE(recDict,playlistDict,songDict,topN = 300):
   rmse = rmse / (testNum - 1)
   rmse = math.sqrt(rmse)
   return mae,rmse
+
+#send email to me
+def sendMail(to,subtitle,content):
+    #定义发送列表
+    #mailto_list = ['wwssttt@163.com']
+    #设置服务器
+    mail_host = 'smtp.163.com'
+    mail_port = '25'
+    mail_user = 'wwssttt'
+    mail_password = 'hxl111wst'
+    mail_postfix = '163.com'
+    me = mail_user+'<'+mail_user+'@'+mail_postfix+'>'
+    msg = MIMEText(content)
+    msg['Subject'] = subtitle
+    msg['From'] = mail_user+'@'+mail_postfix
+    msg['To'] = to
+    try:
+        send_smtp = smtplib.SMTP()
+        send_smtp.connect(mail_host,mail_port)
+        send_smtp.login(mail_user,mail_password)
+        send_smtp.sendmail(me,to,msg.as_string())
+        send_smtp.close()
+        print 'success'
+        return True
+    except Exception as e:
+        print(str(e))
+        print 'false'

@@ -5,8 +5,12 @@
 ############################
 
 import test
+import util
 
 if __name__ == "__main__":
+
+  util.sendMail('wwssttt@163.com', 'test mail', 'Hi, I am from Python')
+
   """
   test.showRecallTrendWithDifferentCoeff_MostSimilarHybrid()
   """
