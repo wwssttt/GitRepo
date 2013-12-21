@@ -3,6 +3,9 @@
 from ctypes import *
 import os
 
+def div():
+  return 1/0
+
 def callPmathFromC():
   pmath = cdll.LoadLibrary(os.getcwd()+'/pmath.so')
   print pmath.mul(2,3)
