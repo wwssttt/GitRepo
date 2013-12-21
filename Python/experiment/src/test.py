@@ -166,7 +166,9 @@ def getErrorOfRecMethod(recType = 0,subType = 0):
   start_time = time.time()
   songDict = persist.readSongFromFile()
   playlistDict = persist.readPlaylistFromFile()
-  if recType < 5 or recType == 7:
+  if recType < 5:
+    recDict = predict.getRecDict(playlistDict,songDict,recType)
+  elif recType == 7:
     recDict = predict.getRecDict(playlistDict,songDict,recType)
   elif recType == 5:
     recDict = predict.getRecDictOfDis(playlistDict,songDict)

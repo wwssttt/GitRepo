@@ -450,7 +450,7 @@ def showStatistics():
   plt.title("RMSE of Different Recommend Algorithms")
   plt.xlabel("Number of recommendations")
   plt.ylabel("RMSE")
-  plt.legend(loc="center right")
+  plt.legend(loc="lower right")
   plt.savefig("../img/rmse1.png")
   #plt.show()
   logging.info('I am out showStatistics......')
