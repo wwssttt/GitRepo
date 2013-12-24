@@ -56,6 +56,26 @@ def showRecallTrendWithDifferentCoeff_AverageHybrid():
   plt.savefig("../img/average_hybrid_trend.png")
   #plt.show()
 
+#show mae and rmse trends of average similar methods with different coefficients
+def showRecallTrendWithDifferentCoeff_AverageSimilar():
+  songDict = persist.readSongFromFile()
+  playlistDict = persist.readPlaylistFromFile()
+  coeffs = [float(x) / 10 for x in range(0,11,1)]
+  print coeffs
+  recalls = []
+  for coeff in coeffs:
+    print 'hybrid  coeff = %f' % coeff
+    recDict = predict.getRecDict(playlistDict,songDict,8,coeff)
+    recall,precision,f1 = util.getTopNIndex(recDict,playlistDict)
+    recalls.append(recall)
+  plt.plot(coeffs,recalls,label="Recall")
+  plt.title("Recall trends of Different Hybrid Coefficients")
+  plt.xlabel("lambda")
+  plt.ylabel("Recall")
+  plt.legend(loc="upper right")
+  plt.savefig("../img/average_similar_trend.png")
+  plt.show()
+
 #show mae and rmse trends of cold-law methods with different coefficients
 def showRecallTrendWithDifferentCoeff_ColdLaw():
   songDict = persist.readSongFromFile()
@@ -190,6 +210,107 @@ def getErrorOfRecMethod(recType = 0,subType = 0):
     print '%d:TopN = %d:%f %f %f %f %f' % (recType,topN,recall,precision,f1,mae,rmse)
     logging.info('%d>%d:%f %f %f %f %f' % (recType,topN,recall,precision,f1,mae,rmse))
   return recalls,precisions,f1s,maes,rmses  
+
+def compareWithAverage(recType):
+  if recType == 1:
+    print 'You compare average with itsself......'
+    return
+  logging.info('I am in compareWithAverage......')
+  filename = "../txt/testall.txt"
+  x = range(1,301,5)
+  avg_recalls = []
+  avg_precisions = [] 
+  avg_f1s = []
+  avg_maes = []
+  avg_rmses = []
+  sth_recalls = []
+  sth_precisions = []
+  sth_f1s = []
+  sth_maes = []
+  sth_rmses = []
+  if os.path.exists(filename):
+    print '%s is existing......' % filename
+    rFile = open(filename,"r")
+    lines = rFile.readlines()
+    for line in lines:
+      line = line.rstrip('\n')
+      items = line.split("INFO:")
+      line = items[1]
+      items = line.split(":")
+      ids = items[0]
+      values = items[1]
+      idItems = ids.split(">")
+      mid = int(idItems[0])
+      topN = int(idItems[1])
+      valueItems = values.split()
+      recall = float(valueItems[0])
+      precision = float(valueItems[1])
+      f1 = float(valueItems[2])
+      mae = float(valueItems[3])
+      rmse = float(valueItems[4])
+      if mid == 1:
+        avg_recalls.append(recall)
+        avg_precisions.append(precision)
+        avg_f1s.append(f1)
+        avg_maes.append(mae)
+        avg_rmses.append(rmse)
+      elif mid == recType:
+        sth_recalls.append(recall)
+        sth_precisions.append(precision)
+        sth_f1s.append(f1)
+        sth_maes.append(mae)
+        sth_rmses.append(rmse)
+    rFile.close()
+  if len(avg_recalls) == 0:
+    avg_recalls,avg_precisions,avg_f1s,avg_maes,avg_rmses = getErrorOfRecMethod(1)
+  if len(sth_recalls) == 0:
+    sth_recalls,sth_precisions,sth_f1s,sth_maes,sth_rmses = getErrorOfRecMethod(recType)
+  plt.figure(1)
+  plt.plot(x,avg_recalls,label="Average")
+  plt.plot(x,sth_recalls,label="New Method")
+  plt.title("Recall of Different Recommend Algorithms")
+  plt.xlabel("Number of recommendations")
+  plt.ylabel("Recall")
+  plt.legend(loc="lower right")
+  plt.savefig("../img/recall%d.png" % recType)
+  #plt.show()
+  plt.figure(2)
+  plt.plot(x,avg_precisions,label="Average")
+  plt.plot(x,sth_precisions,label="New Method")
+  plt.title("Precision of Different Recommend Algorithms")
+  plt.xlabel("Number of recommendations")
+  plt.ylabel("Precision")
+  plt.legend()
+  plt.savefig("../img/precision%d.png" % recType)
+  #plt.show()
+  plt.figure(3)
+  plt.plot(x,avg_f1s,label="Average")
+  plt.plot(x,sth_f1s,label="New Method")
+  plt.title("F1-Score of Different Recommend Algorithms")
+  plt.xlabel("Number of recommendations")
+  plt.ylabel("F1-Score")
+  plt.legend()
+  plt.savefig("../img/f1_%d.png" % recType)
+  #plt.show()
+  plt.figure(4)
+  plt.plot(x,avg_maes,label="Average")
+  plt.plot(x,sth_maes,label="New Method")
+  plt.title("MAE of Different Recommend Algorithms")
+  plt.xlabel("Number of recommendations")
+  plt.ylabel("MAE")
+  plt.legend(loc="lower right")
+  plt.savefig("../img/mae%d.png" % recType)
+  #plt.show()
+  plt.figure(5)
+  plt.plot(x,avg_rmses,label="Average")
+  plt.plot(x,sth_rmses,label="New Method")
+  plt.title("RMSE of Different Recommend Algorithms")
+  plt.xlabel("Number of recommendations")
+  plt.ylabel("RMSE")
+  plt.legend(loc="lower right")
+  plt.savefig("../img/rmse%d.png" % recType)
+  #plt.show()
+  logging.info('I am out compareWithAverage......')
 
 def showStatistics():
   logging.info('I am in showStatistics......')
@@ -405,7 +526,7 @@ def showStatistics():
   plt.xlabel("Number of recommendations")
   plt.ylabel("Recall")
   plt.legend(loc="center right")
-  plt.savefig("../img/recall1.png")
+  plt.savefig("../img/recall_dm.png")
   #plt.show()
   plt.figure(7)
   plt.plot(x,hybrid_precisions,label="Neighbor+Arima")
@@ -417,7 +538,7 @@ def showStatistics():
   plt.xlabel("Number of recommendations")
   plt.ylabel("Precision")
   plt.legend()
-  plt.savefig("../img/precision1.png")
+  plt.savefig("../img/precision_dm.png")
   #plt.show()
   plt.figure(8)
   plt.plot(x,hybrid_f1s,label="Neighbor+Arima")
@@ -429,7 +550,7 @@ def showStatistics():
   plt.xlabel("Number of recommendations")
   plt.ylabel("F1-Score")
   plt.legend()
-  plt.savefig("../img/f11.png")
+  plt.savefig("../img/f1_dm.png")
   #plt.show()
   plt.figure(9)
   plt.plot(x,hybrid_maes,label="Neighbor+Arima")
@@ -441,7 +562,7 @@ def showStatistics():
   plt.xlabel("Number of recommendations")
   plt.ylabel("MAE")
   plt.legend(loc="lower right")
-  plt.savefig("../img/mae1.png")
+  plt.savefig("../img/mae_dm.png")
   #plt.show()
   plt.figure(10)
   plt.plot(x,hybrid_rmses,label="Neighbor+Arima")
@@ -453,6 +574,6 @@ def showStatistics():
   plt.xlabel("Number of recommendations")
   plt.ylabel("RMSE")
   plt.legend(loc="lower right")
-  plt.savefig("../img/rmse1.png")
+  plt.savefig("../img/rmse_dm.png")
   #plt.show()
   logging.info('I am out showStatistics......')

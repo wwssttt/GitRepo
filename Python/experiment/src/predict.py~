@@ -136,6 +136,20 @@ def topicDictForNextSongByAverageHybrid(playlist,songDict,arimaDict,lamda):
     topicDict[topic] = pro
   return topicDict
 
+#get predicted topic dict of next song by average with most simlilar
+def topicDictForNextSongByAverageWithSimilar(playlist,songDict,lamda):
+  trainingList = playlist.getTrainingList()
+  pid = playlist.getPid()
+  count = len(trainingList)
+  sid = trainingList[count-1]
+  lastTopicDict =  songDict[sid].getTopicDict()
+  avgTopicDict = topicDictForNextSongByAverage(playlist,songDict)
+  topicDict = {}
+  for topic in avgTopicDict.keys():
+    pro = lamda*avgTopicDict[topic] + (1 - lamda)*lastTopicDict[topic]
+    topicDict[topic] = pro
+  return topicDict
+
 #get recommend songs list of playlist comparing with target dict
 def getRecSongs(songDict,topN,tarDict):
   recDict = {}
@@ -155,10 +169,11 @@ def getRecSongs(songDict,topN,tarDict):
 #1: average
 #2: cold law
 #3: arima
-#4: most similar hybrid
+#4: most similar + arima
 #5: dis-arima
 #6: #1:sd-arima  #2:sd-svm
-#7: average hybrid
+#7: average + arima
+#8: average + most similar
 #default: most similar
 def getRecDict(playlistDict,songDict,recType = 0,lamda = 0.2,coeff = 5.0,topN = 300):
   recDict = {}
@@ -178,8 +193,11 @@ def getRecDict(playlistDict,songDict,recType = 0,lamda = 0.2,coeff = 5.0,topN = 
     typeName = "Neighbor+Arima"
   elif recType == 7:
     typeName = "Average+Arima"
+  elif recType == 8:
+    typeName = "Average+Similar"
   else:
-    typeName = "Neighbor+Arima"
+    print '%d is an Error Type......' % recType
+    return
   for pid in playlistDict.keys():
     print '%s:%d/%d' % (typeName,index,count)
     playlist = playlistDict[pid]
@@ -195,8 +213,11 @@ def getRecDict(playlistDict,songDict,recType = 0,lamda = 0.2,coeff = 5.0,topN = 
       tarDict = topicDictForNextSongByMostSimilarHybrid(playlist,songDict,arimaDict,lamda)
     elif recType == 7:
       tarDict = topicDictForNextSongByAverageHybrid(playlist,songDict,arimaDict,lamda)
+    elif recType == 8:
+      tarDict = topicDictForNextSongByAverageWithSimilar(playlist,songDict,lamda)
     else:
-      tarDict = topicDictForNextSongByMostSimilar(playlist,songDict)
+      print '%d is an Error Type......' % recType
+      return
     recSong = getRecSongs(songDict,topN,tarDict)
     recDict[pid] = recSong
     index = index + 1

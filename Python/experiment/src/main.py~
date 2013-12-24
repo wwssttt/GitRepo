@@ -8,8 +8,12 @@ import test
 import util
 
 if __name__ == "__main__":
+  
+  test.compareWithAverage(7)
 
-  util.sendMail('wwssttt@163.com', 'test mail', 'Hi, I am from Python')
+  """
+  test.showRecallTrendWithDifferentCoeff_AverageSimilar()
+  """
 
   """
   test.showRecallTrendWithDifferentCoeff_MostSimilarHybrid()
@@ -35,4 +39,6 @@ if __name__ == "__main__":
   test.testRecMethod(6,1)
   """
   
+  """
   test.showStatistics()
+  """
