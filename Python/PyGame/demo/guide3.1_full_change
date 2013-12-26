@@ -1,0 +1,33 @@
+#!/usr/bin python
+#--coding:utf-8----
+############################
+#guide of display
+############################
+
+import pygame
+from pygame.locals import *
+from sys import exit
+
+bg_image_filename = "sushiplate.jpg"
+
+pygame.init()
+screen = pygame.display.set_mode((640,480),0,32)
+pygame.display.set_caption("Guide 3")
+
+bg = pygame.image.load(bg_image_filename).convert()
+
+Fullscreen = False
+
+while True:
+    for event in pygame.event.get():
+        if event.type == QUIT:
+            exit()
+        if event.type == KEYDOWN:
+            if event.key == K_f:
+                Fullscreen = not Fullscreen
+                if Fullscreen:
+                    screen = pygame.display.set_mode((640,480),FULLSCREEN,32)
+                else:
+                    screen = pygame.display.set_mode((640,480),0,32)
+    screen.blit(bg,(0,0))
+    pygame.display.update()
