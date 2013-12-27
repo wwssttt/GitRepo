@@ -4,6 +4,8 @@
 #give definition of Song and Playlist
 ############################
 
+import math
+
 #define model of song
 class Song:
   #constructor
@@ -17,11 +19,8 @@ class Song:
   def getSid(self):
     return self.sid
   #get the cosine similarity between self and other song or distribute
-  def compareWithDict(self,topicDict,simType = 0):
-    if simType == 1:
-      return cosineSim(self.topicDict,topicDict)
-    else:
-      return KLSim(self.topicDict,topicDict)
+  def compareWithDict(self,topicDict):
+    return util.similarity(self.topicDict,topicDict)
   def compareWithAno(self,another,simType):
     if simType == 1:
       return cosineSim(self.topicDict,another.getTopicDict())

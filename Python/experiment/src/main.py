@@ -12,8 +12,10 @@ if __name__ == "__main__":
   """
   test.compareWithAverage(7)
   """
-
+  
+  """
   test.showRecallTrendWithDifferentCoeff_AverageSimilar()
+  """
 
   """
   test.showRecallTrendWithDifferentCoeff_MostSimilarHybrid()
@@ -39,6 +41,4 @@ if __name__ == "__main__":
   test.testRecMethod(6,1)
   """
   
-  """
   test.showStatistics()
-  """

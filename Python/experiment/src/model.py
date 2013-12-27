@@ -19,16 +19,10 @@ class Song:
   def getSid(self):
     return self.sid
   #get the cosine similarity between self and other song or distribute
-  def compareWithDict(self,topicDict,simType = 0):
-    if simType == 1:
-      return cosineSim(self.topicDict,topicDict)
-    else:
-      return KLSim(self.topicDict,topicDict)
+  def compareWithDict(self,topicDict):
+    return util.similarity(self.topicDict,topicDict)
   def compareWithAno(self,another,simType):
-    if simType == 1:
-      return cosineSim(self.topicDict,another.getTopicDict())
-    else:
-      return KLSim(self.topicDict,another.getTopicDict())
+    return util.similarity(self.topicDict,another.getTopicDict())
   def getSd(self):
     size = len(self.topicDict)
     total = sum(self.topicDict.values())

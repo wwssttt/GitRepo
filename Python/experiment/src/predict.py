@@ -156,7 +156,7 @@ def getRecSongs(songDict,topN,tarDict):
   for sid in songDict.keys():
     song = songDict[sid]
     topicDict = song.getTopicDict()
-    sim = util.KLSim(topicDict,tarDict)
+    sim = util.similarity(topicDict,tarDict)
     recDict[sid] = sim
   recList = sorted(recDict.iteritems(),key=lambda x:x[1])
   result = []
@@ -168,36 +168,20 @@ def getRecSongs(songDict,topN,tarDict):
 #0: most similar
 #1: average
 #2: cold law
-#3: arima
-#4: most similar + arima
-#5: dis-arima
-#6: #1:sd-arima  #2:sd-svm
-#7: average + arima
-#8: average + most similar
+#3: Arima
+#4: Arima + Similar
+#5: Arima + Average
+#6: Dis-Arima
+#7: Sd-Arima 
+#8: Sd-SVM
 #default: most similar
-def getRecDict(playlistDict,songDict,recType = 0,lamda = 0.2,coeff = 5.0,topN = 300):
+def getRecDict(playlistDict,songDict,recType = 0,lamda = 0.45,coeff = 5.0,topN = 300):
   recDict = {}
-  if recType == 3 or recType == 4 or recType == 7:
+  if recType == 3 or recType == 4 or recType == 5:
     arimaDict = persist.readPredictedTopicDictOfArima()
   index = 0
   count = len(playlistDict)
-  if recType == 0:
-    typeName = "Most Similar"
-  elif recType == 1:
-    typeName = "Average"
-  elif recType == 2:
-    typeName = "Cold Law"
-  elif recType == 3:
-    typeName = "Arima"
-  elif recType == 4:
-    typeName = "Neighbor+Arima"
-  elif recType == 7:
-    typeName = "Average+Arima"
-  elif recType == 8:
-    typeName = "Average+Similar"
-  else:
-    print '%d is an Error Type......' % recType
-    return
+  typeName = util.getMethodName(recType)
   for pid in playlistDict.keys():
     print '%s:%d/%d' % (typeName,index,count)
     playlist = playlistDict[pid]
@@ -211,10 +195,8 @@ def getRecDict(playlistDict,songDict,recType = 0,lamda = 0.2,coeff = 5.0,topN = 
       tarDict = arimaDict[pid]
     elif recType == 4:
       tarDict = topicDictForNextSongByMostSimilarHybrid(playlist,songDict,arimaDict,lamda)
-    elif recType == 7:
+    elif recType == 5:
       tarDict = topicDictForNextSongByAverageHybrid(playlist,songDict,arimaDict,lamda)
-    elif recType == 8:
-      tarDict = topicDictForNextSongByAverageWithSimilar(playlist,songDict,lamda)
     else:
       print '%d is an Error Type......' % recType
       return
@@ -241,7 +223,7 @@ def getPredictedKLDisByArima(playlist,songDict):
       length = len(sTopicDict)
       for t in range(0,length):
         baseDict[t] = 1.0 / length
-    disList.append(util.KLSim(sTopicDict,baseDict))
+    disList.append(util.similarity(sTopicDict,baseDict))
 
   #using auto arima to forecast the kl distance
   vec = robjects.FloatVector(disList)
@@ -265,7 +247,7 @@ def getRecSongsOfDis(playlist,songDict,topN,tarDis):
       length = len(topicDict)
       for i in range(0,length):
         baseDict[i] = 1.0 / length
-    baseDis = util.KLSim(topicDict,baseDict)
+    baseDis = util.similarity(topicDict,baseDict)
     value = math.fabs(baseDis-tarDis)
     recDict[sid] = value
   recList = sorted(recDict.iteritems(),key=lambda x:x[1])
@@ -351,7 +333,7 @@ def getRecSongsOfSd(playlist,songDict,topN,tarSd):
   return result
 
 #generate rec dict
-def getRecDictOfSd(playlistDict,songDict,recType = 0,topN = 300):
+def getRecDictOfSd(playlistDict,songDict,recType = 7,topN = 300):
   recDict = {}
   index = 0
   count = len(playlistDict)
@@ -360,9 +342,9 @@ def getRecDictOfSd(playlistDict,songDict,recType = 0,topN = 300):
   for pid in playlistDict.keys():
     print 'Sd:%d/%d' % (index,count)
     playlist = playlistDict[pid]
-    if recType == 0:
+    if recType == 7:
       tarSd = getPredictedSdByArima(playlist,songDict)
-    elif recType == 1:
+    elif recType == 8:
       tarSd = getPredictedSdBySVM(playlist,songDict)
     preSds.append(tarSd)
     realSds.append(songDict[playlist.getLastSid()].getSd())
@@ -375,9 +357,9 @@ def getRecDictOfSd(playlistDict,songDict,recType = 0,topN = 300):
   plt.xlabel("pid")
   plt.ylabel("sd")
   plt.legend()
-  if recType == 0:
+  if recType == 7:
     plt.savefig("../img/sdArimarror.png")
-  elif recType == 1:
+  elif recType == 8:
     plt.savefig("../img/sdSVMError.png")
   #plt.show()
   return recDict

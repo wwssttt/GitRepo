@@ -72,6 +72,28 @@ def KLSim(topicDict1,topicDict2):
   dis2 = KLDis(topicDict2,topicDict1)
   return (dis1 + dis2) / 2.0
 
+#calculate Hellinger distance of two discrete distribution
+def HellDis(topicDict1,topicDict2):
+  K = len(topicDict1)
+  hellDis = 0
+  for key in topicDict1.keys():
+    if key not in topicDict2:
+      print '%d is not in another dict...' % key
+      return
+    else:
+      if topicDict1[key] < 0:
+        topicDict1[key] = 1.0 / 10000000
+      if topicDict2[key] < 0:
+        topicDict2[key] = 1.0 / 10000000
+      hellDis += (math.sqrt(topicDict1[key]) - math.sqrt(topicDict2[key]))**2
+  hellDis = math.sqrt(hellDis)
+  hellDis *= 1/math.sqrt(2)
+  return hellDis
+
+#universe interface to calculate similarity of two distributions
+def similarity(topicDict1,topicDict2):
+  return HellDis(topicDict1,topicDict2)
+
 #calculate recall,preision and F1-Score
 def getTopNIndex(recDict,playlistDict,topN = 300):
   if topN < 0:
@@ -133,6 +155,46 @@ def getMAEandRMSE(recDict,playlistDict,songDict,topN = 300):
   rmse = rmse / (testNum - 1)
   rmse = math.sqrt(rmse)
   return mae,rmse
+
+#return text info of method
+def getMethodName(mid):
+  if mid == 0:
+    return "Most Similar"
+  elif mid == 1:
+    return "Average"
+  elif mid == 2:
+    return "ColdLaw"
+  elif mid == 3:
+    return "Arima"
+  elif mid == 4:
+    return "Arima+Similar"
+  elif mid == 5:
+    return "Arima+Average"
+  elif mid == 6:
+    return "Dis-Arima"
+  elif mid == 7:
+    return "Sd-Arima"
+  elif mid == 8:
+    return "Sd-SVM"
+  else:
+    print '%d does not exist......' % mid
+    return
+
+#return text info of validation
+def getIndexName(index):
+  if index == 0:
+    return "Hit Ratio"
+  elif index == 1:
+    return "Precision"
+  elif index == 2:
+    return "F1-Score"
+  elif index == 3:
+    return "MAE"
+  elif index == 4:
+    return "RMSE"
+  else:
+    print '%d does not exist......' % index
+    return
 
 #send email to me
 def sendMail(to,subtitle,content):

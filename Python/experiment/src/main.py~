@@ -9,11 +9,11 @@ import util
 
 if __name__ == "__main__":
   
+  """
   test.compareWithAverage(7)
+  """
 
-  """
   test.showRecallTrendWithDifferentCoeff_AverageSimilar()
-  """
 
   """
   test.showRecallTrendWithDifferentCoeff_MostSimilarHybrid()
