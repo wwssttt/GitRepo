@@ -10,6 +10,7 @@ import os
 import time
 import util
 import MySQLdb
+import random
 
 #define function to crawl friends of user with specific username from lastfm
 def crawlInfoOfUser(username,infoType = 0,page = 1):
@@ -165,17 +166,25 @@ def storeRecordsToDB():
   filename = "../txt/tracks.txt"
   if not os.path.exists(filename):
     crawlRecentTracksFromLastfm()
-  
+  newfilename = "../txt/tracks_new.txt"
   conn=MySQLdb.connect(host="localhost",user="root",passwd="wst",db="lastfm")
   cur = conn.cursor()
-  
+  records = []
   uFile = open(filename,'r')
+  nFile = open(newfilename,'w')
   lines = uFile.readlines()
   for line in lines:
     value = line.rstrip('\n').split('+')
-    cur.execute('insert into record values(%s,%s,%s,%s)',value)
+    uid = value[0]
+    uts = value[2]
+    s = '%s#%s' % (uid,uts)
+    if not s in records:
+      records.append(s)
+      cur.execute('insert into record values(0,%s,%s,%s,%s)',value)
+      nFile.write(line)
   conn.commit()
   uFile.close()
+  nFile.close()
   cur.close()
   conn.close()
 
@@ -323,5 +332,7 @@ def crawlInfoOfTag(tagname):
   return ddata
 
 if __name__ == "__main__":
-  storeRecordsToDB()
+  for i in range(0,10000):
+    num = random.randint(0,1000000)
+    util.sendMail('420989762@qq.com','Crawl Artists Finished',str(num))
       

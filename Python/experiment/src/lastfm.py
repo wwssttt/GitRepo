@@ -165,17 +165,25 @@ def storeRecordsToDB():
   filename = "../txt/tracks.txt"
   if not os.path.exists(filename):
     crawlRecentTracksFromLastfm()
-  
+  newfilename = "../txt/tracks_new.txt"
   conn=MySQLdb.connect(host="localhost",user="root",passwd="wst",db="lastfm")
   cur = conn.cursor()
-  
+  records = []
   uFile = open(filename,'r')
+  nFile = open(newfilename,'w')
   lines = uFile.readlines()
   for line in lines:
     value = line.rstrip('\n').split('+')
-    cur.execute('insert into record values(0,%s,%s,%s,%s)',value)
+    uid = value[0]
+    uts = value[2]
+    s = '%s#%s' % (uid,uts)
+    if not s in records:
+      records.append(s)
+      cur.execute('insert into record values(0,%s,%s,%s,%s)',value)
+      nFile.write(line)
   conn.commit()
   uFile.close()
+  nFile.close()
   cur.close()
   conn.close()
 
