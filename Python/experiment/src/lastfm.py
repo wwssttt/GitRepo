@@ -9,6 +9,7 @@ import json
 import os
 import time
 import util
+import MySQLdb
 
 #define function to crawl friends of user with specific username from lastfm
 def crawlInfoOfUser(username,infoType = 0,page = 1):
@@ -89,6 +90,25 @@ def getAllUserFromFile():
   print 'There are %d users...' % len(allUserId)
   uFile.close()
   return allUserId,allUserName
+
+#store users to db
+def storeUsersToDB():
+  filename = "../txt/users.txt"
+  if not os.path.exists(filename):
+    crawlUsersFromLastfm()
+  
+  conn=MySQLdb.connect(host="localhost",user="root",passwd="wst",db="lastfm")
+  cur = conn.cursor()
+  
+  uFile = open(filename,'r')
+  lines = uFile.readlines()
+  for line in lines:
+    value = line.rstrip('\n').split('+')
+    cur.execute('insert into user values(%s,%s,%s,%s,%s,%s,%s)',value)
+  conn.commit()
+  uFile.close()
+  cur.close()
+  conn.close()
   
 def crawlRecentTracksFromLastfm():
   filename = "../txt/tracks.txt"
@@ -138,6 +158,26 @@ def getAllSongFromFile():
   print info
   #util.sendMail('wwssttt@163.com','Crawl Tracks Finished',info)
   sFile.close()
+  return allSid
+
+#store records to db
+def storeRecordsToDB():
+  filename = "../txt/tracks.txt"
+  if not os.path.exists(filename):
+    crawlRecentTracksFromLastfm()
+  
+  conn=MySQLdb.connect(host="localhost",user="root",passwd="wst",db="lastfm")
+  cur = conn.cursor()
+  
+  uFile = open(filename,'r')
+  lines = uFile.readlines()
+  for line in lines:
+    value = line.rstrip('\n').split('+')
+    cur.execute('insert into record values(0,%s,%s,%s,%s)',value)
+  conn.commit()
+  uFile.close()
+  cur.close()
+  conn.close()
 
 #define function to crawl info of songs with specific mbid from lastfm
 def crawlInfoOfSong(mbid,infoType = 0):
@@ -166,7 +206,7 @@ def crawlSongsFromLastfm():
   filename = "../txt/songs.txt"
   exceptionName = "../txt/exception.txt"
   if os.path.exists(filename):
-    print '%s is existing......'
+    print '%s is existing......' % filename
     return
   sFile = open(filename,'w')
   eFile = open(exceptionName,'w')
@@ -183,7 +223,8 @@ def crawlSongsFromLastfm():
       sid = track['id']
       name = track['name']
       duration = track['duration']
-      artist = track['artist']['mbid']
+      artistId = track['artist']['mbid']
+      artistName = track['artist']['name']
       album = track['album']['mbid']
       listeners = track['listeners']
       playcount = track['playcount']
@@ -198,7 +239,7 @@ def crawlSongsFromLastfm():
         sTags[tagName] = tagCount
       tagStr = str(sTags)
       
-      content = '%s++%s++%s++%s++%s++%s++%s++%s++%s\n' % (sid,mbid,name,duration,artist,album,listeners,playcount,tagStr)
+      content = '%s()%s()%s()%s()%s()%s()%s()%s()%s()%s\n' % (sid,mbid,name,duration,artistId,artistName,album,listeners,playcount,tagStr)
       sFile.write(content)
     except:
       print '%s(%d/%d) causes exception......' % (mbid,index,count)
@@ -215,7 +256,7 @@ def getAllArtistFromFile():
   allAid = []
   lines = sFile.readlines()
   for line in lines:
-    items = line.rstrip('\n').split('++')
+    items = line.rstrip('\n').split('()')
     mbid = items[4]
     if not mbid in allAid:
       allAid.append(mbid)
@@ -282,5 +323,5 @@ def crawlInfoOfTag(tagname):
   return ddata
 
 if __name__ == "__main__":
-  crawlSongsFromLastfm()
+  storeRecordsToDB()
       
