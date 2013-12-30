@@ -6,7 +6,11 @@
 
 import os
 import model
+import predict
+import sys
 
+reload(sys)
+sys.setdefaultencoding('utf-8')
 #write topic dict of Arima to file to avoid re-computation
 def writeTopicDictOfArimaToFile(playlistDict,songDict):
   print 'Begin tp write topic dict to file......'
@@ -22,7 +26,7 @@ def writeTopicDictOfArimaToFile(playlistDict,songDict):
     print '%d/%d' % (index,many)
     index += 1
     playlist = playlistDict[pid]
-    predictTopicDict = topicDictForNextSongByArima(playlist,songDict)
+    predictTopicDict = predict.topicDictForNextSongByArima(playlist,songDict)
     content = '%d#' % pid
     for topic in predictTopicDict.keys():
       content = '%s%d:%f,' % (content,topic,predictTopicDict[topic])

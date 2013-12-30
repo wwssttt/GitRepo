@@ -12,6 +12,10 @@ import logging
 import os
 import math
 import matplotlib.pyplot as plt
+import sys
+
+reload(sys)
+sys.setdefaultencoding('utf-8')
 
 # set log's localtion and level
 logging.basicConfig(filename=os.path.join(os.getcwd(),'../log/test_log.txt'),level=logging.DEBUG,format='%(asctime)s-%(levelname)s:%(message)s')
@@ -34,7 +38,7 @@ def showRecallTrendWithDifferentCoeff_MostSimilarHybrid():
   plt.ylabel("Recall")
   plt.legend(loc="upper right")
   plt.savefig("../img/hybrid_trend.png")
-  #plt.show()
+  plt.show()
 
 #show mae and rmse trends of average hybrid methods with different coefficients
 def showRecallTrendWithDifferentCoeff_AverageHybrid():
@@ -45,7 +49,7 @@ def showRecallTrendWithDifferentCoeff_AverageHybrid():
   recalls = []
   for coeff in coeffs:
     print 'hybrid  coeff = %f' % coeff
-    recDict = predict.getRecDict(playlistDict,songDict,7,coeff)
+    recDict = predict.getRecDict(playlistDict,songDict,5,coeff)
     recall,precision,f1 = util.getTopNIndex(recDict,playlistDict)
     recalls.append(recall)
   plt.plot(coeffs,recalls,label="Recall")
@@ -54,7 +58,7 @@ def showRecallTrendWithDifferentCoeff_AverageHybrid():
   plt.ylabel("Recall")
   plt.legend(loc="upper right")
   plt.savefig("../img/average_hybrid_trend.png")
-  #plt.show()
+  plt.show()
 
 #show mae and rmse trends of average similar methods with different coefficients
 def showRecallTrendWithDifferentCoeff_AverageSimilar():
@@ -163,7 +167,12 @@ def getErrorOfRecMethod(recType = 0):
   songDict = persist.readSongFromFile()
   playlistDict = persist.readPlaylistFromFile()
   if recType < 6:
-    recDict = predict.getRecDict(playlistDict,songDict,recType)
+    if recType == 4:
+      recDict = predict.getRecDict(playlistDict,songDict,recType,0.4)
+    elif recType == 5:
+      recDict = predict.getRecDict(playlistDict,songDict,recType,0.5)
+    else:
+      recDict = predict.getRecDict(playlistDict,songDict,recType)
   elif recType == 6:
     recDict = predict.getRecDictOfDis(playlistDict,songDict)
   elif recType == 7 or recType == 8:
@@ -299,7 +308,10 @@ def showStatistics():
     plt.title("%s of Different Recommend Algorithms" % indexName)
     plt.xlabel("Number of recommendations")
     plt.ylabel(indexName)
-    plt.legend()
+    if index == 0:
+      plt.legend(loc="lower right")
+    else:
+      plt.legend()
     plt.savefig("../img/%s.png" % indexName)
     #plt.show()
   #plt last five method on one img

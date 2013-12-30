@@ -932,10 +932,3 @@ using
 having
 u
 once
-good
-bad
-favorite
-best
-better
-worse
-worst

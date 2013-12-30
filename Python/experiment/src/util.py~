@@ -7,6 +7,7 @@
 import math
 import smtplib
 from email.mime.text import MIMEText
+from hashlib import md5
 
 #getHammingDict
 def getHammingDict(topicDict,baseDict):
@@ -81,9 +82,10 @@ def HellDis(topicDict1,topicDict2):
       print '%d is not in another dict...' % key
       return
     else:
-      if topicDict1[key] < 0 or topicDict2[key] < 0:
-        print topicDict1[key]
-        print topicDict2[key]
+      if topicDict1[key] < 0:
+        topicDict1[key] = 1.0 / 10000000
+      if topicDict2[key] < 0:
+        topicDict2[key] = 1.0 / 10000000
       hellDis += (math.sqrt(topicDict1[key]) - math.sqrt(topicDict2[key]))**2
   hellDis = math.sqrt(hellDis)
   hellDis *= 1/math.sqrt(2)
@@ -194,6 +196,12 @@ def getIndexName(index):
   else:
     print '%d does not exist......' % index
     return
+
+#get MD5
+def getMD5(string):
+  m = md5()
+  m.update(string)
+  return m.hexdigest()
 
 #send email to me
 def sendMail(to,subtitle,content):

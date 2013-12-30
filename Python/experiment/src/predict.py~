@@ -12,7 +12,10 @@ import persist
 import util
 import matplotlib.pyplot as plt
 from sklearn.svm import SVC
+import sys
 
+reload(sys)
+sys.setdefaultencoding('utf-8')
 #set default encoding
 reload(sys)
 sys.setdefaultencoding("utf-8")

@@ -17,6 +17,7 @@ import os
 from nltk.stem.lancaster import LancasterStemmer
 import DBProcess
 import matplotlib.pyplot as plt
+import util
 
 # reload sys and set encoding to utf-8
 reload(sys)
@@ -53,7 +54,7 @@ def readStopwordsFromFile(filename):
 #combine two stop words lists
 #return a combined stopwords list/file
 def combineTwoStopwordsFile():
-  if os.path.exists("stopwords.txt"):
+  if os.path.exists("../txt/stopwords.txt"):
     print "stop words file is existing......"
     return
   first = readStopwordsFromFile("EnglishStopWords_datatang.txt")
@@ -66,7 +67,7 @@ def combineTwoStopwordsFile():
   return result
 
 #get stopwords list
-stopwords = readStopwordsFromFile("stopwords.txt")
+stopwords = readStopwordsFromFile("../txt/stopwords.txt")
 vocabulary = []
 
 #add word to word dictionary
@@ -79,28 +80,33 @@ def addItemToDict(tagDict,tagStr,tagCount):
   #stemmer
   st = LancasterStemmer()
   #split tagStr
-  items = tagStr.split()
-  for item in items:
-    item = item.lower()
-    #stem
-    item = st.stem(item)
-    #remove stopwords and too short words
-    if item not in stopwords and len(item) > 1:
-      if item not in tagDict:
-        tagDict[item] = tagCount
-      else:
-        tagDict[item] = tagDict[item] + tagCount
-      #add item to vocabulary list
-      if item not in vocabulary:
-        vocabulary.append(item)
+  item = "%20".join(tagStr.split())
+  item = item.lower()
+  #stem
+  item = st.stem(item)
+  #remove stopwords and too short words
+  if item not in stopwords:
+    if item not in tagDict:
+      tagDict[item] = tagCount
+    else:
+      tagDict[item] = tagDict[item] + tagCount
+    #add item to vocabulary list
+    if item not in vocabulary:
+      vocabulary.append(item)
+    
 
 #generate tag dictionary of given song
 def generateTagDictofSong(sname,aname,tags):
   tagDict = {}
   #add sname to tagDict
-  addItemToDict(tagDict,sname,50)
+  addItemToDict(tagDict,sname,100)
   #add aname to tagDict
-  addItemToDict(tagDict,aname,50)
+  addItemToDict(tagDict,aname,100)
+  for item in sname.split():
+    addItemToDict(tagDict,item,100)
+  #add aname to tagDict
+  for item in aname.split():
+    addItemToDict(tagDict,item,100)
   #split tags<tag:count>
   tagInfos = tags.split("##==##")
   #loop every tag Information
@@ -121,6 +127,8 @@ def generateTagDictofSong(sname,aname,tags):
 
 #rm dir,no matter it is empty or not
 def rmDir(whichdir):
+  if not os.path.exists(whichdir):
+    return
   print 'begin to rm dir %s' % whichdir
   for dirpath,dirname,filenames in os.walk(whichdir):
     for filename in filenames:
@@ -132,22 +140,13 @@ def rmDir(whichdir):
 
 #generate document of given song from its tagDict
 def generateDocofSong(sid,tagDict):
-  #if song file exists, return
-  if os.path.exists("data/songs/%d" % sid):
-    print '%d is existing...' % sid
-    logging.warning('%d is existing...' % sid)
-    return
-  #else new a file
-  sFile = open("data/songs/%d" % sid, "w")
+  result = []
   #repeat: write tag into file
   for tag in tagDict.keys():
     count = (int)(tagDict[tag] / 4)
-    content = ""
-    #construct a line and write to file
-    for i in range(0,count):
-      content = "%s %s" % (content,tag)
-    sFile.write(content+'\n')
-  sFile.close()
+    tag = "%s " % tag
+    result.append(tag*count)
+  return " ".join(result)
 
 #generate all docs of all songs
 #get statistics of tags,listener number and playcount
@@ -161,9 +160,15 @@ def generateDocs():
   global DBCHARSET
 
   #rm folder songs
-  rmDir("data/songs")
+  rmDir("../txt/songs")
   #mkdir songs
-  os.mkdir("data/songs")  
+  os.mkdir("../txt/songs")  
+  #filename = "../txt/songDocs.txt"
+  #if os.path.exists(filename):
+    #print '%s is existing...' % filename
+    #return
+
+  #docFile = open(filename,'w')
 
   try:
     #connect db and select db name
@@ -181,6 +186,7 @@ def generateDocs():
     songNum = len(songDict)
     index = 0
     for sid in songDict.keys():
+      sFile = open('../txt/songs/%s' % sid,'w')
       index = index + 1
       print 'begin to generate file of song %d(%d/%d)' % (sid,index,songNum)
       logging.debug('begin to generate file of song %d(%d/%d)' % (sid,index,songNum))
@@ -216,13 +222,18 @@ def generateDocs():
         return
 
       tagDict = generateTagDictofSong(sname,aname,tags)
-      generateDocofSong(sid,tagDict)
-    
+      text =  generateDocofSong(sid,tagDict)
+      sFile.write(text)
+      #md5 = util.getMD5("%s,%s" % (sname,aname))
+      #info = '%s X   \"%s\"\n' % (md5,text)
+      #docFile.write(info)
+      sFile.close()
       print 'end of generating file of song %d' % sid
       logging.debug('end of generating file of song %d' % sid)
     conn.commit()
     cur.close()
     conn.close()
+    #docFile.close()
     print 'There are %d different tag count' % len(countDict)
     print 'There are %d different listener numbers' % len(lisDict)
     print 'There are %d different playcount numbers' % len(playDict)

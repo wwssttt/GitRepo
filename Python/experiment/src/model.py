@@ -5,7 +5,10 @@
 ############################
 
 import math
+import sys
 
+reload(sys)
+sys.setdefaultencoding('utf-8')
 #define model of song
 class Song:
   #constructor

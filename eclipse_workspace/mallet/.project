@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>mallet</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.jdt.core.javabuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>org.eclipse.jdt.core.javanature</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>class</name>
+			<type>2</type>
+			<location>/home/wst/GitRepo/eclipse_workspace/mallet/mallet-2.0.7/class</location>
+		</link>
+		<link>
+			<name>src</name>
+			<type>2</type>
+			<location>/home/wst/GitRepo/eclipse_workspace/mallet/mallet-2.0.7/src</location>
+		</link>
+	</linkedResources>
+</projectDescription>

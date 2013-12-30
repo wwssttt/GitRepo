@@ -10,7 +10,11 @@ import os
 import time
 import util
 import MySQLdb
-import random
+import types
+import sys
+
+reload(sys)
+sys.setdefaultencoding('utf-8')
 
 #define function to crawl friends of user with specific username from lastfm
 def crawlInfoOfUser(username,infoType = 0,page = 1):
@@ -105,7 +109,7 @@ def storeUsersToDB():
   lines = uFile.readlines()
   for line in lines:
     value = line.rstrip('\n').split('+')
-    cur.execute('insert into user values(%s,%s,%s,%s,%s,%s,%s)',value)
+    cur.execute('insert ignore into user values(%s,%s,%s,%s,%s,%s,%s)',value)
   conn.commit()
   uFile.close()
   cur.close()
@@ -180,13 +184,103 @@ def storeRecordsToDB():
     s = '%s#%s' % (uid,uts)
     if not s in records:
       records.append(s)
-      cur.execute('insert into record values(0,%s,%s,%s,%s)',value)
+      cur.execute('insert ignore into record values(0,%s,%s,%s,%s)',value)
       nFile.write(line)
   conn.commit()
   uFile.close()
   nFile.close()
   cur.close()
   conn.close()
+
+#get all records
+def getAllScaleRecordsOfDB():
+  conn=MySQLdb.connect(host="localhost",user="root",passwd="wst",db="lastfm")
+  cur = conn.cursor()
+  userCount = cur.execute('select distinct(uid) from record')
+  print 'There are %d distinct users...' % userCount
+  users = cur.fetchall()
+  userList = [user[0] for user in users]
+  cur.close()
+  conn.close()
+  print 'There are %d all users.' % len(userList)
+  return userList
+
+#filter records with session or pause
+#all songs must be listenered in n*8*60s
+#that is, length of per song is 8 min
+def getMiddleScaleRecordsOfDB():
+  effective = []
+  conn=MySQLdb.connect(host="localhost",user="root",passwd="wst",db="lastfm")
+  cur = conn.cursor()
+  userCount = cur.execute('select distinct(uid) from record')
+  print 'There are %d distinct users...' % userCount
+  users = cur.fetchall()
+  userList = [user[0] for user in users]
+  index = 0
+  userCount = len(userList)
+  for index in range(userCount):
+    print 'getMiddleScaleRecordsOfDB:%d/%d' % (index,userCount)
+    uid = userList[index]
+    rCount = cur.execute('select max(uts),min(uts),count(uts) from record where uid=%s',uid)
+    results = cur.fetchall()
+    new = int(results[0][0])
+    old = int(results[0][1])
+    sCount = int(results[0][2])
+    sCount -= 1
+    delta = new - old
+    totalDelta = sCount * 8 * 60
+    if delta <= totalDelta:
+      effective.append(uid)
+  #set scale to 1 for middle records
+  eCount = len(effective)
+  for index in range(eCount):
+    print 'getMiddleScaleRecordsOfDB/setScale=1:%d/%d' % (index,eCount)
+    uid = effective[index]
+    cur.execute('update record set scale=1 where uid=%s',uid)
+  conn.commit()
+  cur.close()
+  conn.close()
+  print 'There are %d middle users.' % len(effective)
+  return effective
+
+#get small scale records:500
+def getSmallScaleRecordsOfDB():
+  effective = []
+  conn=MySQLdb.connect(host="localhost",user="root",passwd="wst",db="lastfm")
+  cur = conn.cursor()
+  cur.execute('select distinct(uid) from record where scale = 1')
+  users = cur.fetchall()
+  userList = [user[0] for user in users]
+  userCount = len(userList)
+  delta = userCount / 500
+  for index in range(1,userCount,delta):
+    print 'getSmallScaleRecordsOfDB/setScale=0:%d/%d' % (index,userCount)
+    uid = userList[index]
+    effective.append(uid)
+    cur.execute('update record set scale=0 where uid=%s',uid)
+  conn.commit()
+  cur.close()
+  conn.close()
+  print 'There are %d small users.' % len(effective)
+  return effective
+
+#get distinct songs' mbids of effective uids
+def getDistinctSongs(scale = 0):
+  songs = []
+  conn=MySQLdb.connect(host="localhost",user="root",passwd="wst",db="lastfm")
+  cur = conn.cursor()
+  sql = 'select distinct(mbid) from record where scale <= %d' % scale
+  cur.execute(sql)
+  results = cur.fetchall()
+  for result in results:
+    mbid  = result[0]
+    if not mbid in songs:
+      songs.append(mbid)
+  print len(songs)
+  cur.close()
+  conn.close()
+  print 'There are %d distinct songs...' % len(songs)
+  return songs
 
 #define function to crawl info of songs with specific mbid from lastfm
 def crawlInfoOfSong(mbid,infoType = 0):
@@ -209,53 +303,148 @@ def crawlInfoOfSong(mbid,infoType = 0):
   ddata = json.loads(data)
   return ddata
 
-#crawl song infos from lastfm
-def crawlSongsFromLastfm():
-  #target file
-  filename = "../txt/songs.txt"
-  exceptionName = "../txt/exception.txt"
-  if os.path.exists(filename):
-    print '%s is existing......' % filename
-    return
-  sFile = open(filename,'w')
-  eFile = open(exceptionName,'w')
-  #get all songs' mbid
-  allMbid = getAllSongFromFile()
-  #loop every mbid and crawl its info
-  count = len(allMbid)
-  for index in range(count):
-    mbid = allMbid[index]
-    print '%d/%d : %s......' % (index,count,mbid)
-    try:
-      infoDict = crawlInfoOfSong(mbid,0)
-      track = infoDict['track']
-      sid = track['id']
-      name = track['name']
-      duration = track['duration']
-      artistId = track['artist']['mbid']
-      artistName = track['artist']['name']
-      album = track['album']['mbid']
-      listeners = track['listeners']
-      playcount = track['playcount']
+#get content text of mbid
+def getContentOfSong(mbid):
+  infoDict = crawlInfoOfSong(mbid,0)
+  if 'track' not in infoDict:
+    print '%s is not found...' % mbid
+    return '-1\n'
+  track = infoDict['track']
+  sid = track['id']
+  name = track['name']
+  duration = track['duration']
+  artistId = track['artist']['mbid']
+  artistName = track['artist']['name']
+  if 'album' not in track:
+    album = ''
+  else:
+    album = track['album']['mbid']
+  listeners = track['listeners']
+  playcount = track['playcount']
 
-      tagDict = crawlInfoOfSong(mbid,1)
-      tagList = tagDict['toptags']['tag']
+  tagDict = crawlInfoOfSong(mbid,1)
+  sTags = {}
+  if 'tag' in tagDict['toptags']:
+    tagList = tagDict['toptags']['tag']
+    if type(tagList) is types.DictType:
+      tagName = tagList['name']
+      tagCount = tagList['count']
+      sTags[tagName] = tagCount
+    elif type(tagList) is types.ListType:
       tagNum = len(tagList)
-      sTags = {}
       for i in range(tagNum):
         tagName = tagList[i]['name']
         tagCount = tagList[i]['count']
         sTags[tagName] = tagCount
-      tagStr = str(sTags)
+  tagStr = str(sTags)
       
-      content = '%s()%s()%s()%s()%s()%s()%s()%s()%s()%s\n' % (sid,mbid,name,duration,artistId,artistName,album,listeners,playcount,tagStr)
-      sFile.write(content)
+  content = '%s()%s()%s()%s()%s()%s()%s()%s()%s()%s\n' % (sid,mbid,name,duration,artistId,artistName,album,listeners,playcount,tagStr)
+  #print content
+  return content
+
+#crawl song infos from lastfm
+def crawlSongsFromLastfm(scale = 0):
+  #target file
+  filename = "../txt/songs%d.txt" % scale
+  exceptionName = "../txt/exception%d.txt" % scale
+  if os.path.exists(filename):
+    print '%s is existing......' % filename
+    oldExceptionCount = 0
+    while True:
+      exceptionCount = crawlSongsInException(scale)
+      if exceptionCount == 0 or oldExceptionCount == exceptionCount:
+        break
+      oldExceptionCount = exceptionCount
+    return
+  sFile = open(filename,'w')
+  eFile = open(exceptionName,'w')
+  #get all songs' mbid
+  allMbid = getDistinctSongs(scale)
+  #loop every mbid and crawl its info
+  count = len(allMbid)
+  for index in range(count):
+    mbid = allMbid[index]
+    print 'crawlSongsFromLastfm:%d/%d : %s......' % (index,count,mbid)
+    try:
+      content = getContentOfSong(mbid)
+      if not content.startswith('-1'):
+        sFile.write(content)
     except:
       print '%s(%d/%d) causes exception......' % (mbid,index,count)
       eFile.write('%s\n' % mbid)
       continue 
   sFile.close()
   eFile.close()
+  
+  print 'processing exception......'
+  oldExceptionCount = 0
+  while True:
+    exceptionCount = crawlSongsInException(scale)
+    if exceptionCount == 0 or oldExceptionCount == exceptionCount:
+      break
+    oldExceptionCount = exceptionCount
+
+#deal with exception
+def crawlSongsInException(scale = 0):
+  filename = "../txt/exception%d.txt" % scale
+  if not os.path.exists(filename):
+    print '%s is not existing...' % filename
+    return 0
+  exeptionCount = 0
+  eFile = open(filename,'r')
+  lines = eFile.readlines()
+  mbids = [line.rstrip('\n') for line in lines]
+  eFile.close()
+  newFile = '../txt/new_songs%d.txt' % scale
+  oldFile = '../txt/songs%d.txt' % scale
+  eFile = open(filename,'w')
+  sFile = open(newFile,'w')
+  count = len(mbids)
+  for index in range(count):
+    mbid = mbids[index]
+    print 'crawlSongsInException:%d/%d : %s......' % (index,count,mbid)
+    try:
+      content = getContentOfSong(mbid)
+      if not content.startswith('-1'):
+        sFile.write(content)
+    except Error,e:
+      print 'crawlSongsInException:%d/%d : %s causes exception......' % (index,count,mbid)
+      print e
+      exceptionCount += 1
+      eFile.write(mbid)
+      continue
+  sFile.close()
+  eFile.close()
+  #call shell command to combine file
+  command = "cat %s >> %s" % (newFile,oldFile)
+  os.system(command)
+  storeSongsToDB(scale)
+  command = "rm -rf %s" % newFile
+  os.system(command)
+  if exceptionCount == 0:
+    command = "rm -rf %s" % filename
+    os.system(command)
+  return exceptionCount
+
+#store users to db
+def storeSongsToDB(scale = 0):
+  filename = "../txt/songs%d.txt" % scale
+  if not os.path.exists(filename):
+    crawlUsersFromLastfm(scale)
+  
+  conn=MySQLdb.connect(host="localhost",user="root",passwd="wst",db="lastfm")
+  cur = conn.cursor()
+  
+  uFile = open(filename,'r')
+  lines = uFile.readlines()
+  for line in lines:
+    value = line.rstrip('\n').split('()')
+    sql = 'insert ignore into song values(%%s,%%s,%%s,%%s,%%s,%%s,%%s,%%s,%%s,%%s,%d)' % scale
+    cur.execute(sql,value)
+  conn.commit()
+  uFile.close()
+  cur.close()
+  conn.close()
 
 def getAllArtistFromFile():
   filename = "../txt/songs.txt"
@@ -331,8 +520,23 @@ def crawlInfoOfTag(tagname):
   ddata = json.loads(data)
   return ddata
 
+#generate exception mbids of scale
+def generateExceptionFile(scale = 0):
+  filename = '../txt/exception%d.txt' % scale
+  eFile = open(filename,'w')
+  allMbid = getDistinctSongs(scale)
+  conn=MySQLdb.connect(host="localhost",user="root",passwd="wst",db="lastfm")
+  cur = conn.cursor()
+  cur.execute('select mbid from song where scale = %d' % scale)
+  results = cur.fetchall()
+  mbids = [result[0] for result in results]
+  deltas = [val for val in allMbid if val not in mbids]
+  for delta in deltas:
+    eFile.write('%s\n' % delta)
+  cur.close()
+  conn.close()
+  eFile.close()
+
 if __name__ == "__main__":
-  for i in range(0,10000):
-    num = random.randint(0,1000000)
-    util.sendMail('420989762@qq.com','Crawl Artists Finished',str(num))
-      
+  generateExceptionFile(scale = 0)
+  crawlSongsInException(scale = 0)

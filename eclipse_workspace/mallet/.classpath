@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" output="class" path="src"/>
+	<classpathentry kind="src" path="mallet-2.0.7/test"/>
+	<classpathentry kind="var" path="JRE_LIB" sourcepath="JRE_SRC"/>
+	<classpathentry kind="con" path="/home/wst/GitRepo/eclipse_workspace/mallet/mallet-2.0.7/class"/>
+	<classpathentry kind="lib" path="/home/wst/GitRepo/eclipse_workspace/mallet/mallet-2.0.7/lib/bsh.jar"/>
+	<classpathentry kind="lib" path="/home/wst/GitRepo/eclipse_workspace/mallet/mallet-2.0.7/lib/grmm-deps.jar"/>
+	<classpathentry kind="lib" path="/home/wst/GitRepo/eclipse_workspace/mallet/mallet-2.0.7/lib/jdom-1.0.jar"/>
+	<classpathentry kind="lib" path="/home/wst/GitRepo/eclipse_workspace/mallet/mallet-2.0.7/lib/jgrapht-0.6.0.jar"/>
+	<classpathentry kind="lib" path="/home/wst/GitRepo/eclipse_workspace/mallet/mallet-2.0.7/lib/junit-4.5.jar"/>
+	<classpathentry kind="lib" path="/home/wst/GitRepo/eclipse_workspace/mallet/mallet-2.0.7/lib/jwnl-1.3.jar"/>
+	<classpathentry kind="lib" path="/home/wst/GitRepo/eclipse_workspace/mallet/mallet-2.0.7/lib/mallet-deps.jar"/>
+	<classpathentry kind="lib" path="/home/wst/GitRepo/eclipse_workspace/mallet/mallet-2.0.7/lib/mtj-0.9.9.jar"/>
+	<classpathentry kind="lib" path="/home/wst/GitRepo/eclipse_workspace/mallet/mallet-2.0.7/lib/openjgraph.jar"/>
+	<classpathentry kind="lib" path="/home/wst/GitRepo/eclipse_workspace/mallet/mallet-2.0.7/lib/trove-2.0.2.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

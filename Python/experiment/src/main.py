@@ -6,7 +6,10 @@
 
 import test
 import util
+import sys
 
+reload(sys)
+sys.setdefaultencoding('utf-8')
 if __name__ == "__main__":
   
   """
@@ -21,9 +24,7 @@ if __name__ == "__main__":
   test.showRecallTrendWithDifferentCoeff_MostSimilarHybrid()
   """
   
-  """
-  test.showRecallTrendWithDifferentCoeff_AverageHybrid()
-  """
+  #test.showRecallTrendWithDifferentCoeff_AverageHybrid()
   
   """
   test.showRecallTrendWithDifferentCoeff_ColdLaw()

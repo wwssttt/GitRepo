@@ -7,7 +7,11 @@
 import math
 import smtplib
 from email.mime.text import MIMEText
+from hashlib import md5
+import sys
 
+reload(sys)
+sys.setdefaultencoding('utf-8')
 #getHammingDict
 def getHammingDict(topicDict,baseDict):
   hammingDict = {}
@@ -195,6 +199,12 @@ def getIndexName(index):
   else:
     print '%d does not exist......' % index
     return
+
+#get MD5
+def getMD5(string):
+  m = md5()
+  m.update(string)
+  return m.hexdigest()
 
 #send email to me
 def sendMail(to,subtitle,content):
