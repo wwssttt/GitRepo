@@ -6,37 +6,22 @@
 
 import test
 import util
+import sys
+
+reload(sys)
+sys.setdefaultencoding('utf-8')
 
 if __name__ == "__main__":
   
-  """
-  test.compareWithAverage(7)
-  """
-  
-  """
-  test.showRecallTrendWithDifferentCoeff_AverageSimilar()
-  """
+  #test.compareWithAverage(7)
 
-  """
-  test.showRecallTrendWithDifferentCoeff_MostSimilarHybrid()
-  """
+  #test.showRecallTrendWithDifferentCoeff_MostSimilarHybrid()
   
   #test.showRecallTrendWithDifferentCoeff_AverageHybrid()
   
-  """
-  test.showRecallTrendWithDifferentCoeff_ColdLaw()
-  """
+  #test.showRecallTrendWithDifferentCoeff_ColdLaw()
 
-  """
-  #test all rec methods with topN = 300
-  test.testRecMethod(0)
-  test.testRecMethod(1)
-  test.testRecMethod(2)
-  test.testRecMethod(3)
-  test.testRecMethod(4)
-  test.testRecMethod(5)
-  test.testRecMethod(6,0)
-  test.testRecMethod(6,1)
-  """
+  for i in range(9):
+    test.testRecMethod(i)
   
   test.showStatistics()

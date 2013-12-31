@@ -12,6 +12,10 @@ import logging
 import os
 import math
 import matplotlib.pyplot as plt
+import sys
+
+reload(sys)
+sys.setdefaultencoding('utf-8')
 
 # set log's localtion and level
 logging.basicConfig(filename=os.path.join(os.getcwd(),'../log/test_log.txt'),level=logging.DEBUG,format='%(asctime)s-%(levelname)s:%(message)s')
@@ -166,7 +170,7 @@ def getErrorOfRecMethod(recType = 0):
     if recType == 4:
       recDict = predict.getRecDict(playlistDict,songDict,recType,0.4)
     elif recType == 5:
-      recDict = predict.getRecDict(playlistDict,songDict,recType,0.5)
+      recDict = predict.getRecDict(playlistDict,songDict,recType,0.9)
     else:
       recDict = predict.getRecDict(playlistDict,songDict,recType)
   elif recType == 6:
@@ -181,7 +185,7 @@ def getErrorOfRecMethod(recType = 0):
   f1s = []
   maes = []
   rmses = []
-  for topN in range(1,111,10):
+  for topN in range(1,311,10):
     recall,precision,f1 = util.getTopNIndex(recDict,playlistDict,topN)
     mae,rmse = util.getMAEandRMSE(recDict,playlistDict,songDict,topN)
     recalls.append(recall)
@@ -199,7 +203,7 @@ def compareWithAverage(recType):
     return
   logging.info('I am in compareWithAverage......')
   filename = "../txt/testall.txt"
-  x = range(1,111,10)
+  x = range(1,311,10)
   result = [[[] for i in range(5)] for i in range(2)]
   #read result from file to result
   if os.path.exists(filename):
@@ -262,7 +266,7 @@ def compareWithAverage(recType):
 def showStatistics():
   logging.info('I am in showStatistics......')
   filename = "../txt/testall.txt"
-  x = range(1,111,10)
+  x = range(1,311,10)
   result = [[[] for i in range(5)] for i in range(9)]
   #read result from file to result
   if os.path.exists(filename):
@@ -300,6 +304,8 @@ def showStatistics():
     plt.figure(index)
     indexName = util.getIndexName(index)
     for mid in range(0,6,1):
+      if mid == 2:
+        continue
       plt.plot(x,result[mid][index],label=util.getMethodName(mid))
     plt.title("%s of Different Recommend Algorithms" % indexName)
     plt.xlabel("Number of recommendations")
@@ -310,7 +316,9 @@ def showStatistics():
       plt.legend()
     plt.savefig("../img/%s.png" % indexName)
     #plt.show()
+  
   #plt last five method on one img
+  """
   for index in range(5):
     plt.figure(index+5)
     indexName = util.getIndexName(index)
@@ -322,4 +330,5 @@ def showStatistics():
     plt.legend()
     plt.savefig("../img/%s_.png" % indexName)
     #plt.show()
+  """
   logging.info('I am out showStatistics......')

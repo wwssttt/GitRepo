@@ -2,7 +2,7 @@
 # Run this script from 'scripts' directory of mallet directory
 
 # One by one traverse each project
-dirs=`ls -d ../../../data/`
+dirs=`ls -d ../data/`
 for dir in $dirs
 do
 	# Read names of major versions
@@ -29,7 +29,7 @@ do
 	then
 		numTopics=({20..200..15})
 	else
-		numTopics=({100..200..10})
+		numTopics=({50..400..10})
 	fi
 
 	# Iterate over major project versions

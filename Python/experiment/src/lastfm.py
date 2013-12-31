@@ -248,16 +248,32 @@ def getSmallScaleRecordsOfDB():
   effective = []
   conn=MySQLdb.connect(host="localhost",user="root",passwd="wst",db="lastfm")
   cur = conn.cursor()
+  #get all songs in db
+  sql = 'select mbid from song'
+  cur.execute(sql)
+  results = cur.fetchall()
+  allSongsInDb = [result[0] for result in results]
+  #get all user ids
   cur.execute('select distinct(uid) from record where scale = 1')
   users = cur.fetchall()
   userList = [user[0] for user in users]
   userCount = len(userList)
-  delta = userCount / 500
-  for index in range(1,userCount,delta):
-    print 'getSmallScaleRecordsOfDB/setScale=0:%d/%d' % (index,userCount)
+  for index in range(userCount):
+    print 'getSmallScaleRecordsOfDB():%d/%d...' % (index,userCount)
     uid = userList[index]
-    effective.append(uid)
-    cur.execute('update record set scale=0 where uid=%s',uid)
+    sql = "select mbid from record where uid = '%s'" % uid
+    cur.execute(sql)
+    results = cur.fetchall()
+    allMbids = [result[0] for result in results]
+    flag = True
+    for mbid in allMbids:
+      if mbid not in allSongsInDb:
+        flag = False
+        break
+    if flag == True:
+      effective.append(uid)
+      sql = "update record set scale = 0 where uid = '%s'" % uid
+      cur.execute(sql)  
   conn.commit()
   cur.close()
   conn.close()
@@ -277,9 +293,17 @@ def getDistinctSongs(scale = 0):
     if not mbid in songs:
       songs.append(mbid)
   print len(songs)
+  print 'There are %d distinct songs...' % len(songs)
+  sql = 'select mbid from song'
+  cur.execute(sql)
+  results = cur.fetchall()
+  allSongs = [result[0] for result in results]
+  delta = [val for val in songs if val not in allSongs]
+  if len(delta) > 0:
+    print 'There are %d songs not crawled...' % len(delta)
+    #print delta
   cur.close()
   conn.close()
-  print 'There are %d distinct songs...' % len(songs)
   return songs
 
 #define function to crawl info of songs with specific mbid from lastfm
@@ -353,6 +377,7 @@ def crawlSongsFromLastfm(scale = 0):
     while True:
       exceptionCount = crawlSongsInException(scale)
       if exceptionCount == 0 or oldExceptionCount == exceptionCount:
+        print 'No Exception or No Promotion......'
         break
       oldExceptionCount = exceptionCount
     return
@@ -390,7 +415,7 @@ def crawlSongsInException(scale = 0):
   if not os.path.exists(filename):
     print '%s is not existing...' % filename
     return 0
-  exeptionCount = 0
+  exceptionCount = 0
   eFile = open(filename,'r')
   lines = eFile.readlines()
   mbids = [line.rstrip('\n') for line in lines]
@@ -531,13 +556,40 @@ def generateExceptionFile(scale = 0):
   results = cur.fetchall()
   mbids = [result[0] for result in results]
   deltas = [val for val in allMbid if val not in mbids]
+  print 'There are %d exception...' % len(deltas)
   for delta in deltas:
     eFile.write('%s\n' % delta)
+    print delta
+    #sql = "delete from record where mbid = '%s'" % delta
+    #cur.execute(sql)
+  conn.commit()
   cur.close()
   conn.close()
   eFile.close()
+  return deltas
 
+#filter users with too short records
+def filterShortRecords():
+  conn=MySQLdb.connect(host="localhost",user="root",passwd="wst",db="lastfm")
+  cur = conn.cursor()
+  cur.execute('select uid from record group by uid having count(mbid) < 10')
+  results = cur.fetchall()
+  uids = [result[0] for result in results]
+  count = len(uids)
+  for index in range(count):
+    print 'Begin:%d/%d' % (index,count)
+    uid = uids[index]
+    sql = "delete from record where uid = '%s'" % uid
+    cur.execute(sql)
+    print 'End:%d/%d' % (index,count)
+  conn.commit()
+  cur.close()
+  conn.close()
 if __name__ == "__main__":
+  #getMiddleScaleRecordsOfDB()
+  #getSmallScaleRecordsOfDB()
   #generateExceptionFile(scale = 0)
-  #crawlSongsInException(scale = 0)
-  storeSongsToDB(scale = 0)
+  #crawlSongsFromLastfm(scale = 0)
+  #storeSongsToDB(scale = 0)
+  #getDistinctSongs(scale = 0)
+  filterShortRecords()
