@@ -471,8 +471,8 @@ def storeSongsToDB(scale = 0):
   cur.close()
   conn.close()
 
-def getAllArtistFromFile():
-  filename = "../txt/songs.txt"
+def getAllArtistFromFile(scale = 0):
+  filename = "../txt/songs%d.txt" % scale
   if not os.path.exists(filename):
     crawlSongsFromLastfm()
   sFile = open(filename,'r')
@@ -487,53 +487,145 @@ def getAllArtistFromFile():
   print info
   #util.sendMail('wwssttt@163.com','Crawl Artists Finished',info)
   sFile.close()
+  return allAid
 
-#crawl artist infos from lastfm
-def crawlArtistsFromLastfm():
-  #target file
-  filename = "../txt/artists.txt"
-  exceptionName = "../txt/exception.txt"
-  if os.path.exists(filename):
-    print '%s is existing......'
-    return
-  aFile = open(filename,'w')
-  eFile = open(exceptionName,'w')
-  #get all songs' mbid
-  allMbid = getAllArtistFromFile()
-  #loop every mbid and crawl its info
-  count = len(allMbid)
+#crawl artists in exception files
+def crawlArtistsInException(scale = 0):
+  filename = "../txt/exception_artist%d.txt" % scale
+  if not os.path.exists(filename):
+    print '%s is not existing...' % filename
+    return 0
+  exceptionCount = 0
+  eFile = open(filename,'r')
+  lines = eFile.readlines()
+  mbids = [line.rstrip('\n') for line in lines]
+  eFile.close()
+  artistFilename = '../txt/artists%d.txt' % scale
+  aFile = open(artistFilename,'a')
+  eFile = open(filename,'w')
+  count = len(mbids)
   for index in range(count):
-    mbid = allMbid[index]
-    print '%d/%d : %s......' % (index,count,mbid)
+    mbid = mbids[index]
+    print 'crawlArtistsInException:%d/%d : %s......' % (index,count,mbid)
     try:
-      infoDict = crawlInfoOfSong(mbid,2)
-      artist = infoDict['artist']
-      name = artist['name']
-      imageList = artist['image']
-      imageCount = len(imageList)
-      if imageCount >= 1:
-        imageUrl = imageList[imageCount-1]['#text']
-      else:
-        imageUrl = ""
+      content = getContentOfArtist(mbid)
+      if not content.startswith('-1'):
+        aFile.write(content)
+    except Error,e:
+      print 'crawlArtistsInException:%d/%d : %s causes exception......' % (index,count,mbid)
+      print e
+      exceptionCount += 1
+      eFile.write(mbid)
+      continue
+  aFile.close()
+  eFile.close()
+  return exceptionCount
 
-      tagDict = crawlInfoOfSong(mbid,3)
-      tagList = tagDict['toptags']['tag']
+#get content text of mbid
+def getContentOfArtist(mbid):
+  infoDict = crawlInfoOfSong(mbid,2)
+  if 'artist' not in infoDict:
+    print '%s is not found...' % mbid
+    return '-1\n'
+  artist = infoDict['artist']
+  if 'name' not in artist:
+    name = ''
+  else:
+    name = artist['name']
+  if 'image' not in artist:
+    imageUrl = ''
+  else:
+    imageList = artist['image']
+    imageCount = len(imageList)
+    if imageCount >= 1:
+      if '#text' not in imageList[imageCount-1]:
+        imageUrl = ''
+      else:
+        imageUrl = imageList[imageCount-1]['#text']
+    else:
+      imageUrl = ""
+      
+  tagDict = crawlInfoOfSong(mbid,3)
+  sTags = {}
+  if 'tag' in tagDict['toptags']:
+    tagList = tagDict['toptags']['tag']
+    if type(tagList) is types.DictType:
+      tagName = tagList['name']
+      tagCount = tagList['count']
+      sTags[tagName] = tagCount
+    elif type(tagList) is types.ListType:
       tagNum = len(tagList)
-      sTags = {}
       for i in range(tagNum):
         tagName = tagList[i]['name']
         tagCount = tagList[i]['count']
         sTags[tagName] = tagCount
-      tagStr = str(sTags)
-      
-      content = '%s++%s++%s++%s\n' % (mbid,name,imageUrl,tagStr)
-      aFile.write(content)
+  tagStr = str(sTags)
+  
+  content = '%s()%s()%s()%s\n' % (mbid,name,imageUrl,tagStr)
+  #print content
+  return content
+
+#crawl artist infos from lastfm
+def crawlArtistsFromLastfm(scale = 0):
+  #target file
+  filename = "../txt/artists%d.txt" % scale
+  exceptionName = "../txt/exception_artist%d.txt" % scale
+  if os.path.exists(filename):
+    print '%s is existing......' % filename
+    oldExceptionCount = 0
+    while True:
+      exceptionCount = crawlArtistsInException(scale)
+      if exceptionCount == 0 or oldExceptionCount == exceptionCount:
+        print 'No Exception or No Promotion......'
+        break
+      oldExceptionCount = exceptionCount
+    return
+  aFile = open(filename,'w')
+  eFile = open(exceptionName,'w')
+  #get all songs' mbid
+  allMbid = getAllArtistFromFile(scale)
+  #loop every mbid and crawl its info
+  count = len(allMbid)
+  for index in range(count):
+    mbid = allMbid[index]
+    print 'crawlArtistsFromLastfm:%d/%d : %s......' % (index,count,mbid)
+    try:
+      content = getContentOfArtist(mbid)
+      if not content.startswith('-1'):
+        aFile.write(content)
     except:
       print '%s(%d/%d) causes exception......' % (mbid,index,count)
-      eFile.write('%s\n' % mbid)
-      continue 
+      eFile.write('%s\n' % mbid) 
   aFile.close()
   eFile.close()
+
+  print 'processing exception......'
+  oldExceptionCount = 0
+  while True:
+    exceptionCount = crawlSongsInException(scale)
+    if exceptionCount == 0 or oldExceptionCount == exceptionCount:
+      break
+    oldExceptionCount = exceptionCount
+
+#store artists in filename
+def storeArtistsToDB(scale = 0):
+  filename = "../txt/artists%d.txt" % scale
+  if not os.path.exists(filename):
+    crawlArtistsFromLastfm(scale)
+  
+  conn=MySQLdb.connect(host="localhost",user="root",passwd="wst",db="lastfm")
+  cur = conn.cursor()
+  
+  uFile = open(filename,'r')
+  lines = uFile.readlines()
+  for line in lines:
+    value = line.rstrip('\n').split('()')
+    sql = 'insert ignore into artist values(%%s,%%s,%%s,%%s,%d)' % scale
+    cur.execute(sql,value)
+  conn.commit()
+  uFile.close()
+  cur.close()
+  conn.close()
 
 #define function to crawl info of tags with specific mbid from lastfm
 def crawlInfoOfTag(tagname):
@@ -592,4 +684,6 @@ if __name__ == "__main__":
   #crawlSongsFromLastfm(scale = 0)
   #storeSongsToDB(scale = 0)
   #getDistinctSongs(scale = 0)
-  filterShortRecords()
+  #filterShortRecords()
+  #crawlArtistsFromLastfm(scale = 0)
+  storeArtistsToDB(scale = 0)
