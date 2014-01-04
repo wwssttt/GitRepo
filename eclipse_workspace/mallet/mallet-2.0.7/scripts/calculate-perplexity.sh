@@ -29,7 +29,7 @@ do
 	then
 		numTopics=({20..200..15})
 	else
-		numTopics=({400..500..10})
+		numTopics=({50..500..10})
 	fi
 
 	# Iterate over major project versions

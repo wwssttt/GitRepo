@@ -18,20 +18,13 @@ from nltk.stem.lancaster import LancasterStemmer
 import DBProcess
 import matplotlib.pyplot as plt
 import util
+import const
 
 # reload sys and set encoding to utf-8
 reload(sys)
 sys.setdefaultencoding('utf-8')
 # set log's localtion and level
 logging.basicConfig(filename=os.path.join(os.getcwd(),'log/docgenerate_log.txt'),level=logging.DEBUG,format='%(asctime)s-%(levelname)s:%(message)s')
-
-# define some global varibale
-DBHOST = 'localhost'
-DBUSER = 'root'
-DBPWD = 'wst'
-DBPORT = 3306
-DBNAME = 'aotm'
-DBCHARSET = 'utf8'
 
 #read stop words from stop words file
 # return stop words list
@@ -127,6 +120,8 @@ def generateTagDictofSong(sname,aname,tags):
 
 #rm dir,no matter it is empty or not
 def rmDir(whichdir):
+  if not os.path.exists(whichdir):
+    return
   print 'begin to rm dir %s' % whichdir
   for dirpath,dirname,filenames in os.walk(whichdir):
     for filename in filenames:
@@ -148,19 +143,14 @@ def generateDocofSong(sid,tagDict):
 
 #generate all docs of all songs
 #get statistics of tags,listener number and playcount
-def generateDocs():
-  #import global variable
-  global DBHOST
-  global DBUSER
-  global DBPWD
-  global DBPORT
-  global DBNAME
-  global DBCHARSET
-
+def generateAotmDocs():
+  if const.DATASET_NAME != 'Aotm':
+    print 'dataset is not Aotm'
+    return 
   #rm folder songs
-  rmDir("../txt/songs")
+  rmDir("../txt/%s_songs" % const.DATASET_NAME)
   #mkdir songs
-  os.mkdir("../txt/songs")  
+  os.mkdir("../txt/%s_songs" % const.DATASET_NAME)  
   #filename = "../txt/songDocs.txt"
   #if os.path.exists(filename):
     #print '%s is existing...' % filename
@@ -170,9 +160,9 @@ def generateDocs():
 
   try:
     #connect db and select db name
-    conn = MySQLdb.Connect(host=DBHOST,user=DBUSER,passwd=DBPWD,port=DBPORT,charset=DBCHARSET)
+    conn = MySQLdb.Connect(host=const.DBHOST,user=const.DBUSER,passwd=const.DBPWD,port=const.DBPORT,charset=const.DBCHARSET)
     cur = conn.cursor()
-    conn.select_db(DBNAME)
+    conn.select_db(const.DBNAME)
     #get song dict and playlist dict from DBProcess
     songDict,playlistDict = DBProcess.genEffectivePlaylist()
     #tags'count:number
@@ -240,6 +230,81 @@ def generateDocs():
     print 'Mysql Error %d:%s' % (e.args[0],e.args[1])
     logging.error('Mysql Error %d:%s' % (e.args[0],e.args[1]))
 
+def Lastfm_generateDocs():
+  if const.DATASET_NAME != 'Lastfm':
+    print 'dataset is not Lastfm'
+    return 
+  #rm folder songs
+  rmDir("../txt/%s_songs" % const.DATASET_NAME)
+  #mkdir songs
+  os.mkdir("../txt/%s_songs" % const.DATASET_NAME)  
+  try:
+    #connect db and select db name
+    conn = MySQLdb.Connect(host=const.DBHOST,user=const.DBUSER,passwd=const.DBPWD,port=const.DBPORT,charset=const.DBCHARSET)
+    cur = conn.cursor()
+    conn.select_db(const.DBNAME)
+    count = cur.execute('select sid,name,aname,toptag from song where scale = 0')
+    results = cur.fetchall()
+    index = 0
+    for result in results:
+      index += 1
+      print '%d/%d' % (index,count)
+      sid = result[0]
+      sname = result[1]
+      aname = result[2]
+      toptag = result[3]
+      sFile = open('../txt/%s_songs/%s' % (const.DATASET_NAME,sid),'w')
+      tagDict = Lastfm_generateTagDictofSong(sname,aname,toptag)
+      text =  Lastfm_generateDocofSong(sid,tagDict)
+      sFile.write(text)
+      sFile.close()
+    conn.commit()
+    cur.close()
+    conn.close()
+  except MySQLdb.Error,e:
+    print 'Mysql Error %d:%s' % (e.args[0],e.args[1])
+    logging.error('Mysql Error %d:%s' % (e.args[0],e.args[1]))
+
+#add word to word dictionary
+#tagDict:word dictionary of a song(word:count)
+#tagStr:tag string
+#tagCount:the count of tag's appearance
+def Lastfm_addItemToDict(tagDict,tagStr,tagCount):
+  #stemmer
+  st = LancasterStemmer()
+  #split tagStr
+  for item in tagStr.split():
+    item = item.lower()
+    #stem
+    item = st.stem(item)
+    #remove stopwords and too short words
+    if item not in stopwords:
+      if item not in tagDict:
+        tagDict[item] = tagCount
+      else:
+        tagDict[item] = tagDict[item] + tagCount
+
+#generate tag dictionary of given song
+def Lastfm_generateTagDictofSong(sname,aname,toptag):
+  tagDict = {}
+  #add sname to tagDict
+  addItemToDict(tagDict,sname,100)
+  #add aname to tagDict
+  addItemToDict(tagDict,aname,100)
+  #split tags<tag:count>
+  tagInfos = eval(toptag)
+  #loop every tag Information
+  for tag in tagInfos.keys():
+    tagCount = tagInfos[tag]
+    #avoid some tags without count
+    #if a tag has no count, ignore it
+    if len(tagCount) == 0:
+      continue
+    else:
+      #add tag to dict
+      addItemToDict(tagDict,tag,int(tagCount))
+  return tagDict
+
 if __name__ == "__main__":
-  generateDocs()
+  Lastfm_generateDocs()
 

@@ -13,6 +13,7 @@ import os
 import math
 import matplotlib.pyplot as plt
 import sys
+import const
 
 reload(sys)
 sys.setdefaultencoding('utf-8')
@@ -37,7 +38,7 @@ def showRecallTrendWithDifferentCoeff_MostSimilarHybrid():
   plt.xlabel("lambda")
   plt.ylabel("Recall")
   plt.legend(loc="upper right")
-  plt.savefig("../img/hybrid_trend.png")
+  plt.savefig("../img/%s_SimilarandArima_trend_%d.png" % (const.DATASET_NAME,const.TOPIC_NUM))
   plt.show()
 
 #show mae and rmse trends of average hybrid methods with different coefficients
@@ -57,7 +58,7 @@ def showRecallTrendWithDifferentCoeff_AverageHybrid():
   plt.xlabel("lambda")
   plt.ylabel("Recall")
   plt.legend(loc="upper right")
-  plt.savefig("../img/average_hybrid_trend.png")
+  plt.savefig("../img/%s_AverageandArima_trend_%d" % (const.DATASET_NAME,const.TOPIC_NUM))
   plt.show()
 
 #show mae and rmse trends of average similar methods with different coefficients
@@ -77,7 +78,7 @@ def showRecallTrendWithDifferentCoeff_AverageSimilar():
   plt.xlabel("lambda")
   plt.ylabel("Recall")
   plt.legend(loc="upper right")
-  plt.savefig("../img/average_similar_trend.png")
+  plt.savefig("../img/%s_average_similar_trend.png" % const.DATASET_NAME)
   plt.show()
 
 #show mae and rmse trends of cold-law methods with different coefficients
@@ -96,7 +97,7 @@ def showRecallTrendWithDifferentCoeff_ColdLaw():
   plt.xlabel("coefficients")
   plt.ylabel("Recall")
   plt.legend(loc="upper right")
-  plt.savefig("../img/coldlaw_trend.png")
+  plt.savefig("../img/%s_coldlaw_trend.png" % const.DATASET_NAME)
   #plt.show()
 
 #show weight trends of different coefficients
@@ -111,7 +112,7 @@ def showColdLawWithDifferentCoeff():
   plt.ylabel("weight")
   plt.title("Weight Trend of Cold Law with Different Coefficients")
   plt.legend(loc = "upper right")
-  plt.savefig("../img/cold-law.png")
+  plt.savefig("../img/%s_cold-law.png" % const.DATASET_NAME)
   plt.show()
 
 #test traditional method
@@ -202,7 +203,7 @@ def compareWithAverage(recType):
     print 'You compare average with itsself......'
     return
   logging.info('I am in compareWithAverage......')
-  filename = "../txt/testall.txt"
+  filename = "../txt/%s_testall_%d.txt" % (const.DATASET_NAME,const.TOPIC_NUM)
   x = range(1,311,10)
   result = [[[] for i in range(5)] for i in range(2)]
   #read result from file to result
@@ -258,14 +259,14 @@ def compareWithAverage(recType):
     plt.title("%s of Different Recommend Algorithms" % indexName)
     plt.xlabel("Number of recommendations")
     plt.ylabel(indexName)
-    plt.savefig("../img/%s_with_average.png" % indexName)
+    plt.savefig("../img/%s_%s_with_average_%d.png" % (const.DATASET_NAME,indexName,const.TOPIC_NUM))
     #plt.show()
   logging.info('I am out compareWithAverage......')
 
 #show all recommend results with different methods
 def showStatistics():
   logging.info('I am in showStatistics......')
-  filename = "../txt/testall.txt"
+  filename = "../txt/%s_testall_%d.txt" % (const.DATASET_NAME,const.TOPIC_NUM)
   x = range(1,311,10)
   result = [[[] for i in range(5)] for i in range(9)]
   #read result from file to result
@@ -292,7 +293,7 @@ def showStatistics():
     rFile.close()
   #if some method is not in file, recreate it
   for mid in range(9):
-    if len(result[mid][0]) == 0:
+    if len(result[mid][0]) == 0 and mid <= 5:
       recalls,precisions,f1s,maes,rmses = getErrorOfRecMethod(mid)
       result[mid][0] = recalls
       result[mid][1] = precisions
@@ -304,8 +305,6 @@ def showStatistics():
     plt.figure(index)
     indexName = util.getIndexName(index)
     for mid in range(0,6,1):
-      if mid == 2:
-        continue
       plt.plot(x,result[mid][index],label=util.getMethodName(mid))
     plt.title("%s of Different Recommend Algorithms" % indexName)
     plt.xlabel("Number of recommendations")
@@ -314,21 +313,20 @@ def showStatistics():
       plt.legend(loc="lower right")
     else:
       plt.legend()
-    plt.savefig("../img/%s.png" % indexName)
+    plt.savefig("../img/%s_%s_%d.png" % (const.DATASET_NAME,indexName,const.TOPIC_NUM))
     #plt.show()
   
   #plt last five method on one img
-  """
-  for index in range(5):
-    plt.figure(index+5)
-    indexName = util.getIndexName(index)
-    for mid in range(4,9,1):
-      plt.plot(x,result[mid][index],label=util.getMethodName(mid))
-    plt.title("%s of Different Recommend Algorithms" % indexName)
-    plt.xlabel("Number of recommendations")
-    plt.ylabel(indexName)
-    plt.legend()
-    plt.savefig("../img/%s_.png" % indexName)
-    #plt.show()
-  """
+  if len(result[6][0]) != 0:
+    for index in range(5):
+      plt.figure(index+5)
+      indexName = util.getIndexName(index)
+      for mid in range(4,9,1):
+        plt.plot(x,result[mid][index],label=util.getMethodName(mid))
+      plt.title("%s of Different Recommend Algorithms" % indexName)
+      plt.xlabel("Number of recommendations")
+      plt.ylabel(indexName)
+      plt.legend()
+      plt.savefig("../img/%s_%s_%d_.png" % (const.DATASET_NAME,indexName,TOPIC_NUM))
+      #plt.show()
   logging.info('I am out showStatistics......')

@@ -8,8 +8,7 @@ import os
 reload(sys)
 sys.setdefaultencoding("utf8")
 
-def showPerplexity():
-  filename = 'songs-perplexity.txt'
+def showPerplexity(filename):
   if os.path.exists(filename):
     step = []
     perplexity = []
@@ -24,10 +23,10 @@ def showPerplexity():
     plt.ylabel("Perplexity")
     plt.plot(step,perplexity,"b-D",label="Perplexity")
     plt.legend(loc="upper right",numpoints=1)
-    #plt.savefig("img/perplexity%d-%d.png" % (begin,end))
+    plt.savefig("%s.png" % filename)
     plt.show()
   else:
     print '%s do not exist...' % filename
 
 if __name__ == "__main__":
-  showPerplexity()
+  showPerplexity("Lastfm_songs-perplexity.txt")

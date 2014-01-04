@@ -8,13 +8,14 @@ import os
 import model
 import predict
 import sys
+import const
 
 reload(sys)
 sys.setdefaultencoding('utf-8')
 #write topic dict of Arima to file to avoid re-computation
 def writeTopicDictOfArimaToFile(playlistDict,songDict):
   print 'Begin tp write topic dict to file......'
-  filename = "../txt/arima.txt"
+  filename = "../txt/%s_arima.txt" % const.DATASET_NAME
   if os.path.exists(filename):
     print '%s is existing......' % filename
     return
@@ -38,7 +39,7 @@ def writeTopicDictOfArimaToFile(playlistDict,songDict):
 #read Predicted Topic Dict Of Arima
 def readPredictedTopicDictOfArima():
   print 'I am reading predicted topic dict of arima......'
-  filename = "../txt/arima.txt"
+  filename = "../txt/%s_arima.txt" % const.DATASET_NAME
   if not os.path.exists(filename):
     playlistDict = readPlaylistFromFile()
     songDict = readSongFromFile()
@@ -70,7 +71,7 @@ def readPredictedTopicDictOfArima():
 #output is a dict whose key is sid and value is song object
 def readSongFromFile():
   print 'I am reading songs from doc-topic file......'
-  filename = "../txt/songs-doc-topics.txt"
+  filename = "../txt/%s_songs-doc-topics.txt" % const.DATASET_NAME
   if os.path.exists(filename):
     songDict = {}
     dtFile = open(filename,"r")
@@ -124,7 +125,7 @@ def readPlaylistFromDB():
 
 #write playlists to file
 def writePlaylistsToFile():
-  filename = "../txt/playlists.txt"
+  filename = "../txt/%s_playlists.txt" % const.DATASET_NAME
   if os.path.exists(filename):
     print '%s is existing......' % filename
     return
@@ -145,7 +146,7 @@ def writePlaylistsToFile():
 
 #read playlists from file and construct dict of playlists
 def readPlaylistFromFile():
-  filename = "../txt/playlists.txt"
+  filename = "../txt/%s_playlists.txt" % const.DATASET_NAME
   if not os.path.exists(filename):
     writePlaylistsToFile()
   pFile = open(filename,"r")

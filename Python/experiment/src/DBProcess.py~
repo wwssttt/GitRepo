@@ -20,7 +20,7 @@ import matplotlib.pyplot as plt
 reload(sys)
 sys.setdefaultencoding('utf-8')
 # set log's localtion and level
-logging.basicConfig(filename=os.path.join(os.getcwd(),'log/dbprocess_log.txt'),level=logging.DEBUG,format='%(asctime)s-%(levelname)s:%(message)s')
+logging.basicConfig(filename=os.path.join(os.getcwd(),'../log/dbprocess_log.txt'),level=logging.DEBUG,format='%(asctime)s-%(levelname)s:%(message)s')
 
 # define some global varibale
 DBHOST = 'localhost'
