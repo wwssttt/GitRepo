@@ -7,21 +7,17 @@
 import test
 import util
 import sys
+import const
 
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
 if __name__ == "__main__":
-  
-  #test.compareWithAverage(7)
 
   #test.showRecallTrendWithDifferentCoeff_MostSimilarHybrid()
   
   #test.showRecallTrendWithDifferentCoeff_AverageHybrid()
-  
-  #test.showRecallTrendWithDifferentCoeff_ColdLaw()
 
-  #for i in range(9):
-    #test.testRecMethod(i)
+  #test.testRecMethod(const.ARIMA)
   
-  test.showStatistics()
+  test.showResult()

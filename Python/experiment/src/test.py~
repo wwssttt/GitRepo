@@ -19,7 +19,7 @@ reload(sys)
 sys.setdefaultencoding('utf-8')
 
 # set log's localtion and level
-logging.basicConfig(filename=os.path.join(os.getcwd(),'../log/test_log.txt'),level=logging.DEBUG,format='%(asctime)s-%(levelname)s:%(message)s')
+logging.basicConfig(filename=os.path.join(os.getcwd(),'../log/test_log_%s.txt' % const.DATASET_NAME),level=logging.DEBUG,format='%(asctime)s-%(levelname)s:%(message)s')
 
 #show mae and rmse trends of most similarhybrid methods with different coefficients
 def showRecallTrendWithDifferentCoeff_MostSimilarHybrid():
@@ -38,7 +38,7 @@ def showRecallTrendWithDifferentCoeff_MostSimilarHybrid():
   plt.xlabel("lambda")
   plt.ylabel("Recall")
   plt.legend(loc="upper right")
-  plt.savefig("../img/%s_SimilarandArima_trend_%d.png" % (const.DATASET_NAME,const.TOPIC_NUM))
+  plt.savefig("../img/%s_arima_similar_%d_%d.png" % (const.DATASET_NAME,const.TOPIC_NUM,const.TOP_N))
   plt.show()
 
 #show mae and rmse trends of average hybrid methods with different coefficients
@@ -58,84 +58,43 @@ def showRecallTrendWithDifferentCoeff_AverageHybrid():
   plt.xlabel("lambda")
   plt.ylabel("Recall")
   plt.legend(loc="upper right")
-  plt.savefig("../img/%s_AverageandArima_trend_%d" % (const.DATASET_NAME,const.TOPIC_NUM))
-  plt.show()
-
-#show mae and rmse trends of average similar methods with different coefficients
-def showRecallTrendWithDifferentCoeff_AverageSimilar():
-  songDict = persist.readSongFromFile()
-  playlistDict = persist.readPlaylistFromFile()
-  coeffs = [float(x) / 10 for x in range(0,11,1)]
-  print coeffs
-  recalls = []
-  for coeff in coeffs:
-    print 'hybrid  coeff = %f' % coeff
-    recDict = predict.getRecDict(playlistDict,songDict,8,coeff)
-    recall,precision,f1 = util.getTopNIndex(recDict,playlistDict)
-    recalls.append(recall)
-  plt.plot(coeffs,recalls,label="Recall")
-  plt.title("Recall trends of Different Hybrid Coefficients")
-  plt.xlabel("lambda")
-  plt.ylabel("Recall")
-  plt.legend(loc="upper right")
-  plt.savefig("../img/%s_average_similar_trend.png" % const.DATASET_NAME)
-  plt.show()
-
-#show mae and rmse trends of cold-law methods with different coefficients
-def showRecallTrendWithDifferentCoeff_ColdLaw():
-  songDict = persist.readSongFromFile()
-  playlistDict = persist.readPlaylistFromFile()
-  coeffs = [float(x) / 10 for x in range(0,100,10)]
-  recalls = []
-  for coeff in coeffs:
-    print 'coldlaw coeff = %f' % coeff
-    recDict = predict.getRecDict(playlistDict,songDict,2,0.5,coeff)
-    recall,precision,f1 = util.getTopNIndex(recDict,playlistDict)
-    recalls.append(recall)
-  plt.plot(coeffs,recalls,label="Recall")
-  plt.title("Recall trends of Different ColdLaw Coefficients")
-  plt.xlabel("coefficients")
-  plt.ylabel("Recall")
-  plt.legend(loc="upper right")
-  plt.savefig("../img/%s_coldlaw_trend.png" % const.DATASET_NAME)
-  #plt.show()
-
-#show weight trends of different coefficients
-def showColdLawWithDifferentCoeff():
-  coeffs = [0.25,0.5,0.75,1.0,5.0]
-  x = range(0,20,1)
-  for coeff in coeffs:
-    weight = [1*math.pow(math.e,-1*coeff*delta) for delta in x]
-    label = "coeff = %f" % coeff
-    plt.plot(x,weight,label=label)
-  plt.xlabel("time")
-  plt.ylabel("weight")
-  plt.title("Weight Trend of Cold Law with Different Coefficients")
-  plt.legend(loc = "upper right")
-  plt.savefig("../img/%s_cold-law.png" % const.DATASET_NAME)
+  plt.savefig("../img/%s_arima_average_%d_%d.png" % (const.DATASET_NAME,const.TOPIC_NUM,const.TOP_N))
   plt.show()
 
 #test traditional method
 #0: most similar
 #1: average
-#2: cold law
-#3: Arima
-#4: Arima + Similar
-#5: Arima + Average
-#6: Dis-Arima
-#7: Sd-Arima 
-#8: Sd-SVM
+#2: Arima
+#3: Arima + Similar
+#4: Arima + Average
+#5: Matrix Factorization
 def testRecMethod(recType = 0):
   info = '############%s#############' % util.getMethodName(recType)
   start_time = time.time()
   songDict = persist.readSongFromFile()
   playlistDict = persist.readPlaylistFromFile()
-  if recType < 6:
+  if recType == const.ARIMA:
     recDict = predict.getRecDict(playlistDict,songDict,recType)
-  elif recType == 6:
-    recDict = predict.getRecDictOfDis(playlistDict,songDict)
-  elif recType == 7 or recType == 8:
-    recDict = predict.getRecDictOfSd(playlistDict,songDict,recType)
+  elif recType == const.SIMILAR:
+    recDict = predict.getRecDict(playlistDict,songDict,recType)
+  elif recType == const.AVG:
+    recDict = predict.getRecDict(playlistDict,songDict,recType)
+  elif recType == const.POPULAR:
+    recDict = predict.getRecDictOfMostPopular(songDict,playlistDict)
+  elif recType == const.ARIMA_SIMILAR:
+    recDict = predict.getRecDict(playlistDict,songDict,recType)
+  elif recType == const.ARIMA_AVG:
+    recDict = predict.getRecDict(playlistDict,songDict,recType)
+  elif recType == const.MF:
+    recDict = predict.getRecDictOfMF(songDict,playlistDict)
+  elif recType == const.KNN:
+    recDict = predict.getRecDictOfUserKNN(songDict,playlistDict)
+  elif recType == const.LSA:
+    recDict = predict.getRecDictOfLSA(songDict,playlistDict)
+  elif recType == const.MARKOV:
+    recDict = predict.getRecDictOfLSA(songDict,playlistDict)
+  elif recType == const.PATTERN:
+    recDict = predict.getRecDictOfMostPattern(songDict,playlistDict)
   recall,precision,f1 = util.getTopNIndex(recDict,playlistDict)
   mae,rmse = util.getMAEandRMSE(recDict,playlistDict,songDict)
   print info
@@ -156,37 +115,42 @@ def testRecMethod(recType = 0):
 #test traditional method
 #0: most similar
 #1: average
-#2: cold law
-#3: Arima
-#4: Arima + Similar
-#5: Arima + Average
-#6: Dis-Arima
-#7: Sd-Arima 
-#8: Sd-SVM
+#2: Arima
+#3: Arima + Similar
+#4: Arima + Average
+#5: Matrix Factorization
 def getErrorOfRecMethod(recType = 0):
   start_time = time.time()
   songDict = persist.readSongFromFile()
   playlistDict = persist.readPlaylistFromFile()
-  if recType < 6:
-    if recType == 4:
-      recDict = predict.getRecDict(playlistDict,songDict,recType,0.4)
-    elif recType == 5:
-      recDict = predict.getRecDict(playlistDict,songDict,recType,0.9)
-    else:
-      recDict = predict.getRecDict(playlistDict,songDict,recType)
-  elif recType == 6:
-    recDict = predict.getRecDictOfDis(playlistDict,songDict)
-  elif recType == 7 or recType == 8:
-    recDict = predict.getRecDictOfSd(playlistDict,songDict,recType)
-  else:
-    print '0 <= recType <= 8......'
-    return
+  if recType == const.ARIMA:
+    recDict = predict.getRecDict(playlistDict,songDict,recType)
+  elif recType == const.SIMILAR:
+    recDict = predict.getRecDict(playlistDict,songDict,recType)
+  elif recType == const.AVG:
+    recDict = predict.getRecDict(playlistDict,songDict,recType)
+  elif recType == const.POPULAR:
+    recDict = predict.getRecDictOfMostPopular(songDict,playlistDict)
+  elif recType == const.ARIMA_SIMILAR:
+    recDict = predict.getRecDict(playlistDict,songDict,recType)
+  elif recType == const.ARIMA_AVG:
+    recDict = predict.getRecDict(playlistDict,songDict,recType)
+  elif recType == const.MF:
+    recDict = predict.getRecDictOfMF(songDict,playlistDict)
+  elif recType == const.KNN:
+    recDict = predict.getRecDictOfUserKNN(songDict,playlistDict)
+  elif recType == const.LSA:
+    recDict = predict.getRecDictOfLSA(songDict,playlistDict)
+  elif recType == const.MARKOV:
+    recDict = predict.getRecDictOfLSA(songDict,playlistDict)
+  elif recType == const.PATTERN:
+    recDict = predict.getRecDictOfLSA(songDict,playlistDict)
   recalls = []
   precisions = []
   f1s = []
   maes = []
   rmses = []
-  for topN in range(1,311,10):
+  for topN in range(1,const.TOP_N+2,5):
     recall,precision,f1 = util.getTopNIndex(recDict,playlistDict,topN)
     mae,rmse = util.getMAEandRMSE(recDict,playlistDict,songDict,topN)
     recalls.append(recall)
@@ -198,77 +162,12 @@ def getErrorOfRecMethod(recType = 0):
     logging.info('%d>%d:%f %f %f %f %f' % (recType,topN,recall,precision,f1,mae,rmse))
   return recalls,precisions,f1s,maes,rmses  
 
-def compareWithAverage(recType):
-  if recType == 1:
-    print 'You compare average with itsself......'
-    return
-  logging.info('I am in compareWithAverage......')
-  filename = "../txt/%s_testall_%d.txt" % (const.DATASET_NAME,const.TOPIC_NUM)
-  x = range(1,311,10)
-  result = [[[] for i in range(5)] for i in range(2)]
-  #read result from file to result
-  if os.path.exists(filename):
-    print '%s is existing......' % filename    
-    rFile = open(filename,"r")
-    lines = rFile.readlines()
-    for line in lines:
-      line = line.rstrip('\n')
-      items = line.split("INFO:")
-      line = items[1]
-      items = line.split(":")
-      ids = items[0]
-      values = items[1]
-      idItems = ids.split(">")
-      mid = int(idItems[0])
-      topN = int(idItems[1])
-      valueItems = values.split()
-      if mid == 1:
-        result[mid][0].append(float(valueItems[0]))
-        result[mid][1].append(float(valueItems[1]))
-        result[mid][2].append(float(valueItems[2]))
-        result[mid][3].append(float(valueItems[3]))
-        result[mid][4].append(float(valueItems[4]))
-      elif mid == recType:
-        result[0][0].append(float(valueItems[0]))
-        result[0][1].append(float(valueItems[1]))
-        result[0][2].append(float(valueItems[2]))
-        result[0][3].append(float(valueItems[3]))
-        result[0][4].append(float(valueItems[4]))
-      else:
-        continue
-    rFile.close()
-  #if some method is not in file, recreate it
-  if len(result[0][0]) == 0:
-    recalls,precisions,f1s,maes,rmses = getErrorOfRecMethod(recType)
-    result[0][0] = recalls
-    result[0][1] = precisions
-    result[0][2] = f1s
-    result[0][3] = maes
-    result[0][4] = rmses
-  if len(result[1][0]) == 0:
-    recalls,precisions,f1s,maes,rmses = getErrorOfRecMethod(1)
-    result[1][0] = recalls
-    result[1][1] = precisions
-    result[1][2] = f1s
-    result[1][3] = maes
-    result[1][4] = rmses
-  for index in range(5):
-    plt.figure(index)
-    plt.plot(x,result[0][index],label=util.getMethodName(recType))
-    plt.plot(x,result[1][index],label=util.getMethodName(1))
-    plt.title("%s of Different Recommend Algorithms" % indexName)
-    plt.xlabel("Number of recommendations")
-    plt.ylabel(indexName)
-    plt.savefig("../img/%s_%s_with_average_%d.png" % (const.DATASET_NAME,indexName,const.TOPIC_NUM))
-    #plt.show()
-  logging.info('I am out compareWithAverage......')
-
 #show all recommend results with different methods
-def showStatistics():
-  logging.info('I am in showStatistics......')
-  filename = "../txt/%s_testall_%d.txt" % (const.DATASET_NAME,const.TOPIC_NUM)
-  x = range(1,311,10)
-  result = [[[] for i in range(5)] for i in range(9)]
+def showResult():
+  logging.info('I am in showResult......')
+  filename = "../txt/%s_testall_%d_%d.txt" % (const.DATASET_NAME,const.TOPIC_NUM,const.TOP_N)
+  x = range(1,const.TOP_N+2,5)
+  result = [[[] for i in range(5)] for i in range(11)]
   #read result from file to result
   if os.path.exists(filename):
     print '%s is existing......' % filename    
@@ -291,42 +190,73 @@ def showStatistics():
       result[mid][3].append(float(valueItems[3]))
       result[mid][4].append(float(valueItems[4]))
     rFile.close()
+  else:
+    rFile = open(filename,"w")
+    rFile.close()
   #if some method is not in file, recreate it
-  for mid in range(9):
-    if len(result[mid][0]) == 0 and mid <= 5:
+  for mid in range(11):
+    if len(result[mid][0]) == 0:
       recalls,precisions,f1s,maes,rmses = getErrorOfRecMethod(mid)
       result[mid][0] = recalls
       result[mid][1] = precisions
       result[mid][2] = f1s
       result[mid][3] = maes
       result[mid][4] = rmses
-  #plt first five method on one img
+
+  #plt img of comparing with pure method
   for index in range(5):
     plt.figure(index)
     indexName = util.getIndexName(index)
-    for mid in range(0,6,1):
+    mids = [0,1,2,3]
+    for mid in mids:
       plt.plot(x,result[mid][index],label=util.getMethodName(mid))
     plt.title("%s of Different Recommend Algorithms" % indexName)
     plt.xlabel("Number of recommendations")
     plt.ylabel(indexName)
-    if index == 0:
-      plt.legend(loc="lower right")
-    else:
-      plt.legend()
-    plt.savefig("../img/%s_%s_%d.png" % (const.DATASET_NAME,indexName,const.TOPIC_NUM))
+    plt.legend(loc=const.locs[index])
+    plt.savefig("../img/pure_%s_%s_%d_%d.png" % (const.DATASET_NAME,indexName,const.TOPIC_NUM,const.TOP_N))
     #plt.show()
-  
-  #plt last five method on one img
-  if len(result[6][0]) != 0:
-    for index in range(5):
-      plt.figure(index+5)
-      indexName = util.getIndexName(index)
-      for mid in range(4,9,1):
-        plt.plot(x,result[mid][index],label=util.getMethodName(mid))
-      plt.title("%s of Different Recommend Algorithms" % indexName)
-      plt.xlabel("Number of recommendations")
-      plt.ylabel(indexName)
-      plt.legend()
-      plt.savefig("../img/%s_%s_%d_.png" % (const.DATASET_NAME,indexName,TOPIC_NUM))
-      #plt.show()
-  logging.info('I am out showStatistics......')
+
+  #plt img of comparing with pure method
+  for index in range(5):
+    plt.figure(index+5)
+    indexName = util.getIndexName(index)
+    mids = [0,4,5]
+    for mid in mids:
+      plt.plot(x,result[mid][index],label=util.getMethodName(mid))
+    plt.title("%s of Different Recommend Algorithms" % indexName)
+    plt.xlabel("Number of recommendations")
+    plt.ylabel(indexName)
+    plt.legend(loc=const.locs[index])
+    plt.savefig("../img/hybrid_%s_%s_%d_%d.png" % (const.DATASET_NAME,indexName,const.TOPIC_NUM,const.TOP_N))
+    #plt.show()
+
+  #plt img of comparing with pure method
+  for index in range(5):
+    plt.figure(index+10)
+    indexName = util.getIndexName(index)
+    mids = [0,6,7]
+    for mid in mids:
+      plt.plot(x,result[mid][index],label=util.getMethodName(mid))
+    plt.title("%s of Different Recommend Algorithms" % indexName)
+    plt.xlabel("Number of recommendations")
+    plt.ylabel(indexName)
+    plt.legend(loc=const.locs[index])
+    plt.savefig("../img/cf_%s_%s_%d_%d.png" % (const.DATASET_NAME,indexName,const.TOPIC_NUM,const.TOP_N))
+    #plt.show()
+
+  #plt img of comparing with pure method
+  for index in range(5):
+    plt.figure(index+15)
+    indexName = util.getIndexName(index)
+    mids = [0,8,9,10]
+    for mid in mids:
+      plt.plot(x,result[mid][index],label=util.getMethodName(mid))
+    plt.title("%s of Different Recommend Algorithms" % indexName)
+    plt.xlabel("Number of recommendations")
+    plt.ylabel(indexName)
+    plt.legend(loc=const.locs[index])
+    plt.savefig("../img/sequential_%s_%s_%d_%d.png" % (const.DATASET_NAME,indexName,const.TOPIC_NUM,const.TOP_N))
+    #plt.show()
+
+  logging.info('I am out showResult......')

@@ -1,0 +1,1152 @@
+2014-01-09 15:53:17,901-INFO:adding document #0 to Dictionary(0 unique tokens)
+2014-01-09 15:53:29,479-INFO:built Dictionary(26145 unique tokens) from 9488 documents (total 2431143 corpus positions)
+2014-01-09 15:53:41,033-INFO:collecting document frequencies
+2014-01-09 15:53:41,033-INFO:PROGRESS: processing document #0
+2014-01-09 15:53:41,146-INFO:calculating IDF weights for 9488 documents and 26145 features (276838 matrix non-zeros)
+2014-01-09 15:53:41,183-INFO:using serial LDA version on this node
+2014-01-09 15:53:41,742-INFO:running online LDA training, 30 topics, 1 passes over the supplied corpus of 9488 documents, updating model once every 2000 documents
+2014-01-09 15:53:41,743-WARNING:too few updates, training might not converge; consider increasing the number of passes to improve accuracy
+2014-01-09 15:53:42,401-INFO:PROGRESS: iteration 0, at document #2000/9488
+2014-01-09 15:53:42,401-DEBUG:performing inference on a chunk of 2000 documents
+2014-01-09 15:53:45,085-INFO:2000/2000 documents converged within 50 iterations
+2014-01-09 15:53:45,095-DEBUG:updating topics
+2014-01-09 15:53:45,143-INFO:merging changes from 2000 documents into a model of 9488 documents
+2014-01-09 15:53:45,791-INFO:topic #0: 0.013*christmas + 0.008*rock + 0.006*door + 0.005*indy + 0.004*fem + 0.004*sun + 0.004*grac + 0.004*altern + 0.004*nat + 0.003*biosph
+2014-01-09 15:53:45,802-INFO:topic #1: 0.015*christmas + 0.005*nev + 0.005*indy + 0.005*nat + 0.005*rock + 0.004*shout + 0.004*cronin + 0.004*coldplay + 0.003*blu + 0.003*folk
+2014-01-09 15:53:45,813-INFO:topic #2: 0.007*rock + 0.006*indy + 0.005*boy + 0.005*nev + 0.005*altern + 0.005*punk + 0.005*fal + 0.004*machin + 0.004*cov + 0.004*rag
+2014-01-09 15:53:45,824-INFO:topic #3: 0.006*indy + 0.006*lennox + 0.005*rock + 0.005*anny + 0.004*folk + 0.004*fem + 0.004*pop + 0.004*shoegaz + 0.004*alunageorg + 0.003*altern
+2014-01-09 15:53:45,835-INFO:topic #4: 0.007*perry + 0.007*katy + 0.006*portishead + 0.005*indy + 0.005*rock + 0.004*shoegaz + 0.004*pop + 0.004*dead + 0.004*boy + 0.004*dant
+2014-01-09 15:53:45,846-INFO:topic #5: 0.007*indy + 0.006*rock + 0.005*altern + 0.005*folk + 0.005*harvey + 0.005*pj + 0.005*electron + 0.004*son + 0.004*hip-hop + 0.003*maccab
+2014-01-09 15:53:45,857-INFO:topic #6: 0.006*christmas + 0.005*guarald + 0.005*indy + 0.005*vint + 0.004*dead + 0.004*rock + 0.003*april + 0.003*somafm + 0.003*met + 0.003*folk
+2014-01-09 15:53:45,868-INFO:topic #7: 0.008*christmas + 0.005*indy + 0.005*rock + 0.005*guarald + 0.004*swervedr + 0.004*vint + 0.004*shoegaz + 0.003*folk + 0.003*jazz + 0.003*electron
+2014-01-09 15:53:45,878-INFO:topic #8: 0.007*christmas + 0.007*guarald + 0.006*vint + 0.005*dido + 0.005*masc + 0.005*rock + 0.005*surf + 0.004*trio + 0.004*mr. + 0.004*instru
+2014-01-09 15:53:45,889-INFO:topic #9: 0.008*rock + 0.006*indy + 0.005*jack + 0.005*altern + 0.004*somafm + 0.003*bagel + 0.003*elliot + 0.003*brit + 0.003*japandroid + 0.003*johnson
+2014-01-09 15:53:45,900-INFO:topic #10: 0.004*rock + 0.004*bagel + 0.003*somafm + 0.003*indy + 0.003*blu + 0.003*hous + 0.003*electron + 0.003*masc + 0.003*met + 0.003*head
+2014-01-09 15:53:45,911-INFO:topic #11: 0.007*christmas + 0.006*xx + 0.005*indy + 0.004*rock + 0.004*fem + 0.004*dido + 0.004*pop + 0.004*instru + 0.004*gar + 0.004*libertin
+2014-01-09 15:53:45,921-INFO:topic #12: 0.012*christmas + 0.006*electron + 0.006*indy + 0.005*rjd2 + 0.005*rock + 0.004*beck + 0.004*night + 0.004*fem + 0.003*singer-songwrit + 0.003*altern
+2014-01-09 15:53:45,932-INFO:topic #13: 0.005*rock + 0.004*christmas + 0.004*russ + 0.004*kiss + 0.004*dido + 0.004*circ + 0.003*cull + 0.003*jazz + 0.003*indy + 0.003*jamy
+2014-01-09 15:53:45,943-INFO:topic #14: 0.008*indy + 0.006*rock + 0.006*maccab + 0.004*surf + 0.004*french + 0.003*country + 0.003*cronin + 0.003*electron + 0.003*blu + 0.003*pop
+2014-01-09 15:53:45,953-INFO:topic diff=26.211297, rho=1.000000
+2014-01-09 15:53:46,563-INFO:PROGRESS: iteration 0, at document #4000/9488
+2014-01-09 15:53:46,563-DEBUG:performing inference on a chunk of 2000 documents
+2014-01-09 15:53:49,442-INFO:1997/2000 documents converged within 50 iterations
+2014-01-09 15:53:49,452-DEBUG:updating topics
+2014-01-09 15:53:49,499-INFO:merging changes from 2000 documents into a model of 9488 documents
+2014-01-09 15:53:50,132-INFO:topic #0: 0.020*christmas + 0.009*armstrong + 0.009*lou + 0.009*die + 0.008*fir + 0.008*nick + 0.008*soc + 0.008*cav + 0.007*rock + 0.006*merry
+2014-01-09 15:53:50,143-INFO:topic #1: 0.014*christmas + 0.011*mcfly + 0.006*martin + 0.005*dean + 0.004*shout + 0.004*met + 0.004*fut + 0.004*rock + 0.004*synth-rock + 0.003*skin
+2014-01-09 15:53:50,155-INFO:topic #2: 0.015*iron + 0.013*win + 0.010*fal + 0.009*boy + 0.009*northern + 0.007*& + 0.007*rock + 0.007*indy + 0.007*folk + 0.006*punk
+2014-01-09 15:53:50,166-INFO:topic #3: 0.008*devo + 0.006*ladytron + 0.005*indy + 0.005*dyl + 0.005*rock + 0.005*gon + 0.004*wav + 0.004*blood + 0.004*hil + 0.004*synthpop
+2014-01-09 15:53:50,177-INFO:topic #4: 0.010*nirvan + 0.008*sold + 0.007*lun + 0.005*brok + 0.005*grung + 0.005*fir + 0.005*lost + 0.004*parad + 0.004*rock + 0.004*perry
+2014-01-09 15:53:50,188-INFO:topic #5: 0.021*jackson + 0.018*michael + 0.009*met + 0.007*doom + 0.006*rock + 0.006*sludg + 0.006*post-rock + 0.005*pop + 0.005*hip-hop + 0.005*destroy
+2014-01-09 15:53:50,199-INFO:topic #6: 0.017*metalc + 0.012*post-hardcore + 0.012*met + 0.010*sufs + 0.010*plan + 0.009*stev + 0.006*mogwa + 0.006*christmas + 0.005*dea + 0.005*divid
+2014-01-09 15:53:50,211-INFO:topic #7: 0.010*cinem + 0.010*door + 0.007*club + 0.007*indy + 0.007*christmas + 0.006*lie + 0.005*rock + 0.005*electron + 0.004*punk + 0.003*body
+2014-01-09 15:53:50,222-INFO:topic #8: 0.010*hardc + 0.006*pan + 0.005*mr. + 0.005*panic! + 0.004*rock + 0.004*disco + 0.004*sunday + 0.004*radiohead + 0.003*christmas + 0.003*converg
+2014-01-09 15:53:50,233-INFO:topic #9: 0.015*jack + 0.014*johnson + 0.008*rock + 0.006*indy + 0.006*acoust + 0.006*peopl + 0.005*param + 0.004*leg + 0.004*noir + 0.004*pop
+2014-01-09 15:53:50,244-INFO:topic #10: 0.014*fu + 0.011*manchu + 0.009*ston + 0.009*tron + 0.008*architect + 0.008*met + 0.005*boom + 0.005*rock + 0.005*kil + 0.004*soundtrack
+2014-01-09 15:53:50,255-INFO:topic #11: 0.011*birthday + 0.009*christmas + 0.006*carp + 0.006*cloud + 0.005*syn + 0.005*common + 0.004*post-rock + 0.004*leav + 0.004*fem + 0.004*johnson
+2014-01-09 15:53:50,267-INFO:topic #12: 0.015*christmas + 0.014*sufs + 0.012*stev + 0.008*indy + 0.008*beck + 0.006*holy + 0.005*rock + 0.005*night + 0.004*regin + 0.004*folk
+2014-01-09 15:53:50,278-INFO:topic #13: 0.013*cult + 0.005*sick + 0.004*christmas + 0.004*row + 0.003*post-rock + 0.003*bruc + 0.003*wrong + 0.003*rock + 0.003*mel + 0.003*arrow
+2014-01-09 15:53:50,289-INFO:topic #14: 0.010*fiv + 0.008*cypress + 0.008*scoot + 0.008*laur + 0.005*indy + 0.005*rock + 0.004*post-rock + 0.004*stil + 0.004*nee + 0.004*mar
+2014-01-09 15:53:50,299-INFO:topic diff=0.622493, rho=0.707107
+2014-01-09 15:53:50,894-INFO:PROGRESS: iteration 0, at document #6000/9488
+2014-01-09 15:53:50,894-DEBUG:performing inference on a chunk of 2000 documents
+2014-01-09 15:53:53,499-INFO:1998/2000 documents converged within 50 iterations
+2014-01-09 15:53:53,509-DEBUG:updating topics
+2014-01-09 15:53:53,555-INFO:merging changes from 2000 documents into a model of 9488 documents
+2014-01-09 15:53:54,189-INFO:topic #0: 0.018*christmas + 0.008*die + 0.008*rock + 0.007*jov + 0.007*gospel + 0.006*littl + 0.006*indy + 0.005*fir + 0.005*lou + 0.005*hors
+2014-01-09 15:53:54,200-INFO:topic #1: 0.011*christmas + 0.008*celt + 0.005*cirqu + 0.005*mcfly + 0.005*met + 0.004*span + 0.004*liquid + 0.004*dubstep + 0.004*fantasy + 0.004*rock
+2014-01-09 15:53:54,211-INFO:topic #2: 0.019*ris + 0.012*punk + 0.010*fal + 0.009*rock + 0.009*iron + 0.006*win + 0.006*talk + 0.006*leon + 0.006*boy + 0.006*altern
+2014-01-09 15:53:54,223-INFO:topic #3: 0.011*bon + 0.009*iv + 0.009*cag + 0.009*eleph + 0.008*indy + 0.007*dubstep + 0.007*rock + 0.007*leo + 0.006*folk + 0.005*altern
+2014-01-09 15:53:54,234-INFO:topic #4: 0.011*parad + 0.010*lost + 0.006*goth + 0.005*katy + 0.004*perry + 0.004*nirvan + 0.004*met + 0.004*pop + 0.004*hip-hop + 0.004*rock
+2014-01-09 15:53:54,246-INFO:topic #5: 0.013*met + 0.012*jackson + 0.010*clash + 0.009*michael + 0.009*doom + 0.008*rock + 0.007*80s + 0.006*mad + 0.005*indy + 0.005*depech
+2014-01-09 15:53:54,257-INFO:topic #6: 0.034*met + 0.018*post-hardcore + 0.015*doom + 0.014*metalc + 0.012*enemy + 0.012*joy + 0.012*dea + 0.011*goth + 0.008*kataton + 0.006*plan
+2014-01-09 15:53:54,269-INFO:topic #7: 0.009*capit + 0.008*publ + 0.006*deathc + 0.006*daylight + 0.006*door + 0.005*dea + 0.005*rock + 0.005*indy + 0.005*christmas + 0.005*ther
+2014-01-09 15:53:54,280-INFO:topic #8: 0.017*shor + 0.014*hardc + 0.007*rub + 0.006*mr. + 0.005*twist + 0.005*pan + 0.005*californ + 0.005*nashvil + 0.005*soundtrack + 0.004*org
+2014-01-09 15:53:54,291-INFO:topic #9: 0.014*jack + 0.013*johnson + 0.009*rock + 0.007*moody + 0.007*acoust + 0.006*indy + 0.006*mac + 0.005*rain + 0.005*peopl + 0.004*war
+2014-01-09 15:53:54,303-INFO:topic #10: 0.023*met + 0.022*thrash + 0.018*architect + 0.011*sepultur + 0.008*idm + 0.008*ska + 0.008*ston + 0.006*black + 0.006*fu + 0.005*kil
+2014-01-09 15:53:54,314-INFO:topic #11: 0.009*harry + 0.008*tom + 0.007*christmas + 0.006*icon + 0.005*wait + 0.005*leav + 0.005*angel + 0.005*birthday + 0.005*carp + 0.005*jessy
+2014-01-09 15:53:54,326-INFO:topic #12: 0.013*christian + 0.012*christmas + 0.008*belleruch + 0.007*sufs + 0.007*indy + 0.007*stev + 0.005*rock + 0.004*beck + 0.004*trip-hop + 0.004*night
+2014-01-09 15:53:54,337-INFO:topic #13: 0.007*fai + 0.007*cult + 0.004*cov + 0.004*wrong + 0.004*alexand + 0.004*bruc + 0.003*stuck + 0.003*row + 0.003*springsteen + 0.003*rank
+2014-01-09 15:53:54,349-INFO:topic #14: 0.012*air + 0.006*mar + 0.006*fiv + 0.005*scoot + 0.005*jimmy + 0.005*rainbow + 0.005*french + 0.004*rock + 0.004*hold + 0.004*indy
+2014-01-09 15:53:54,359-INFO:topic diff=0.589012, rho=0.577350
+2014-01-09 15:53:55,007-INFO:PROGRESS: iteration 0, at document #8000/9488
+2014-01-09 15:53:55,007-DEBUG:performing inference on a chunk of 2000 documents
+2014-01-09 15:53:57,751-INFO:1998/2000 documents converged within 50 iterations
+2014-01-09 15:53:57,761-DEBUG:updating topics
+2014-01-09 15:53:57,808-INFO:merging changes from 2000 documents into a model of 9488 documents
+2014-01-09 15:53:58,443-INFO:topic #0: 0.018*christmas + 0.008*hors + 0.007*rock + 0.007*die + 0.006*indy + 0.005*littl + 0.005*fir + 0.005*jazz + 0.005*merry + 0.004*gospel
+2014-01-09 15:53:58,455-INFO:topic #1: 0.010*dubstep + 0.008*christmas + 0.007*bur + 0.006*fut + 0.006*ear + 0.005*dean + 0.004*celt + 0.004*sea + 0.004*ey + 0.004*folk
+2014-01-09 15:53:58,466-INFO:topic #2: 0.013*punk + 0.010*ris + 0.009*fal + 0.009*rock + 0.008*talk + 0.006*sugarcult + 0.006*emo + 0.006*iron + 0.006*heat + 0.005*altern
+2014-01-09 15:53:58,478-INFO:topic #3: 0.010*dubstep + 0.008*indy + 0.007*folk + 0.007*bon + 0.007*sav + 0.006*rock + 0.005*camer + 0.005*altern + 0.005*iv + 0.005*obscur
+2014-01-09 15:53:58,490-INFO:topic #4: 0.008*lost + 0.007*parad + 0.007*blak + 0.006*brok + 0.006*oneohtrix + 0.006*project + 0.006*al + 0.004*katy + 0.004*indy + 0.004*goth
+2014-01-09 15:53:58,501-INFO:topic #5: 0.010*rock + 0.008*pj + 0.008*chip + 0.008*harvey + 0.007*jackson + 0.007*indy + 0.007*met + 0.006*michael + 0.006*hot + 0.006*80s
+2014-01-09 15:53:58,513-INFO:topic #6: 0.028*met + 0.021*dea + 0.012*post-hardcore + 0.009*joy + 0.009*goth + 0.009*metalc + 0.008*doom + 0.008*dutch + 0.008*enemy + 0.007*suck
+2014-01-09 15:53:58,525-INFO:topic #7: 0.019*neil + 0.006*rock + 0.005*publ + 0.005*capit + 0.004*indy + 0.004*som + 0.004*christmas + 0.004*class + 0.004*dub + 0.004*daylight
+2014-01-09 15:53:58,536-INFO:topic #8: 0.020*chain + 0.011*parson + 0.011*disco + 0.010*panic! + 0.010*pan + 0.008*hardc + 0.008*shor + 0.006*project + 0.006*twist + 0.005*mr.
+2014-01-09 15:53:58,548-INFO:topic #9: 0.010*fad + 0.008*anim + 0.008*rock + 0.008*indy + 0.007*shin + 0.007*tail + 0.007*jack + 0.006*johnson + 0.006*acoust + 0.005*mac
+2014-01-09 15:53:58,560-INFO:topic #10: 0.017*met + 0.016*thrash + 0.012*oizo + 0.011*idm + 0.010*ska + 0.009*architect + 0.009*mr. + 0.007*indigo + 0.007*redhead + 0.007*electron
+2014-01-09 15:53:58,572-INFO:topic #11: 0.012*tom + 0.012*65daysofstatic + 0.008*bush + 0.008*wait + 0.007*post-rock + 0.006*angel + 0.005*kat + 0.005*leav + 0.004*common + 0.004*harry
+2014-01-09 15:53:58,584-INFO:topic #12: 0.009*ferdinand + 0.009*christmas + 0.009*franz + 0.008*indy + 0.007*christian + 0.006*furry + 0.006*clap + 0.005*stev + 0.005*rock + 0.005*sufs
+2014-01-09 15:53:58,595-INFO:topic #13: 0.006*bruc + 0.005*cult + 0.005*springsteen + 0.005*fai + 0.004*blunt + 0.004*sick + 0.004*stuck + 0.003*wrong + 0.003*flat + 0.003*(feat.
+2014-01-09 15:53:58,607-INFO:topic #14: 0.018*astronaut + 0.014*god + 0.012*post-rock + 0.008*air + 0.007*instru + 0.006*stil + 0.005*mar + 0.005*french + 0.005*le + 0.005*bright
+2014-01-09 15:53:58,617-INFO:topic diff=0.593655, rho=0.500000
+2014-01-09 15:53:58,807-INFO:PROGRESS: iteration 0, at document #9488/9488
+2014-01-09 15:53:58,808-DEBUG:performing inference on a chunk of 1488 documents
+2014-01-09 15:54:00,089-INFO:1488/1488 documents converged within 50 iterations
+2014-01-09 15:54:00,106-DEBUG:updating topics
+2014-01-09 15:54:00,155-INFO:merging changes from 1488 documents into a model of 9488 documents
+2014-01-09 15:54:00,796-INFO:topic #0: 0.026*christmas + 0.011*grac + 0.009*hors + 0.009*dum + 0.008*day + 0.007*merry + 0.007*jmsn + 0.007*rock + 0.006*bublã© + 0.006*littl
+2014-01-09 15:54:00,808-INFO:topic #1: 0.017*schmidt + 0.012*clam + 0.011*dean + 0.009*m.g. + 0.007*ear + 0.005*dubstep + 0.005*christmas + 0.005*liquid + 0.005*sea + 0.005*bur
+2014-01-09 15:54:00,819-INFO:topic #2: 0.009*punk + 0.008*fal + 0.007*ris + 0.007*talk + 0.007*macintosh + 0.006*win + 0.006*rock + 0.005*heat + 0.005*rod + 0.005*sugarcult
+2014-01-09 15:54:00,831-INFO:topic #3: 0.013*anny + 0.009*leo + 0.007*cag + 0.006*blood + 0.006*dubstep + 0.006*eleph + 0.006*indy + 0.006*sav + 0.005*gon + 0.005*folk
+2014-01-09 15:54:00,843-INFO:topic #4: 0.008*lost + 0.007*mix) + 0.007*project + 0.005*ballet + 0.005*bat + 0.005*parad + 0.005*blak + 0.005*perry + 0.005*wood + 0.004*brok
+2014-01-09 15:54:00,855-INFO:topic #5: 0.018*jackson + 0.015*michael + 0.007*rock + 0.007*pj + 0.006*harvey + 0.006*chip + 0.005*met + 0.005*indy + 0.005*expery + 0.005*electron
+2014-01-09 15:54:00,866-INFO:topic #6: 0.018*met + 0.014*dea + 0.013*casino + 0.010*post-hardcore + 0.009*joy + 0.007*ihsahn + 0.006*plan + 0.006*metalc + 0.006*enemy + 0.006*dog
+2014-01-09 15:54:00,878-INFO:topic #7: 0.013*thoma + 0.012*neil + 0.012*rajn + 0.005*de + 0.005*body + 0.004*dub + 0.004*ther + 0.004*rock + 0.004*jet + 0.004*door
+2014-01-09 15:54:00,890-INFO:topic #8: 0.017*chain + 0.011*pan + 0.008*parson + 0.007*disco + 0.007*shor + 0.006*vernon + 0.006*panic! + 0.006*project + 0.006*hardc + 0.005*integr
+2014-01-09 15:54:00,902-INFO:topic #9: 0.011*bird + 0.009*jonath + 0.009*fad + 0.008*anim + 0.006*tinley + 0.006*emmet + 0.006*rock + 0.005*shin + 0.005*japanes + 0.005*tail
+2014-01-09 15:54:00,914-INFO:topic #10: 0.013*met + 0.011*thrash + 0.010*architect + 0.008*idm + 0.008*oizo + 0.007*grmln + 0.007*wat + 0.007*mr. + 0.007*surkin + 0.007*ska
+2014-01-09 15:54:00,925-INFO:topic #11: 0.010*sig + 0.010*version) + 0.009*tom + 0.007*post-rock + 0.007*rã³s + 0.007*timor + 0.007*65daysofstatic + 0.006*wait + 0.005*angel + 0.005*harry
+2014-01-09 15:54:00,937-INFO:topic #12: 0.010*chant + 0.009*milky + 0.008*christmas + 0.006*stev + 0.006*ferdinand + 0.005*indy + 0.005*franz + 0.005*brown + 0.005*christian + 0.004*sufs
+2014-01-09 15:54:00,949-INFO:topic #13: 0.014*rado + 0.014*blunt + 0.013*row + 0.005*(feat. + 0.005*chines + 0.005*ð’ñ–ð´ð¾ð¿ð»ññð¾ð²ð° + 0.005*ð’ð¾ð¿ð»ñ– + 0.005*å‘¨æ°å€« + 0.004*taiw + 0.004*sick
+2014-01-09 15:54:00,960-INFO:topic #14: 0.012*astronaut + 0.011*god + 0.008*air + 0.007*post-rock + 0.005*midnight + 0.005*stil + 0.005*hold + 0.005*instru + 0.005*french + 0.005*nee
+2014-01-09 15:54:00,971-INFO:topic diff=0.463416, rho=0.447214
+2014-01-09 15:55:48,487-INFO:adding document #0 to Dictionary(0 unique tokens)
+2014-01-09 15:56:00,549-INFO:built Dictionary(26145 unique tokens) from 9488 documents (total 2431143 corpus positions)
+2014-01-09 15:56:12,308-INFO:collecting document frequencies
+2014-01-09 15:56:12,309-INFO:PROGRESS: processing document #0
+2014-01-09 15:56:12,430-INFO:calculating IDF weights for 9488 documents and 26145 features (276838 matrix non-zeros)
+2014-01-09 15:56:12,466-INFO:using serial LDA version on this node
+2014-01-09 15:56:13,023-INFO:running online LDA training, 30 topics, 1 passes over the supplied corpus of 9488 documents, updating model once every 2000 documents
+2014-01-09 15:56:13,023-WARNING:too few updates, training might not converge; consider increasing the number of passes to improve accuracy
+2014-01-09 15:56:13,678-INFO:PROGRESS: iteration 0, at document #2000/9488
+2014-01-09 15:56:13,678-DEBUG:performing inference on a chunk of 2000 documents
+2014-01-09 15:56:16,386-INFO:2000/2000 documents converged within 50 iterations
+2014-01-09 15:56:16,395-DEBUG:updating topics
+2014-01-09 15:56:16,442-INFO:merging changes from 2000 documents into a model of 9488 documents
+2014-01-09 15:56:17,096-INFO:topic #0: 0.005*indy + 0.005*rock + 0.005*christmas + 0.004*craig + 0.004*david + 0.003*pop + 0.003*altern + 0.003*gold + 0.003*ting + 0.003*letheret
+2014-01-09 15:56:17,108-INFO:topic #1: 0.008*christmas + 0.005*rock + 0.004*indy + 0.004*jazz + 0.004*hip-hop + 0.004*dido + 0.003*rjd2 + 0.003*electron + 0.003*jack + 0.003*lennox
+2014-01-09 15:56:17,120-INFO:topic #2: 0.006*rock + 0.005*altern + 0.004*indy + 0.004*met + 0.004*harvey + 0.004*pj + 0.004*hip-hop + 0.004*fem + 0.004*broth + 0.003*gwen
+2014-01-09 15:56:17,131-INFO:topic #3: 0.006*indy + 0.005*rock + 0.005*digit + 0.005*christmas + 0.004*coldplay + 0.003*notw + 0.003*lov + 0.003*somafm + 0.003*altern + 0.003*gag
+2014-01-09 15:56:17,143-INFO:topic #4: 0.005*rock + 0.005*chapterh + 0.004*surf + 0.004*indy + 0.004*regin + 0.003*gould + 0.003*fem + 0.003*spekt + 0.003*prim + 0.003*altern
+2014-01-09 15:56:17,155-INFO:topic #5: 0.007*indy + 0.006*rock + 0.005*xx + 0.005*altern + 0.004*met + 0.004*beck + 0.004*electron + 0.003*pop + 0.003*sev + 0.003*shoegaz
+2014-01-09 15:56:17,167-INFO:topic #6: 0.008*whiskeytown + 0.005*indy + 0.005*alt-country + 0.005*rock + 0.004*blu + 0.004*country + 0.004*alt-j + 0.003*altern + 0.003*perry + 0.003*katy
+2014-01-09 15:56:17,178-INFO:topic #7: 0.010*christmas + 0.005*rock + 0.005*crib + 0.005*vint + 0.004*ston + 0.004*indy + 0.004*jazz + 0.004*guarald + 0.003*nev + 0.003*light
+2014-01-09 15:56:17,190-INFO:topic #8: 0.017*christmas + 0.006*indy + 0.005*rock + 0.005*door + 0.004*coldplay + 0.004*cronin + 0.003*guarald + 0.003*instru + 0.003*somafm + 0.003*whiskeytown
+2014-01-09 15:56:17,202-INFO:topic #9: 0.006*indy + 0.005*& + 0.005*teit + 0.004*rock + 0.004*folk + 0.003*singer-songwrit + 0.003*dead + 0.003*altern + 0.003*fem + 0.003*broth
+2014-01-09 15:56:17,214-INFO:topic #10: 0.005*pop + 0.005*rock + 0.004*dido + 0.004*fem + 0.004*indy + 0.004*xx + 0.003*littl + 0.003*biosph + 0.003*ring + 0.003*lord
+2014-01-09 15:56:17,225-INFO:topic #11: 0.008*dido + 0.007*christmas + 0.007*rag + 0.006*machin + 0.005*rock + 0.004*indy + 0.004*fem + 0.004*kiss + 0.003*instru + 0.003*brion
+2014-01-09 15:56:17,237-INFO:topic #12: 0.007*rock + 0.006*indy + 0.006*christmas + 0.004*electron + 0.004*automatic + 0.004*roy + 0.004*kiss + 0.003*head + 0.003*altern + 0.003*crib
+2014-01-09 15:56:17,249-INFO:topic #13: 0.008*pj + 0.008*harvey + 0.008*hip-hop + 0.008*rock + 0.006*n*e*r*d + 0.005*christmas + 0.005*slugab + 0.004*altern + 0.004*indy + 0.004*brit
+2014-01-09 15:56:17,261-INFO:topic #14: 0.006*teit + 0.005*rock + 0.005*indy + 0.004*king + 0.004*altern + 0.003*dido + 0.003*pop + 0.003*instru + 0.003*monst + 0.003*christmas
+2014-01-09 15:56:17,272-INFO:topic diff=26.216859, rho=1.000000
+2014-01-09 15:56:17,882-INFO:PROGRESS: iteration 0, at document #4000/9488
+2014-01-09 15:56:17,882-DEBUG:performing inference on a chunk of 2000 documents
+2014-01-09 15:56:20,800-INFO:1998/2000 documents converged within 50 iterations
+2014-01-09 15:56:20,811-DEBUG:updating topics
+2014-01-09 15:56:20,860-INFO:merging changes from 2000 documents into a model of 9488 documents
+2014-01-09 15:56:21,499-INFO:topic #0: 0.012*hardc + 0.010*david + 0.009*tron + 0.005*cloud + 0.004*bitch + 0.004*street + 0.004*rock + 0.004*sar + 0.004*blood + 0.004*soul
+2014-01-09 15:56:21,511-INFO:topic #1: 0.015*daft + 0.008*die + 0.008*christmas + 0.008*punk + 0.007*math + 0.007*johnny + 0.006*car + 0.006*soundtrack + 0.006*electron + 0.005*amus
+2014-01-09 15:56:21,524-INFO:topic #2: 0.015*metalc + 0.008*post-hardcore + 0.006*hardc + 0.006*met + 0.006*rock + 0.006*k-pop + 0.005*cav + 0.005*escap + 0.005*mov + 0.004*presley
+2014-01-09 15:56:21,536-INFO:topic #3: 0.011*massacr + 0.011*smal + 0.007*daft + 0.007*architect + 0.006*rock + 0.006*christmas + 0.005*sludg + 0.004*placebo + 0.004*ben + 0.004*indy
+2014-01-09 15:56:21,548-INFO:topic #4: 0.015*arcad + 0.010*devo + 0.006*mogwa + 0.006*mad + 0.006*regin + 0.006*spekt + 0.006*floyd + 0.005*hil + 0.005*rock + 0.005*hey
+2014-01-09 15:56:21,561-INFO:topic #5: 0.010*northern + 0.008*met + 0.007*lun + 0.007*beck + 0.006*param + 0.006*rock + 0.006*indy + 0.005*sky + 0.005*metallic + 0.005*altern
+2014-01-09 15:56:21,573-INFO:topic #6: 0.011*phoenix + 0.010*birthday + 0.006*clash + 0.006*drug + 0.006*cre + 0.005*flow + 0.004*rock + 0.004*juny + 0.004*indy + 0.003*leon
+2014-01-09 15:56:21,585-INFO:topic #7: 0.019*saturday + 0.017*ston + 0.011*fu + 0.010*mcfly + 0.010*manchu + 0.007*rock + 0.006*christmas + 0.006*everyth + 0.004*thiev + 0.004*post-rock
+2014-01-09 15:56:21,598-INFO:topic #8: 0.023*christmas + 0.021*sufs + 0.017*stev + 0.016*door + 0.014*cinem + 0.013*club + 0.009*indy + 0.007*explod + 0.005*holy + 0.005*rock
+2014-01-09 15:56:21,610-INFO:topic #9: 0.013*iron + 0.013*win + 0.011*& + 0.009*folk + 0.008*indy + 0.006*pass + 0.006*fir + 0.005*madchest + 0.005*singer-songwrit + 0.004*daught
+2014-01-09 15:56:21,622-INFO:topic #10: 0.009*tricky + 0.006*lord + 0.005*pop + 0.005*trip-hop + 0.004*2013 + 0.004*electron + 0.004*fem + 0.004*(feat. + 0.003*skin + 0.003*downtempo
+2014-01-09 15:56:21,634-INFO:topic #11: 0.015*cur + 0.008*lie + 0.007*christmas + 0.005*post-punk + 0.004*rock + 0.004*met + 0.004*ring + 0.003*machin + 0.003*rag + 0.003*field
+2014-01-09 15:56:21,647-INFO:topic #12: 0.006*sug + 0.006*christmas + 0.005*doolittl + 0.005*eliz + 0.005*rock + 0.004*tricky + 0.004*follow + 0.004*forest + 0.004*seeth + 0.004*beach
+2014-01-09 15:56:21,659-INFO:topic #13: 0.021*jackson + 0.017*radiohead + 0.017*michael + 0.012*hip-hop + 0.008*christmas + 0.008*rock + 0.005*rap + 0.005*altern + 0.005*hop + 0.004*fitzgerald
+2014-01-09 15:56:21,671-INFO:topic #14: 0.011*dil + 0.007*kri + 0.006*beatl + 0.005*al + 0.005*rock + 0.005*imagin + 0.004*bef + 0.004*moloko + 0.003*king + 0.003*fool
+2014-01-09 15:56:21,682-INFO:topic diff=0.612530, rho=0.707107
+2014-01-09 15:56:22,283-INFO:PROGRESS: iteration 0, at document #6000/9488
+2014-01-09 15:56:22,283-DEBUG:performing inference on a chunk of 2000 documents
+2014-01-09 15:56:24,914-INFO:2000/2000 documents converged within 50 iterations
+2014-01-09 15:56:24,924-DEBUG:updating topics
+2014-01-09 15:56:24,973-INFO:merging changes from 2000 documents into a model of 9488 documents
+2014-01-09 15:56:25,616-INFO:topic #0: 0.015*hardc + 0.009*david + 0.007*disturb + 0.006*cirqu + 0.005*punk + 0.005*bitch + 0.004*rock + 0.004*dust + 0.004*tron + 0.004*cloud
+2014-01-09 15:56:25,628-INFO:topic #1: 0.009*punk + 0.008*daft + 0.006*celt + 0.005*die + 0.005*christmas + 0.005*soundtrack + 0.005*town + 0.004*electron + 0.004*gam + 0.004*rock
+2014-01-09 15:56:25,640-INFO:topic #2: 0.016*post-hardcore + 0.012*metalc + 0.011*met + 0.007*hardc + 0.007*unwound + 0.006*celt + 0.006*rock + 0.006*rainbow + 0.005*real + 0.005*frost
+2014-01-09 15:56:25,653-INFO:topic #3: 0.030*sued + 0.018*architect + 0.010*britpop + 0.007*rock + 0.006*smal + 0.006*wor + 0.006*placebo + 0.005*massacr + 0.005*queen + 0.005*sist
+2014-01-09 15:56:25,665-INFO:topic #4: 0.010*mad + 0.010*cocteau + 0.009*arcad + 0.007*twin + 0.006*liquid + 0.005*weeknd + 0.004*devo + 0.004*rock + 0.004*west + 0.004*floyd
+2014-01-09 15:56:25,678-INFO:topic #5: 0.010*met + 0.006*sky + 0.006*northern + 0.005*rock + 0.005*moody + 0.004*indy + 0.004*altern + 0.004*metallic + 0.004*beck + 0.004*thrash
+2014-01-09 15:56:25,690-INFO:topic #6: 0.017*clash + 0.016*robby + 0.008*phoenix + 0.007*punk + 0.007*rock + 0.006*leon + 0.006*william + 0.006*flow + 0.005*du + 0.005*blu
+2014-01-09 15:56:25,702-INFO:topic #7: 0.016*ston + 0.013*queen + 0.011*howard + 0.010*dubstep + 0.010*shor + 0.010*suicid + 0.009*saturday + 0.009*everyth + 0.009*rock + 0.008*william
+2014-01-09 15:56:25,715-INFO:topic #8: 0.023*christmas + 0.012*sil + 0.011*sufs + 0.011*door + 0.010*stev + 0.007*cinem + 0.007*club + 0.007*indy + 0.006*war + 0.006*hors
+2014-01-09 15:56:25,727-INFO:topic #9: 0.009*& + 0.008*iron + 0.007*folk + 0.006*win + 0.006*indy + 0.006*bob + 0.005*jimmy + 0.005*daught + 0.005*pass + 0.005*bicyc
+2014-01-09 15:56:25,739-INFO:topic #10: 0.018*air + 0.010*belleruch + 0.007*lord + 0.007*trip-hop + 0.006*electron + 0.005*pop + 0.005*downtempo + 0.005*2013 + 0.004*chillout + 0.004*fem
+2014-01-09 15:56:25,752-INFO:topic #11: 0.016*cur + 0.011*sleigh + 0.008*deathc + 0.007*mac + 0.006*harry + 0.006*post-punk + 0.005*lie + 0.005*wav + 0.005*christmas + 0.004*wind
+2014-01-09 15:56:25,764-INFO:topic #12: 0.018*tom + 0.016*wait + 0.005*sug + 0.005*rock + 0.004*christmas + 0.004*morrissey + 0.003*follow + 0.003*forest + 0.003*1 + 0.003*ac/dc
+2014-01-09 15:56:25,777-INFO:topic #13: 0.017*hip-hop + 0.013*radiohead + 0.012*jackson + 0.010*rap + 0.009*michael + 0.009*rock + 0.008*hop + 0.008*hip + 0.007*deerhunt + 0.006*altern
+2014-01-09 15:56:25,789-INFO:topic #14: 0.037*beatl + 0.011*moody + 0.010*drawn + 0.010*60s + 0.010*rock + 0.009*class + 0.009*publ + 0.005*boy + 0.005*brazil + 0.005*fool
+2014-01-09 15:56:25,800-INFO:topic diff=0.595814, rho=0.577350
+2014-01-09 15:56:26,452-INFO:PROGRESS: iteration 0, at document #8000/9488
+2014-01-09 15:56:26,452-DEBUG:performing inference on a chunk of 2000 documents
+2014-01-09 15:56:29,072-INFO:2000/2000 documents converged within 50 iterations
+2014-01-09 15:56:29,083-DEBUG:updating topics
+2014-01-09 15:56:29,131-INFO:merging changes from 2000 documents into a model of 9488 documents
+2014-01-09 15:56:29,769-INFO:topic #0: 0.012*david + 0.011*hardc + 0.006*bonobo + 0.005*street + 0.005*punk + 0.004*blood + 0.004*system + 0.004*disturb + 0.004*rememb + 0.004*flight
+2014-01-09 15:56:29,782-INFO:topic #1: 0.009*65daysofstatic + 0.008*redhead + 0.007*math + 0.006*post-rock + 0.006*punk + 0.006*instru + 0.006*soundtrack + 0.005*talk + 0.005*green + 0.005*christmas
+2014-01-09 15:56:29,795-INFO:topic #2: 0.022*neil + 0.014*bree + 0.010*post-hardcore + 0.008*rock + 0.007*metalc + 0.007*dress + 0.007*met + 0.005*trib + 0.005*real + 0.005*class
+2014-01-09 15:56:29,808-INFO:topic #3: 0.017*astronaut + 0.015*sued + 0.011*god + 0.010*architect + 0.010*post-rock + 0.008*britpop + 0.007*mort + 0.006*rock + 0.006*unknown + 0.006*smal
+2014-01-09 15:56:29,821-INFO:topic #4: 0.016*cocteau + 0.015*twin + 0.008*eth + 0.007*hil + 0.006*mad + 0.006*4ad + 0.005*arcad + 0.005*dream + 0.004*hey + 0.004*shoegaz
+2014-01-09 15:56:29,834-INFO:topic #5: 0.014*chain + 0.010*gadget + 0.009*shin + 0.006*met + 0.005*clap + 0.005*rock + 0.005*indy + 0.005*sky + 0.005*futurepop + 0.004*altern
+2014-01-09 15:56:29,846-INFO:topic #6: 0.012*mess + 0.011*phoenix + 0.010*clash + 0.008*print + 0.008*robby + 0.007*ghost + 0.006*leon + 0.006*stranger + 0.005*rock + 0.005*southern
+2014-01-09 15:56:29,859-INFO:topic #7: 0.021*dubstep + 0.014*bur + 0.010*ston + 0.009*rock + 0.008*velvet + 0.008*everyth + 0.007*howard + 0.007*queen + 0.006*suicid + 0.005*class
+2014-01-09 15:56:29,872-INFO:topic #8: 0.021*christmas + 0.009*hors + 0.008*sufs + 0.008*sil + 0.008*stev + 0.007*door + 0.006*indy + 0.005*cinem + 0.005*war + 0.005*brown
+2014-01-09 15:56:29,885-INFO:topic #9: 0.007*folk + 0.006*iron + 0.005*& + 0.005*underground + 0.005*win + 0.005*thoma + 0.005*ros + 0.005*daught + 0.004*indy + 0.004*goe
+2014-01-09 15:56:29,898-INFO:topic #10: 0.012*air + 0.006*electron + 0.006*2013 + 0.006*downtempo + 0.005*lord + 0.005*bastil + 0.005*barret + 0.005*belleruch + 0.005*chillout + 0.004*jazz
+2014-01-09 15:56:29,911-INFO:topic #11: 0.011*cur + 0.008*jon + 0.007*mac + 0.007*brion + 0.007*sleigh + 0.006*post-punk + 0.006*heat + 0.005*wind + 0.005*send + 0.005*tak
+2014-01-09 15:56:29,924-INFO:topic #12: 0.020*wait + 0.019*tom + 0.010*indigo + 0.005*sug + 0.004*rock + 0.004*battl + 0.004*automatic + 0.003*christmas + 0.003*attack + 0.003*1
+2014-01-09 15:56:29,937-INFO:topic #13: 0.015*hip-hop + 0.009*hip + 0.009*hop + 0.009*rap + 0.009*pj + 0.008*harvey + 0.008*rock + 0.007*radiohead + 0.007*jackson + 0.006*michael
+2014-01-09 15:56:29,950-INFO:topic #14: 0.062*beatl + 0.019*60s + 0.015*class + 0.013*rock + 0.008*brazil + 0.008*brit + 0.007*psychedel + 0.005*moody + 0.005*fool + 0.005*pop
+2014-01-09 15:56:29,961-INFO:topic diff=0.600234, rho=0.500000
+2014-01-09 15:56:30,156-INFO:PROGRESS: iteration 0, at document #9488/9488
+2014-01-09 15:56:30,156-DEBUG:performing inference on a chunk of 1488 documents
+2014-01-09 15:56:31,458-INFO:1488/1488 documents converged within 50 iterations
+2014-01-09 15:56:31,469-DEBUG:updating topics
+2014-01-09 15:56:31,544-INFO:merging changes from 1488 documents into a model of 9488 documents
+2014-01-09 15:56:32,209-INFO:topic #0: 0.014*clam + 0.013*casino + 0.012*jonath + 0.011*david + 0.008*blood + 0.008*hardc + 0.005*byrn + 0.005*cirqu + 0.004*street + 0.004*noth
+2014-01-09 15:56:32,221-INFO:topic #1: 0.011*row + 0.007*macintosh + 0.006*sant + 0.005*65daysofstatic + 0.005*punk + 0.005*talk + 0.005*math + 0.005*soundtrack + 0.005*christmas + 0.005*gam
+2014-01-09 15:56:32,234-INFO:topic #2: 0.013*neil + 0.011*bree + 0.007*post-hardcore + 0.006*unwound + 0.005*rock + 0.005*broth + 0.005*metalc + 0.005*met + 0.004*real + 0.004*dress
+2014-01-09 15:56:32,246-INFO:topic #3: 0.011*astronaut + 0.010*architect + 0.010*god + 0.009*sued + 0.007*post-rock + 0.006*newsboy + 0.006*digit + 0.006*surkin + 0.005*glam + 0.005*mort
+2014-01-09 15:56:32,259-INFO:topic #4: 0.010*twin + 0.010*cocteau + 0.009*grmln + 0.008*mad + 0.007*liquid + 0.006*eth + 0.006*tayl + 0.006*hil + 0.004*dream + 0.004*arcad
+2014-01-09 15:56:32,272-INFO:topic #5: 0.013*chain + 0.009*jmsn + 0.008*gadget + 0.006*shin + 0.006*kaiyot + 0.006*hiat + 0.005*macaco + 0.005*northern + 0.004*hold + 0.004*sky
+2014-01-09 15:56:32,284-INFO:topic #6: 0.009*ghost + 0.009*mess + 0.009*phoenix + 0.006*robby + 0.006*clash + 0.005*perry + 0.005*print + 0.005*du + 0.005*katy + 0.005*french
+2014-01-09 15:56:32,297-INFO:topic #7: 0.016*bur + 0.012*dubstep + 0.009*jan + 0.009*sig + 0.007*ston + 0.006*rock + 0.006*velvet + 0.005*everyth + 0.005*cryst + 0.005*walk
+2014-01-09 15:56:32,309-INFO:topic #8: 0.026*christmas + 0.014*flatlin + 0.011*hors + 0.009*sil + 0.008*merry + 0.008*stev + 0.008*club + 0.007*brown + 0.006*sufs + 0.006*door
+2014-01-09 15:56:32,321-INFO:topic #9: 0.018*thoma + 0.008*plu + 0.006*& + 0.006*ros + 0.005*win + 0.004*folk + 0.004*iron + 0.004*underground + 0.003*goe + 0.003*catch
+2014-01-09 15:56:32,334-INFO:topic #10: 0.023*newm + 0.010*air + 0.007*lord + 0.007*soul + 0.006*vernon + 0.005*justin + 0.005*john + 0.005*tear + 0.005*(feat. + 0.005*electron
+2014-01-09 15:56:32,346-INFO:topic #11: 0.019*schmidt + 0.012*blunt + 0.010*m.g. + 0.009*cur + 0.009*grindc + 0.008*porã£o + 0.008*rato + 0.006*jon + 0.005*tak + 0.005*harry
+2014-01-09 15:56:32,359-INFO:topic #12: 0.015*wait + 0.012*tom + 0.012*unicorn + 0.010*doolittl + 0.010*eliz + 0.008*indigo + 0.006*fruit + 0.004*fip + 0.004*bombino + 0.004*attack
+2014-01-09 15:56:32,371-INFO:topic #13: 0.017*jackson + 0.015*elv + 0.014*michael + 0.011*hip-hop + 0.008*hop + 0.008*hip + 0.007*pj + 0.006*harvey + 0.006*rap + 0.006*rock
+2014-01-09 15:56:32,383-INFO:topic #14: 0.040*beatl + 0.012*60s + 0.010*brazil + 0.010*class + 0.009*rock + 0.008*moody + 0.006*someth + 0.005*raimundo + 0.005*brit + 0.005*brasil
+2014-01-09 15:56:32,394-INFO:topic diff=0.459178, rho=0.447214
+2014-01-09 16:00:55,409-INFO:adding document #0 to Dictionary(0 unique tokens)
+2014-01-09 16:01:07,195-INFO:built Dictionary(26145 unique tokens) from 9488 documents (total 2431143 corpus positions)
+2014-01-09 16:01:18,967-INFO:collecting document frequencies
+2014-01-09 16:01:18,968-INFO:PROGRESS: processing document #0
+2014-01-09 16:01:19,080-INFO:calculating IDF weights for 9488 documents and 26145 features (276838 matrix non-zeros)
+2014-01-09 16:01:19,116-INFO:using symmetric alpha at 0.0333333333333
+2014-01-09 16:01:19,116-INFO:using serial LDA version on this node
+2014-01-09 16:01:19,678-INFO:running online LDA training, 30 topics, 1 passes over the supplied corpus of 9488 documents, updating model once every 2000 documents, evaluating every 9488 documents
+2014-01-09 16:01:19,678-WARNING:too few updates, training might not converge; consider increasing the number of passes to improve accuracy
+2014-01-09 16:01:20,316-INFO:PROGRESS: iteration 0, at document #2000/9488
+2014-01-09 16:01:20,316-DEBUG:performing inference on a chunk of 2000 documents
+2014-01-09 16:01:22,992-INFO:2000/2000 documents converged within 50 iterations
+2014-01-09 16:01:23,002-DEBUG:updating topics
+2014-01-09 16:01:23,050-INFO:merging changes from 2000 documents into a model of 9488 documents
+2014-01-09 16:01:23,747-INFO:topic #15 (0.033): 0.006*masc + 0.006*surf + 0.005*indy + 0.005*rock + 0.004*rnb + 0.003*somafm + 0.003*pj + 0.003*harvey + 0.003*christmas + 0.003*maccab
+2014-01-09 16:01:23,759-INFO:topic #6 (0.033): 0.009*door + 0.007*teit + 0.005*rock + 0.004*indy + 0.004*gould + 0.004*led + 0.004*zeppelin + 0.004*woodkid + 0.004*jazz + 0.003*psychedel
+2014-01-09 16:01:23,771-INFO:topic #13 (0.033): 0.005*rock + 0.005*fem + 0.004*indy + 0.004*christmas + 0.003*tango + 0.003*rol + 0.003*voc + 0.003*gar + 0.003*brit + 0.003*pop
+2014-01-09 16:01:23,782-INFO:topic #24 (0.033): 0.007*indy + 0.007*christmas + 0.006*rock + 0.004*efterklang + 0.004*folk + 0.004*tinariw + 0.004*altern + 0.003*nat + 0.003*afr + 0.003*elliot
+2014-01-09 16:01:23,794-INFO:topic #10 (0.033): 0.010*christmas + 0.007*rock + 0.005*indy + 0.005*altern + 0.004*dido + 0.004*fem + 0.004*instru + 0.004*stefan + 0.004*gwen + 0.004*jon
+2014-01-09 16:01:23,806-INFO:topic #29 (0.033): 0.007*indy + 0.006*rock + 0.006*folk + 0.004*coldplay + 0.004*altern + 0.004*somafm + 0.004*fem + 0.004*electron + 0.003*notw + 0.003*gar
+2014-01-09 16:01:23,817-INFO:topic #12 (0.033): 0.007*indy + 0.006*crib + 0.006*sho + 0.005*rock + 0.004*rjd2 + 0.004*christmas + 0.004*rag + 0.003*tak + 0.003*somafm + 0.003*electron
+2014-01-09 16:01:23,829-INFO:topic #11 (0.033): 0.005*met + 0.004*indy + 0.004*rock + 0.004*christmas + 0.004*lennox + 0.004*woodkid + 0.003*jack + 0.003*hip-hop + 0.003*elliot + 0.003*altern
+2014-01-09 16:01:23,841-INFO:topic #27 (0.033): 0.007*blu + 0.005*indy + 0.005*rock + 0.004*knif + 0.004*pretty + 0.004*electron + 0.004*skip + 0.004*maccab + 0.003*cov + 0.003*light
+2014-01-09 16:01:23,853-INFO:topic #16 (0.033): 0.008*christmas + 0.007*indy + 0.006*folk + 0.005*rock + 0.004*xx + 0.004*crib + 0.004*surf + 0.004*drak + 0.003*chem + 0.003*monst
+2014-01-09 16:01:23,864-INFO:topic #0 (0.033): 0.009*christmas + 0.007*indy + 0.006*rock + 0.004*harvey + 0.004*pj + 0.004*altern + 0.004*electron + 0.004*brag + 0.004*brit + 0.003*fem
+2014-01-09 16:01:23,876-INFO:topic #8 (0.033): 0.006*rock + 0.006*blu + 0.005*ston + 0.004*indy + 0.004*christmas + 0.004*menomen + 0.004*wait + 0.003*folk + 0.003*fem + 0.003*acoust
+2014-01-09 16:01:23,888-INFO:topic #17 (0.033): 0.008*rock + 0.007*indy + 0.005*christmas + 0.005*whiskeytown + 0.005*libertin + 0.005*altern + 0.003*strokes + 0.003*alt-country + 0.003*pop + 0.003*electron
+2014-01-09 16:01:23,899-INFO:topic #19 (0.033): 0.008*rock + 0.006*indy + 0.005*altern + 0.004*pj + 0.004*harvey + 0.004*coldplay + 0.003*fem + 0.003*electron + 0.003*class + 0.003*avalanch
+2014-01-09 16:01:23,911-INFO:topic #25 (0.033): 0.006*christmas + 0.006*dido + 0.005*indy + 0.005*rock + 0.004*pop + 0.004*surf + 0.004*electron + 0.003*fem + 0.003*altern + 0.003*lost
+2014-01-09 16:01:23,922-INFO:topic diff=26.221920, rho=1.000000
+2014-01-09 16:01:24,511-INFO:PROGRESS: iteration 0, at document #4000/9488
+2014-01-09 16:01:24,512-DEBUG:performing inference on a chunk of 2000 documents
+2014-01-09 16:01:27,325-INFO:1996/2000 documents converged within 50 iterations
+2014-01-09 16:01:27,334-DEBUG:updating topics
+2014-01-09 16:01:27,382-INFO:merging changes from 2000 documents into a model of 9488 documents
+2014-01-09 16:01:28,095-INFO:topic #23 (0.033): 0.017*met + 0.014*johnson + 0.013*jack + 0.009*goth + 0.006*black + 0.006*acoust + 0.005*dawn + 0.005*rock + 0.005*symphon + 0.004*lost
+2014-01-09 16:01:28,107-INFO:topic #6 (0.033): 0.019*door + 0.015*cinem + 0.011*club + 0.011*cre + 0.010*plan + 0.009*daft + 0.006*fir + 0.006*indy + 0.006*rock + 0.006*led
+2014-01-09 16:01:28,119-INFO:topic #9 (0.033): 0.018*radiohead + 0.012*cur + 0.009*massacr + 0.009*revoir + 0.008*met + 0.008*rock + 0.007*yeah + 0.007*post-rock + 0.007*indy + 0.006*altern
+2014-01-09 16:01:28,132-INFO:topic #4 (0.033): 0.012*mcfly + 0.009*tron + 0.009*soc + 0.007*hop + 0.006*hip + 0.006*rap + 0.005*hip-hop + 0.004*tid + 0.003*christmas + 0.003*indust
+2014-01-09 16:01:28,144-INFO:topic #24 (0.033): 0.017*iron + 0.015*win + 0.010*christmas + 0.009*& + 0.009*folk + 0.008*lun + 0.008*chillwav + 0.007*indy + 0.005*rock + 0.005*william
+2014-01-09 16:01:28,156-INFO:topic #22 (0.033): 0.010*devo + 0.010*christmas + 0.009*cav + 0.006*nick + 0.006*silv + 0.005*mar + 0.005*rock + 0.004*& + 0.004*bad + 0.004*train
+2014-01-09 16:01:28,169-INFO:topic #28 (0.033): 0.012*christmas + 0.009*phoenix + 0.007*scoot + 0.006*math + 0.006*indy + 0.005*johnny + 0.005*rock + 0.005*clash + 0.005*punk + 0.004*pap
+2014-01-09 16:01:28,181-INFO:topic #2 (0.033): 0.009*lou + 0.009*armstrong + 0.006*indy + 0.005*rock + 0.005*hardc + 0.005*sufs + 0.004*boom + 0.004*jazz + 0.004*christmas + 0.004*fac
+2014-01-09 16:01:28,193-INFO:topic #13 (0.033): 0.006*lie + 0.006*destroy + 0.005*rock + 0.005*whit + 0.005*fem + 0.005*mod + 0.004*cabaret + 0.004*indy + 0.004*zz + 0.004*david
+2014-01-09 16:01:28,206-INFO:topic #12 (0.033): 0.005*eddy + 0.005*madchest + 0.004*rock + 0.004*christmas + 0.004*indy + 0.004*red + 0.003*funk + 0.003*lamb + 0.003*dol + 0.003*trip-hop
+2014-01-09 16:01:28,218-INFO:topic #11 (0.033): 0.022*saturday + 0.014*poe + 0.005*met + 0.004*rock + 0.004*fem + 0.004*pop + 0.004*wash + 0.004*indy + 0.004*car + 0.004*hip-hop
+2014-01-09 16:01:28,230-INFO:topic #26 (0.033): 0.017*christmas + 0.011*merry + 0.006*floyd + 0.006*broth + 0.005*daught + 0.004*brown + 0.004*littl + 0.004*van + 0.003*ye + 0.003*chris
+2014-01-09 16:01:28,242-INFO:topic #29 (0.033): 0.007*indy + 0.006*arct + 0.006*monkey + 0.005*folk + 0.005*rock + 0.005*fam + 0.005*thiev + 0.004*somafm + 0.004*digit + 0.004*ste
+2014-01-09 16:01:28,255-INFO:topic #25 (0.033): 0.014*sufs + 0.011*christmas + 0.011*stev + 0.006*hil + 0.006*lost + 0.005*noir + 0.005*boy + 0.005*mr. + 0.005*sil + 0.004*pop
+2014-01-09 16:01:28,267-INFO:topic #7 (0.033): 0.011*sufs + 0.010*stev + 0.006*amus + 0.005*indy + 0.005*eliz + 0.005*doolittl + 0.004*hauschk + 0.004*drown + 0.004*giant + 0.003*rock
+2014-01-09 16:01:28,278-INFO:topic diff=0.624014, rho=0.707107
+2014-01-09 16:01:28,855-INFO:PROGRESS: iteration 0, at document #6000/9488
+2014-01-09 16:01:28,855-DEBUG:performing inference on a chunk of 2000 documents
+2014-01-09 16:01:31,414-INFO:1997/2000 documents converged within 50 iterations
+2014-01-09 16:01:31,424-DEBUG:updating topics
+2014-01-09 16:01:31,472-INFO:merging changes from 2000 documents into a model of 9488 documents
+2014-01-09 16:01:32,113-INFO:topic #27 (0.033): 0.018*jackson + 0.014*post-hardcore + 0.013*michael + 0.009*chvrches + 0.008*everyth + 0.008*met + 0.007*metalc + 0.006*dea + 0.006*body + 0.005*fiv
+2014-01-09 16:01:32,126-INFO:topic #25 (0.033): 0.020*ris + 0.012*sil + 0.011*christmas + 0.007*sufs + 0.007*parad + 0.007*boy + 0.006*stev + 0.006*punk + 0.005*liquid + 0.005*anoth
+2014-01-09 16:01:32,139-INFO:topic #21 (0.033): 0.011*hip-hop + 0.008*dubstep + 0.008*nero + 0.007*cal + 0.006*meg + 0.006*tragedy + 0.005*dj + 0.005*grip + 0.004*twist + 0.004*dea
+2014-01-09 16:01:32,151-INFO:topic #15 (0.033): 0.012*joy + 0.009*sleigh + 0.008*daylight + 0.007*divid + 0.006*formid + 0.006*wav + 0.005*johnny + 0.005*swim + 0.005*cash + 0.005*80s
+2014-01-09 16:01:32,164-INFO:topic #11 (0.033): 0.012*saturday + 0.008*pearl + 0.007*del + 0.006*poe + 0.006*lan + 0.005*jam + 0.005*fantasy + 0.005*rey + 0.004*grung + 0.004*pop
+2014-01-09 16:01:32,177-INFO:topic #14 (0.033): 0.016*air + 0.010*regga + 0.009*celt + 0.008*twin + 0.007*cocteau + 0.006*rock + 0.006*indy + 0.005*girl + 0.005*pop + 0.005*someth
+2014-01-09 16:01:32,190-INFO:topic #0 (0.033): 0.014*doom + 0.009*drawn + 0.008*bad + 0.007*parad + 0.006*met + 0.006*christmas + 0.005*indy + 0.005*pleas + 0.005*boy + 0.005*lord
+2014-01-09 16:01:32,202-INFO:topic #16 (0.033): 0.013*howard + 0.013*shor + 0.011*suicid + 0.007*sinatr + 0.007*fent + 0.007*frank + 0.006*christmas + 0.005*rain + 0.005*pink + 0.005*rock
+2014-01-09 16:01:32,224-INFO:topic #1 (0.033): 0.015*cag + 0.013*eleph + 0.011*belleruch + 0.007*elv + 0.005*tricky + 0.005*foal + 0.005*fip + 0.005*dyl + 0.005*somewh + 0.004*presley
+2014-01-09 16:01:32,246-INFO:topic #23 (0.033): 0.046*met + 0.020*goth + 0.014*black + 0.012*korn + 0.011*johnson + 0.011*jack + 0.011*symphon + 0.009*xandr + 0.007*dea + 0.007*lost
+2014-01-09 16:01:32,265-INFO:topic #10 (0.033): 0.006*bob + 0.006*simon + 0.006*flor + 0.005*fai + 0.005*indy + 0.005*rock + 0.005*fool + 0.005*+ + 0.005*christmas + 0.004*machin
+2014-01-09 16:01:32,278-INFO:topic #18 (0.033): 0.022*met + 0.020*thrash + 0.013*sepultur + 0.011*capit + 0.007*punk + 0.006*rock + 0.006*fu + 0.006*bon + 0.005*wor + 0.005*son
+2014-01-09 16:01:32,292-INFO:topic #5 (0.033): 0.021*indust + 0.008*hardc + 0.007*dog + 0.006*heav + 0.006*frost + 0.005*explod + 0.005*mad + 0.004*rock + 0.004*metallic + 0.004*hey
+2014-01-09 16:01:32,305-INFO:topic #3 (0.033): 0.035*beatl + 0.018*met + 0.013*doom + 0.012*rock + 0.011*class + 0.010*60s + 0.010*kataton + 0.008*sabba + 0.007*arcad + 0.006*brit
+2014-01-09 16:01:32,318-INFO:topic #13 (0.033): 0.013*iv + 0.011*christian + 0.011*bon + 0.007*glam + 0.007*mod + 0.007*depech + 0.006*whit + 0.006*rock + 0.006*hors + 0.005*harsh
+2014-01-09 16:01:32,328-INFO:topic diff=0.595928, rho=0.577350
+2014-01-09 16:01:32,957-INFO:PROGRESS: iteration 0, at document #8000/9488
+2014-01-09 16:01:32,957-DEBUG:performing inference on a chunk of 2000 documents
+2014-01-09 16:01:35,505-INFO:1998/2000 documents converged within 50 iterations
+2014-01-09 16:01:35,515-DEBUG:updating topics
+2014-01-09 16:01:35,562-INFO:merging changes from 2000 documents into a model of 9488 documents
+2014-01-09 16:01:36,203-INFO:topic #20 (0.033): 0.012*anim + 0.012*queen + 0.007*mac + 0.007*jon + 0.007*wal + 0.006*smal + 0.006*rock + 0.005*northern + 0.005*adam + 0.005*west
+2014-01-09 16:01:36,216-INFO:topic #27 (0.033): 0.012*jackson + 0.011*michael + 0.010*post-hardcore + 0.008*knif + 0.008*everyth + 0.005*chvrches + 0.005*met + 0.005*pop-punk + 0.004*synthpop + 0.004*metalc
+2014-01-09 16:01:36,229-INFO:topic #2 (0.033): 0.008*tel + 0.007*wel + 0.006*rock + 0.006*bush + 0.006*orchestr + 0.005*mort + 0.005*unknown + 0.005*kat + 0.005*leon + 0.004*indy
+2014-01-09 16:01:36,248-INFO:topic #21 (0.033): 0.013*ferdinand + 0.012*franz + 0.011*dubstep + 0.008*redhead + 0.008*furry + 0.006*hip-hop + 0.006*cal + 0.005*twist + 0.005*nero + 0.004*planet
+2014-01-09 16:01:36,267-INFO:topic #15 (0.033): 0.011*joy + 0.005*divid + 0.005*wav + 0.005*johnny + 0.005*sleigh + 0.005*daylight + 0.005*post-punk + 0.005*rnb + 0.005*rid + 0.004*cash
+2014-01-09 16:01:36,292-INFO:topic #4 (0.033): 0.016*hip-hop + 0.015*hip + 0.014*hop + 0.013*rap + 0.008*enemy + 0.007*real + 0.007*underground + 0.006*da + 0.004*blood + 0.004*tru
+2014-01-09 16:01:36,318-INFO:topic #10 (0.033): 0.012*orchestr + 0.008*brion + 0.008*disco + 0.007*panic! + 0.007*pan + 0.006*jon + 0.006*cat + 0.006*trans-siberian + 0.005*rhy + 0.005*rock
+2014-01-09 16:01:36,344-INFO:topic #14 (0.033): 0.015*sleater-kinney + 0.011*twin + 0.011*cocteau + 0.009*regga + 0.009*riot + 0.009*indy + 0.009*air + 0.007*mess + 0.007*amby + 0.007*grrrl
+2014-01-09 16:01:36,357-INFO:topic #7 (0.033): 0.017*chain + 0.017*sued + 0.012*jes + 0.009*indigo + 0.009*def + 0.006*bonobo + 0.006*trib + 0.005*hold + 0.004*britpop + 0.004*fear
+2014-01-09 16:01:36,370-INFO:topic #13 (0.033): 0.012*fad + 0.009*bowy + 0.009*hors + 0.009*david + 0.008*bon + 0.008*iv + 0.007*sublim + 0.007*glam + 0.006*christian + 0.006*whit
+2014-01-09 16:01:36,383-INFO:topic #5 (0.033): 0.013*indust + 0.010*dog + 0.008*blak + 0.006*vil + 0.006*kurt + 0.005*dubstep + 0.005*hey + 0.004*hardc + 0.004*moon + 0.004*heav
+2014-01-09 16:01:36,396-INFO:topic #18 (0.033): 0.017*thrash + 0.017*met + 0.007*sepultur + 0.006*capit + 0.006*placebo + 0.006*punk + 0.005*rock + 0.005*gam + 0.005*common + 0.004*rabbit
+2014-01-09 16:01:36,409-INFO:topic #9 (0.033): 0.024*yeah + 0.012*bree + 0.010*rock + 0.009*radiohead + 0.009*goth + 0.008*indy + 0.008*cur + 0.008*altern + 0.007*hendrix + 0.007*jim
+2014-01-09 16:01:36,421-INFO:topic #8 (0.033): 0.023*neil + 0.022*wait + 0.014*tom + 0.009*tail + 0.008*rock + 0.007*ston + 0.006*hol + 0.005*decemb + 0.005*war + 0.005*blu
+2014-01-09 16:01:36,434-INFO:topic #28 (0.033): 0.014*post-rock + 0.013*astronaut + 0.011*god + 0.009*mary + 0.009*65daysofstatic + 0.007*instru + 0.007*phoenix + 0.007*punk + 0.007*rock + 0.007*clash
+2014-01-09 16:01:36,445-INFO:topic diff=0.598164, rho=0.500000
+2014-01-09 16:01:36,919-DEBUG:bound: at document #0
+2014-01-09 16:01:39,048-INFO:-22.947 per-word bound, 8084688.9 perplexity estimate based on a held-out corpus of 1488 documents with 3327 words
+2014-01-09 16:01:39,048-INFO:PROGRESS: iteration 0, at document #9488/9488
+2014-01-09 16:01:39,048-DEBUG:performing inference on a chunk of 1488 documents
+2014-01-09 16:01:40,307-INFO:1488/1488 documents converged within 50 iterations
+2014-01-09 16:01:40,321-DEBUG:updating topics
+2014-01-09 16:01:40,383-INFO:merging changes from 1488 documents into a model of 9488 documents
+2014-01-09 16:01:41,029-INFO:topic #11 (0.033): 0.006*saturday + 0.005*del + 0.005*low + 0.005*ten + 0.004*midnight + 0.004*doubt + 0.004*chang + 0.004*t. + 0.004*fin + 0.003*woodkid
+2014-01-09 16:01:41,041-INFO:topic #18 (0.033): 0.017*anny + 0.012*myslovitz + 0.010*pol + 0.010*met + 0.009*thrash + 0.007*timor + 0.006*newsboy + 0.005*m.g. + 0.005*gam + 0.005*bat
+2014-01-09 16:01:41,054-INFO:topic #20 (0.033): 0.018*schmidt + 0.011*anim + 0.008*m.g. + 0.008*japanes + 0.008*queen + 0.007*wal + 0.005*northern + 0.005*perry + 0.004*smal + 0.004*j-rock
+2014-01-09 16:01:41,067-INFO:topic #14 (0.033): 0.012*thoma + 0.010*sleater-kinney + 0.008*regga + 0.008*twin + 0.008*air + 0.007*cocteau + 0.006*walk + 0.006*indy + 0.006*riot + 0.006*mess
+2014-01-09 16:01:41,079-INFO:topic #12 (0.033): 0.015*bur + 0.009*brazil + 0.008*swing + 0.007*sav + 0.006*wild + 0.006*raimundo + 0.005*hand + 0.005*red + 0.004*mos + 0.004*brasil
+2014-01-09 16:01:41,092-INFO:topic #24 (0.033): 0.022*newm + 0.012*clam + 0.012*rajn + 0.011*project + 0.010*john + 0.008*& + 0.007*soul + 0.006*parson + 0.006*william + 0.006*win
+2014-01-09 16:01:41,105-INFO:topic #2 (0.033): 0.009*row + 0.009*unicorn + 0.008*remix) + 0.006*tel + 0.005*ov + 0.005*wel + 0.004*kat + 0.004*rock + 0.004*la + 0.004*bush
+2014-01-09 16:01:41,117-INFO:topic #6 (0.033): 0.013*blunt + 0.009*bear + 0.007*plan + 0.007*door + 0.007*club + 0.006*kean + 0.006*mountain + 0.006*tayl + 0.005*wast + 0.005*cinem
+2014-01-09 16:01:41,130-INFO:topic #28 (0.033): 0.011*post-rock + 0.010*chant + 0.010*mary + 0.009*god + 0.009*milky + 0.009*astronaut + 0.008*sig + 0.006*phoenix + 0.005*65daysofstatic + 0.005*christmas
+2014-01-09 16:01:41,143-INFO:topic #7 (0.033): 0.015*chain + 0.011*jes + 0.010*sued + 0.009*eliz + 0.009*doolittl + 0.007*indigo + 0.006*fear + 0.006*def + 0.006*hold + 0.004*middl
+2014-01-09 16:01:41,155-INFO:topic #5 (0.033): 0.012*dog + 0.010*indust + 0.007*bonjah + 0.006*vil + 0.006*childr + 0.006*quartet + 0.006*fruit + 0.005*blak + 0.005*wood + 0.005*believ
+2014-01-09 16:01:41,168-INFO:topic #25 (0.033): 0.010*mr. + 0.010*sil + 0.009*oizo + 0.008*christmas + 0.008*ris + 0.007*velvet + 0.006*liquid + 0.006*stev + 0.005*hil + 0.005*boy
+2014-01-09 16:01:41,181-INFO:topic #8 (0.033): 0.017*wait + 0.014*neil + 0.011*jonath + 0.011*viol + 0.011*tom + 0.009*soho + 0.008*war + 0.007*hol + 0.006*tail + 0.005*rock
+2014-01-09 16:01:41,193-INFO:topic #19 (0.033): 0.008*jan + 0.007*leo + 0.007*rock + 0.006*idm + 0.006*pj + 0.006*architect + 0.006*harvey + 0.006*indy + 0.005*grindc + 0.005*altern
+2014-01-09 16:01:41,206-INFO:topic #17 (0.033): 0.010*jol + 0.010*grac + 0.008*rock + 0.007*chip + 0.006*hot + 0.006*macintosh + 0.005*justin + 0.005*die + 0.005*day + 0.005*altern
+2014-01-09 16:01:41,217-INFO:topic diff=0.463794, rho=0.447214
+2014-01-09 20:44:12,674-INFO:adding document #0 to Dictionary(0 unique tokens)
+2014-01-09 20:44:26,876-INFO:built Dictionary(26145 unique tokens) from 9488 documents (total 2431143 corpus positions)
+2014-01-09 20:44:43,513-INFO:collecting document frequencies
+2014-01-09 20:44:43,513-INFO:PROGRESS: processing document #0
+2014-01-09 20:44:43,711-INFO:calculating IDF weights for 9488 documents and 26145 features (276838 matrix non-zeros)
+2014-01-09 20:44:43,748-INFO:using symmetric alpha at 0.005
+2014-01-09 20:44:43,748-INFO:using serial LDA version on this node
+2014-01-09 20:44:48,211-INFO:running online LDA training, 200 topics, 1 passes over the supplied corpus of 9488 documents, updating model once every 2000 documents, evaluating every 9488 documents
+2014-01-09 20:44:48,211-WARNING:too few updates, training might not converge; consider increasing the number of passes to improve accuracy
+2014-01-09 20:44:49,089-INFO:PROGRESS: iteration 0, at document #2000/9488
+2014-01-09 20:44:49,089-DEBUG:performing inference on a chunk of 2000 documents
+2014-01-09 20:44:56,199-INFO:2000/2000 documents converged within 50 iterations
+2014-01-09 20:44:56,271-DEBUG:updating topics
+2014-01-09 20:44:56,596-INFO:merging changes from 2000 documents into a model of 9488 documents
+2014-01-09 20:45:01,810-INFO:topic #99 (0.005): 0.017*cheryl + 0.016*col + 0.013*cynd + 0.013*laup + 0.012*doll + 0.012*iv + 0.012*bon + 0.012*greensleev + 0.012*u.k. + 0.011*pistol
+2014-01-09 20:45:01,891-INFO:topic #138 (0.005): 0.019*ciar + 0.017*bolthol + 0.016*teit + 0.015*cronin + 0.015*alex + 0.014*chos + 0.013*land + 0.013*cribbin + 0.012*mik + 0.012*crib
+2014-01-09 20:45:01,973-INFO:topic #177 (0.005): 0.013*fergy + 0.013*day + 0.013*jingl + 0.011*grac + 0.011*safr + 0.011*mazzy + 0.010*depech + 0.009*bel + 0.009*pep + 0.009*seiz
+2014-01-09 20:45:02,046-INFO:topic #4 (0.005): 0.015*jun + 0.014*neofolk + 0.014*wif + 0.013*noodland + 0.012*neckbrac + 0.012*pinbal + 0.011*2013 + 0.011*class + 0.010*wizard + 0.009*led
+2014-01-09 20:45:02,116-INFO:topic #165 (0.005): 0.013*mobl + 0.011*christmas + 0.010*air + 0.010*skatalit + 0.009*bieb + 0.009*nev + 0.008*menomen + 0.008*britney + 0.008*spear + 0.008*metro
+2014-01-09 20:45:02,183-INFO:topic #22 (0.005): 0.019*coldplay + 0.017*ldn + 0.014*lily + 0.013*nat + 0.013*29 + 0.012*sink + 0.012*sci + 0.010*junip + 0.010*slow + 0.009*land
+2014-01-09 20:45:02,293-INFO:topic #151 (0.005): 0.025*dido + 0.021*starlight + 0.016*autry + 0.015*mumford + 0.014*whiskeytown + 0.013*country + 0.013*umilian + 0.013*piero + 0.010*joy + 0.009*gen
+2014-01-09 20:45:02,398-INFO:topic #180 (0.005): 0.015*maccab + 0.013*harm's + 0.013*kany + 0.012*strung + 0.012*nirvan + 0.012*dayv + 0.010*giv + 0.010*april + 0.009*light + 0.009*pretty
+2014-01-09 20:45:02,465-INFO:topic #133 (0.005): 0.016*xymox + 0.014*sympath + 0.014*seek + 0.014*gar + 0.013*tango + 0.012*harvey + 0.012*pj + 0.010*travel + 0.010*libedinsky + 0.009*carlo
+2014-01-09 20:45:02,531-INFO:topic #190 (0.005): 0.012*portishead + 0.011*dido + 0.010*awoog + 0.009*cull + 0.009*lennox + 0.009*marin + 0.009*anathallo + 0.008*fem + 0.008*doe + 0.008*jamy
+2014-01-09 20:45:02,598-INFO:topic #76 (0.005): 0.014*swervedr + 0.010*awoln + 0.009*shoegaz + 0.009*lil + 0.009*replac + 0.009*nierik + 0.008*wait + 0.008*altern + 0.008*disp + 0.008*santigold
+2014-01-09 20:45:02,677-INFO:topic #70 (0.005): 0.013*weez + 0.012*frict + 0.012*omen-filled + 0.012*tet + 0.011*hash + 0.011*winakalin + 0.010*imidiw + 0.010*chalklin + 0.009*tinariw + 0.009*pip
+2014-01-09 20:45:02,761-INFO:topic #47 (0.005): 0.013*knif + 0.012*nirvan + 0.012*gle + 0.011*zorn + 0.010*invite, + 0.010*dog + 0.010*monst + 0.010*linkin + 0.009*quartet + 0.008*unicorn
+2014-01-09 20:45:02,850-INFO:topic #189 (0.005): 0.014*johnny + 0.013*mgmt + 0.012*libertin + 0.011*jon + 0.011*fatboy + 0.011*tillotson + 0.010*on, + 0.010*no-one + 0.010*collid + 0.009*view
+2014-01-09 20:45:02,929-INFO:topic #96 (0.005): 0.015*parachut + 0.013*gle + 0.012*summon + 0.012*lennox + 0.012*deler + 0.011*weekend + 0.010*hexpero + 0.010*eth + 0.009*anny + 0.009*mel
+2014-01-09 20:45:03,038-INFO:topic diff=193.378167, rho=1.000000
+2014-01-09 20:45:03,737-INFO:PROGRESS: iteration 0, at document #4000/9488
+2014-01-09 20:45:03,738-DEBUG:performing inference on a chunk of 2000 documents
+2014-01-09 20:45:10,962-INFO:2000/2000 documents converged within 50 iterations
+2014-01-09 20:45:11,050-DEBUG:updating topics
+2014-01-09 20:45:11,411-INFO:merging changes from 2000 documents into a model of 9488 documents
+2014-01-09 20:45:15,873-INFO:topic #37 (0.005): 0.016*light + 0.014*bought + 0.014*transitdelir + 0.014*cupid + 0.013*heat + 0.013*wavv + 0.012*orang + 0.011*luck + 0.011*mor + 0.011*newsound
+2014-01-09 20:45:15,933-INFO:topic #160 (0.005): 0.034*lee + 0.030*hauschk + 0.020*john + 0.015*hook + 0.010*broth + 0.009*crim + 0.009*soul + 0.009*piano + 0.009*fjord + 0.008*pick-up
+2014-01-09 20:45:15,995-INFO:topic #72 (0.005): 0.039*beck + 0.032*lost + 0.022*exit + 0.020*forest + 0.019*coh + 0.016*fath + 0.015*leonard + 0.014*lizvelrene2010 + 0.012*dea + 0.010*vega
+2014-01-09 20:45:16,055-INFO:topic #165 (0.005): 0.020*regga + 0.018*christmas + 0.016*cast + 0.015*hollywood + 0.015*cher + 0.013*marley + 0.012*def + 0.010*air + 0.008*soul + 0.008*b-side
+2014-01-09 20:45:16,114-INFO:topic #177 (0.005): 0.033*mod + 0.023*bel + 0.022*glam + 0.020*day + 0.019*depech + 0.017*grac + 0.016*season + 0.014*jingl + 0.012*kick + 0.012*duo
+2014-01-09 20:45:16,174-INFO:topic #62 (0.005): 0.043*david + 0.037*anim + 0.017*guett + 0.017*el + 0.015*city + 0.013*ston + 0.011*sail + 0.010*eargasm + 0.009*byrn + 0.009*hous
+2014-01-09 20:45:16,235-INFO:topic #154 (0.005): 0.033*peac + 0.020*door + 0.018*tight + 0.011*atom + 0.011*default + 0.011*cimx-fm + 0.010*mind + 0.010*black + 0.009*poison + 0.006*bagel
+2014-01-09 20:45:16,295-INFO:topic #130 (0.005): 0.037*wal + 0.018*21 + 0.017*baltim + 0.014*suburb + 0.011*trio + 0.011*kingston + 0.011*eyeshield + 0.010*lin + 0.010*everyth + 0.009*johnson
+2014-01-09 20:45:16,354-INFO:topic #174 (0.005): 0.039*rap + 0.038*hip-hop + 0.026*mogwa + 0.021*hip + 0.020*hop + 0.016*met + 0.012*dea + 0.011*deathc + 0.009*black + 0.009*ring
+2014-01-09 20:45:16,414-INFO:topic #190 (0.005): 0.017*trip-hop + 0.012*honest + 0.011*grrl + 0.011*rod + 0.011*ser + 0.009*diamond + 0.008*morcheeb + 0.008*pol + 0.008*crook + 0.007*trax
+2014-01-09 20:45:16,474-INFO:topic #126 (0.005): 0.016*radiohead + 0.015*situ + 0.013*portugal. + 0.011*wand + 0.011*monst + 0.010*sleepyhead + 0.010*iceland + 0.009*lazy + 0.009*r.e.m. + 0.009*moon
+2014-01-09 20:45:16,537-INFO:topic #6 (0.005): 0.035*floyd + 0.024*someday + 0.020*misery + 0.019*touch + 0.014*colo + 0.013*groov + 0.012*emd + 0.012*brick + 0.010*skinny + 0.010*disord
+2014-01-09 20:45:16,595-INFO:topic #39 (0.005): 0.028*strangers + 0.023*bury + 0.022*left + 0.019*pocket + 0.019*candl + 0.017*plac + 0.014*antony + 0.012*cov + 0.009*construct + 0.009*johnson
+2014-01-09 20:45:16,656-INFO:topic #94 (0.005): 0.067*lie + 0.018*midnight + 0.018*carry + 0.013*tom + 0.009*goth + 0.007*bang + 0.007*myhit + 0.007*baumax + 0.007*retrofutro + 0.007*vulgar-folk
+2014-01-09 20:45:16,716-INFO:topic #23 (0.005): 0.055*armstrong + 0.044*lou + 0.020*post-grunge + 0.017*jazz + 0.016*christmas + 0.015*grung + 0.015*satellit + 0.013*seeth + 0.010*creep + 0.010*altern
+2014-01-09 20:45:16,784-INFO:topic diff=0.919518, rho=0.707107
+2014-01-09 20:45:17,458-INFO:PROGRESS: iteration 0, at document #6000/9488
+2014-01-09 20:45:17,458-DEBUG:performing inference on a chunk of 2000 documents
+2014-01-09 20:45:23,591-INFO:2000/2000 documents converged within 50 iterations
+2014-01-09 20:45:23,663-DEBUG:updating topics
+2014-01-09 20:45:23,981-INFO:merging changes from 2000 documents into a model of 9488 documents
+2014-01-09 20:45:28,355-INFO:topic #166 (0.005): 0.031*mess + 0.026*mr. + 0.026*ray + 0.020*charl + 0.019*ming + 0.018*rag + 0.015*rapc + 0.013*machin + 0.012*skat + 0.011*gamm
+2014-01-09 20:45:28,415-INFO:topic #23 (0.005): 0.033*lou + 0.033*armstrong + 0.032*post-grunge + 0.026*grung + 0.016*silverchair + 0.014*pag + 0.013*seeth + 0.011*christmas + 0.011*altern + 0.011*buffet
+2014-01-09 20:45:28,476-INFO:topic #183 (0.005): 0.033*wann + 0.031*fight + 0.027*metallic + 0.021*foo + 0.016*intro + 0.015*riot + 0.013*ecstasy + 0.012*unknown + 0.010*rock + 0.009*orchestr
+2014-01-09 20:45:28,536-INFO:topic #174 (0.005): 0.058*hip-hop + 0.055*rap + 0.037*hip + 0.035*hop + 0.027*publ + 0.027*dea + 0.020*met + 0.012*dead + 0.012*metalc + 0.012*gangst
+2014-01-09 20:45:28,596-INFO:topic #2 (0.005): 0.042*iron + 0.029*cree + 0.021*hil + 0.017*& + 0.017*thiev + 0.017*ste + 0.015*hip-hop + 0.015*gorillaz + 0.015*cov + 0.014*folk
+2014-01-09 20:45:28,656-INFO:topic #90 (0.005): 0.073*everyth + 0.021*sev + 0.020*modest + 0.017*smith + 0.013*chick + 0.013*gilbert + 0.012*tri + 0.011*tuesday + 0.010*to: + 0.009*sunshin
+2014-01-09 20:45:28,717-INFO:topic #29 (0.005): 0.030*hor + 0.024*edit + 0.017*fresh + 0.016*anderson + 0.014*juggernaut + 0.013*gil + 0.011*biffy + 0.011*tabl + 0.011*mark + 0.010*clyro
+2014-01-09 20:45:28,777-INFO:topic #116 (0.005): 0.093*air + 0.052*daft + 0.039*punk + 0.035*electron + 0.030*soundtrack + 0.027*amby + 0.021*french + 0.020*modern + 0.019*chillout + 0.017*digit
+2014-01-09 20:45:28,838-INFO:topic #108 (0.005): 0.049*win + 0.019*nee + 0.016*chamb + 0.015*bret + 0.013*folk + 0.012*sand + 0.012*mellow + 0.011*glen + 0.010*acoust + 0.010*indy
+2014-01-09 20:45:28,901-INFO:topic #22 (0.005): 0.042*lily + 0.016*wet + 0.016*pussy + 0.016*ot + 0.015*quiet + 0.014*sink + 0.014*sci + 0.013*azeal + 0.013*red + 0.013*els
+2014-01-09 20:45:28,960-INFO:topic #126 (0.005): 0.031*lazy + 0.018*r.e.m. + 0.015*grow + 0.008*stor + 0.008*indy + 0.007*radiohead + 0.007*rem + 0.007*asleep + 0.007*situ + 0.007*minh
+2014-01-09 20:45:29,020-INFO:topic #105 (0.005): 0.031*discoverockult + 0.025*fear + 0.025*tid + 0.023*brun + 0.022*cavo + 0.016*dream + 0.016*rac + 0.015*ast + 0.014*mayb + 0.010*slowd
+2014-01-09 20:45:29,080-INFO:topic #122 (0.005): 0.038*john + 0.032*lennon + 0.027*tv + 0.020*radio + 0.020*funky + 0.010*dlz + 0.009*rae + 0.008*deaf + 0.008*indy + 0.006*hous
+2014-01-09 20:45:29,140-INFO:topic #78 (0.005): 0.048*girl + 0.020*tag + 0.015*happy + 0.013*boog + 0.013*k-pop + 0.010*psychedel + 0.010*hypnot + 0.010*blu + 0.009*pray + 0.009*audioslav
+2014-01-09 20:45:29,201-INFO:topic #104 (0.005): 0.033*drum + 0.023*grand + 0.022*giant + 0.015*becaus + 0.012*send + 0.012*bedroom + 0.011*dum + 0.008*sufu5a + 0.004*too, + 0.004*dance?
+2014-01-09 20:45:29,271-INFO:topic diff=0.877998, rho=0.577350
+2014-01-09 20:45:29,983-INFO:PROGRESS: iteration 0, at document #8000/9488
+2014-01-09 20:45:29,983-DEBUG:performing inference on a chunk of 2000 documents
+2014-01-09 20:45:36,692-INFO:2000/2000 documents converged within 50 iterations
+2014-01-09 20:45:36,767-DEBUG:updating topics
+2014-01-09 20:45:37,107-INFO:merging changes from 2000 documents into a model of 9488 documents
+2014-01-09 20:45:41,664-INFO:topic #142 (0.005): 0.065*monkey + 0.057*christian + 0.056*arct + 0.041*hom + 0.024*mountain + 0.016*indy + 0.013*orton + 0.011*revel + 0.011*rock + 0.008*brit
+2014-01-09 20:45:41,728-INFO:topic #79 (0.005): 0.040*techn + 0.033*spac + 0.031*step + 0.020*oas + 0.015*hard + 0.015*squarepush + 0.010*prid + 0.007*defend + 0.007*b. + 0.006*buttersnip
+2014-01-09 20:45:41,795-INFO:topic #106 (0.005): 0.045*cur + 0.019*glitch + 0.019*hey + 0.018*body + 0.018*evil + 0.017*hip-hop + 0.016*dre + 0.013*expery + 0.012*grip + 0.012*trip
+2014-01-09 20:45:41,877-INFO:topic #176 (0.005): 0.078*symphon + 0.068*met + 0.040*goth + 0.033*wat + 0.026*xandr + 0.021*mor + 0.018*fem + 0.018*front + 0.014*aft + 0.014*trans-siberian
+2014-01-09 20:45:41,942-INFO:topic #18 (0.005): 0.054*jim + 0.049*hendrix + 0.022*sug + 0.021*straight + 0.021*kenny + 0.018*magnet + 0.012*rock + 0.010*perform + 0.010*automatic + 0.010*class
+2014-01-09 20:45:42,006-INFO:topic #123 (0.005): 0.056*johnson + 0.054*jack + 0.034*acoust + 0.031*chillwav + 0.017*singer-songwrit + 0.015*chil + 0.014*lo-fi + 0.012*mellow + 0.010*relax + 0.009*zeppelin
+2014-01-09 20:45:42,070-INFO:topic #48 (0.005): 0.047*cal + 0.035*bright + 0.029*meg + 0.018*engl + 0.015*ey + 0.013*hear + 0.011*kiley + 0.010*rilo + 0.008*faith + 0.006*dark
+2014-01-09 20:45:42,137-INFO:topic #174 (0.005): 0.070*hip-hop + 0.055*hip + 0.054*rap + 0.049*hop + 0.022*dea + 0.017*publ + 0.015*met + 0.015*underground + 0.012*dead + 0.012*coast
+2014-01-09 20:45:42,201-INFO:topic #50 (0.005): 0.081*chip + 0.056*velvet + 0.051*hot + 0.013*amb + 0.013*u2 + 0.013*electron + 0.011*indy + 0.011*bittersweet + 0.010*adv + 0.008*alison
+2014-01-09 20:45:42,276-INFO:topic #68 (0.005): 0.035*wom + 0.023*town + 0.016*iiiiiiiii + 0.016*produc + 0.015*sit + 0.012*lin + 0.011*fluffy + 0.010*herald + 0.009*(radio + 0.009*stereophon
+2014-01-09 20:45:42,340-INFO:topic #138 (0.005): 0.048*sea + 0.032*alex + 0.018*mik + 0.017*land + 0.017*suprem + 0.014*comedy + 0.009*sooth + 0.009*spacey + 0.008*earl + 0.008*cribbin
+2014-01-09 20:45:42,406-INFO:topic #181 (0.005): 0.029*remix) + 0.028*tonight + 0.022*remix + 0.016*funny + 0.011*synthes + 0.011*soundscap + 0.010*wonky + 0.010*sham + 0.008*oi + 0.007*easy
+2014-01-09 20:45:42,475-INFO:topic #89 (0.005): 0.047*pink + 0.027*latin + 0.018*martin + 0.013*loung + 0.010*elliot + 0.010*jazz + 0.008*largo + 0.008*cha + 0.006*sibyl + 0.006*bai
+2014-01-09 20:45:42,539-INFO:topic #95 (0.005): 0.038*pleas + 0.029*eagl + 0.020*collaps + 0.019*eurovid + 0.017*lew + 0.012*areth + 0.012*franklin + 0.011*volt + 0.009*jil + 0.009*christmas
+2014-01-09 20:45:42,603-INFO:topic #98 (0.005): 0.066*hand + 0.025*common + 0.023*5 + 0.017*feel + 0.016*cam + 0.015*elev + 0.013*italiano + 0.013*dusty + 0.012*dreamwav + 0.012*springfield
+2014-01-09 20:45:42,678-INFO:topic diff=0.918336, rho=0.500000
+2014-01-09 20:45:45,062-DEBUG:bound: at document #0
+2014-01-09 20:45:49,341-INFO:-77.867 per-word bound, 275528557110796499288064.0 perplexity estimate based on a held-out corpus of 1488 documents with 3327 words
+2014-01-09 20:45:49,341-INFO:PROGRESS: iteration 0, at document #9488/9488
+2014-01-09 20:45:49,341-DEBUG:performing inference on a chunk of 1488 documents
+2014-01-09 20:45:51,879-INFO:1488/1488 documents converged within 50 iterations
+2014-01-09 20:45:51,960-DEBUG:updating topics
+2014-01-09 20:45:52,318-INFO:merging changes from 1488 documents into a model of 9488 documents
+2014-01-09 20:45:56,933-INFO:topic #10 (0.005): 0.070*jol + 0.047*dea + 0.040*lord + 0.032*alon + 0.026*minim + 0.021*riv + 0.018*met + 0.016*field + 0.013*(live + 0.010*drink
+2014-01-09 20:45:56,995-INFO:topic #20 (0.005): 0.059*jmsn + 0.032*bat + 0.026*flo + 0.020*feat. + 0.017*1996 + 0.011*divin + 0.009*man's + 0.009*jameson + 0.009*church + 0.008*telescop
+2014-01-09 20:45:57,057-INFO:topic #100 (0.005): 0.016*mag + 0.013*zed + 0.012*ye + 0.011*1 + 0.011*capit + 0.011*sound + 0.010*synthpop + 0.010*pop + 0.010*indy + 0.010*electron
+2014-01-09 20:45:57,125-INFO:topic #79 (0.005): 0.038*step + 0.024*techn + 0.020*spac + 0.012*oas + 0.011*lawn + 0.010*dement + 0.009*p.e. + 0.009*(hé™d) + 0.009*hard + 0.009*squarepush
+2014-01-09 20:45:57,190-INFO:topic #158 (0.005): 0.075*littl + 0.029*fly + 0.029*mar + 0.028*attack + 0.024*vint + 0.014*drum + 0.008*county + 0.008*zim + 0.008*swingerhead + 0.008*breakfast
+2014-01-09 20:45:57,253-INFO:topic #98 (0.005): 0.069*hand + 0.051*eliz + 0.051*doolittl + 0.034*timor + 0.017*feel + 0.014*5 + 0.014*common + 0.012*b-line + 0.009*italiano + 0.009*cam
+2014-01-09 20:45:57,315-INFO:topic #148 (0.005): 0.057*kil + 0.042*sun + 0.026*thes + 0.021*hat + 0.018*cut + 0.009*indy + 0.009*mou + 0.009*& + 0.008*sunny + 0.007*agneth
+2014-01-09 20:45:57,377-INFO:topic #121 (0.005): 0.039*peach + 0.032*ten + 0.025*smok + 0.023*je + 0.019*rich + 0.013*proto-punk + 0.012*follow + 0.010*sixp + 0.010*te + 0.009*kyo
+2014-01-09 20:45:57,443-INFO:topic #39 (0.005): 0.094*rajn + 0.029*bury + 0.018*left + 0.018*plac + 0.016*beyont + 0.011*beb + 0.011*bank + 0.010*kalist + 0.010*miland + 0.010*infernam
+2014-01-09 20:45:57,508-INFO:topic #159 (0.005): 0.031*pap + 0.030*letheret + 0.029*bas + 0.023*system + 0.022*4 + 0.018*disast + 0.011*violin + 0.011*simply + 0.011*wick + 0.011*fars
+2014-01-09 20:45:57,573-INFO:topic #145 (0.005): 0.076*dean + 0.022*dr. + 0.020*8 + 0.019*329000 + 0.018*mitchel + 0.017*rajn + 0.017*hap + 0.016*sunday + 0.014*kiss + 0.014*comp
+2014-01-09 20:45:57,650-INFO:topic #151 (0.005): 0.068*joy + 0.043*son + 0.012*undernea + 0.012*formid + 0.009*silverhead + 0.008*nã + 0.008*mah + 0.006*mumford + 0.005*folk + 0.004*umilian
+2014-01-09 20:45:57,722-INFO:topic #96 (0.005): 0.024*frost + 0.023*2000 + 0.021*gr + 0.019*twilight + 0.019*honey + 0.015*av + 0.014*jacket + 0.010*jump + 0.009*eth + 0.009*greg
+2014-01-09 20:45:57,786-INFO:topic #7 (0.005): 0.036*tre + 0.029*trant + 0.018*christmas + 0.016*dian + 0.015*cho + 0.014*suit + 0.013*lanz + 0.013*knight + 0.011*kral + 0.010*duet
+2014-01-09 20:45:57,848-INFO:topic #180 (0.005): 0.022*battl + 0.020*west + 0.015*kany + 0.013*morrissey + 0.012*cowboy + 0.012*trap + 0.011*pretty + 0.010*sword + 0.009*sabr + 0.008*alert
+2014-01-09 20:45:57,921-INFO:topic diff=0.640255, rho=0.447214
+2014-01-10 10:13:06,557-INFO:adding document #0 to Dictionary(0 unique tokens)
+2014-01-10 10:13:18,783-INFO:built Dictionary(26145 unique tokens) from 9488 documents (total 2431143 corpus positions)
+2014-01-10 10:13:30,539-INFO:collecting document frequencies
+2014-01-10 10:13:30,539-INFO:PROGRESS: processing document #0
+2014-01-10 10:13:30,656-INFO:calculating IDF weights for 9488 documents and 26145 features (276838 matrix non-zeros)
+2014-01-10 10:13:30,692-INFO:using serial LSI version on this node
+2014-01-10 10:13:30,693-INFO:updating model with new documents
+2014-01-10 10:13:31,554-INFO:preparing a new chunk of documents
+2014-01-10 10:13:31,557-DEBUG:converting corpus to csc format
+2014-01-10 10:13:31,959-INFO:using 100 extra samples and 2 power iterations
+2014-01-10 10:13:32,000-INFO:1st phase: constructing (26145, 130) action matrix
+2014-01-10 10:13:32,421-INFO:orthonormalizing (26145, 130) action matrix
+2014-01-10 10:13:32,473-DEBUG:computing QR of (26145, 130) dense matrix
+2014-01-10 10:13:34,941-DEBUG:running 2 power iterations
+2014-01-10 10:13:35,291-DEBUG:computing QR of (26145, 130) dense matrix
+2014-01-10 10:13:37,876-DEBUG:computing QR of (26145, 130) dense matrix
+2014-01-10 10:13:40,367-INFO:2nd phase: running dense svd on (130, 9488) matrix
+2014-01-10 10:13:42,580-INFO:computing the final decomposition
+2014-01-10 10:13:42,593-INFO:keeping 30 factors (discarding 54.136% of energy spectrum)
+2014-01-10 10:13:42,742-INFO:processed documents up to #9488
+2014-01-10 10:13:42,770-INFO:topic #0(9.551): -0.465*"met" + -0.356*"rock" + -0.340*"christmas" + -0.251*"indy" + -0.178*"altern" + -0.177*"beatl" + -0.133*"class" + -0.117*"fem" + -0.113*"pop" + -0.108*"goth"
+2014-01-10 10:13:42,775-INFO:topic #1(8.927): 0.844*"christmas" + -0.387*"met" + -0.092*"rock" + -0.085*"dea" + -0.082*"goth" + 0.073*"merry" + 0.072*"jazz" + 0.070*"xma" + -0.070*"doom" + 0.058*"holiday"
+2014-01-10 10:13:42,779-INFO:topic #2(8.392): -0.629*"met" + 0.280*"beatl" + 0.264*"rock" + -0.260*"christmas" + 0.248*"indy" + -0.141*"dea" + 0.126*"class" + 0.125*"altern" + 0.123*"60s" + -0.122*"goth"
+2014-01-10 10:13:42,783-INFO:topic #3(7.308): -0.747*"beatl" + 0.280*"indy" + -0.269*"60s" + -0.232*"class" + 0.134*"altern" + 0.113*"folk" + 0.110*"fem" + 0.102*"electron" + -0.084*"psychedel" + -0.084*"met"
+2014-01-10 10:13:42,788-INFO:topic #4(6.036): -0.600*"johnson" + -0.578*"jack" + -0.307*"acoust" + -0.211*"folk" + -0.182*"singer-songwrit" + 0.110*"rock" + 0.082*"punk" + -0.080*"chil" + 0.074*"altern" + 0.071*"yeah"
+2014-01-10 10:13:59,488-INFO:adding document #0 to Dictionary(0 unique tokens)
+2014-01-10 10:14:11,638-INFO:built Dictionary(26145 unique tokens) from 9488 documents (total 2431143 corpus positions)
+2014-01-10 10:14:23,586-INFO:collecting document frequencies
+2014-01-10 10:14:23,586-INFO:PROGRESS: processing document #0
+2014-01-10 10:14:23,702-INFO:calculating IDF weights for 9488 documents and 26145 features (276838 matrix non-zeros)
+2014-01-10 10:14:23,739-INFO:using serial LSI version on this node
+2014-01-10 10:14:23,740-INFO:updating model with new documents
+2014-01-10 10:14:24,620-INFO:preparing a new chunk of documents
+2014-01-10 10:14:24,623-DEBUG:converting corpus to csc format
+2014-01-10 10:14:25,012-INFO:using 100 extra samples and 2 power iterations
+2014-01-10 10:14:25,043-INFO:1st phase: constructing (26145, 130) action matrix
+2014-01-10 10:14:25,338-INFO:orthonormalizing (26145, 130) action matrix
+2014-01-10 10:14:25,379-DEBUG:computing QR of (26145, 130) dense matrix
+2014-01-10 10:14:27,613-DEBUG:running 2 power iterations
+2014-01-10 10:14:27,932-DEBUG:computing QR of (26145, 130) dense matrix
+2014-01-10 10:14:30,486-DEBUG:computing QR of (26145, 130) dense matrix
+2014-01-10 10:14:32,896-INFO:2nd phase: running dense svd on (130, 9488) matrix
+2014-01-10 10:14:34,838-INFO:computing the final decomposition
+2014-01-10 10:14:34,838-INFO:keeping 30 factors (discarding 54.120% of energy spectrum)
+2014-01-10 10:14:34,971-INFO:processed documents up to #9488
+2014-01-10 10:14:34,988-INFO:topic #0(9.551): -0.465*"met" + -0.356*"rock" + -0.340*"christmas" + -0.251*"indy" + -0.178*"altern" + -0.177*"beatl" + -0.133*"class" + -0.117*"fem" + -0.114*"pop" + -0.108*"goth"
+2014-01-10 10:14:34,992-INFO:topic #1(8.927): -0.844*"christmas" + 0.387*"met" + 0.092*"rock" + 0.085*"dea" + 0.082*"goth" + -0.074*"merry" + -0.073*"jazz" + -0.071*"xma" + 0.070*"doom" + -0.057*"holiday"
+2014-01-10 10:14:34,997-INFO:topic #2(8.392): 0.629*"met" + -0.281*"beatl" + -0.264*"rock" + 0.260*"christmas" + -0.248*"indy" + 0.141*"dea" + -0.126*"altern" + -0.125*"class" + 0.122*"goth" + -0.122*"60s"
+2014-01-10 10:14:35,001-INFO:topic #3(7.308): 0.747*"beatl" + -0.280*"indy" + 0.269*"60s" + 0.232*"class" + -0.134*"altern" + -0.113*"folk" + -0.111*"fem" + -0.103*"electron" + 0.084*"met" + 0.084*"psychedel"
+2014-01-10 10:14:35,005-INFO:topic #4(6.036): 0.600*"johnson" + 0.578*"jack" + 0.309*"acoust" + 0.214*"folk" + 0.179*"singer-songwrit" + -0.106*"rock" + -0.086*"punk" + 0.080*"chil" + -0.070*"altern" + -0.067*"yeah"
+2014-01-10 10:18:43,942-INFO:adding document #0 to Dictionary(0 unique tokens)
+2014-01-10 10:18:52,433-INFO:built Dictionary(20341 unique tokens) from 5402 documents (total 1687623 corpus positions)
+2014-01-10 10:19:01,004-INFO:collecting document frequencies
+2014-01-10 10:19:01,004-INFO:PROGRESS: processing document #0
+2014-01-10 10:19:01,109-INFO:calculating IDF weights for 5402 documents and 20341 features (236879 matrix non-zeros)
+2014-01-10 10:19:01,135-INFO:using symmetric alpha at 0.0333333333333
+2014-01-10 10:19:01,135-INFO:using serial LDA version on this node
+2014-01-10 10:19:01,624-INFO:running online LDA training, 30 topics, 1 passes over the supplied corpus of 5402 documents, updating model once every 2000 documents, evaluating every 5402 documents
+2014-01-10 10:19:01,624-WARNING:too few updates, training might not converge; consider increasing the number of passes to improve accuracy
+2014-01-10 10:19:02,419-INFO:PROGRESS: iteration 0, at document #2000/5402
+2014-01-10 10:19:02,419-DEBUG:performing inference on a chunk of 2000 documents
+2014-01-10 10:19:05,574-INFO:2000/2000 documents converged within 50 iterations
+2014-01-10 10:19:05,583-DEBUG:updating topics
+2014-01-10 10:19:05,621-INFO:merging changes from 2000 documents into a model of 5402 documents
+2014-01-10 10:19:06,182-INFO:topic #4 (0.033): 0.005*zomby + 0.004*indy + 0.004*beck + 0.004*ramon + 0.003*aerosmi + 0.003*60s + 0.003*class + 0.003*r.e.m. + 0.002*monkey + 0.002*blu
+2014-01-10 10:19:06,193-INFO:topic #11 (0.033): 0.003*fem + 0.003*indy + 0.003*beatl + 0.003*corp + 0.003*pumpkin + 0.003*folk + 0.003*lennon + 0.003*class + 0.003*& + 0.003*heart
+2014-01-10 10:19:06,203-INFO:topic #2 (0.033): 0.004*80s + 0.004*indy + 0.004*fem + 0.004*chain + 0.004*folk + 0.003*altern + 0.003*dyl + 0.003*cur + 0.003*fion + 0.003*follow
+2014-01-10 10:19:06,213-INFO:topic #26 (0.033): 0.004*door + 0.003*pep + 0.003*ston + 0.003*radiohead + 0.003*red + 0.003*nickelback + 0.002*met + 0.002*giant + 0.002*indy + 0.002*class
+2014-01-10 10:19:06,224-INFO:topic #13 (0.033): 0.004*cov + 0.004*indy + 0.003*cak + 0.003*punk + 0.003*cash + 0.003*britpop + 0.003*reign + 0.003*o'er + 0.003*johnny + 0.002*littl
+2014-01-10 10:19:06,235-INFO:topic #25 (0.033): 0.005*shin + 0.005*indy + 0.003*canad + 0.003*psychedel + 0.003*floyd + 0.003*altern + 0.003*kreviazuk + 0.003*60s + 0.003*pink + 0.003*foo
+2014-01-10 10:19:06,245-INFO:topic #5 (0.033): 0.004*cash + 0.004*johnny + 0.004*indy + 0.003*aerosmi + 0.003*strokes + 0.003*rid + 0.003*country + 0.003*mou + 0.003*folk + 0.003*fem
+2014-01-10 10:19:06,255-INFO:topic #15 (0.033): 0.004*indy + 0.004*doubt + 0.003*met + 0.003*altern + 0.003*barenak + 0.003*book + 0.003*folk + 0.002*fem + 0.002*modest + 0.002*mous
+2014-01-10 10:19:06,265-INFO:topic #12 (0.033): 0.005*fem + 0.005*door + 0.004*beck + 0.004*floyd + 0.003*folk + 0.003*psychedel + 0.003*corp + 0.003*pink + 0.003*indy + 0.003*altern
+2014-01-10 10:19:06,276-INFO:topic #9 (0.033): 0.004*bowy + 0.004*folk + 0.004*pink + 0.004*indy + 0.004*dyl + 0.003*door + 0.003*floyd + 0.003*david + 0.003*cov + 0.003*met
+2014-01-10 10:19:06,285-INFO:topic #7 (0.033): 0.007*beatl + 0.004*class + 0.003*indy + 0.003*folk + 0.003*cov + 0.003*70s + 0.003*country + 0.002*fem + 0.002*dust + 0.002*fleetwood
+2014-01-10 10:19:06,295-INFO:topic #3 (0.033): 0.004*interpol + 0.003*beatl + 0.003*indy + 0.002*bon + 0.002*longpig + 0.002*weight + 0.002*a-h + 0.002*grung + 0.002*saliv + 0.002*jazz
+2014-01-10 10:19:06,305-INFO:topic #14 (0.033): 0.007*wait + 0.006*tom + 0.004*indy + 0.003*class + 0.003*madonn + 0.003*80s + 0.003*elv + 0.003*beatl + 0.003*blu + 0.003*met
+2014-01-10 10:19:06,316-INFO:topic #6 (0.033): 0.004*weez + 0.004*fem + 0.003*bel + 0.003*r.e.m. + 0.003*simon + 0.003*americ + 0.003*met + 0.002*sist + 0.002*ac/dc + 0.002*jazz
+2014-01-10 10:19:06,326-INFO:topic #18 (0.033): 0.005*radiohead + 0.004*indy + 0.003*placebo + 0.003*altern + 0.003*norah + 0.003*camer + 0.003*harvey + 0.003*cal + 0.002*fem + 0.002*pj
+2014-01-10 10:19:06,336-INFO:topic diff=25.689157, rho=1.000000
+2014-01-10 10:19:07,144-INFO:PROGRESS: iteration 0, at document #4000/5402
+2014-01-10 10:19:07,145-DEBUG:performing inference on a chunk of 2000 documents
+2014-01-10 10:19:10,524-INFO:1996/2000 documents converged within 50 iterations
+2014-01-10 10:19:10,533-DEBUG:updating topics
+2014-01-10 10:19:10,572-INFO:merging changes from 2000 documents into a model of 5402 documents
+2014-01-10 10:19:11,083-INFO:topic #1 (0.033): 0.010*fountain + 0.009*wayn + 0.008*bright + 0.008*ey + 0.006*nirvan + 0.005*indy + 0.003*manson + 0.003*unicorn + 0.003*marilyn + 0.003*van
+2014-01-10 10:19:11,094-INFO:topic #6 (0.033): 0.010*weez + 0.005*neko + 0.004*goo + 0.004*cas + 0.004*step + 0.004*simon + 0.004*jon + 0.003*triangl + 0.003*misunderstood + 0.003*thom
+2014-01-10 10:19:11,104-INFO:topic #13 (0.033): 0.005*ska + 0.005*cak + 0.004*cov + 0.004*indy + 0.004*pav + 0.004*tru + 0.003*rol + 0.003*britpop + 0.003*littl + 0.003*ston
+2014-01-10 10:19:11,115-INFO:topic #4 (0.033): 0.005*zomby + 0.005*beck + 0.005*60s + 0.004*indy + 0.004*lay + 0.004*cru + 0.004*grrls + 0.003*stripes + 0.003*whit + 0.003*star
+2014-01-10 10:19:11,125-INFO:topic #10 (0.033): 0.006*ben + 0.006*elliot + 0.005*paul + 0.005*fold + 0.005*smi + 0.004*prom + 0.004*angel + 0.004*nat + 0.004*john + 0.004*elton
+2014-01-10 10:19:11,136-INFO:topic #7 (0.033): 0.005*beatl + 0.004*blondy + 0.004*wom + 0.004*mae + 0.004*class + 0.003*spin + 0.003*bluegrass + 0.003*harrison + 0.003*glass + 0.003*harry
+2014-01-10 10:19:11,147-INFO:topic #23 (0.033): 0.004*monday + 0.004*fem + 0.004*smith + 0.004*som + 0.004*indy + 0.003*az + 0.003*journey + 0.003*broth + 0.003*80s + 0.003*saint
+2014-01-10 10:19:11,157-INFO:topic #11 (0.033): 0.004*kiss + 0.004*process + 0.004*lennon + 0.004*heart + 0.003*told + 0.003*idol + 0.003*corp + 0.003*print + 0.003*someth + 0.003*tuesday
+2014-01-10 10:19:11,167-INFO:topic #25 (0.033): 0.008*shin + 0.007*cat + 0.007*indy + 0.005*fem + 0.004*pow + 0.004*fight + 0.004*sebast + 0.004*inch + 0.004*bel + 0.004*&
+2014-01-10 10:19:11,178-INFO:topic #29 (0.033): 0.008*holiday + 0.007*jimmy + 0.006*bil + 0.006*velvet + 0.006*eat + 0.006*jazz + 0.005*oas + 0.004*ris + 0.004*indy + 0.004*drak
+2014-01-10 10:19:11,189-INFO:topic #22 (0.033): 0.005*head + 0.005*hot + 0.004*talk + 0.004*indust + 0.004*bruc + 0.004*springsteen + 0.004*stevy + 0.004*snak + 0.004*grav + 0.004*low
+2014-01-10 10:19:11,199-INFO:topic #21 (0.033): 0.010*elv + 0.010*presley + 0.007*morrissey + 0.006*okkervil + 0.006*riv + 0.006*rol + 0.005*damy + 0.004*50s + 0.004*indy + 0.004*ludacr
+2014-01-10 10:19:11,209-INFO:topic #16 (0.033): 0.008*r.e.m. + 0.007*ferdinand + 0.006*aerosmi + 0.005*pumpkin + 0.005*cov + 0.005*u2 + 0.004*tak + 0.004*ac/dc + 0.004*abb + 0.004*smash
+2014-01-10 10:19:11,220-INFO:topic #5 (0.033): 0.009*cash + 0.008*johnny + 0.008*pillow + 0.006*j-rock + 0.005*japanes + 0.005*country + 0.005*strokes + 0.004*ont + 0.003*ton + 0.003*strange
+2014-01-10 10:19:11,230-INFO:topic #19 (0.033): 0.009*depech + 0.008*punk + 0.007*mod + 0.006*relig + 0.006*coldplay + 0.006*kid + 0.005*wilco + 0.005*adam + 0.004*bad + 0.004*bowy
+2014-01-10 10:19:11,240-INFO:topic diff=0.765446, rho=0.707107
+2014-01-10 10:19:12,145-DEBUG:bound: at document #0
+2014-01-10 10:19:17,316-INFO:-18.332 per-word bound, 330070.2 perplexity estimate based on a held-out corpus of 1402 documents with 4385 words
+2014-01-10 10:19:17,316-INFO:PROGRESS: iteration 0, at document #5402/5402
+2014-01-10 10:19:17,316-DEBUG:performing inference on a chunk of 1402 documents
+2014-01-10 10:19:19,513-INFO:1402/1402 documents converged within 50 iterations
+2014-01-10 10:19:19,521-DEBUG:updating topics
+2014-01-10 10:19:19,560-INFO:merging changes from 1402 documents into a model of 5402 documents
+2014-01-10 10:19:20,100-INFO:topic #0 (0.033): 0.012*met + 0.006*indust + 0.005*(live) + 0.005*dead + 0.005*lou + 0.005*blee + 0.004*fai + 0.004*suck + 0.004*lan + 0.004*joy
+2014-01-10 10:19:20,111-INFO:topic #17 (0.033): 0.014*pixy + 0.011*aim + 0.008*met + 0.008*decemb + 0.008*bowy + 0.007*garb + 0.006*thrash + 0.006*david + 0.006*indy + 0.005*fem
+2014-01-10 10:19:20,126-INFO:topic #8 (0.033): 0.025*beatl + 0.010*60s + 0.007*gray + 0.007*class + 0.007*soul + 0.006*georg + 0.006*win + 0.005*brit + 0.005*harrison + 0.005*macy
+2014-01-10 10:19:20,137-INFO:topic #28 (0.033): 0.014*ezr + 0.011*bet + 0.010*fir + 0.009*arcad + 0.006*fre + 0.005*hom + 0.005*chang + 0.004*patt + 0.004*crazy + 0.004*jet
+2014-01-10 10:19:20,154-INFO:topic #24 (0.033): 0.007*eagl + 0.007*franz + 0.006*valentin + 0.005*brand + 0.004*rememb + 0.004*sun + 0.004*templ + 0.003*dear + 0.003*build + 0.003*brok
+2014-01-10 10:19:20,167-INFO:topic #3 (0.033): 0.008*johnson + 0.006*jack + 0.006*prim + 0.006*interpol + 0.005*dashboard + 0.005*confess + 0.004*bon + 0.004*bed + 0.004*swing + 0.004*gabriel
+2014-01-10 10:19:20,178-INFO:topic #4 (0.033): 0.007*zomby + 0.006*60s + 0.005*beck + 0.005*believ + 0.005*indy + 0.004*ramon + 0.004*grrls + 0.004*whit + 0.004*round + 0.004*john
+2014-01-10 10:19:20,189-INFO:topic #27 (0.033): 0.011*zeppelin + 0.011*led + 0.007*sav + 0.007*clash + 0.005*alon + 0.005*punk + 0.004*leav + 0.004*reel + 0.004*mil + 0.004*class
+2014-01-10 10:19:20,202-INFO:topic #12 (0.033): 0.014*door + 0.008*devendr + 0.008*banhart + 0.007*tor + 0.006*flam + 0.006*psychedel + 0.006*amo + 0.005*fem + 0.005*folk + 0.004*drawn
+2014-01-10 10:19:20,212-INFO:topic #21 (0.033): 0.013*elv + 0.012*presley + 0.009*riv + 0.008*rol + 0.008*okkervil + 0.007*50s + 0.005*morrissey + 0.004*oldy + 0.004*indy + 0.004*kwel
+2014-01-10 10:19:20,223-INFO:topic #25 (0.033): 0.009*cat + 0.009*indy + 0.007*eel + 0.006*pow + 0.006*fem + 0.006*shin + 0.005*& + 0.005*bel + 0.005*sebast + 0.004*matthew
+2014-01-10 10:19:20,234-INFO:topic #29 (0.033): 0.010*jimmy + 0.009*eat + 0.008*holiday + 0.007*drak + 0.007*oas + 0.006*nick + 0.006*bil + 0.005*ther + 0.005*indy + 0.005*jazz
+2014-01-10 10:19:20,245-INFO:topic #11 (0.033): 0.009*process + 0.007*heart + 0.006*print + 0.005*black + 0.004*kiss + 0.004*1 + 0.004*oil + 0.004*lennon + 0.003*told + 0.003*clos
+2014-01-10 10:19:20,255-INFO:topic #5 (0.033): 0.011*cash + 0.011*johnny + 0.008*strokes + 0.007*everclear + 0.007*country + 0.006*pillow + 0.004*japanes + 0.004*tony + 0.004*j-rock + 0.003*catch
+2014-01-10 10:19:20,267-INFO:topic #10 (0.033): 0.015*ben + 0.014*fold + 0.011*elliot + 0.011*smi + 0.008*piano + 0.005*fiv + 0.005*queen + 0.004*paul + 0.004*bush + 0.004*singer-songwrit
+2014-01-10 10:19:20,277-INFO:topic diff=0.681094, rho=0.577350
+2014-01-11 13:29:24,921-INFO:adding document #0 to Dictionary(0 unique tokens)
+2014-01-11 13:29:38,984-INFO:built Dictionary(26145 unique tokens) from 9488 documents (total 2431143 corpus positions)
+2014-01-11 13:29:59,861-INFO:collecting document frequencies
+2014-01-11 13:29:59,861-INFO:PROGRESS: processing document #0
+2014-01-11 13:30:00,077-INFO:calculating IDF weights for 9488 documents and 26145 features (276838 matrix non-zeros)
+2014-01-11 13:30:00,147-INFO:using symmetric alpha at 0.0333333333333
+2014-01-11 13:30:00,147-INFO:using serial LDA version on this node
+2014-01-11 13:30:01,257-INFO:running online LDA training, 30 topics, 1 passes over the supplied corpus of 9488 documents, updating model once every 2000 documents, evaluating every 9488 documents
+2014-01-11 13:30:01,257-WARNING:too few updates, training might not converge; consider increasing the number of passes to improve accuracy
+2014-01-11 13:30:02,461-INFO:PROGRESS: iteration 0, at document #2000/9488
+2014-01-11 13:30:02,461-DEBUG:performing inference on a chunk of 2000 documents
+2014-01-11 13:30:07,595-INFO:2000/2000 documents converged within 50 iterations
+2014-01-11 13:30:07,626-DEBUG:updating topics
+2014-01-11 13:30:07,724-INFO:merging changes from 2000 documents into a model of 9488 documents
+2014-01-11 13:30:08,959-INFO:topic #22 (0.033): 0.006*grac + 0.006*rock + 0.005*chem + 0.004*haus + 0.004*underwood + 0.004*dav + 0.004*altern + 0.003*christmas + 0.003*nev + 0.003*day
+2014-01-11 13:30:08,980-INFO:topic #3 (0.033): 0.008*christmas + 0.006*guarald + 0.005*vint + 0.005*depech + 0.004*electron + 0.004*rjd2 + 0.004*hip-hop + 0.004*jazz + 0.003*nat + 0.003*mod
+2014-01-11 13:30:09,009-INFO:topic #11 (0.033): 0.007*indy + 0.005*rock + 0.004*elliot + 0.004*verv + 0.004*folk + 0.004*libertin + 0.004*stefan + 0.004*gwen + 0.003*altern + 0.003*electron
+2014-01-11 13:30:09,029-INFO:topic #21 (0.033): 0.006*indy + 0.006*rock + 0.006*teit + 0.006*christmas + 0.005*altern + 0.004*fem + 0.004*blu + 0.003*nash + 0.003*voc + 0.003*pj
+2014-01-11 13:30:09,058-INFO:topic #1 (0.033): 0.007*indy + 0.006*rock + 0.006*christmas + 0.005*whiskeytown + 0.004*vint + 0.004*altern + 0.004*futurehead + 0.003*guarald + 0.003*libertin + 0.003*xx
+2014-01-11 13:30:09,078-INFO:topic #29 (0.033): 0.007*christmas + 0.005*rock + 0.004*indy + 0.004*door + 0.004*electron + 0.004*shoegaz + 0.003*met + 0.003*kitch + 0.003*boy + 0.003*blu
+2014-01-11 13:30:09,098-INFO:topic #24 (0.033): 0.007*xx + 0.005*indy + 0.004*woodkid + 0.004*rock + 0.004*machin + 0.003*altern + 0.003*electron + 0.003*hexpero + 0.003*fev + 0.003*country
+2014-01-11 13:30:09,119-INFO:topic #9 (0.033): 0.005*thievery + 0.005*corp + 0.005*christmas + 0.004*blu + 0.004*rat + 0.004*somafm + 0.003*jazz + 0.003*instru + 0.003*amby + 0.003*bright
+2014-01-11 13:30:09,147-INFO:topic #18 (0.033): 0.006*teit + 0.005*indy + 0.005*rock + 0.004*air + 0.004*strokes + 0.004*machin + 0.004*fatboy + 0.003*night + 0.003*folk + 0.003*rag
+2014-01-11 13:30:09,166-INFO:topic #20 (0.033): 0.006*christmas + 0.005*indy + 0.005*rock + 0.004*secret + 0.003*crib + 0.003*flam + 0.003*folk + 0.003*lip + 0.003*somafm + 0.003*vil
+2014-01-11 13:30:09,186-INFO:topic #17 (0.033): 0.006*rock + 0.006*indy + 0.006*christmas + 0.005*ting + 0.005*ston + 0.004*maccab + 0.004*altern + 0.003*lennox + 0.003*pentangl + 0.003*folk
+2014-01-11 13:30:09,210-INFO:topic #4 (0.033): 0.005*rock + 0.004*brion + 0.004*fem + 0.004*indy + 0.004*singer-songwrit + 0.003*altern + 0.003*jon + 0.003*folk + 0.003*pj + 0.003*harvey
+2014-01-11 13:30:09,236-INFO:topic #12 (0.033): 0.008*ston + 0.005*indy + 0.005*rock + 0.004*blu + 0.004*queen + 0.003*ag + 0.003*pop + 0.003*altern + 0.003*brit + 0.003*electron
+2014-01-11 13:30:09,256-INFO:topic #5 (0.033): 0.006*indy + 0.004*rock + 0.003*dian + 0.003*blu + 0.003*altern + 0.003*kral + 0.003*menomen + 0.003*jazz + 0.003*electron + 0.003*christmas
+2014-01-11 13:30:09,276-INFO:topic #19 (0.033): 0.008*rock + 0.008*indy + 0.004*altern + 0.004*christmas + 0.004*pop + 0.003*william + 0.003*fem + 0.003*dido + 0.003*met + 0.003*pj
+2014-01-11 13:30:09,295-INFO:topic diff=26.213233, rho=1.000000
+2014-01-11 13:30:10,404-INFO:PROGRESS: iteration 0, at document #4000/9488
+2014-01-11 13:30:10,412-DEBUG:performing inference on a chunk of 2000 documents
+2014-01-11 13:30:15,921-INFO:1997/2000 documents converged within 50 iterations
+2014-01-11 13:30:15,949-DEBUG:updating topics
+2014-01-11 13:30:16,037-INFO:merging changes from 2000 documents into a model of 9488 documents
+2014-01-11 13:30:17,213-INFO:topic #11 (0.033): 0.010*chillwav + 0.009*post-hardcore + 0.008*indy + 0.006*metalc + 0.006*electron + 0.006*cinem + 0.006*ladytron + 0.005*door + 0.005*rock + 0.005*dog
+2014-01-11 13:30:17,235-INFO:topic #13 (0.033): 0.012*radiohead + 0.009*indy + 0.009*plan + 0.008*rock + 0.006*altern + 0.006*moon + 0.005*fals + 0.004*brit + 0.004*dragon + 0.004*thiev
+2014-01-11 13:30:17,255-INFO:topic #4 (0.033): 0.019*daft + 0.011*simon + 0.008*soundtrack + 0.008*punk + 0.006*fitzgerald + 0.005*ell + 0.005*christmas + 0.005*electron + 0.005*rock + 0.004*indy
+2014-01-11 13:30:17,275-INFO:topic #3 (0.033): 0.006*depech + 0.005*christmas + 0.005*m.i.a. + 0.005*ven + 0.005*lin + 0.004*mod + 0.003*faithless + 0.003*fal + 0.003*reason + 0.003*electron
+2014-01-11 13:30:17,304-INFO:topic #17 (0.033): 0.018*met + 0.014*doom + 0.011*sludg + 0.009*johnson + 0.009*jack + 0.007*lost + 0.006*goth + 0.005*rock + 0.005*brok + 0.005*christmas
+2014-01-11 13:30:17,324-INFO:topic #29 (0.033): 0.012*door + 0.011*cinem + 0.009*sold + 0.008*lun + 0.008*club + 0.007*met + 0.006*indy + 0.005*rock + 0.005*christmas + 0.005*symphon
+2014-01-11 13:30:17,344-INFO:topic #23 (0.033): 0.020*christmas + 0.020*sufs + 0.018*stev + 0.012*poe + 0.009*king + 0.009*param + 0.006*rock + 0.006*indy + 0.005*johnny + 0.005*sinatr
+2014-01-11 13:30:17,373-INFO:topic #6 (0.033): 0.010*fiv + 0.008*arct + 0.007*monkey + 0.006*radiohead + 0.006*tricky + 0.006*indy + 0.005*rock + 0.005*pan + 0.005*altern + 0.004*goth
+2014-01-11 13:30:17,393-INFO:topic #20 (0.033): 0.009*explod + 0.006*pass + 0.005*holy + 0.005*christmas + 0.005*greg + 0.005*common + 0.004*bor + 0.004*rock + 0.004*post-rock + 0.004*&
+2014-01-11 13:30:17,413-INFO:topic #14 (0.033): 0.006*hip-hop + 0.006*john + 0.006*boom + 0.005*dean + 0.005*hey + 0.004*martin + 0.004*christmas + 0.004*suicid + 0.004*rock + 0.004*admir
+2014-01-11 13:30:17,433-INFO:topic #10 (0.033): 0.015*christmas + 0.011*revoir + 0.009*jack + 0.008*johnson + 0.007*math + 0.007*rock + 0.005*param + 0.005*au + 0.004*johnny + 0.004*met
+2014-01-11 13:30:17,462-INFO:topic #27 (0.033): 0.017*iron + 0.015*win + 0.011*mcfly + 0.010*birthday + 0.008*indy + 0.008*folk + 0.008*& + 0.006*rock + 0.005*cov + 0.005*acoust
+2014-01-11 13:30:17,482-INFO:topic #12 (0.033): 0.017*ston + 0.010*devo + 0.007*queen + 0.006*rock + 0.005*ag + 0.005*valy + 0.005*thor + 0.004*cabaret + 0.004*jean + 0.004*alon
+2014-01-11 13:30:17,502-INFO:topic #26 (0.033): 0.009*hardc + 0.006*christmas + 0.006*nick + 0.006*cav + 0.006*hip-hop + 0.006*bad + 0.005*devil + 0.005*war + 0.005*rock + 0.004*sug
+2014-01-11 13:30:17,523-INFO:topic #15 (0.033): 0.012*fu + 0.009*manchu + 0.009*ston + 0.008*rock + 0.006*met + 0.005*indy + 0.005*blood + 0.005*stripes + 0.004*gar + 0.004*whit
+2014-01-11 13:30:17,550-INFO:topic diff=0.611371, rho=0.707107
+2014-01-11 13:30:18,622-INFO:PROGRESS: iteration 0, at document #6000/9488
+2014-01-11 13:30:18,623-DEBUG:performing inference on a chunk of 2000 documents
+2014-01-11 13:30:23,936-INFO:1998/2000 documents converged within 50 iterations
+2014-01-11 13:30:23,956-DEBUG:updating topics
+2014-01-11 13:30:24,049-INFO:merging changes from 2000 documents into a model of 9488 documents
+2014-01-11 13:30:25,219-INFO:topic #10 (0.033): 0.012*enemy + 0.012*christmas + 0.007*rock + 0.007*met + 0.006*jack + 0.006*johnson + 0.005*anoth + 0.005*revoir + 0.005*horizon + 0.004*town
+2014-01-11 13:30:25,248-INFO:topic #6 (0.033): 0.011*monkey + 0.010*arct + 0.006*chip + 0.006*indy + 0.006*fiv + 0.006*wel + 0.005*rock + 0.004*cov + 0.004*pan + 0.004*altern
+2014-01-11 13:30:25,277-INFO:topic #4 (0.033): 0.009*daft + 0.007*soundtrack + 0.007*punk + 0.007*harry + 0.006*mil + 0.006*rock + 0.005*simon + 0.005*er + 0.004*wild + 0.004*electron
+2014-01-11 13:30:25,290-INFO:topic #28 (0.033): 0.008*rainbow + 0.008*drak + 0.005*believ + 0.004*ang + 0.003*bat + 0.003*digit + 0.003*mam + 0.003*jul + 0.003*johnny + 0.002*frank
+2014-01-11 13:30:25,315-INFO:topic #16 (0.033): 0.017*ris + 0.007*cocteau + 0.007*leo + 0.007*twin + 0.007*punk + 0.007*lord + 0.006*imog + 0.006*heap + 0.006*rock + 0.005*ska
+2014-01-11 13:30:25,336-INFO:topic #29 (0.033): 0.018*met + 0.014*symphon + 0.011*xandr + 0.010*goth + 0.008*door + 0.007*front + 0.006*cinem + 0.005*someth + 0.005*dj + 0.005*club
+2014-01-11 13:30:25,356-INFO:topic #21 (0.033): 0.012*cur + 0.007*rock + 0.007*publ + 0.006*80s + 0.006*hip-hop + 0.005*wav + 0.005*christmas + 0.004*indy + 0.004*elv + 0.004*altern
+2014-01-11 13:30:25,385-INFO:topic #19 (0.033): 0.020*jackson + 0.017*william + 0.016*robby + 0.014*michael + 0.010*bel + 0.007*rock + 0.006*met + 0.006*pop + 0.006*icon + 0.005*christmas
+2014-01-11 13:30:25,407-INFO:topic #1 (0.033): 0.011*regga + 0.011*tom + 0.011*shor + 0.009*rock + 0.007*sabba + 0.007*pearl + 0.006*rebelut + 0.006*daylight + 0.005*80s + 0.005*jam
+2014-01-11 13:30:25,436-INFO:topic #5 (0.033): 0.012*celt + 0.007*lou + 0.007*talk + 0.006*fir + 0.006*armstrong + 0.006*fool + 0.005*dian + 0.005*wat + 0.005*mess + 0.005*black
+2014-01-11 13:30:25,457-INFO:topic #13 (0.033): 0.026*beatl + 0.013*rock + 0.012*radiohead + 0.010*indy + 0.008*brit + 0.008*60s + 0.008*drawn + 0.007*altern + 0.007*class + 0.005*moon
+2014-01-11 13:30:25,477-INFO:topic #3 (0.033): 0.011*depech + 0.008*mod + 0.006*shop + 0.006*weeknd + 0.005*boy + 0.005*ven + 0.004*paul + 0.004*9 + 0.004*brun + 0.004*synthpop
+2014-01-11 13:30:25,506-INFO:topic #24 (0.033): 0.030*sued + 0.009*bring + 0.006*britpop + 0.006*placebo + 0.006*met + 0.006*frost + 0.005*wor + 0.005*parad + 0.005*monday + 0.004*noth
+2014-01-11 13:30:25,526-INFO:topic #23 (0.033): 0.019*christmas + 0.010*stev + 0.010*sufs + 0.009*king + 0.007*jov + 0.007*mad + 0.007*rock + 0.006*sil + 0.006*fent + 0.006*sinatr
+2014-01-11 13:30:25,555-INFO:topic #7 (0.033): 0.007*smal + 0.007*patrol + 0.006*christmas + 0.006*remix) + 0.006*merry + 0.006*chas + 0.006*snow + 0.005*trib + 0.004*rock + 0.004*son
+2014-01-11 13:30:25,566-INFO:topic diff=0.598690, rho=0.577350
+2014-01-11 13:30:27,108-INFO:PROGRESS: iteration 0, at document #8000/9488
+2014-01-11 13:30:27,108-DEBUG:performing inference on a chunk of 2000 documents
+2014-01-11 13:30:32,320-INFO:2000/2000 documents converged within 50 iterations
+2014-01-11 13:30:32,339-DEBUG:updating topics
+2014-01-11 13:30:32,427-INFO:merging changes from 2000 documents into a model of 9488 documents
+2014-01-11 13:30:33,822-INFO:topic #5 (0.033): 0.013*mess + 0.010*talk + 0.008*oneohtrix + 0.007*motorcyc + 0.007*black + 0.007*rebel + 0.007*celt + 0.006*fool + 0.006*fir + 0.005*club
+2014-01-11 13:30:33,868-INFO:topic #25 (0.033): 0.020*sleater-kinney + 0.011*riot + 0.009*grrrl + 0.007*knif + 0.007*mac + 0.006*deathc + 0.006*da + 0.005*adam + 0.005*evil + 0.004*rock
+2014-01-11 13:30:33,898-INFO:topic #18 (0.033): 0.013*air + 0.008*walk + 0.008*bear + 0.007*pol + 0.006*everyth + 0.005*red + 0.005*honey + 0.005*belleruch + 0.005*eagl + 0.004*rock
+2014-01-11 13:30:33,923-INFO:topic #0 (0.033): 0.022*yeah + 0.011*indy + 0.008*rock + 0.007*jes + 0.006*clash + 0.006*mos + 0.006*punk + 0.005*camer + 0.005*obscur + 0.005*ebm
+2014-01-11 13:30:33,953-INFO:topic #14 (0.033): 0.024*neil + 0.009*korn + 0.009*howard + 0.008*suicid + 0.006*met + 0.006*astronaut + 0.005*whatev + 0.005*nu + 0.005*pixy + 0.005*dean
+2014-01-11 13:30:33,981-INFO:topic #7 (0.033): 0.008*hil + 0.007*smal + 0.006*snow + 0.006*merry + 0.006*remix) + 0.006*bur + 0.006*trib + 0.006*futurepop + 0.005*christmas + 0.005*dubstep
+2014-01-11 13:30:34,011-INFO:topic #1 (0.033): 0.011*regga + 0.010*tom + 0.009*rock + 0.008*hendrix + 0.008*jim + 0.007*dutch + 0.006*redhead + 0.006*hol + 0.005*shor + 0.005*psychedel
+2014-01-11 13:30:34,042-INFO:topic #24 (0.033): 0.017*sued + 0.006*placebo + 0.006*bring + 0.005*monday + 0.005*rememb + 0.004*dyl + 0.004*noth + 0.004*kenny + 0.004*parad + 0.004*britpop
+2014-01-11 13:30:34,085-INFO:topic #16 (0.033): 0.011*twin + 0.011*cocteau + 0.008*ris + 0.006*punk + 0.006*rock + 0.005*ska + 0.005*indy + 0.005*cryst + 0.005*maybeshewil + 0.005*eth
+2014-01-11 13:30:34,117-INFO:topic #19 (0.033): 0.013*jackson + 0.011*william + 0.011*michael + 0.009*bel + 0.009*robby + 0.008*blak + 0.006*christmas + 0.005*rock + 0.005*pop + 0.004*met
+2014-01-11 13:30:34,144-INFO:topic #2 (0.033): 0.012*indust + 0.008*phoenix + 0.008*indy + 0.007*bon + 0.007*brazil + 0.007*iv + 0.007*joy + 0.006*rock + 0.005*folk + 0.005*cag
+2014-01-11 13:30:34,169-INFO:topic #28 (0.033): 0.022*chain + 0.006*mam + 0.005*believ + 0.005*rainbow + 0.004*drak + 0.003*ang + 0.003*bat + 0.003*digit + 0.002*ford + 0.002*zabranjeno
+2014-01-11 13:30:34,193-INFO:topic #20 (0.033): 0.017*orchestr + 0.011*dubstep + 0.008*trans-siberian + 0.007*vil + 0.007*kurt + 0.005*common + 0.005*bear + 0.004*fear + 0.004*hand + 0.004*post-rock
+2014-01-11 13:30:34,224-INFO:topic #8 (0.033): 0.010*bowy + 0.009*god + 0.008*tel + 0.007*sublim + 0.007*saturday + 0.006*rock + 0.005*black + 0.005*sea + 0.005*astronaut + 0.005*zz
+2014-01-11 13:30:34,255-INFO:topic #27 (0.033): 0.013*bur + 0.011*ferdinand + 0.011*franz + 0.009*hors + 0.009*dubstep + 0.008*& + 0.008*indy + 0.007*warp + 0.007*bush + 0.006*iron
+2014-01-11 13:30:34,286-INFO:topic diff=0.609027, rho=0.500000
+2014-01-11 13:30:35,257-DEBUG:bound: at document #0
+2014-01-11 13:30:39,096-INFO:-22.926 per-word bound, 7968754.0 perplexity estimate based on a held-out corpus of 1488 documents with 3327 words
+2014-01-11 13:30:39,096-INFO:PROGRESS: iteration 0, at document #9488/9488
+2014-01-11 13:30:39,096-DEBUG:performing inference on a chunk of 1488 documents
+2014-01-11 13:30:41,559-INFO:1487/1488 documents converged within 50 iterations
+2014-01-11 13:30:41,590-DEBUG:updating topics
+2014-01-11 13:30:41,679-INFO:merging changes from 1488 documents into a model of 9488 documents
+2014-01-11 13:30:42,865-INFO:topic #6 (0.033): 0.009*pan + 0.009*sig + 0.008*chip + 0.008*bree + 0.007*rã³s + 0.007*post-rock + 0.006*parson + 0.006*wel + 0.006*dub + 0.006*65daysofstatic
+2014-01-11 13:30:42,895-INFO:topic #26 (0.033): 0.009*hip-hop + 0.008*kais + 0.008*chief + 0.007*war + 0.007*pacewon + 0.006*hop + 0.006*rap + 0.006*hip + 0.005*macintosh + 0.005*plu
+2014-01-11 13:30:42,917-INFO:topic #14 (0.033): 0.014*neil + 0.013*dean + 0.008*john + 0.006*howard + 0.006*korn + 0.005*suicid + 0.005*astronaut + 0.005*chines + 0.004*met + 0.004*whatev
+2014-01-11 13:30:42,938-INFO:topic #12 (0.033): 0.011*queen + 0.009*ston + 0.008*sav + 0.007*mary + 0.007*bombino + 0.006*fip + 0.006*alon + 0.005*nee + 0.005*rol + 0.005*dress
+2014-01-11 13:30:42,968-INFO:topic #10 (0.033): 0.021*newm + 0.010*christmas + 0.009*unicorn + 0.008*version) + 0.007*sant + 0.006*indigo + 0.006*wond + 0.006*park + 0.006*holiday + 0.006*soul
+2014-01-11 13:30:42,990-INFO:topic #1 (0.033): 0.012*clam + 0.010*regga + 0.008*tom + 0.007*japanes + 0.006*hol + 0.006*rock + 0.005*ros + 0.005*ther + 0.005*shor + 0.005*hendrix
+2014-01-11 13:30:43,011-INFO:topic #29 (0.033): 0.011*milky + 0.010*symphon + 0.009*met + 0.009*someth + 0.007*mountain + 0.005*door + 0.005*cinem + 0.004*swim + 0.004*club + 0.004*smok
+2014-01-11 13:30:43,041-INFO:topic #22 (0.033): 0.014*grac + 0.010*anim + 0.009*day + 0.007*wal + 0.007*shin + 0.007*liquid + 0.006*broth + 0.006*fin + 0.005*haus + 0.005*lie
+2014-01-11 13:30:43,062-INFO:topic #19 (0.033): 0.030*jackson + 0.025*michael + 0.012*christmas + 0.009*bel + 0.009*jmsn + 0.008*bublã© + 0.007*william + 0.006*robby + 0.006*blak + 0.004*dying
+2014-01-11 13:30:43,092-INFO:topic #17 (0.033): 0.018*met + 0.016*anny + 0.010*doom + 0.009*ihsahn + 0.008*lost + 0.007*board + 0.006*brown + 0.006*goth + 0.006*m.g. + 0.006*garb
+2014-01-11 13:30:43,114-INFO:topic #27 (0.033): 0.017*bur + 0.011*hors + 0.009*& + 0.007*grmln + 0.007*ferdinand + 0.007*franz + 0.006*win + 0.006*indy + 0.005*project + 0.005*alway
+2014-01-11 13:30:43,135-INFO:topic #25 (0.033): 0.012*sleater-kinney + 0.011*blunt + 0.008*da + 0.008*grindc + 0.007*justin + 0.007*vernon + 0.007*knif + 0.007*riot + 0.006*porã£o + 0.006*rato
+2014-01-11 13:30:43,165-INFO:topic #13 (0.033): 0.025*beatl + 0.011*rock + 0.009*60s + 0.009*chant + 0.008*class + 0.008*indy + 0.007*psychedel + 0.007*dum + 0.006*gadget + 0.006*brit
+2014-01-11 13:30:43,178-INFO:topic #8 (0.033): 0.008*god + 0.007*tel + 0.007*sea + 0.006*bowy + 0.005*saturday + 0.005*jet + 0.005*sublim + 0.005*band + 0.004*black + 0.004*city
+2014-01-11 13:30:43,208-INFO:topic #21 (0.033): 0.018*elv + 0.010*bird + 0.009*rado + 0.008*pj + 0.008*harvey + 0.007*cur + 0.005*rock + 0.004*christmas + 0.004*fruit + 0.004*tayl
+2014-01-11 13:30:43,237-INFO:topic diff=0.459309, rho=0.447214
+2014-01-11 13:32:17,623-INFO:adding document #0 to Dictionary(0 unique tokens)
+2014-01-11 13:32:34,365-INFO:built Dictionary(20341 unique tokens) from 5402 documents (total 1687623 corpus positions)
+2014-01-11 13:32:48,862-INFO:collecting document frequencies
+2014-01-11 13:32:48,862-INFO:PROGRESS: processing document #0
+2014-01-11 13:32:49,074-INFO:calculating IDF weights for 5402 documents and 20341 features (236879 matrix non-zeros)
+2014-01-11 13:32:49,131-INFO:using symmetric alpha at 0.0333333333333
+2014-01-11 13:32:49,131-INFO:using serial LDA version on this node
+2014-01-11 13:32:50,139-INFO:running online LDA training, 30 topics, 1 passes over the supplied corpus of 5402 documents, updating model once every 2000 documents, evaluating every 5402 documents
+2014-01-11 13:32:50,140-WARNING:too few updates, training might not converge; consider increasing the number of passes to improve accuracy
+2014-01-11 13:32:51,385-INFO:PROGRESS: iteration 0, at document #2000/5402
+2014-01-11 13:32:51,385-DEBUG:performing inference on a chunk of 2000 documents
+2014-01-11 13:32:57,288-INFO:2000/2000 documents converged within 50 iterations
+2014-01-11 13:32:57,305-DEBUG:updating topics
+2014-01-11 13:32:57,375-INFO:merging changes from 2000 documents into a model of 5402 documents
+2014-01-11 13:32:58,260-INFO:topic #11 (0.033): 0.004*wir + 0.003*punk + 0.003*indy + 0.003*disconnect + 0.003*drive-in + 0.003*blu + 0.002*wait + 0.002*jazz + 0.002*bowy + 0.002*circ
+2014-01-11 13:32:58,280-INFO:topic #29 (0.033): 0.004*norah + 0.004*incub + 0.003*indy + 0.003*fem + 0.003*oas + 0.003*jon + 0.003*folk + 0.003*tig + 0.003*class + 0.003*floyd
+2014-01-11 13:32:58,298-INFO:topic #14 (0.033): 0.004*indy + 0.004*ston + 0.004*rit + 0.003*black + 0.003*josh + 0.003*folk + 0.003*80s + 0.003*clash + 0.003*fem + 0.003*altern
+2014-01-11 13:32:58,316-INFO:topic #12 (0.033): 0.004*coldplay + 0.004*80s + 0.003*indy + 0.003*fem + 0.003*beatl + 0.003*pixy + 0.003*dyl + 0.003*r.e.m. + 0.003*indust + 0.003*met
+2014-01-11 13:32:58,335-INFO:topic #2 (0.033): 0.004*doubt + 0.004*indy + 0.003*pulp + 0.003*weez + 0.003*pumpkin + 0.003*smash + 0.003*whig + 0.003*afgh + 0.003*hot + 0.003*altern
+2014-01-11 13:32:58,361-INFO:topic #10 (0.033): 0.005*indy + 0.004*fem + 0.004*folk + 0.003*drawn + 0.003*difranco + 0.003*boy + 0.003*lennon + 0.003*john + 0.003*hip-hop + 0.002*beasty
+2014-01-11 13:32:58,371-INFO:topic #5 (0.033): 0.005*wait + 0.005*tom + 0.005*indy + 0.003*gust + 0.003*beatl + 0.003*class + 0.003*semison + 0.003*sist + 0.003*star + 0.003*folk
+2014-01-11 13:32:58,389-INFO:topic #9 (0.033): 0.004*fem + 0.004*ey + 0.004*kreviazuk + 0.003*radiohead + 0.003*chant + 0.003*indy + 0.003*met + 0.003*oas + 0.003*folk + 0.003*brit
+2014-01-11 13:32:58,400-INFO:topic #13 (0.033): 0.006*met + 0.005*wilco + 0.004*indust + 0.003*war + 0.003*pillow + 0.003*beatl + 0.003*thin + 0.003*hip-hop + 0.003*dea + 0.003*black
+2014-01-11 13:32:58,424-INFO:topic #21 (0.033): 0.004*indy + 0.003*chain + 0.003*grung + 0.003*weez + 0.003*fem + 0.003*r.e.m. + 0.003*soundgard + 0.003*wolf + 0.002*oc + 0.002*altern
+2014-01-11 13:32:58,439-INFO:topic #0 (0.033): 0.010*beatl + 0.005*class + 0.004*60s + 0.004*indy + 0.003*fem + 0.003*door + 0.003*cat + 0.003*met + 0.003*80s + 0.003*folk
+2014-01-11 13:32:58,461-INFO:topic #6 (0.033): 0.004*psychedel + 0.004*indy + 0.003*fem + 0.003*class + 0.003*door + 0.003*cash + 0.003*60s + 0.003*wait + 0.002*johnny + 0.002*jazz
+2014-01-11 13:32:58,479-INFO:topic #15 (0.033): 0.006*bowy + 0.005*david + 0.004*jazz + 0.004*pixy + 0.003*radiohead + 0.003*glam + 0.003*altern + 0.003*80s + 0.003*indy + 0.002*brit
+2014-01-11 13:32:58,508-INFO:topic #17 (0.033): 0.006*cov + 0.005*aerosmi + 0.004*r.e.m. + 0.003*indy + 0.003*soul + 0.003*fem + 0.003*folk + 0.003*difranco + 0.003*met + 0.003*macy
+2014-01-11 13:32:58,527-INFO:topic #24 (0.033): 0.004*zomby + 0.003*wait + 0.003*tom + 0.002*80s + 0.002*jazz + 0.002*indy + 0.002*60s + 0.002*class + 0.002*singer-songwrit + 0.002*hersh
+2014-01-11 13:32:58,544-INFO:topic diff=25.685224, rho=1.000000
+2014-01-11 13:33:00,333-INFO:PROGRESS: iteration 0, at document #4000/5402
+2014-01-11 13:33:00,334-DEBUG:performing inference on a chunk of 2000 documents
+2014-01-11 13:33:06,114-INFO:1997/2000 documents converged within 50 iterations
+2014-01-11 13:33:06,123-DEBUG:updating topics
+2014-01-11 13:33:06,182-INFO:merging changes from 2000 documents into a model of 5402 documents
+2014-01-11 13:33:07,185-INFO:topic #24 (0.033): 0.004*lie + 0.003*hersh + 0.003*kristin + 0.003*elton + 0.003*saint + 0.003*trav + 0.003*told + 0.003*tempt + 0.003*print + 0.003*light
+2014-01-11 13:33:07,203-INFO:topic #14 (0.033): 0.007*son + 0.007*depech + 0.006*rit + 0.006*holiday + 0.005*mod + 0.005*indy + 0.005*ston + 0.005*josh + 0.004*decemb + 0.004*bil
+2014-01-11 13:33:07,221-INFO:topic #16 (0.033): 0.008*pillow + 0.006*indy + 0.005*japanes + 0.005*nat + 0.005*damy + 0.005*j-rock + 0.004*ris + 0.004*pearl + 0.003*punk + 0.003*jam
+2014-01-11 13:33:07,237-INFO:topic #15 (0.033): 0.013*bowy + 0.010*david + 0.008*pixy + 0.008*radiohead + 0.005*hors + 0.005*glam + 0.005*drak + 0.004*nick + 0.003*paul + 0.003*indy
+2014-01-11 13:33:07,255-INFO:topic #27 (0.033): 0.014*elv + 0.013*presley + 0.010*harrison + 0.008*georg + 0.008*beatl + 0.007*rol + 0.006*weez + 0.005*class + 0.004*50s + 0.004*twin
+2014-01-11 13:33:07,280-INFO:topic #26 (0.033): 0.009*jimmy + 0.008*eat + 0.006*silverchair + 0.005*cov + 0.004*gon + 0.004*pul + 0.004*punk + 0.004*blondy + 0.004*prim + 0.004*goe
+2014-01-11 13:33:07,304-INFO:topic #2 (0.033): 0.008*ferdinand + 0.007*hot + 0.006*pumpkin + 0.005*smash + 0.005*nin + 0.005*indust + 0.005*nail + 0.005*inch + 0.005*indy + 0.005*johnson
+2014-01-11 13:33:07,321-INFO:topic #1 (0.033): 0.008*franz + 0.006*dashboard + 0.005*confess + 0.005*truck + 0.005*drive-by + 0.005*alt-country + 0.005*jem + 0.005*lay + 0.005*country + 0.004*neko
+2014-01-11 13:33:07,340-INFO:topic #0 (0.033): 0.022*beatl + 0.012*cat + 0.009*60s + 0.009*class + 0.007*pow + 0.007*door + 0.006*psychedel + 0.005*fem + 0.004*indy + 0.004*brit
+2014-01-11 13:33:07,363-INFO:topic #28 (0.033): 0.010*fountain + 0.009*wayn + 0.005*kid + 0.005*radiohead + 0.005*grat + 0.005*indy + 0.004*air + 0.004*heav + 0.004*altern + 0.004*john
+2014-01-11 13:33:07,376-INFO:topic #18 (0.033): 0.011*aim + 0.006*fem + 0.006*junky + 0.006*cowboy + 0.004*cru + 0.004*finch + 0.004*riot + 0.003*snak + 0.003*indy + 0.003*lcd
+2014-01-11 13:33:07,402-INFO:topic #10 (0.033): 0.007*hip-hop + 0.007*beasty + 0.006*rap + 0.006*difranco + 0.006*boy + 0.005*indy + 0.005*fem + 0.005*hip + 0.005*folk + 0.004*john
+2014-01-11 13:33:07,420-INFO:topic #19 (0.033): 0.008*mary + 0.006*chain + 0.006*jes + 0.005*grrls + 0.005*marvel + 0.005*shoegaz + 0.004*sam + 0.003*soul + 0.003*sea + 0.003*post-punk
+2014-01-11 13:33:07,444-INFO:topic #20 (0.033): 0.006*ten + 0.005*gil + 0.005*welch + 0.004*ludacr + 0.004*mirah + 0.004*fem + 0.003*tigr + 0.003*head + 0.003*morrissey + 0.003*cardig
+2014-01-11 13:33:07,471-INFO:topic #23 (0.033): 0.007*devendr + 0.006*banhart + 0.006*smith + 0.004*folk + 0.004*alright + 0.003*ash + 0.003*misunderstood + 0.003*grac + 0.002*morrissey + 0.002*jam
+2014-01-11 13:33:07,488-INFO:topic diff=0.754251, rho=0.707107
+2014-01-11 13:33:09,323-DEBUG:bound: at document #0
+2014-01-11 13:33:18,323-INFO:-18.347 per-word bound, 333395.3 perplexity estimate based on a held-out corpus of 1402 documents with 4385 words
+2014-01-11 13:33:18,323-INFO:PROGRESS: iteration 0, at document #5402/5402
+2014-01-11 13:33:18,323-DEBUG:performing inference on a chunk of 1402 documents
+2014-01-11 13:33:22,163-INFO:1401/1402 documents converged within 50 iterations
+2014-01-11 13:33:22,178-DEBUG:updating topics
+2014-01-11 13:33:22,255-INFO:merging changes from 1402 documents into a model of 5402 documents
+2014-01-11 13:33:23,338-INFO:topic #29 (0.033): 0.011*oas + 0.007*charlot + 0.007*jon + 0.005*incub + 0.005*norah + 0.004*joy + 0.004*divid + 0.004*palm + 0.004*cream + 0.004*fem
+2014-01-11 13:33:23,358-INFO:topic #18 (0.033): 0.014*aim + 0.007*fem + 0.007*cowboy + 0.005*junky + 0.004*petty + 0.004*built + 0.004*fly + 0.004*spil + 0.004*nickelback + 0.003*cov
+2014-01-11 13:33:23,374-INFO:topic #27 (0.033): 0.018*elv + 0.014*presley + 0.011*fleetwood + 0.011*mac + 0.010*rol + 0.008*harrison + 0.008*georg + 0.007*50s + 0.006*ston + 0.006*twin
+2014-01-11 13:33:23,401-INFO:topic #8 (0.033): 0.013*met + 0.011*ozzy + 0.010*osbourn + 0.009*cur + 0.006*80s + 0.006*heavy + 0.005*lis + 0.005*loeb + 0.005*lou + 0.004*wav
+2014-01-11 13:33:23,414-INFO:topic #6 (0.033): 0.009*johnny + 0.008*cash + 0.007*sebast + 0.006*bel + 0.005*velvet + 0.005*country + 0.005*abb + 0.004*prom + 0.004*tak + 0.004*door
+2014-01-11 13:33:23,445-INFO:topic #28 (0.033): 0.009*kid + 0.008*fountain + 0.008*radiohead + 0.007*wayn + 0.005*heav + 0.005*indy + 0.005*strokes + 0.005*jan + 0.004*blood + 0.004*electron
+2014-01-11 13:33:23,455-INFO:topic #4 (0.033): 0.008*limp + 0.008*bizkit + 0.007*met + 0.007*nu + 0.007*pol + 0.006*pav + 0.004*moby + 0.004*beach + 0.004*bear + 0.004*lan
+2014-01-11 13:33:23,485-INFO:topic #7 (0.033): 0.014*bright + 0.013*placebo + 0.012*ey + 0.008*matthew + 0.007*mar + 0.007*dav + 0.006*fee + 0.006*rush + 0.005*red + 0.005*wrong
+2014-01-11 13:33:23,506-INFO:topic #26 (0.033): 0.012*jimmy + 0.011*eat + 0.010*silverchair + 0.008*prim + 0.007*tor + 0.006*amo + 0.005*cov + 0.005*gon + 0.005*goe + 0.005*punk
+2014-01-11 13:33:23,529-INFO:topic #0 (0.033): 0.025*beatl + 0.015*60s + 0.013*cat + 0.011*class + 0.009*psychedel + 0.008*pow + 0.008*door + 0.006*brit + 0.006*fem + 0.005*lennon
+2014-01-11 13:33:23,552-INFO:topic #10 (0.033): 0.012*difranco + 0.012*hip-hop + 0.010*boy + 0.009*beasty + 0.008*rap + 0.007*john + 0.007*hip + 0.007*fem + 0.006*folk + 0.006*hop
+2014-01-11 13:33:23,581-INFO:topic #11 (0.033): 0.011*adam + 0.010*ryan + 0.006*whit + 0.006*drak + 0.006*nick + 0.005*ramon + 0.005*girlfriend + 0.005*valentin + 0.005*circ + 0.004*hotel
+2014-01-11 13:33:23,593-INFO:topic #16 (0.033): 0.006*pearl + 0.006*indy + 0.005*pillow + 0.005*ris + 0.005*wainwright + 0.005*garb + 0.005*japanes + 0.004*shadow + 0.004*jam + 0.004*ruf
+2014-01-11 13:33:23,620-INFO:topic #20 (0.033): 0.008*welch + 0.007*gil + 0.006*hol + 0.004*fem + 0.004*cranberry + 0.004*bed + 0.004*cardig + 0.004*ten + 0.004*fear + 0.004*morrissey
+2014-01-11 13:33:23,642-INFO:topic #15 (0.033): 0.024*bowy + 0.019*david + 0.015*radiohead + 0.013*pixy + 0.008*glam + 0.007*ther + 0.006*drak + 0.005*hors + 0.005*nick + 0.004*starsail
+2014-01-11 13:33:23,665-INFO:topic diff=0.672283, rho=0.577350
+2014-01-11 14:21:25,113-INFO:adding document #0 to Dictionary(0 unique tokens)
+2014-01-11 14:21:35,777-INFO:built Dictionary(20341 unique tokens) from 5402 documents (total 1687623 corpus positions)
+2014-01-11 14:21:46,083-INFO:collecting document frequencies
+2014-01-11 14:21:46,083-INFO:PROGRESS: processing document #0
+2014-01-11 14:21:46,330-INFO:calculating IDF weights for 5402 documents and 20341 features (236879 matrix non-zeros)
+2014-01-11 14:21:46,361-INFO:using symmetric alpha at 0.0333333333333
+2014-01-11 14:21:46,361-INFO:using serial LDA version on this node
+2014-01-11 14:21:46,934-INFO:running online LDA training, 30 topics, 1 passes over the supplied corpus of 5402 documents, updating model once every 2000 documents, evaluating every 5402 documents
+2014-01-11 14:21:46,934-WARNING:too few updates, training might not converge; consider increasing the number of passes to improve accuracy
+2014-01-11 14:21:48,007-INFO:PROGRESS: iteration 0, at document #2000/5402
+2014-01-11 14:21:48,007-DEBUG:performing inference on a chunk of 2000 documents
+2014-01-11 14:21:51,497-INFO:2000/2000 documents converged within 50 iterations
+2014-01-11 14:21:51,507-DEBUG:updating topics
+2014-01-11 14:21:51,547-INFO:merging changes from 2000 documents into a model of 5402 documents
+2014-01-11 14:21:52,123-INFO:topic #14 (0.033): 0.005*fem + 0.004*blur + 0.004*fee + 0.003*wait + 0.003*beatl + 0.003*aim + 0.003*indy + 0.003*air + 0.002*jimmy + 0.002*door
+2014-01-11 14:21:52,133-INFO:topic #20 (0.033): 0.003*indy + 0.003*sea + 0.003*fem + 0.003*wir + 0.003*junky + 0.003*difranco + 0.002*cowboy + 0.002*eagl + 0.002*punk + 0.002*weez
+2014-01-11 14:21:52,144-INFO:topic #28 (0.033): 0.003*indy + 0.003*folk + 0.003*butch + 0.003*zomby + 0.003*grrls + 0.003*disconnect + 0.003*aft + 0.002*hot + 0.002*marvel + 0.002*psychedel
+2014-01-11 14:21:52,154-INFO:topic #26 (0.033): 0.005*aerosmi + 0.003*indy + 0.003*weez + 0.003*buckley + 0.003*cov + 0.003*beatl + 0.002*80s + 0.002*jeff + 0.002*class + 0.002*kreviazuk
+2014-01-11 14:21:52,164-INFO:topic #21 (0.033): 0.005*aerosmi + 0.005*shin + 0.004*wait + 0.004*indy + 0.004*tom + 0.003*80s + 0.003*bottl + 0.003*beatl + 0.003*sist + 0.003*punk
+2014-01-11 14:21:52,174-INFO:topic #0 (0.033): 0.005*met + 0.004*80s + 0.004*indy + 0.003*bel + 0.003*leppard + 0.003*radiohead + 0.003*depech + 0.003*sebast + 0.003*wait + 0.003*bowy
+2014-01-11 14:21:52,185-INFO:topic #2 (0.033): 0.005*eel + 0.004*indy + 0.004*dyl + 0.003*met + 0.003*weez + 0.003*red + 0.003*fem + 0.003*bob + 0.003*pillow + 0.003*john
+2014-01-11 14:21:52,195-INFO:topic #22 (0.033): 0.004*80s + 0.004*class + 0.003*indy + 0.003*car + 0.003*door + 0.003*60s + 0.003*pol + 0.003*yo + 0.003*smith + 0.002*psychedel
+2014-01-11 14:21:52,205-INFO:topic #3 (0.033): 0.005*beatl + 0.004*punk + 0.003*bil + 0.003*john + 0.003*indy + 0.003*dyl + 0.003*fem + 0.003*folk + 0.003*311 + 0.003*class
+2014-01-11 14:21:52,215-INFO:topic #13 (0.033): 0.006*ston + 0.004*class + 0.004*baby + 0.003*beatl + 0.003*hip-hop + 0.003*indy + 0.003*john + 0.003*truck + 0.003*drive-by + 0.003*floyd
+2014-01-11 14:21:52,226-INFO:topic #6 (0.033): 0.005*radiohead + 0.004*indy + 0.004*fem + 0.003*shin + 0.003*blu + 0.003*bil + 0.002*80s + 0.002*chain + 0.002*folk + 0.002*elliot
+2014-01-11 14:21:52,236-INFO:topic #16 (0.033): 0.004*indy + 0.003*ey + 0.003*punk + 0.003*fleetwood + 0.003*cassidy + 0.003*mac + 0.002*cov + 0.002*dan + 0.002*offspr + 0.002*pop
+2014-01-11 14:21:52,246-INFO:topic #9 (0.033): 0.005*radiohead + 0.003*indy + 0.003*parad + 0.003*met + 0.003*altern + 0.003*corp + 0.003*green + 0.003*britpop + 0.002*someth + 0.002*punk
+2014-01-11 14:21:52,256-INFO:topic #5 (0.033): 0.003*lennon + 0.003*class + 0.003*indy + 0.003*rush + 0.003*80s + 0.003*arcad + 0.003*60s + 0.003*green + 0.003*altern + 0.003*cat
+2014-01-11 14:21:52,267-INFO:topic #25 (0.033): 0.004*difranco + 0.004*indust + 0.004*fem + 0.004*folk + 0.003*oas + 0.003*mighty + 0.003*indy + 0.003*drak + 0.003*macy + 0.003*ska
+2014-01-11 14:21:52,276-INFO:topic diff=25.689153, rho=1.000000
+2014-01-11 14:21:53,490-INFO:PROGRESS: iteration 0, at document #4000/5402
+2014-01-11 14:21:53,491-DEBUG:performing inference on a chunk of 2000 documents
+2014-01-11 14:21:55,598-INFO:adding document #0 to Dictionary(0 unique tokens)
+2014-01-11 14:22:00,206-INFO:1997/2000 documents converged within 50 iterations
+2014-01-11 14:22:00,222-DEBUG:updating topics
+2014-01-11 14:22:00,297-INFO:merging changes from 2000 documents into a model of 5402 documents
+2014-01-11 14:22:01,321-INFO:topic #1 (0.033): 0.010*harrison + 0.008*georg + 0.006*lou + 0.005*ree + 0.004*oas + 0.004*rocket + 0.003*beatl + 0.003*insid + 0.003*class + 0.003*bye
+2014-01-11 14:22:01,338-INFO:topic #7 (0.033): 0.010*zeppelin + 0.009*led + 0.008*son + 0.007*met + 0.006*interpol + 0.006*indy + 0.005*decemb + 0.004*fold + 0.004*morrissey + 0.004*brand
+2014-01-11 14:22:01,364-INFO:topic #26 (0.033): 0.007*aerosmi + 0.005*kreviazuk + 0.005*chant + 0.004*blond + 0.004*blondy + 0.004*tmbg + 0.004*round + 0.003*weez + 0.003*redhead + 0.003*fem
+2014-01-11 14:22:01,383-INFO:topic #10 (0.033): 0.007*iron + 0.005*indy + 0.004*black + 0.004*difranco + 0.004*folk + 0.004*fem + 0.004*wilco + 0.004*win + 0.003*mountain + 0.003*aim
+2014-01-11 14:22:01,401-INFO:topic #21 (0.033): 0.009*shin + 0.007*wait + 0.007*tom + 0.005*indy + 0.004*aerosmi + 0.004*dandy + 0.004*warhol + 0.004*punk + 0.004*prom + 0.004*fountain
+2014-01-11 14:22:01,419-INFO:topic #20 (0.033): 0.006*wir + 0.006*cak + 0.004*cowboy + 0.004*wick + 0.004*sea + 0.004*hersh + 0.004*ash + 0.004*kristin + 0.004*junky + 0.003*patrol
+2014-01-11 14:22:01,445-INFO:topic #5 (0.033): 0.008*kink + 0.007*franz + 0.005*fir + 0.005*rush + 0.005*hors + 0.004*met + 0.004*chain + 0.004*class + 0.004*progress + 0.003*verv
+2014-01-11 14:22:01,463-INFO:topic #6 (0.033): 0.009*radiohead + 0.006*bil + 0.006*holiday + 0.006*elliot + 0.006*jazz + 0.005*smi + 0.004*jem + 0.004*fem + 0.004*evanesc + 0.004*indy
+2014-01-11 14:22:01,481-INFO:topic #23 (0.033): 0.009*bowy + 0.008*david + 0.005*bon + 0.005*glam + 0.004*clash + 0.004*70s + 0.004*class + 0.004*cov + 0.003*indy + 0.003*prim
+2014-01-11 14:22:01,499-INFO:topic #11 (0.033): 0.006*okkervil + 0.005*damy + 0.005*riv + 0.004*& + 0.004*hand + 0.003*lullaby + 0.003*los + 0.003*hal + 0.003*octob + 0.003*indy
+2014-01-11 14:22:01,525-INFO:topic #0 (0.033): 0.009*depech + 0.007*mod + 0.007*sebast + 0.006*bel + 0.006*milk + 0.005*hotel + 0.005*neut + 0.005*80s + 0.005*indy + 0.004*cas
+2014-01-11 14:22:01,543-INFO:topic #25 (0.033): 0.009*difranco + 0.009*drak + 0.008*nick + 0.007*folk + 0.007*indust + 0.006*gray + 0.006*macy + 0.005*fem + 0.005*nin + 0.005*cab
+2014-01-11 14:22:01,566-INFO:topic #14 (0.033): 0.009*blur + 0.008*aim + 0.007*fee + 0.006*fem + 0.005*goth + 0.004*cur + 0.004*femalevocalistsgdchil + 0.004*britpop + 0.004*streets + 0.004*door
+2014-01-11 14:22:01,584-INFO:topic #13 (0.033): 0.011*ston + 0.006*blind + 0.005*rol + 0.004*sinatr + 0.004*class + 0.004*baby + 0.004*silverchair + 0.004*gorillaz + 0.004*frank + 0.004*mind
+2014-01-11 14:22:01,610-INFO:topic #24 (0.033): 0.009*elv + 0.008*presley + 0.008*r.e.m. + 0.005*indy + 0.005*pixy + 0.004*altern + 0.004*gil + 0.004*welch + 0.004*canad + 0.004*dead
+2014-01-11 14:22:01,627-INFO:topic diff=0.748445, rho=0.707107
+2014-01-11 14:22:03,468-DEBUG:bound: at document #0
+2014-01-11 14:22:10,611-INFO:built Dictionary(26145 unique tokens) from 9488 documents (total 2431143 corpus positions)
+2014-01-11 14:22:13,997-INFO:-18.333 per-word bound, 330190.1 perplexity estimate based on a held-out corpus of 1402 documents with 4385 words
+2014-01-11 14:22:13,997-INFO:PROGRESS: iteration 0, at document #5402/5402
+2014-01-11 14:22:13,997-DEBUG:performing inference on a chunk of 1402 documents
+2014-01-11 14:22:18,403-INFO:1402/1402 documents converged within 50 iterations
+2014-01-11 14:22:18,419-DEBUG:updating topics
+2014-01-11 14:22:18,491-INFO:merging changes from 1402 documents into a model of 5402 documents
+2014-01-11 14:22:19,803-INFO:topic #27 (0.033): 0.013*wilco + 0.012*hip-hop + 0.010*beasty + 0.009*rap + 0.007*tor + 0.007*hip + 0.006*boy + 0.006*hop + 0.006*amo + 0.006*cov
+2014-01-11 14:22:19,832-INFO:topic #3 (0.033): 0.010*john + 0.007*311 + 0.007*lin + 0.005*bil + 0.005*believ + 0.005*dj + 0.004*dirty + 0.004*collect + 0.003*patt + 0.003*&
+2014-01-11 14:22:19,872-INFO:topic #24 (0.033): 0.014*r.e.m. + 0.011*elv + 0.008*presley + 0.008*pixy + 0.006*indy + 0.005*altern + 0.005*jangl + 0.005*canad + 0.005*country + 0.005*rem
+2014-01-11 14:22:19,895-INFO:topic #6 (0.033): 0.012*elliot + 0.012*smi + 0.009*holiday + 0.008*kid + 0.007*radiohead + 0.006*bil + 0.006*jazz + 0.005*bush + 0.004*alright + 0.004*indy
+2014-01-11 14:22:19,914-INFO:topic #22 (0.033): 0.010*door + 0.008*pol + 0.008*coldplay + 0.006*gard + 0.005*alon + 0.005*smith + 0.005*80s + 0.005*car + 0.004*gun + 0.004*trio
+2014-01-11 14:22:19,945-INFO:topic #9 (0.033): 0.011*met + 0.009*bizkit + 0.009*limp + 0.008*nu + 0.006*yeah + 0.006*6 + 0.006*ozzy + 0.005*osbourn + 0.005*fly + 0.004*rapc
+2014-01-11 14:22:19,967-INFO:topic #4 (0.033): 0.013*placebo + 0.006*beatl + 0.006*60s + 0.005*wild + 0.004*blee + 0.004*hendrix + 0.004*built + 0.004*psychedel + 0.004*spil + 0.004*cardig
+2014-01-11 14:22:19,995-INFO:topic #15 (0.033): 0.012*radiohead + 0.011*indy + 0.008*cat + 0.007*pow + 0.007*punk + 0.006*relig + 0.006*bad + 0.006*folk + 0.005*adam + 0.005*altern
+2014-01-11 14:22:20,035-INFO:topic #12 (0.033): 0.009*low + 0.008*jackson + 0.007*wainwright + 0.006*ruf + 0.006*wak + 0.005*ramon + 0.004*michael + 0.004*jefferson + 0.004*airpl + 0.003*conveny
+2014-01-11 14:22:20,067-INFO:topic #7 (0.033): 0.012*fold + 0.011*zeppelin + 0.011*led + 0.010*ben + 0.008*met + 0.007*decemb + 0.007*son + 0.006*piano + 0.006*indy + 0.005*post-punk
+2014-01-11 14:22:20,131-INFO:topic #14 (0.033): 0.014*aim + 0.008*blur + 0.008*fee + 0.008*cur + 0.006*fem + 0.005*goth + 0.004*brown + 0.004*femalevocalistsgdchil + 0.004*britpop + 0.003*streets
+2014-01-11 14:22:20,184-INFO:topic #23 (0.033): 0.022*bowy + 0.018*david + 0.008*glam + 0.007*clash + 0.007*fre + 0.005*class + 0.005*70s + 0.005*badf + 0.005*ezr + 0.004*chang
+2014-01-11 14:22:20,237-INFO:topic #8 (0.033): 0.007*lion + 0.005*pedro + 0.005*gen + 0.005*van + 0.004*fion + 0.004*coh + 0.004*harp + 0.004*appl + 0.004*leonard + 0.003*morrison
+2014-01-11 14:22:20,274-INFO:topic #20 (0.033): 0.018*wir + 0.008*post-punk + 0.007*hersh + 0.007*kristin + 0.006*ash + 0.005*cak + 0.005*cowboy + 0.005*punk + 0.004*bloc + 0.004*jim
+2014-01-11 14:22:20,299-INFO:topic #10 (0.033): 0.007*black + 0.006*win + 0.005*indy + 0.005*iron + 0.004*yorn + 0.004*bed + 0.004*heart + 0.004*sun + 0.003*war + 0.003*process
+2014-01-11 14:22:20,323-INFO:topic diff=0.680520, rho=0.577350
+2014-01-11 14:22:28,764-INFO:collecting document frequencies
+2014-01-11 14:22:28,770-INFO:PROGRESS: processing document #0
+2014-01-11 14:22:28,937-INFO:calculating IDF weights for 9488 documents and 26145 features (276838 matrix non-zeros)
+2014-01-11 14:22:28,988-INFO:using symmetric alpha at 0.0333333333333
+2014-01-11 14:22:28,988-INFO:using serial LDA version on this node
+2014-01-11 14:22:30,006-INFO:running online LDA training, 30 topics, 1 passes over the supplied corpus of 9488 documents, updating model once every 2000 documents, evaluating every 9488 documents
+2014-01-11 14:22:30,006-WARNING:too few updates, training might not converge; consider increasing the number of passes to improve accuracy
+2014-01-11 14:22:31,185-INFO:PROGRESS: iteration 0, at document #2000/9488
+2014-01-11 14:22:31,185-DEBUG:performing inference on a chunk of 2000 documents
+2014-01-11 14:22:36,213-INFO:2000/2000 documents converged within 50 iterations
+2014-01-11 14:22:36,227-DEBUG:updating topics
+2014-01-11 14:22:36,306-INFO:merging changes from 2000 documents into a model of 9488 documents
+2014-01-11 14:22:37,399-INFO:topic #16 (0.033): 0.006*indy + 0.005*rock + 0.004*cov + 0.004*folk + 0.004*post-rock + 0.004*fem + 0.004*lennox + 0.003*gam + 0.003*electron + 0.003*pop
+2014-01-11 14:22:37,414-INFO:topic #26 (0.033): 0.007*indy + 0.005*rock + 0.004*dead + 0.003*altern + 0.003*gar + 0.003*christmas + 0.003*pop + 0.003*electron + 0.003*brit + 0.003*fem
+2014-01-11 14:22:37,429-INFO:topic #8 (0.033): 0.008*christmas + 0.008*xx + 0.005*indy + 0.005*altern + 0.005*rock + 0.005*swervedr + 0.004*met + 0.003*hero + 0.003*sho + 0.003*brag
+2014-01-11 14:22:37,443-INFO:topic #0 (0.033): 0.012*dido + 0.009*christmas + 0.006*indy + 0.006*rock + 0.005*fem + 0.004*maccab + 0.004*met + 0.003*menomen + 0.003*altern + 0.003*pop
+2014-01-11 14:22:37,459-INFO:topic #10 (0.033): 0.006*indy + 0.005*pj + 0.004*harvey + 0.004*rock + 0.004*lil + 0.004*rat + 0.004*somafm + 0.004*christmas + 0.004*electron + 0.003*russ
+2014-01-11 14:22:37,474-INFO:topic #27 (0.033): 0.005*christmas + 0.004*rock + 0.004*bri + 0.004*indy + 0.004*mobl + 0.004*folk + 0.003*woodkid + 0.003*masc + 0.003*eno + 0.003*pentangl
+2014-01-11 14:22:37,487-INFO:topic #11 (0.033): 0.005*rock + 0.005*christmas + 0.004*dido + 0.004*fem + 0.004*indy + 0.004*whiskeytown + 0.004*alt-j + 0.003*altern + 0.003*nat + 0.003*interlud
+2014-01-11 14:22:37,502-INFO:topic #4 (0.033): 0.009*christmas + 0.005*linkin + 0.004*park + 0.004*rock + 0.004*king + 0.004*indy + 0.004*altern + 0.004*fem + 0.003*perry + 0.003*katy
+2014-01-11 14:22:37,518-INFO:topic #1 (0.033): 0.006*shoegaz + 0.006*indy + 0.005*swervedr + 0.005*rock + 0.003*instru + 0.003*somafm + 0.003*ting + 0.003*johnny + 0.003*digit + 0.003*altern
+2014-01-11 14:22:37,533-INFO:topic #7 (0.033): 0.006*christmas + 0.006*rock + 0.005*indy + 0.004*kiss + 0.004*surf + 0.003*folk + 0.003*cla + 0.003*altern + 0.003*alex + 0.003*fem
+2014-01-11 14:22:37,548-INFO:topic #24 (0.033): 0.006*rock + 0.005*indy + 0.005*chem + 0.004*altern + 0.004*folk + 0.004*hip-hop + 0.003*n*e*r*d + 0.003*electron + 0.003*acoust + 0.003*johnson
+2014-01-11 14:22:37,562-INFO:topic #21 (0.033): 0.006*indy + 0.006*christmas + 0.006*rock + 0.006*kiss + 0.005*maccab + 0.003*thievery + 0.003*electron + 0.003*corp + 0.003*justin + 0.003*folk
+2014-01-11 14:22:37,578-INFO:topic #28 (0.033): 0.005*rock + 0.005*fem + 0.004*christmas + 0.004*indy + 0.004*dido + 0.004*guarald + 0.003*pop + 0.003*vint + 0.003*folk + 0.003*altern
+2014-01-11 14:22:37,592-INFO:topic #15 (0.033): 0.009*indy + 0.007*rock + 0.006*rag + 0.005*machin + 0.005*elliot + 0.005*futurehead + 0.004*altern + 0.004*fem + 0.004*smi + 0.004*pop
+2014-01-11 14:22:37,608-INFO:topic #29 (0.033): 0.006*rock + 0.006*indy + 0.004*altern + 0.003*coldplay + 0.003*brit + 0.003*lennox + 0.003*& + 0.003*anny + 0.003*crib + 0.003*ov
+2014-01-11 14:22:37,621-INFO:topic diff=26.213885, rho=1.000000
+2014-01-11 14:22:38,338-INFO:PROGRESS: iteration 0, at document #4000/9488
+2014-01-11 14:22:38,339-DEBUG:performing inference on a chunk of 2000 documents
+2014-01-11 14:22:41,890-INFO:1997/2000 documents converged within 50 iterations
+2014-01-11 14:22:41,903-DEBUG:updating topics
+2014-01-11 14:22:41,969-INFO:merging changes from 2000 documents into a model of 9488 documents
+2014-01-11 14:22:42,802-INFO:topic #29 (0.033): 0.009*pol + 0.009*happysad + 0.006*rock + 0.006*bobby + 0.005*k-pop + 0.005*met + 0.005*altern + 0.005*idol + 0.005*jack + 0.004*radiohead
+2014-01-11 14:22:42,818-INFO:topic #18 (0.033): 0.012*northern + 0.009*phoenix + 0.008*sludg + 0.007*indy + 0.007*lun + 0.007*christmas + 0.006*architect + 0.006*met + 0.006*rock + 0.004*silv
+2014-01-11 14:22:42,833-INFO:topic #12 (0.033): 0.011*ston + 0.009*met + 0.008*metalc + 0.008*rock + 0.008*hardc + 0.006*cypress + 0.006*christmas + 0.005*queen + 0.005*indy + 0.004*dyl
+2014-01-11 14:22:42,848-INFO:topic #2 (0.033): 0.007*miley + 0.007*cyr + 0.006*martin + 0.005*rock + 0.005*indy + 0.005*christmas + 0.004*fem + 0.004*joy + 0.004*dean + 0.004*bob
+2014-01-11 14:22:42,863-INFO:topic #9 (0.033): 0.014*sufs + 0.014*christmas + 0.012*stev + 0.007*peopl + 0.006*johnson + 0.006*indy + 0.005*rock + 0.005*merry + 0.005*regin + 0.005*spekt
+2014-01-11 14:22:42,880-INFO:topic #27 (0.033): 0.011*cur + 0.010*revoir + 0.009*smal + 0.009*scen + 0.008*fac + 0.007*ston + 0.007*fu + 0.006*christmas + 0.006*manchu + 0.006*rock
+2014-01-11 14:22:42,895-INFO:topic #16 (0.033): 0.005*indy + 0.005*stripes + 0.005*rock + 0.004*gon + 0.004*elv + 0.004*patrol + 0.004*lord + 0.004*post-rock + 0.004*whit + 0.004*christmas
+2014-01-11 14:22:42,909-INFO:topic #25 (0.033): 0.016*indust + 0.010*chillwav + 0.008*tron + 0.006*drug + 0.006*tricky + 0.006*gristl + 0.006*throbbing + 0.005*pan + 0.005*christmas + 0.005*disco
+2014-01-11 14:22:42,927-INFO:topic #28 (0.033): 0.029*jackson + 0.023*michael + 0.010*fiv + 0.007*met + 0.005*pop + 0.005*80s + 0.005*goth + 0.005*post-rock + 0.004*noir + 0.004*rock
+2014-01-11 14:22:42,952-INFO:topic #19 (0.033): 0.010*grung + 0.008*loud + 0.008*nirvan + 0.008*shout + 0.007*soundgard + 0.006*rock + 0.005*boom + 0.005*indy + 0.004*soul + 0.004*swed
+2014-01-11 14:22:42,972-INFO:topic #22 (0.033): 0.011*doom + 0.005*stand + 0.005*mam + 0.005*indy + 0.005*everyth + 0.004*field + 0.004*touch + 0.004*rock + 0.004*presley + 0.004*ladytron
+2014-01-11 14:22:42,990-INFO:topic #26 (0.033): 0.011*mcfly + 0.010*arct + 0.010*monkey + 0.009*indy + 0.008*rock + 0.004*moon + 0.004*altern + 0.004*pop + 0.004*anyth + 0.004*christmas
+2014-01-11 14:22:43,004-INFO:topic #23 (0.033): 0.009*yeah + 0.008*japanes + 0.008*seeth + 0.006*rock + 0.006*anim + 0.005*post-grunge + 0.005*altern + 0.005*7 + 0.005*ghost + 0.004*grac
+2014-01-11 14:22:43,019-INFO:topic #6 (0.033): 0.007*christmas + 0.005*pass + 0.004*groov + 0.004*min + 0.004*electron + 0.004*sufs + 0.004*rock + 0.004*avril + 0.004*armad + 0.004*trip-hop
+2014-01-11 14:22:43,036-INFO:topic #15 (0.033): 0.014*cinem + 0.013*door + 0.012*param + 0.012*club + 0.008*indy + 0.008*scoot + 0.008*rock + 0.005*jim + 0.005*met + 0.005*altern
+2014-01-11 14:22:43,048-INFO:topic diff=0.609569, rho=0.707107
+2014-01-11 14:22:44,012-INFO:PROGRESS: iteration 0, at document #6000/9488
+2014-01-11 14:22:44,012-DEBUG:performing inference on a chunk of 2000 documents
+2014-01-11 14:22:48,563-INFO:1998/2000 documents converged within 50 iterations
+2014-01-11 14:22:48,577-DEBUG:updating topics
+2014-01-11 14:22:48,647-INFO:merging changes from 2000 documents into a model of 9488 documents
+2014-01-11 14:22:49,495-INFO:topic #11 (0.033): 0.007*tom + 0.006*armstrong + 0.006*brazil + 0.006*lou + 0.005*rock + 0.005*met + 0.005*leon + 0.004*dying + 0.004*carp + 0.004*metallic
+2014-01-11 14:22:49,509-INFO:topic #23 (0.033): 0.017*yeah + 0.012*enemy + 0.009*publ + 0.008*cocteau + 0.008*twin + 0.007*rock + 0.005*altern + 0.005*post-grunge + 0.005*japanes + 0.005*flor
+2014-01-11 14:22:49,525-INFO:topic #12 (0.033): 0.016*queen + 0.014*ston + 0.012*rock + 0.008*met + 0.008*rol + 0.008*class + 0.005*hardc + 0.005*indy + 0.005*mac + 0.005*metalc
+2014-01-11 14:22:49,540-INFO:topic #1 (0.033): 0.014*cag + 0.013*eleph + 0.009*goth + 0.006*wild + 0.005*birthday + 0.005*johnny + 0.005*rock + 0.005*cal + 0.004*math + 0.004*indy
+2014-01-11 14:22:49,557-INFO:topic #27 (0.033): 0.016*bon + 0.015*moody + 0.013*cur + 0.012*iv + 0.009*sleigh + 0.008*rock + 0.007*blu + 0.006*christmas + 0.006*wav + 0.005*smal
+2014-01-11 14:22:49,571-INFO:topic #6 (0.033): 0.017*christian + 0.010*sil + 0.009*deathc + 0.008*horizon + 0.007*imog + 0.007*heap + 0.004*christmas + 0.004*pass + 0.004*met + 0.004*rock
+2014-01-11 14:22:49,588-INFO:topic #5 (0.033): 0.014*air + 0.007*poe + 0.006*chillout + 0.005*electron + 0.005*pink + 0.005*trip-hop + 0.005*french + 0.005*dawn + 0.004*sold + 0.004*amby
+2014-01-11 14:22:49,602-INFO:topic #22 (0.033): 0.028*doom + 0.015*met + 0.012*dubstep + 0.011*kataton + 0.010*nero + 0.008*sabba + 0.008*everyth + 0.005*hollow + 0.005*harry + 0.004*depress
+2014-01-11 14:22:49,617-INFO:topic #28 (0.033): 0.020*garb + 0.018*jackson + 0.017*met + 0.014*michael + 0.011*goth + 0.009*symphon + 0.009*xandr + 0.008*leo + 0.006*fem + 0.006*rock
+2014-01-11 14:22:49,633-INFO:topic #10 (0.033): 0.020*ris + 0.017*post-hardcore + 0.010*hardc + 0.009*metalc + 0.007*unwound + 0.005*bef + 0.005*kid + 0.005*indy + 0.005*rock + 0.005*lie
+2014-01-11 14:22:49,648-INFO:topic #7 (0.033): 0.036*beatl + 0.011*rock + 0.010*60s + 0.010*class + 0.007*daft + 0.005*brit + 0.005*rain + 0.005*fai + 0.005*punk + 0.005*fool
+2014-01-11 14:22:49,661-INFO:topic #13 (0.033): 0.011*parad + 0.006*soc + 0.006*christmas + 0.006*met + 0.006*monday + 0.005*weeknd + 0.005*kil + 0.005*cash + 0.004*adam + 0.004*destroy
+2014-01-11 14:22:49,679-INFO:topic #9 (0.033): 0.014*christmas + 0.013*howard + 0.013*suicid + 0.007*sufs + 0.007*stev + 0.006*peopl + 0.005*ring + 0.005*sky + 0.004*soundtrack + 0.004*indy
+2014-01-11 14:22:49,694-INFO:topic #3 (0.033): 0.010*dog + 0.005*fin + 0.005*placebo + 0.005*indy + 0.004*glass + 0.004*rock + 0.004*sist + 0.004*hey + 0.004*fieh + 0.004*1live
+2014-01-11 14:22:49,708-INFO:topic #4 (0.033): 0.019*thrash + 0.016*clash + 0.015*met + 0.010*sepultur + 0.009*christmas + 0.009*bring + 0.008*punk + 0.006*park + 0.006*rainbow + 0.006*sufs
+2014-01-11 14:22:49,723-INFO:topic diff=0.592019, rho=0.577350
+2014-01-11 14:22:50,589-INFO:PROGRESS: iteration 0, at document #8000/9488
+2014-01-11 14:22:50,590-DEBUG:performing inference on a chunk of 2000 documents
+2014-01-11 14:22:53,933-INFO:1996/2000 documents converged within 50 iterations
+2014-01-11 14:22:53,946-DEBUG:updating topics
+2014-01-11 14:22:54,011-INFO:merging changes from 2000 documents into a model of 9488 documents
+2014-01-11 14:22:54,841-INFO:topic #9 (0.033): 0.012*christmas + 0.009*howard + 0.008*suicid + 0.007*rebel + 0.007*motorcyc + 0.006*sufs + 0.006*stev + 0.006*peopl + 0.005*mr. + 0.005*twist
+2014-01-11 14:22:54,856-INFO:topic #8 (0.033): 0.019*met + 0.013*astronaut + 0.012*chain + 0.009*post-rock + 0.009*radiohead + 0.008*goth + 0.008*shin + 0.007*korn + 0.006*hand + 0.006*dea
+2014-01-11 14:22:54,870-INFO:topic #27 (0.033): 0.010*bon + 0.009*oizo + 0.008*cur + 0.008*moody + 0.008*rock + 0.008*kais + 0.008*chief + 0.007*iv + 0.007*parson + 0.006*train
+2014-01-11 14:22:54,888-INFO:topic #2 (0.033): 0.011*sleater-kinney + 0.007*riot + 0.007*fad + 0.007*rock + 0.007*indy + 0.006*fem + 0.006*joy + 0.005*met + 0.005*black + 0.005*grrrl
+2014-01-11 14:22:54,901-INFO:topic #15 (0.033): 0.017*bree + 0.010*jim + 0.010*hendrix + 0.009*wel + 0.009*god + 0.008*rock + 0.006*door + 0.005*club + 0.005*altern + 0.005*indy
+2014-01-11 14:22:54,919-INFO:topic #3 (0.033): 0.016*tallest + 0.013*dog + 0.012*ear + 0.006*folk + 0.006*fieh + 0.005*1live + 0.005*hey + 0.005*placebo + 0.004*fin + 0.004*rhy
+2014-01-11 14:22:54,934-INFO:topic #18 (0.033): 0.010*brion + 0.009*jon + 0.008*phoenix + 0.007*dutch + 0.007*architect + 0.007*indy + 0.007*french + 0.006*mr. + 0.006*soundtrack + 0.005*mort
+2014-01-11 14:22:54,950-INFO:topic #11 (0.033): 0.010*brazil + 0.008*tom + 0.005*honey + 0.005*rock + 0.005*mont + 0.004*bright + 0.004*leon + 0.004*kel + 0.004*lou + 0.004*dying
+2014-01-11 14:22:54,963-INFO:topic #10 (0.033): 0.014*pj + 0.014*harvey + 0.011*post-hardcore + 0.011*ris + 0.008*mos + 0.008*hardc + 0.006*metalc + 0.006*bef + 0.005*indy + 0.004*alon
+2014-01-11 14:22:54,979-INFO:topic #16 (0.033): 0.009*kook + 0.008*65daysofstatic + 0.007*post-rock + 0.007*stranger + 0.006*gon + 0.006*snow + 0.006*indy + 0.005*rock + 0.005*tonight + 0.005*gam
+2014-01-11 14:22:54,995-INFO:topic #28 (0.033): 0.012*jackson + 0.011*met + 0.011*garb + 0.011*michael + 0.010*peach + 0.009*goth + 0.008*symphon + 0.006*fem + 0.005*rock + 0.005*riv
+2014-01-11 14:22:55,011-INFO:topic #25 (0.033): 0.017*idm + 0.013*indust + 0.009*tail + 0.008*disco + 0.008*panic! + 0.008*pan + 0.007*blak + 0.006*underground + 0.005*dea + 0.005*electron
+2014-01-11 14:22:55,024-INFO:topic #1 (0.033): 0.009*math + 0.009*camer + 0.009*wild + 0.008*obscur + 0.008*walk + 0.008*cag + 0.007*goth + 0.006*eleph + 0.006*steampunk + 0.005*trib
+2014-01-11 14:22:55,042-INFO:topic #12 (0.033): 0.012*rock + 0.009*queen + 0.008*ston + 0.007*class + 0.007*kean + 0.006*indy + 0.005*met + 0.005*mac + 0.005*rol + 0.004*britpop
+2014-01-11 14:22:55,057-INFO:topic #7 (0.033): 0.057*beatl + 0.019*60s + 0.016*class + 0.014*rock + 0.011*jes + 0.010*mary + 0.009*psychedel + 0.008*brit + 0.006*pop + 0.005*rain
+2014-01-11 14:22:55,070-INFO:topic diff=0.598268, rho=0.500000
+2014-01-11 14:22:55,975-DEBUG:bound: at document #0
+2014-01-11 14:23:00,614-INFO:-22.924 per-word bound, 7957769.8 perplexity estimate based on a held-out corpus of 1488 documents with 3327 words
+2014-01-11 14:23:00,614-INFO:PROGRESS: iteration 0, at document #9488/9488
+2014-01-11 14:23:00,614-DEBUG:performing inference on a chunk of 1488 documents
+2014-01-11 14:23:01,949-INFO:1487/1488 documents converged within 50 iterations
+2014-01-11 14:23:01,960-DEBUG:updating topics
+2014-01-11 14:23:02,010-INFO:merging changes from 1488 documents into a model of 9488 documents
+2014-01-11 14:23:02,710-INFO:topic #2 (0.033): 0.009*thoma + 0.007*dean + 0.007*sleater-kinney + 0.007*fad + 0.005*cold + 0.005*rock + 0.005*indy + 0.005*joy + 0.005*black + 0.005*riot
+2014-01-11 14:23:02,723-INFO:topic #10 (0.033): 0.010*pj + 0.009*harvey + 0.008*de + 0.008*rato + 0.008*porã£o + 0.008*post-hardcore + 0.007*grindc + 0.007*hardc + 0.007*ris + 0.006*plu
+2014-01-11 14:23:02,737-INFO:topic #8 (0.033): 0.014*met + 0.012*flatlin + 0.012*chain + 0.009*rado + 0.009*astronaut + 0.008*hand + 0.007*cryst + 0.007*jmsn + 0.007*lost + 0.006*post-rock
+2014-01-11 14:23:02,756-INFO:topic #26 (0.033): 0.008*indy + 0.007*sued + 0.006*rock + 0.006*monkey + 0.005*arct + 0.004*altern + 0.004*pop + 0.004*blond + 0.004*redhead + 0.004*jam
+2014-01-11 14:23:02,773-INFO:topic #21 (0.033): 0.009*hors + 0.009*regga + 0.009*iceland + 0.006*indy + 0.006*la + 0.006*sweet + 0.006*justin + 0.006*ferdinand + 0.006*vernon + 0.006*franz
+2014-01-11 14:23:02,788-INFO:topic #28 (0.033): 0.028*jackson + 0.024*michael + 0.012*leo + 0.009*christmas + 0.008*met + 0.007*bublã© + 0.006*garb + 0.006*peach + 0.005*symphon + 0.005*goth
+2014-01-11 14:23:02,801-INFO:topic #23 (0.033): 0.018*yeah + 0.009*twin + 0.009*dum + 0.009*anim + 0.008*japanes + 0.007*cocteau + 0.007*ghost + 0.007*day + 0.007*grac + 0.007*grmln
+2014-01-11 14:23:02,814-INFO:topic #25 (0.033): 0.012*idm + 0.011*indust + 0.009*pan + 0.006*tail + 0.006*disco + 0.005*blak + 0.005*underground + 0.004*panic! + 0.004*ebm + 0.004*kidneythiev
+2014-01-11 14:23:02,828-INFO:topic #4 (0.033): 0.015*neil + 0.014*chant + 0.012*milky + 0.011*thrash + 0.008*park + 0.008*met + 0.006*christmas + 0.006*quartet + 0.006*clash + 0.005*perry
+2014-01-11 14:23:02,841-INFO:topic #19 (0.033): 0.018*schmidt + 0.011*bird + 0.011*viol + 0.009*soho + 0.008*mess + 0.007*m.g. + 0.006*knif + 0.006*lord + 0.005*robby + 0.005*william
+2014-01-11 14:23:02,855-INFO:topic #0 (0.033): 0.009*christmas + 0.008*chip + 0.007*littl + 0.007*talk + 0.007*swing + 0.007*hot + 0.006*wal + 0.006*orchestr + 0.006*mocc + 0.005*swingerhead
+2014-01-11 14:23:02,869-INFO:topic #18 (0.033): 0.010*blunt + 0.009*architect + 0.009*surkin + 0.007*jon + 0.007*phoenix + 0.007*brion + 0.005*mr. + 0.005*body + 0.005*indy + 0.005*french
+2014-01-11 14:23:02,882-INFO:topic #24 (0.033): 0.009*pacewon + 0.008*hip-hop + 0.008*war + 0.007*hop + 0.006*kaiyot + 0.006*die + 0.006*sea + 0.006*johnson + 0.006*hiat + 0.006*hip
+2014-01-11 14:23:02,896-INFO:topic #1 (0.033): 0.012*cag + 0.010*eleph + 0.008*wild + 0.008*walk + 0.007*cal + 0.007*johnny + 0.006*digit + 0.006*math + 0.006*steampunk + 0.006*midnight
+2014-01-11 14:23:02,909-INFO:topic #22 (0.033): 0.021*elv + 0.019*bur + 0.014*dubstep + 0.010*doom + 0.009*bil + 0.009*remix) + 0.006*holiday + 0.006*jazz + 0.005*met + 0.005*insid
+2014-01-11 14:23:02,921-INFO:topic diff=0.459445, rho=0.447214
+2014-01-11 14:25:54,679-INFO:adding document #0 to Dictionary(0 unique tokens)
+2014-01-11 14:26:10,317-INFO:built Dictionary(26145 unique tokens) from 9488 documents (total 2431143 corpus positions)
+2014-01-11 14:26:17,851-INFO:adding document #0 to Dictionary(0 unique tokens)
+2014-01-11 14:26:29,809-INFO:built Dictionary(20341 unique tokens) from 5402 documents (total 1687623 corpus positions)
+2014-01-11 14:26:30,928-INFO:collecting document frequencies
+2014-01-11 14:26:30,929-INFO:PROGRESS: processing document #0
+2014-01-11 14:26:31,169-INFO:calculating IDF weights for 9488 documents and 26145 features (276838 matrix non-zeros)
+2014-01-11 14:26:31,240-INFO:using symmetric alpha at 0.0333333333333
+2014-01-11 14:26:31,240-INFO:using serial LDA version on this node
+2014-01-11 14:26:32,300-INFO:running online LDA training, 30 topics, 1 passes over the supplied corpus of 9488 documents, updating model once every 2000 documents, evaluating every 9488 documents
+2014-01-11 14:26:32,300-WARNING:too few updates, training might not converge; consider increasing the number of passes to improve accuracy
+2014-01-11 14:26:33,570-INFO:PROGRESS: iteration 0, at document #2000/9488
+2014-01-11 14:26:33,570-DEBUG:performing inference on a chunk of 2000 documents
+2014-01-11 14:26:39,552-INFO:2000/2000 documents converged within 50 iterations
+2014-01-11 14:26:39,585-DEBUG:updating topics
+2014-01-11 14:26:39,694-INFO:merging changes from 2000 documents into a model of 9488 documents
+2014-01-11 14:26:41,116-INFO:topic #10 (0.033): 0.005*electron + 0.005*dido + 0.004*rock + 0.004*indy + 0.003*singer-songwrit + 0.003*teit + 0.003*automatic + 0.003*altern + 0.003*king + 0.003*pollock
+2014-01-11 14:26:41,141-INFO:topic #24 (0.033): 0.008*christmas + 0.005*indy + 0.004*rock + 0.003*electron + 0.003*folk + 0.003*somafm + 0.003*eminem + 0.003*instru + 0.003*bagel + 0.003*selen
+2014-01-11 14:26:41,170-INFO:topic #29 (0.033): 0.005*indy + 0.004*rock + 0.004*xx + 0.004*altern + 0.003*light + 0.003*johnson + 0.003*jack + 0.003*christmas + 0.003*harvey + 0.003*pj
+2014-01-11 14:26:41,201-INFO:topic #8 (0.033): 0.006*rock + 0.005*n*e*r*d + 0.005*indy + 0.005*christmas + 0.005*rag + 0.004*perry + 0.004*katy + 0.004*smi + 0.004*machin + 0.003*pop
+2014-01-11 14:26:41,241-INFO:topic #12 (0.033): 0.006*pj + 0.006*harvey + 0.005*christmas + 0.005*indy + 0.005*rock + 0.005*fem + 0.004*altern + 0.004*efterklang + 0.004*dido + 0.004*electron
+2014-01-11 14:26:41,259-INFO:topic #14 (0.033): 0.008*christmas + 0.006*indy + 0.005*xx + 0.005*ston + 0.005*monst + 0.004*rock + 0.004*cla + 0.004*queen + 0.003*chem + 0.003*sant
+2014-01-11 14:26:41,272-INFO:topic #23 (0.033): 0.005*indy + 0.005*coldplay + 0.005*whiskeytown + 0.004*2013 + 0.004*christmas + 0.003*gag + 0.003*rock + 0.003*country + 0.003*alt-country + 0.003*jon
+2014-01-11 14:26:41,299-INFO:collecting document frequencies
+2014-01-11 14:26:41,299-INFO:PROGRESS: processing document #0
+2014-01-11 14:26:41,305-INFO:topic #16 (0.033): 0.005*dido + 0.005*christmas + 0.005*indy + 0.004*rock + 0.004*fem + 0.004*altern + 0.003*lennox + 0.003*notw + 0.003*maccab + 0.003*rid
+2014-01-11 14:26:41,330-INFO:topic #19 (0.033): 0.005*rock + 0.005*indy + 0.005*mumford + 0.003*& + 0.003*son + 0.003*shoegaz + 0.003*altern + 0.003*somafm + 0.003*param + 0.003*athlet
+2014-01-11 14:26:41,361-INFO:topic #28 (0.033): 0.007*christmas + 0.005*shoegaz + 0.005*teit + 0.004*indy + 0.004*juggernaut + 0.004*fight + 0.003*electron + 0.003*rat + 0.003*folk + 0.003*dian
+2014-01-11 14:26:41,383-INFO:topic #15 (0.033): 0.008*christmas + 0.006*jazz + 0.005*indy + 0.005*vint + 0.004*rock + 0.004*fem + 0.004*cull + 0.004*jamy + 0.004*dido + 0.003*guarald
+2014-01-11 14:26:41,403-INFO:topic #20 (0.033): 0.007*rock + 0.005*swervedr + 0.005*shoegaz + 0.005*christmas + 0.004*indy + 0.004*fal + 0.003*instru + 0.003*kiss + 0.003*boy + 0.003*surf
+2014-01-11 14:26:41,436-INFO:topic #4 (0.033): 0.006*rock + 0.006*christmas + 0.006*indy + 0.004*maccab + 0.004*altern + 0.003*lily + 0.003*brit + 0.003*fem + 0.003*doe + 0.003*monst
+2014-01-11 14:26:41,455-INFO:topic #7 (0.033): 0.008*indy + 0.005*teit + 0.005*rock + 0.005*menomen + 0.004*altern + 0.004*acoust + 0.004*fem + 0.004*johnson + 0.003*pop + 0.003*jack
+2014-01-11 14:26:41,470-INFO:topic #13 (0.033): 0.007*rock + 0.006*indy + 0.005*xx + 0.005*class + 0.004*brit + 0.004*night + 0.003*rnb + 0.003*altern + 0.003*60s + 0.003*door
+2014-01-11 14:26:41,482-INFO:topic diff=26.216413, rho=1.000000
+2014-01-11 14:26:41,545-INFO:calculating IDF weights for 5402 documents and 20341 features (236879 matrix non-zeros)
+2014-01-11 14:26:41,607-INFO:using symmetric alpha at 0.0333333333333
+2014-01-11 14:26:41,607-INFO:using serial LDA version on this node
+2014-01-11 14:26:42,633-INFO:PROGRESS: iteration 0, at document #4000/9488
+2014-01-11 14:26:42,634-DEBUG:performing inference on a chunk of 2000 documents
+2014-01-11 14:26:42,642-INFO:running online LDA training, 30 topics, 1 passes over the supplied corpus of 5402 documents, updating model once every 2000 documents, evaluating every 5402 documents
+2014-01-11 14:26:42,642-WARNING:too few updates, training might not converge; consider increasing the number of passes to improve accuracy
+2014-01-11 14:26:44,896-INFO:PROGRESS: iteration 0, at document #2000/5402
+2014-01-11 14:26:44,897-DEBUG:performing inference on a chunk of 2000 documents
+2014-01-11 14:26:50,639-INFO:1992/2000 documents converged within 50 iterations
+2014-01-11 14:26:50,666-DEBUG:updating topics
+2014-01-11 14:26:50,782-INFO:merging changes from 2000 documents into a model of 9488 documents
+2014-01-11 14:26:52,405-INFO:topic #6 (0.033): 0.010*post-hardcore + 0.008*met + 0.006*park + 0.006*devil + 0.005*rock + 0.004*metalc + 0.004*linkin + 0.004*laur + 0.004*shoegaz + 0.004*body
+2014-01-11 14:26:52,444-INFO:topic #23 (0.033): 0.009*architect + 0.008*daft + 0.006*regga + 0.006*kri + 0.006*hey + 0.006*silv + 0.005*blood + 0.004*pol + 0.004*met + 0.004*2013
+2014-01-11 14:26:52,480-INFO:topic #20 (0.033): 0.009*smal + 0.009*fal + 0.008*scen + 0.008*rock + 0.008*soc + 0.007*lun + 0.006*punk + 0.005*boy + 0.005*brok + 0.005*dyl
+2014-01-11 14:26:52,510-INFO:topic #21 (0.033): 0.017*door + 0.015*cinem + 0.011*club + 0.010*indy + 0.009*plan + 0.008*miley + 0.008*cyr + 0.007*rock + 0.007*shout + 0.007*loud
+2014-01-11 14:26:52,540-INFO:topic #12 (0.033): 0.012*northern + 0.009*soul + 0.006*wav + 0.005*moon + 0.005*christmas + 0.005*rock + 0.004*fem + 0.004*altern + 0.004*pj + 0.004*harvey
+2014-01-11 14:26:52,573-INFO:topic #1 (0.033): 0.013*poe + 0.011*daft + 0.010*arct + 0.010*monkey + 0.006*indy + 0.006*rock + 0.005*punk + 0.005*trip-hop + 0.005*fals + 0.004*pink
+2014-01-11 14:26:52,603-INFO:topic #16 (0.033): 0.012*simon + 0.006*peopl + 0.006*clash + 0.005*drug + 0.005*bob + 0.005*boom + 0.005*indy + 0.004*rock + 0.004*christmas + 0.004*everyth
+2014-01-11 14:26:52,642-INFO:topic #29 (0.033): 0.006*floyd + 0.006*radiohead + 0.005*anoth + 0.005*fing + 0.005*rock + 0.004*hip + 0.004*murd + 0.004*altern + 0.004*lot + 0.004*choice:
+2014-01-11 14:26:52,668-INFO:topic #10 (0.033): 0.012*cur + 0.010*sufs + 0.010*stev + 0.008*devo + 0.007*japanes + 0.007*dog + 0.005*indy + 0.005*hot + 0.004*rock + 0.004*hand
+2014-01-11 14:26:52,700-INFO:topic #9 (0.033): 0.018*iron + 0.017*win + 0.011*fu + 0.010*ston + 0.009*manchu + 0.009*folk + 0.008*jack + 0.007*johnson + 0.006*& + 0.006*acoust
+2014-01-11 14:26:52,748-INFO:topic #8 (0.033): 0.009*phoenix + 0.007*johnny + 0.007*math + 0.006*christmas + 0.006*lin + 0.005*david + 0.005*die + 0.005*rock + 0.005*car + 0.005*lost
+2014-01-11 14:26:52,774-INFO:topic #2 (0.033): 0.006*instru + 0.006*post-rock + 0.006*metallic + 0.006*met + 0.005*soul + 0.004*hip-hop + 0.004*sar + 0.004*smash + 0.004*howard + 0.004*field
+2014-01-11 14:26:52,802-INFO:topic #7 (0.033): 0.016*johnson + 0.014*jack + 0.008*hardc + 0.008*indy + 0.007*acoust + 0.007*yeah + 0.006*rock + 0.005*metalc + 0.005*altern + 0.004*jim
+2014-01-11 14:26:52,828-INFO:topic #26 (0.033): 0.010*dil + 0.009*leg + 0.006*beatl + 0.005*anyth + 0.005*rock + 0.004*met + 0.004*electron + 0.004*strangers + 0.004*gorillaz + 0.004*street
+2014-01-11 14:26:52,866-INFO:topic #4 (0.033): 0.011*fiv + 0.007*anim + 0.006*beck + 0.005*indust + 0.004*sick + 0.004*rock + 0.004*indy + 0.004*gristl + 0.004*throbbing + 0.003*row
+2014-01-11 14:26:52,897-INFO:topic diff=0.613207, rho=0.707107
+2014-01-11 14:26:53,078-INFO:2000/2000 documents converged within 50 iterations
+2014-01-11 14:26:53,107-DEBUG:updating topics
+2014-01-11 14:26:53,198-INFO:merging changes from 2000 documents into a model of 5402 documents
+2014-01-11 14:26:54,429-INFO:PROGRESS: iteration 0, at document #6000/9488
+2014-01-11 14:26:54,429-DEBUG:performing inference on a chunk of 2000 documents
+2014-01-11 14:26:54,523-INFO:topic #0 (0.033): 0.004*floyd + 0.004*pink + 0.004*ey + 0.003*indy + 0.003*cur + 0.003*elev + 0.003*psychedel + 0.003*pixy + 0.003*zomby + 0.003*cat
+2014-01-11 14:26:54,554-INFO:topic #23 (0.033): 0.004*met + 0.003*indust + 0.003*lizzy + 0.003*thin + 0.003*bowy + 0.003*everyth + 0.003*soul + 0.003*ozzy + 0.002*country + 0.002*cash
+2014-01-11 14:26:54,577-INFO:topic #22 (0.033): 0.007*jazz + 0.007*bil + 0.005*holiday + 0.004*indy + 0.004*elliot + 0.004*fem + 0.004*garb + 0.003*radiohead + 0.003*smi + 0.003*aim
+2014-01-11 14:26:54,601-INFO:topic #17 (0.033): 0.007*cov + 0.003*pillow + 0.003*aim + 0.003*littl + 0.003*fem + 0.003*indy + 0.003*buckley + 0.003*r.e.m. + 0.002*80s + 0.002*pixy
+2014-01-11 14:26:54,621-INFO:topic #9 (0.033): 0.003*cov + 0.003*aerosmi + 0.003*indy + 0.003*oas + 0.003*class + 0.003*& + 0.003*grac + 0.003*everyth + 0.002*costello + 0.002*blu
+2014-01-11 14:26:54,648-INFO:topic #14 (0.033): 0.005*r.e.m. + 0.004*80s + 0.003*beatl + 0.003*indy + 0.003*ben + 0.003*class + 0.002*punk + 0.002*met + 0.002*bottl + 0.002*altern
+2014-01-11 14:26:54,677-INFO:topic #21 (0.033): 0.005*indy + 0.003*door + 0.003*aerosmi + 0.003*rush + 0.003*simon + 0.003*80s + 0.002*punk + 0.002*hot + 0.002*fee + 0.002*modest
+2014-01-11 14:26:54,692-INFO:topic #25 (0.033): 0.004*indy + 0.003*folk + 0.003*pixy + 0.003*dyl + 0.003*fountain + 0.002*& + 0.002*class + 0.002*fem + 0.002*wayn + 0.002*altern
+2014-01-11 14:26:54,718-INFO:topic #5 (0.033): 0.003*indy + 0.003*modest + 0.003*mous + 0.003*ste + 0.003*norah + 0.002*crow + 0.002*zomby + 0.002*alphavil + 0.002*fem + 0.002*switchfoot
+2014-01-11 14:26:54,744-INFO:topic #27 (0.033): 0.007*radiohead + 0.004*indy + 0.003*folk + 0.003*door + 0.003*psychedel + 0.003*altern + 0.003*fem + 0.003*nirvan + 0.003*met + 0.003*80s
+2014-01-11 14:26:54,767-INFO:topic #20 (0.033): 0.004*radiohead + 0.003*met + 0.003*difranco + 0.003*80s + 0.003*indy + 0.003*rac + 0.002*pillow + 0.002*beatl + 0.002*dant + 0.002*folk
+2014-01-11 14:26:54,793-INFO:topic #18 (0.033): 0.004*indy + 0.003*built + 0.003*placebo + 0.003*spil + 0.003*radiohead + 0.003*rol + 0.003*eel + 0.003*fem + 0.003*canad + 0.002*ey
+2014-01-11 14:26:54,811-INFO:topic #2 (0.033): 0.006*shin + 0.005*indy + 0.004*la + 0.003*bob + 0.003*wayn + 0.003*altern + 0.002*fountain + 0.002*sum + 0.002*placebo + 0.002*dyl
+2014-01-11 14:26:54,841-INFO:topic #6 (0.033): 0.004*bowy + 0.003*punk + 0.003*queen + 0.003*david + 0.003*fee + 0.003*brown + 0.003*class + 0.003*glam + 0.003*green + 0.002*devendr
+2014-01-11 14:26:54,872-INFO:topic #28 (0.033): 0.006*oas + 0.004*indy + 0.004*eel + 0.004*punk + 0.003*john + 0.003*norah + 0.003*serv + 0.003*blu + 0.003*class + 0.003*met
+2014-01-11 14:26:54,893-INFO:topic diff=25.683972, rho=1.000000
+2014-01-11 14:26:56,865-INFO:PROGRESS: iteration 0, at document #4000/5402
+2014-01-11 14:26:56,866-DEBUG:performing inference on a chunk of 2000 documents
+2014-01-11 14:27:01,611-INFO:1999/2000 documents converged within 50 iterations
+2014-01-11 14:27:01,634-DEBUG:updating topics
+2014-01-11 14:27:01,759-INFO:merging changes from 2000 documents into a model of 9488 documents
+2014-01-11 14:27:03,479-INFO:topic #12 (0.033): 0.008*leo + 0.006*moody + 0.006*northern + 0.006*moon + 0.006*soul + 0.005*rock + 0.005*wav + 0.005*du + 0.004*war + 0.004*blond
+2014-01-11 14:27:03,513-INFO:topic #16 (0.033): 0.016*clash + 0.009*everyth + 0.008*punk + 0.007*bob + 0.006*simon + 0.006*peopl + 0.006*brazil + 0.005*rock + 0.004*trap + 0.004*indy
+2014-01-11 14:27:03,547-INFO:topic #15 (0.033): 0.010*christmas + 0.007*jazz + 0.006*lou + 0.005*armstrong + 0.005*flor + 0.005*shadow + 0.005*straight + 0.005*leav + 0.005*+ + 0.004*bing
+2014-01-11 14:27:03,588-INFO:topic #19 (0.033): 0.009*fent + 0.006*param + 0.006*chas + 0.006*war + 0.005*talk + 0.005*escap + 0.005*dreamwav + 0.004*straits + 0.004*depech + 0.004*dir
+2014-01-11 14:27:03,628-INFO:topic #17 (0.033): 0.023*sued + 0.010*celt + 0.009*rock + 0.009*indy + 0.009*joy + 0.008*britpop + 0.007*bring + 0.006*2013 + 0.006*ir + 0.005*brit
+2014-01-11 14:27:03,658-INFO:topic #20 (0.033): 0.010*fal + 0.008*rock + 0.006*smal + 0.005*gospel + 0.005*soc + 0.005*punk + 0.005*cov + 0.004*pleas + 0.004*scen + 0.004*boy
+2014-01-11 14:27:03,692-INFO:topic #14 (0.033): 0.011*queen + 0.011*belleruch + 0.009*christmas + 0.007*sinatr + 0.007*frank + 0.007*littl + 0.007*cirqu + 0.006*lord + 0.005*ston + 0.005*sant
+2014-01-11 14:27:03,746-INFO:topic #5 (0.033): 0.016*garb + 0.014*jackson + 0.011*michael + 0.009*christmas + 0.008*sleigh + 0.006*sufs + 0.006*rock + 0.006*stev + 0.005*fem + 0.005*altern
+2014-01-11 14:27:03,785-INFO:topic #28 (0.033): 0.011*chvrches + 0.008*fight + 0.006*chip + 0.006*deerhunt + 0.006*dia + 0.005*gun + 0.005*indust + 0.005*sug + 0.005*hard + 0.004*birthday
+2014-01-11 14:27:03,829-INFO:topic #4 (0.033): 0.010*cocteau + 0.010*twin + 0.006*anim + 0.006*fiv + 0.005*dubstep + 0.004*bil + 0.004*leon + 0.003*dream + 0.003*beck + 0.003*rock
+2014-01-11 14:27:03,865-INFO:topic #9 (0.033): 0.022*thrash + 0.012*iron + 0.011*met + 0.010*ston + 0.009*win + 0.009*sepultur + 0.006*fu + 0.006*folk + 0.005*rock + 0.005*weeknd
+2014-01-11 14:27:03,903-INFO:topic #0 (0.033): 0.007*indy + 0.006*rock + 0.006*bel + 0.005*lily + 0.005*bad + 0.005*massacr + 0.005*revoir + 0.005*arm + 0.005*goth + 0.004*key
+2014-01-11 14:27:03,948-INFO:topic #29 (0.033): 0.009*idm + 0.007*anoth + 0.005*dea + 0.005*strokes + 0.005*lot + 0.005*bloc + 0.005*mut + 0.004*rock + 0.004*hip-hop + 0.004*hat
+2014-01-11 14:27:03,991-INFO:topic #27 (0.033): 0.022*met + 0.018*ris + 0.008*symphon + 0.008*xandr + 0.008*doom + 0.007*goth + 0.007*horizon + 0.005*hardc + 0.005*rock + 0.004*punk
+2014-01-11 14:27:04,019-INFO:topic #10 (0.033): 0.015*cur + 0.007*dog + 0.007*hot + 0.006*mil + 0.005*japanes + 0.005*stev + 0.005*sufs + 0.005*folk + 0.004*rock + 0.004*ther
+2014-01-11 14:27:04,055-INFO:topic diff=0.596485, rho=0.577350
+2014-01-11 14:27:05,683-INFO:1992/2000 documents converged within 50 iterations
+2014-01-11 14:27:05,706-INFO:PROGRESS: iteration 0, at document #8000/9488
+2014-01-11 14:27:05,706-DEBUG:performing inference on a chunk of 2000 documents
+2014-01-11 14:27:05,712-DEBUG:updating topics
+2014-01-11 14:27:05,791-INFO:merging changes from 2000 documents into a model of 5402 documents
+2014-01-11 14:27:07,324-INFO:topic #20 (0.033): 0.004*difranco + 0.004*radiohead + 0.004*wind + 0.003*ont + 0.003*rac + 0.003*watch + 0.003*up, + 0.003*80s + 0.003*pillow + 0.003*met
+2014-01-11 14:27:07,354-INFO:topic #16 (0.033): 0.009*cur + 0.009*adam + 0.008*ryan + 0.008*decemb + 0.006*jes + 0.006*spec + 0.005*chain + 0.005*kiss + 0.005*80s + 0.005*mary
+2014-01-11 14:27:07,370-INFO:topic #12 (0.033): 0.008*fold + 0.007*ben + 0.006*fiv + 0.005*prim + 0.004*met + 0.004*motley + 0.004*scream + 0.004*glory + 0.004*piano + 0.003*ey
+2014-01-11 14:27:07,412-INFO:topic #19 (0.033): 0.007*morrissey + 0.007*beck + 0.005*indy + 0.004*fem + 0.004*mirah + 0.004*interpol + 0.004*dur + 0.004*neko + 0.003*ston + 0.003*rocket
+2014-01-11 14:27:07,442-INFO:topic #29 (0.033): 0.027*beatl + 0.010*60s + 0.007*class + 0.004*tak + 0.004*abb + 0.004*psychedel + 0.004*brit + 0.004*bad + 0.004*relig + 0.003*alon
+2014-01-11 14:27:07,484-INFO:topic #14 (0.033): 0.015*r.e.m. + 0.006*rem + 0.005*tmbg + 0.005*80s + 0.005*giant + 0.004*she's + 0.004*divid + 0.004*start + 0.004*jangl + 0.004*joy
+2014-01-11 14:27:07,500-INFO:topic #24 (0.033): 0.012*tom + 0.011*wait + 0.007*aerosmi + 0.005*rit + 0.005*josh + 0.005*blu + 0.005*folk + 0.004*cak + 0.004*cream + 0.003*singer-songwrit
+2014-01-11 14:27:07,530-INFO:topic #21 (0.033): 0.009*hot + 0.006*door + 0.004*indy + 0.004*microphon + 0.004*crazy + 0.003*velvet + 0.003*jan + 0.003*class + 0.003*80s + 0.003*shak
+2014-01-11 14:27:07,555-INFO:topic #28 (0.033): 0.008*oas + 0.008*harrison + 0.006*georg + 0.005*norah + 0.005*indy + 0.005*eel + 0.004*john + 0.004*jon + 0.003*punk + 0.003*jazz
+2014-01-11 14:27:07,574-INFO:topic #25 (0.033): 0.007*kink + 0.005*nin + 0.005*grat + 0.005*indust + 0.004*nail + 0.004*inch + 0.004*pul + 0.004*peopl + 0.004*dyl + 0.003*goo
+2014-01-11 14:27:07,602-INFO:topic #3 (0.033): 0.009*macy + 0.009*depech + 0.008*gray + 0.007*mod + 0.006*beatl + 0.005*cru + 0.005*jem + 0.004*soul + 0.004*metallic + 0.004*fem
+2014-01-11 14:27:07,624-INFO:topic #7 (0.033): 0.009*sinatr + 0.008*frank + 0.007*incub + 0.005*stripes + 0.005*whit + 0.004*swing + 0.004*dead + 0.004*ston + 0.004*yeah + 0.004*jazz
+2014-01-11 14:27:07,652-INFO:topic #6 (0.033): 0.011*bowy + 0.008*david + 0.007*silverchair + 0.005*glam + 0.004*brown + 0.004*fee + 0.004*swed + 0.004*grung + 0.003*punk + 0.003*queen
+2014-01-11 14:27:07,668-INFO:topic #5 (0.033): 0.007*crow + 0.007*blind + 0.006*count + 0.004*wak + 0.004*indy + 0.004*screamo + 0.003*modest + 0.003*ste + 0.003*mous + 0.003*pan
+2014-01-11 14:27:07,698-INFO:topic #15 (0.033): 0.006*wilco + 0.006*damy + 0.006*pearl + 0.005*rush + 0.005*jam + 0.004*kil + 0.003*bon + 0.003*yellow + 0.003*indy + 0.003*radiohead
+2014-01-11 14:27:07,718-INFO:topic diff=0.747349, rho=0.707107
+2014-01-11 14:27:10,048-DEBUG:bound: at document #0
+2014-01-11 14:27:13,922-INFO:1999/2000 documents converged within 50 iterations
+2014-01-11 14:27:13,957-DEBUG:updating topics
+2014-01-11 14:27:14,070-INFO:merging changes from 2000 documents into a model of 9488 documents
+2014-01-11 14:27:15,690-INFO:topic #2 (0.033): 0.010*astronaut + 0.009*howard + 0.009*post-rock + 0.009*mos + 0.009*indigo + 0.008*orchestr + 0.008*suicid + 0.007*instru + 0.007*mort + 0.007*unknown
+2014-01-11 14:27:15,722-INFO:topic #29 (0.033): 0.015*idm + 0.008*bush + 0.006*anoth + 0.006*hip + 0.006*barret + 0.005*kat + 0.005*pixy + 0.005*lot + 0.005*fly + 0.004*hop
+2014-01-11 14:27:15,742-INFO:topic #17 (0.033): 0.017*neil + 0.011*sued + 0.011*rock + 0.009*indy + 0.009*ferdinand + 0.008*franz + 0.008*2013 + 0.008*project + 0.007*joy + 0.006*parson
+2014-01-11 14:27:15,785-INFO:topic #6 (0.033): 0.016*dea + 0.013*met + 0.009*post-hardcore + 0.007*hip-hop + 0.006*enemy + 0.005*park + 0.005*real + 0.005*alon + 0.005*hop + 0.005*rock
+2014-01-11 14:27:15,811-INFO:topic #19 (0.033): 0.010*talk + 0.008*vil + 0.007*param + 0.005*fent + 0.005*chas + 0.004*escap + 0.004*cod + 0.004*rememb + 0.004*war + 0.004*spin
+2014-01-11 14:27:15,851-INFO:topic #21 (0.033): 0.010*rock + 0.008*velvet + 0.008*kook + 0.007*indy + 0.007*suck + 0.007*door + 0.007*elv + 0.006*dress + 0.006*osk + 0.006*oneohtrix
+2014-01-11 14:27:15,876-INFO:topic #15 (0.033): 0.016*sleater-kinney + 0.011*jazz + 0.011*swing + 0.009*riot + 0.008*bowy + 0.007*grrrl + 0.007*board + 0.006*sublim + 0.006*warp + 0.005*maybeshewil
+2014-01-11 14:27:15,899-INFO:topic #16 (0.033): 0.010*brazil + 0.009*clash + 0.007*motorcyc + 0.007*everyth + 0.007*rebel + 0.007*punk + 0.007*hil + 0.006*peopl + 0.006*bob + 0.005*simon
+2014-01-11 14:27:15,937-INFO:topic #9 (0.033): 0.018*thrash + 0.011*peach + 0.010*met + 0.008*iron + 0.007*win + 0.005*ston + 0.005*dragon + 0.005*sepultur + 0.004*proto-punk + 0.004*folk
+2014-01-11 14:27:15,962-INFO:topic #18 (0.033): 0.014*met + 0.010*rock + 0.010*doom + 0.008*progress + 0.007*shin + 0.007*chief + 0.007*kais + 0.006*indy + 0.006*kataton + 0.005*whit
+2014-01-11 14:27:16,006-INFO:topic #12 (0.033): 0.013*pj + 0.013*harvey + 0.007*blond + 0.007*print + 0.007*def + 0.006*brion + 0.006*rock + 0.005*soul + 0.005*jon + 0.005*moon
+2014-01-11 14:27:16,032-INFO:topic #25 (0.033): 0.018*christmas + 0.017*wait + 0.015*tom + 0.010*indust + 0.008*ell + 0.008*fitzgerald + 0.007*jazz + 0.006*cov + 0.005*syd + 0.005*blu
+2014-01-11 14:27:16,057-INFO:topic #5 (0.033): 0.010*jackson + 0.009*gadget + 0.008*garb + 0.008*michael + 0.006*christmas + 0.006*stev + 0.005*rock + 0.005*ton + 0.005*sufs + 0.005*folk
+2014-01-11 14:27:16,090-INFO:topic #28 (0.033): 0.016*chip + 0.009*hot + 0.007*electron + 0.006*fight + 0.006*ste + 0.006*chvrches + 0.005*dan + 0.004*sug + 0.004*gun + 0.004*ros
+2014-01-11 14:27:16,122-INFO:topic #0 (0.033): 0.014*bree + 0.009*65daysofstatic + 0.009*tel + 0.008*indy + 0.008*rock + 0.007*jes + 0.007*bel + 0.006*altern + 0.006*mary + 0.006*post-rock
+2014-01-11 14:27:16,156-INFO:topic diff=0.601579, rho=0.500000
+2014-01-11 14:27:17,315-DEBUG:bound: at document #0
+2014-01-11 14:27:23,050-INFO:-22.962 per-word bound, 8169445.3 perplexity estimate based on a held-out corpus of 1488 documents with 3327 words
+2014-01-11 14:27:23,050-INFO:PROGRESS: iteration 0, at document #9488/9488
+2014-01-11 14:27:23,050-DEBUG:performing inference on a chunk of 1488 documents
+2014-01-11 14:27:24,056-INFO:-18.403 per-word bound, 346665.8 perplexity estimate based on a held-out corpus of 1402 documents with 4385 words
+2014-01-11 14:27:24,056-INFO:PROGRESS: iteration 0, at document #5402/5402
+2014-01-11 14:27:24,056-DEBUG:performing inference on a chunk of 1402 documents
+2014-01-11 14:27:26,675-INFO:1488/1488 documents converged within 50 iterations
+2014-01-11 14:27:26,701-DEBUG:updating topics
+2014-01-11 14:27:26,838-INFO:merging changes from 1488 documents into a model of 9488 documents
+2014-01-11 14:27:28,698-INFO:topic #9 (0.033): 0.014*casino + 0.012*thrash + 0.011*bird + 0.010*met + 0.008*plu + 0.007*win + 0.006*peach + 0.006*een + 0.005*iron + 0.004*motã¶rhead
+2014-01-11 14:27:28,744-INFO:topic #8 (0.033): 0.009*cag + 0.009*david + 0.008*eleph + 0.007*phoenix + 0.006*crippl + 0.006*autumn + 0.005*noth + 0.005*quartet + 0.005*byrn + 0.005*perry
+2014-01-11 14:27:28,780-INFO:topic #15 (0.033): 0.015*anny + 0.010*sleater-kinney + 0.010*blunt + 0.009*jazz + 0.008*swing + 0.006*riot + 0.005*christmas + 0.005*bowy + 0.005*grrrl + 0.004*board
+2014-01-11 14:27:28,837-INFO:topic #10 (0.033): 0.014*tallest + 0.008*cur + 0.008*japanes + 0.008*ear + 0.008*dog + 0.007*macintosh + 0.006*folk + 0.006*broth + 0.004*j-rock + 0.004*ten
+2014-01-11 14:27:28,877-INFO:topic #23 (0.033): 0.012*regga + 0.011*architect + 0.009*blood + 0.009*bear + 0.008*milky + 0.006*dub + 0.006*ska + 0.005*lady + 0.005*rebelut + 0.004*silv
+2014-01-11 14:27:28,922-INFO:topic #6 (0.033): 0.012*flatlin + 0.011*dea + 0.009*met + 0.007*pacewon + 0.007*post-hardcore + 0.007*da + 0.006*bonjah + 0.006*park + 0.005*unwound + 0.005*body
+2014-01-11 14:27:28,960-INFO:topic #20 (0.033): 0.013*pol + 0.011*chant + 0.010*myslovitz + 0.008*pan + 0.007*rock + 0.006*fal + 0.005*pleas + 0.005*brok + 0.005*disco + 0.005*hom
+2014-01-11 14:27:29,014-INFO:topic #0 (0.033): 0.010*bree + 0.009*sig + 0.008*jes + 0.007*tel + 0.007*mary + 0.007*grmln + 0.006*post-rock + 0.006*rock + 0.006*indy + 0.005*la
+2014-01-11 14:27:29,076-INFO:topic #5 (0.033): 0.021*jackson + 0.018*michael + 0.012*christmas + 0.009*dean + 0.009*jonath + 0.007*gadget + 0.007*bublã© + 0.006*emmet + 0.006*tinley + 0.006*stev
+2014-01-11 14:27:29,129-INFO:topic #24 (0.033): 0.008*sav + 0.008*grindc + 0.008*panth + 0.007*rato + 0.007*porã£o + 0.006*jmsn + 0.006*saturday + 0.005*mary + 0.004*tin + 0.004*tru
+2014-01-11 14:27:29,171-INFO:topic #4 (0.033): 0.016*thoma + 0.012*row + 0.011*bil + 0.011*anim + 0.011*twin + 0.009*cocteau + 0.009*surkin + 0.007*holiday + 0.006*justin + 0.006*kean
+2014-01-11 14:27:29,219-INFO:topic #7 (0.033): 0.014*yeah + 0.011*indy + 0.007*hors + 0.007*crook + 0.006*rock + 0.006*folk + 0.006*hand + 0.005*version) + 0.005*acoust + 0.005*orchestr
+2014-01-11 14:27:29,274-INFO:topic #19 (0.033): 0.008*corn + 0.008*vil + 0.007*talk + 0.007*fent + 0.006*chas + 0.005*cod + 0.004*param + 0.004*reflect + 0.004*ð’ð¾ð¿ð»ñ– + 0.004*ð’ñ–ð´ð¾ð¿ð»ññð¾ð²ð°
+2014-01-11 14:27:29,319-INFO:topic #1 (0.033): 0.010*rado + 0.010*viol + 0.008*air + 0.007*soho + 0.006*mess + 0.006*monkey + 0.005*arct + 0.005*electron + 0.004*pink + 0.004*bat
+2014-01-11 14:27:29,366-INFO:topic #21 (0.033): 0.022*elv + 0.013*jan + 0.007*cryst + 0.007*timor + 0.007*rock + 0.006*velvet + 0.006*plan + 0.006*club + 0.006*door + 0.005*glam
+2014-01-11 14:27:29,409-INFO:topic diff=0.454942, rho=0.447214
+2014-01-11 14:27:30,822-INFO:1402/1402 documents converged within 50 iterations
+2014-01-11 14:27:30,846-DEBUG:updating topics
+2014-01-11 14:27:30,962-INFO:merging changes from 1402 documents into a model of 5402 documents
+2014-01-11 14:27:32,542-INFO:topic #18 (0.033): 0.011*elv + 0.011*presley + 0.009*fir + 0.009*beasty + 0.008*placebo + 0.008*arcad + 0.008*rol + 0.006*hip-hop + 0.006*low + 0.005*50s
+2014-01-11 14:27:32,569-INFO:topic #11 (0.033): 0.008*tor + 0.007*amo + 0.005*ros + 0.005*burn + 0.005*twin + 0.005*fem + 0.004*mclachlan + 0.004*michael + 0.004*sarah + 0.004*madchest
+2014-01-11 14:27:32,596-INFO:topic #12 (0.033): 0.015*fold + 0.013*ben + 0.008*piano + 0.008*prim + 0.007*fiv + 0.006*met + 0.006*everclear + 0.005*scream + 0.004*gard + 0.004*60s
+2014-01-11 14:27:32,630-INFO:topic #21 (0.033): 0.008*hot + 0.006*pep + 0.005*fear + 0.005*crazy + 0.004*jan + 0.004*print + 0.004*red + 0.004*indy + 0.004*underground + 0.004*velvet
+2014-01-11 14:27:32,657-INFO:topic #10 (0.033): 0.009*difranco + 0.008*folk + 0.008*devendr + 0.008*banhart + 0.007*smith + 0.006*dead + 0.006*fem + 0.005*girlfriend + 0.005*sunday + 0.005*indy
+2014-01-11 14:27:32,708-INFO:topic #7 (0.033): 0.011*sinatr + 0.010*frank + 0.006*whit + 0.006*yeah + 0.006*strokes + 0.005*pav + 0.005*valentin + 0.005*jazz + 0.005*hotel + 0.004*incub
+2014-01-11 14:27:32,741-INFO:topic #24 (0.033): 0.013*wait + 0.013*tom + 0.007*aerosmi + 0.007*hous + 0.007*cak + 0.006*rit + 0.006*blu + 0.006*josh + 0.005*folk + 0.004*nev
+2014-01-11 14:27:32,769-INFO:topic #27 (0.033): 0.024*radiohead + 0.010*door + 0.005*welch + 0.005*mar + 0.005*psychedel + 0.005*electron + 0.005*dandy + 0.005*garfunkel + 0.005*warhol + 0.005*nirvan
+2014-01-11 14:27:32,810-INFO:topic #26 (0.033): 0.011*zeppelin + 0.011*led + 0.009*fleetwood + 0.009*mac + 0.005*ther + 0.005*ruf + 0.005*wainwright + 0.005*someth + 0.005*ferdinand + 0.005*class
+2014-01-11 14:27:32,854-INFO:topic #14 (0.033): 0.025*r.e.m. + 0.008*jangl + 0.008*giant + 0.008*rem + 0.007*tmbg + 0.007*80s + 0.006*hum + 0.005*start + 0.005*badf + 0.005*blee
+2014-01-11 14:27:32,895-INFO:topic #28 (0.033): 0.013*eel + 0.009*oas + 0.006*georg + 0.006*harrison + 0.006*john + 0.006*indy + 0.004*gon + 0.004*acoust + 0.003*matthew + 0.003*kwel
+2014-01-11 14:27:32,926-INFO:topic #23 (0.033): 0.012*ozzy + 0.011*osbourn + 0.009*cash + 0.009*johnny + 0.008*met + 0.007*lizzy + 0.006*thin + 0.006*blood + 0.005*heavy + 0.005*alright
+2014-01-11 14:27:32,957-INFO:topic #16 (0.033): 0.014*mary + 0.013*chain + 0.012*adam + 0.011*jes + 0.011*ryan + 0.010*cur + 0.010*decemb + 0.008*shoegaz + 0.006*80s + 0.006*wav
+2014-01-11 14:27:33,001-INFO:topic #13 (0.033): 0.010*coldplay + 0.009*jimmy + 0.008*eat + 0.007*heart + 0.005*process + 0.005*indy + 0.005*cov + 0.005*black + 0.004*boy + 0.004*californ
+2014-01-11 14:27:33,037-INFO:topic #0 (0.033): 0.010*bright + 0.009*cat + 0.008*ey + 0.008*son + 0.006*indy + 0.006*pow + 0.005*pink + 0.005*sufs + 0.005*floyd + 0.005*folk
+2014-01-11 14:27:33,062-INFO:topic diff=0.664019, rho=0.577350

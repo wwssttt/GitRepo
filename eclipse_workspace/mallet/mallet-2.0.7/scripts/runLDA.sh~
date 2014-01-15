@@ -2,7 +2,7 @@
 # Run this script from 'scripts' directory of mallet directory
 
 # One by one traverse each project
-dirs=`ls -d ../../../data/`
+dirs=`ls -d ../data/`
 for dir in $dirs
 do
 	# Read names of major versions

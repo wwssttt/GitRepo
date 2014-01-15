@@ -8,14 +8,12 @@ import math
 import sys
 import rpy2.robjects as robjects
 from rpy2.robjects.packages import importr
+from gensim import corpora, models, similarities
 import persist
 import util
-import matplotlib.pyplot as plt
-from sklearn.svm import SVC
-import sys
+import const
+import PrefixSpan
 
-reload(sys)
-sys.setdefaultencoding('utf-8')
 #set default encoding
 reload(sys)
 sys.setdefaultencoding("utf-8")
@@ -47,30 +45,6 @@ def topicDictForNextSongByMostSimilar(playlist,songDict):
   count = len(trainingList)
   sid = trainingList[count-1]
   return songDict[sid].getTopicDict()
-
-#get predicted topic dict of next song by cold law
-def topicDictForNextSongByColdLaw(playlist,songDict,coeff = 5.0):
-  #get playlist's training list
-  trainingList = playlist.getTrainingList()
-  count = len(trainingList)
-  topicDict = {}
-  totalWeight = 0
-  #add each key of every song to topicDict
-  for i in range(0,count):
-    delta = count-i
-    weight = math.pow(math.e,-1*coeff*delta)
-    sid = trainingList[i]
-    sTopicDict = songDict[sid].getTopicDict()
-    for key in sTopicDict.keys():
-      if key not in topicDict:
-        topicDict[key] = sTopicDict[key] * weight
-      else:
-        topicDict[key] = topicDict[key] + sTopicDict[key] * weight
-    totalWeight = totalWeight + weight
-  #average
-  for key in topicDict.keys():
-    topicDict[key] = topicDict[key] / totalWeight
-  return topicDict
 
 #get predicted topic dict of next song by auto_arima
 def topicDictForNextSongByArima(playlist,songDict):
@@ -104,7 +78,8 @@ def topicDictForNextSongByArima(playlist,songDict):
     if len(tsDict[key]) != total:
       print '....Error:Time Series do not have same length......'
       return
-    vec = robjects.FloatVector(tsDict[key])
+    tsList = tsDict[key]
+    vec = robjects.FloatVector(tsList[-6:])
     ts = robjects.r['ts'](vec)
     fit = robjects.r['auto.arima'](ts)
     next = robjects.r['forecast'](fit,h=1)
@@ -139,20 +114,6 @@ def topicDictForNextSongByAverageHybrid(playlist,songDict,arimaDict,lamda):
     topicDict[topic] = pro
   return topicDict
 
-#get predicted topic dict of next song by average with most simlilar
-def topicDictForNextSongByAverageWithSimilar(playlist,songDict,lamda):
-  trainingList = playlist.getTrainingList()
-  pid = playlist.getPid()
-  count = len(trainingList)
-  sid = trainingList[count-1]
-  lastTopicDict =  songDict[sid].getTopicDict()
-  avgTopicDict = topicDictForNextSongByAverage(playlist,songDict)
-  topicDict = {}
-  for topic in avgTopicDict.keys():
-    pro = lamda*avgTopicDict[topic] + (1 - lamda)*lastTopicDict[topic]
-    topicDict[topic] = pro
-  return topicDict
-
 #get recommend songs list of playlist comparing with target dict
 def getRecSongs(songDict,topN,tarDict):
   recDict = {}
@@ -170,17 +131,13 @@ def getRecSongs(songDict,topN,tarDict):
 #generate rec dict
 #0: most similar
 #1: average
-#2: cold law
-#3: Arima
-#4: Arima + Similar
-#5: Arima + Average
-#6: Dis-Arima
-#7: Sd-Arima 
-#8: Sd-SVM
+#2: Arima
+#3: Arima + Similar
+#4: Arima + Average
 #default: most similar
-def getRecDict(playlistDict,songDict,recType = 0,lamda = 0.45,coeff = 5.0,topN = 300):
+def getRecDict(playlistDict,songDict,recType = 0,lamda = 0.45,topN = const.TOP_N):
   recDict = {}
-  if recType == 3 or recType == 4 or recType == 5:
+  if recType == const.ARIMA or recType == const.ARIMA_SIMILAR or recType == const.ARIMA_AVG:
     arimaDict = persist.readPredictedTopicDictOfArima()
   index = 0
   count = len(playlistDict)
@@ -188,17 +145,15 @@ def getRecDict(playlistDict,songDict,recType = 0,lamda = 0.45,coeff = 5.0,topN =
   for pid in playlistDict.keys():
     print '%s:%d/%d' % (typeName,index,count)
     playlist = playlistDict[pid]
-    if recType == 0:
+    if recType == const.SIMILAR:
       tarDict = topicDictForNextSongByMostSimilar(playlist,songDict)
-    elif recType == 1:
+    elif recType == const.AVG:
       tarDict = topicDictForNextSongByAverage(playlist,songDict)
-    elif recType == 2:
-      tarDict = topicDictForNextSongByColdLaw(playlist,songDict,coeff)
-    elif recType == 3:
+    elif recType == const.ARIMA:
       tarDict = arimaDict[pid]
-    elif recType == 4:
+    elif recType == const.ARIMA_SIMILAR:
       tarDict = topicDictForNextSongByMostSimilarHybrid(playlist,songDict,arimaDict,lamda)
-    elif recType == 5:
+    elif recType == const.ARIMA_AVG:
       tarDict = topicDictForNextSongByAverageHybrid(playlist,songDict,arimaDict,lamda)
     else:
       print '%d is an Error Type......' % recType
@@ -208,161 +163,201 @@ def getRecDict(playlistDict,songDict,recType = 0,lamda = 0.45,coeff = 5.0,topN =
     index = index + 1
   return recDict
 
-#get predicted KL distance with base distribution by auto_arima
-def getPredictedKLDisByArima(playlist,songDict):
-  importr("forecast")
-  #get playlist's training list
-  trainingList = playlist.getTrainingList()
-  count = len(trainingList)
-  #define base diatribution and dis list
-  baseDict = {}
-  disList = []
-  #loop every song in training list
-  #add distribution of sids to tsDict to construct some time series
-  for i in range(0,count):
-    sid = trainingList[i]
-    sTopicDict = songDict[sid].getTopicDict()
-    if len(baseDict) == 0:
-      length = len(sTopicDict)
-      for t in range(0,length):
-        baseDict[t] = 1.0 / length
-    disList.append(util.similarity(sTopicDict,baseDict))
-
-  #using auto arima to forecast the kl distance
-  vec = robjects.FloatVector(disList)
-  ts = robjects.r['ts'](vec)
-  fit = robjects.r['auto.arima'](ts)
-  next = robjects.r['forecast'](fit,h=1)
-  #robjects.r['plot'](next)
-  return float(next.rx('mean')[0][0])
-
-#get recommend songs list of playlist by dis
-def getRecSongsOfDis(playlist,songDict,topN,tarDis):
-  recDict = {}
-  baseDict = {}
-  trainingList = playlist.getTrainingList()
-  size = len(trainingList)
-  lastTopicDict = songDict[trainingList[size-1]].getTopicDict()
+#get recommend songs list of playlist by MF
+def getRecDictOfMF(songDict,playlistDict,topN = const.TOP_N):
+  print 'I am in getRecDictOfMF....'
+  index2Id = {}
   for sid in songDict.keys():
     song = songDict[sid]
-    topicDict = song.getTopicDict()
-    if len(baseDict) == 0:
-      length = len(topicDict)
-      for i in range(0,length):
-        baseDict[i] = 1.0 / length
-    baseDis = util.similarity(topicDict,baseDict)
-    value = math.fabs(baseDis-tarDis)
-    recDict[sid] = value
-  recList = sorted(recDict.iteritems(),key=lambda x:x[1])
-  result = []
-  for i in range(0,topN):
-    result.append(recList[i][0])
-  return result
+    sIndex = song.getIndex()
+    index2Id[sIndex] = sid
 
-#generate rec dict
-def getRecDictOfDis(playlistDict,songDict,topN = 300):
+  countMatrix = util.getUserSongMatrix(songDict,playlistDict)
+  predictMatrix = util.predictMatrix(countMatrix,const.TOPIC_NUM)
+  print 'Begin to generate rec list...'
   recDict = {}
-  index = 0
-  count = len(playlistDict)
+  
   for pid in playlistDict.keys():
-    print 'Dis:%d/%d' % (index,count)
+    scoreDict = {}
     playlist = playlistDict[pid]
-    tarDis = getPredictedKLDisByArima(playlist,songDict)
-    recSong = getRecSongsOfDis(playlist,songDict,topN,tarDis)
-    recDict[pid] = recSong
-    index = index + 1
+    pIndex = playlist.getIndex()
+    trainingList = playlist.getTrainingList()
+    predictList = predictMatrix[pIndex]
+    count = len(predictList)
+    for index in range(count):
+      sid = index2Id[index]
+      if sid not in trainingList:
+        score = predictList[index]
+        scoreDict[sid] = score
+    recList = sorted(scoreDict.iteritems(),key=lambda x:x[1],reverse=True)
+    result = []
+    for i in range(0,topN):
+      result.append(recList[i][0])
+    
+    recDict[pid] = result
+  print 'I am out getRecDictOfMF....'
   return recDict
 
-#get predicted sd by auto_arima
-def getPredictedSdByArima(playlist,songDict):
-  importr("forecast")
-  #get playlist's training list
-  trainingList = playlist.getTrainingList()
-  count = len(trainingList)
-  #sd list
-  sdList = []
-  #loop every song in training list
-  #add distribution of sids to tsDict to construct some time series
-  for i in range(0,count):
-    sid = trainingList[i]
-    sd = songDict[sid].getSd()
-    sdList.append(sd)
 
-  #using auto arima to forecast the kl distance
-  vec = robjects.FloatVector(sdList)
-  ts = robjects.r['ts'](vec)
-  fit = robjects.r['auto.arima'](ts)
-  next = robjects.r['forecast'](fit,h=1)
-  #robjects.r['plot'](next)
-  return float(next.rx('mean')[0][0])
+#get recommend songs list of playlist by MF
+def getRecDictOfUserKNN(songDict,playlistDict,topN = const.TOP_N):
+  print 'I am in getRecDictOfUserKNN....'
+  countMatrix = util.getUserSongMatrix(songDict,playlistDict)
+  simMatrix = util.getUserSimMatrix(songDict,playlistDict)
+  print 'Begin to generate rec list...'
 
-#get predicted sd by SVM
-def getPredictedSdBySVM(playlist,songDict):
-  #get playlist's training list
-  trainingList = playlist.getTrainingList()
-  count = len(trainingList)
-  #sd list
-  sdList = []
-  #loop every song in training list
-  #add distribution of sids to tsDict to construct some time series
-  for i in range(0,count):
-    sid = trainingList[i]
-    sd = songDict[sid].getSd()
-    sdList.append(sd)
-  
-  K = 5
-  trainingX = [sdList[i:K+i] for i in range(0,count-K)]
-  trainingY = [sdList[i] for i in range(K,count)]
-  testingX = sdList[count-K:count]
-  svc = SVC()
-  fit = svc.fit(trainingX,trainingY)
-  predict = fit.predict(testingX)
-  return float(predict)
-
-#get recommend songs list of playlist by hamming dis
-def getRecSongsOfSd(playlist,songDict,topN,tarSd):
   recDict = {}
-  trainingList = playlist.getTrainingList()
-  size = len(trainingList)
+  
+  pid2Index = {}
+  for pid in playlistDict.keys():
+    playlist = playlistDict[pid]
+    pIndex = playlist.getIndex()
+    pid2Index[pid] = pIndex
+
+  sid2Index = {}
   for sid in songDict.keys():
     song = songDict[sid]
-    sd = song.getSd()
-    value = math.fabs(sd - tarSd)
-    recDict[sid] = value
-  recList = sorted(recDict.iteritems(),key=lambda x:x[1])
+    sIndex = song.getIndex()
+    sid2Index[sid] = sIndex  
+
+  step = 0
+  count = len(playlistDict)
+  for oPid in playlistDict.keys():
+    step += 1
+    print 'UserKNN:%d/%d...' % (step,count)
+    scoreDict = {}
+    oPindex = pid2Index[oPid] 
+    for sid in songDict.keys():
+      sIndex = sid2Index[sid]
+      totalSim = 0
+      total = 0
+      for iPid in playlistDict.keys():
+        iPindex = pid2Index[iPid]
+        if oPindex == iPindex:
+          continue
+        sim = simMatrix[oPindex][iPindex]
+        total = total + sim * countMatrix[iPindex][sIndex]
+        totalSim += sim
+      if totalSim == 0:
+        print 'pid = %s,sid = %s,total = %f,totalSim = %f' % (oPid,sid,total,totalSim)
+        totalSim = 1
+      total = total / totalSim
+      scoreDict[sid] = total
+
+    recList = sorted(scoreDict.iteritems(),key=lambda x:x[1],reverse=True)
+
+    result = []
+    for i in range(0,topN):
+      result.append(recList[i][0])
+    
+    recDict[oPid] = result
+
+  print 'I am out getRecDictOfUserKNN....'
+  return recDict
+
+#get recommend songs list of playlist by MF
+def getRecDictOfMostPopular(songDict,playlistDict,topN = const.TOP_N):
+  songFreq = {}
+  for pid in playlistDict.keys():
+    playlist = playlistDict[pid]
+    trainingList = playlist.getTrainingList()
+    for sid in trainingList:
+      if sid not in songFreq:
+        songFreq[sid] = 1
+      else:
+        songFreq[sid] += 1
+
+  songSeq = sorted(songFreq.iteritems(),key=lambda x:x[1],reverse=True)
   result = []
   for i in range(0,topN):
-    result.append(recList[i][0])
-  return result
+    result.append(songSeq[i][0])
+  
+  recDict = {}
+  for pid in playlistDict.keys():
+    recDict[pid] = result
 
-#generate rec dict
-def getRecDictOfSd(playlistDict,songDict,recType = 7,topN = 300):
+  return recDict
+
+def getRecDictOfMostMarkov(songDict,playlistDict,topN = const.TOP_N):
+  return None
+
+def getRecDictOfMostPattern(songDict,playlistDict,topN = const.TOP_N):
+  predictTopicDict = PrefixSpan.getPredictTopicDict(playlistDict,songDict)
   recDict = {}
   index = 0
-  count = len(playlistDict)
-  preSds = []
-  realSds = []
   for pid in playlistDict.keys():
-    print 'Sd:%d/%d' % (index,count)
+    index += 1
+    print 'ContextPattern:%d:%d' % (index,len(playlistDict))
+    predictTopic = predictTopicDict[pid]
+    size = len(predictTopic)
+    scoreDict = {}
+    for sid in songDict.keys():
+      song = songDict[sid]
+      topicDict = song.getTopicDict()
+      score = 0.0
+      for tid in predictTopic:
+        score += topicDict[tid]
+      score = score / size
+      scoreDict[sid] = score
+    songList = sorted(scoreDict.iteritems(),key=lambda x:x[1],reverse=True)
+    result = []
+    for i in range(0,topN):
+      result.append(songList[i][0])
+    recDict[pid] = result
+  return recDict
+     
+#get recommend songs list of playlist by MF
+def getRecDictOfLSA(songDict,playlistDict,topN = const.TOP_N):
+  #read docs of file to documents
+  filename = '../txt/%s_song_Docs.txt' % const.DATASET_NAME
+  docFile = open(filename,'r')
+  documents = []
+  index2Id = {}
+  textDict = {}
+  index = 0
+  while 1:
+    line = docFile.readline()
+    line = line.rstrip('\n')
+    if not line:
+      break
+    pos = line.find('>>')
+    sid = int(line[:pos])
+    content = line[(pos+2):]
+    index2Id[index] = sid
+    textDict[sid] = content
+    documents.append(content)
+    index += 1
+  docFile.close()
+
+  #LSA
+  #make every document to a vector of words
+  texts = [[word for word in document.lower().split()] for document in documents]
+  #map text to id
+  dictionary = corpora.Dictionary(texts)
+  #map every document to a vector of ids of words
+  corpus = [dictionary.doc2bow(text) for text in texts]
+  #make a TF-IDF model
+  tfidf = models.TfidfModel(corpus)
+  #map every document to a vector of tf-idf
+  corpus_tfidf = tfidf[corpus]
+  #make topic models
+  lsi = models.LsiModel(corpus_tfidf,id2word=dictionary,num_topics=const.TOPIC_NUM)
+  similarity = similarities.MatrixSimilarity(lsi[corpus])
+
+  recDict = {} 
+ 
+  for pid in playlistDict.keys():
     playlist = playlistDict[pid]
-    if recType == 7:
-      tarSd = getPredictedSdByArima(playlist,songDict)
-    elif recType == 8:
-      tarSd = getPredictedSdBySVM(playlist,songDict)
-    preSds.append(tarSd)
-    realSds.append(songDict[playlist.getLastSid()].getSd())
-    recSong = getRecSongsOfSd(playlist,songDict,topN,tarSd)
-    recDict[pid] = recSong
-    index = index + 1
-  plt.plot(preSds,label="predict Sds")
-  plt.plot(realSds,label="real Sds")
-  plt.title("Predict Sds and Real Sds")
-  plt.xlabel("pid")
-  plt.ylabel("sd")
-  plt.legend()
-  if recType == 7:
-    plt.savefig("../img/sdArimarror.png")
-  elif recType == 8:
-    plt.savefig("../img/sdSVMError.png")
-  #plt.show()
+    trainingList = playlist.getTrainingList()
+    lastSid = trainingList[-1]
+    query = textDict[lastSid]
+    query_bow = dictionary.doc2bow(query.lower().split())
+    query_lsi = lsi[query_bow]
+    sims = similarity[query_lsi]
+    sort_sims = sorted(enumerate(sims), key=lambda item: -item[1])
+    result = []
+    for i in range(0,topN):
+      result.append(index2Id[sort_sims[i][0]])
+    recDict[pid] = result
+
   return recDict

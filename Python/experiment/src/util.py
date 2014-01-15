@@ -9,6 +9,9 @@ import smtplib
 from email.mime.text import MIMEText
 from hashlib import md5
 import sys
+import numpy
+import const
+import persist
 
 reload(sys)
 sys.setdefaultencoding('utf-8')
@@ -46,6 +49,22 @@ def cosineSim(topicDict1,topicDict2):
       dotProduct = dotProduct + topicDict1[key] * topicDict2[key]
       dictPower1 = dictPower1 + topicDict1[key]**2
       dictPower2 = dictPower2 + topicDict2[key]**2
+  similarity = dotProduct / (math.sqrt(dictPower1) * math.sqrt(dictPower2))
+  return similarity
+
+def cosineSimOfUser(list1,list2):
+  dotProduct = 0.0
+  dictPower1 = 0.0
+  dictPower2 = 0.0
+  count1 = len(list1)
+  count2 = len(list2)
+  if count1 != count2:
+    print 'Two list have different lengths...'
+    return -1
+  for i in range(count1):
+    dotProduct = dotProduct + list1[i] * list2[i]
+    dictPower1 = dictPower1 + list1[i]**2
+    dictPower2 = dictPower2 + list2[i]**2
   similarity = dotProduct / (math.sqrt(dictPower1) * math.sqrt(dictPower2))
   return similarity
 
@@ -99,7 +118,7 @@ def similarity(topicDict1,topicDict2):
   return HellDis(topicDict1,topicDict2)
 
 #calculate recall,preision and F1-Score
-def getTopNIndex(recDict,playlistDict,topN = 300):
+def getTopNIndex(recDict,playlistDict,topN = const.TOP_N):
   if topN < 0:
     print 'topN should be > 0'
     return 0
@@ -129,7 +148,7 @@ def getTopNIndex(recDict,playlistDict,topN = 300):
   return recall,precision,f1
 
 #calculate mae and rmse
-def getMAEandRMSE(recDict,playlistDict,songDict,topN = 300):
+def getMAEandRMSE(recDict,playlistDict,songDict,topN = const.TOP_N):
   if topN < 0:
     print 'topN should be > 0'
     return 0
@@ -163,23 +182,27 @@ def getMAEandRMSE(recDict,playlistDict,songDict,topN = 300):
 #return text info of method
 def getMethodName(mid):
   if mid == 0:
-    return "Most Similar"
-  elif mid == 1:
-    return "Average"
-  elif mid == 2:
-    return "ColdLaw"
-  elif mid == 3:
     return "Arima"
+  elif mid == 1:
+    return "MostSimilar"
+  elif mid == 2:
+    return "Average"
+  elif mid == 3:
+    return "MostPopular"
   elif mid == 4:
     return "Arima+Similar"
   elif mid == 5:
     return "Arima+Average"
   elif mid == 6:
-    return "Dis-Arima"
+    return "Matrix_Factorization"
   elif mid == 7:
-    return "Sd-Arima"
+    return "User_KNN"
   elif mid == 8:
-    return "Sd-SVM"
+    return "LSA"
+  elif mid == 9:
+    return "Markov"
+  elif mid == 10:
+    return "Pattern"
   else:
     print '%d does not exist......' % mid
     return
@@ -232,3 +255,118 @@ def sendMail(to,subtitle,content):
     except Exception as e:
         print(str(e))
         print 'false'
+
+#matrix factorization 
+def matrix_factorization(R, P, Q, K, steps=5000, alpha=0.0002, beta=0.02):
+    print 'I am in matrix_factorization....'
+    Q = Q.T
+    for step in xrange(steps):
+        for i in xrange(len(R)):
+            for j in xrange(len(R[i])):
+                if R[i][j] > 0:
+                    eij = R[i][j] - numpy.dot(P[i,:],Q[:,j])
+                    for k in xrange(K):
+                        P[i][k] = P[i][k] + alpha * (2 * eij * Q[k][j] - beta * P[i][k])
+                        Q[k][j] = Q[k][j] + alpha * (2 * eij * P[i][k] - beta * Q[k][j])
+        eR = numpy.dot(P,Q)
+        e = 0
+        for i in xrange(len(R)):
+            for j in xrange(len(R[i])):
+                if R[i][j] > 0:
+                    e = e + pow(R[i][j] - numpy.dot(P[i,:],Q[:,j]), 2)
+                    for k in xrange(K):
+                        e = e + (beta/2) * (pow(P[i][k],2) + pow(Q[k][j],2))
+        print 'MF:%d/%d:%f...' % (step,steps,e)
+        if e < 0.001:
+            break
+    print 'I am out matrix_factorization....'
+    return P, Q.T
+
+#given a maxtrix R an then user matrix fatorization to make a predicted Matrix
+#K is feature number
+def predictMatrix(R,K):
+  print 'I am in predictMatrix....'
+  R1 = numpy.array(R)
+  N = len(R1)
+  M = len(R1[0])
+  
+  P = numpy.random.rand(N,K)
+  Q = numpy.random.rand(M,K)
+ 
+  nP, nQ = matrix_factorization(R1, P, Q, K)
+  nR = numpy.dot(nP, nQ.T)
+  print 'I am out predictMatrix....'
+  return nR
+
+#construct matrix with songDict and playlistDict
+def getUserSongMatrix(songDict,playlistDict):
+  print 'I am in getUserSongMatrix......'
+  #map id to index
+  id2Index = {}
+  for sid in songDict.keys():
+    song = songDict[sid]
+    id2Index[sid] = song.getIndex()
+  sCount = len(songDict)
+  pCount = len(playlistDict)
+  print 'There are %d users and %d songs.' % (pCount,sCount)
+  #initail all element to zero
+  matrix =[[0 for i in range(sCount)] for j in range(pCount)]
+  #fill matrix using playlistDict
+  index = 0
+  for pid in playlistDict.keys():
+    index += 1
+    print 'construct count matrix:%d/%d.' % (index,pCount)
+    playlist = playlistDict[pid]
+    pIndex = playlist.getIndex()
+    trainingList = playlist.getTrainingList()
+    for sid in trainingList:
+      sIndex = id2Index[sid]
+      matrix[pIndex][sIndex] += 1
+  print 'I am out getUserSongMatrix......'
+  return matrix
+
+#construct sim matrix of users
+def getUserSimMatrix(songDict,playlistDict):
+  print 'I am in getUserSimMatrix....'
+  countMatrix = getUserSongMatrix(songDict,playlistDict)
+  pCount = len(playlistDict)
+  simMatrix = [[-1 for i in range(pCount)] for j in range(pCount)]
+  for i in range(pCount):
+    for j in range(pCount):
+      if simMatrix[i][j] == -1:
+        simMatrix[i][j] = cosineSimOfUser(countMatrix[i],countMatrix[j])
+        simMatrix[j][i] = simMatrix[i][j]
+  print 'I am out getUserSimMatrix....'
+  return simMatrix
+
+#construct a dict to represent a song by its dominant topics
+def getDominantTopicDict(songDict):
+  domDict = {}
+  for sid in songDict.keys():
+    song = songDict[sid]
+    topicDict = song.getTopicDict()
+    topicList = sorted(topicDict.iteritems(),key=lambda x:-x[1])
+    result = []
+    for index in range(len(topicList)):
+      tid = int(topicList[index][0])
+      tpro = float(topicList[index][1])
+      if tpro >= 0.20:
+        result.append(tid)
+    if len(result) == 0:
+      result.append(int(topicList[0][0]))
+    domDict[sid] = result
+
+  return domDict
+
+#construct training set of playlist to mining frequent mining
+def getPatternTrainingSet(playlistDict,songDict):
+  domDict = getDominantTopicDict(songDict)
+  patternDict = {}
+  for pid in playlistDict.keys():
+    playlist = playlistDict[pid]
+    trainingList = playlist.getTrainingList()
+    patternList = []
+    for sid in trainingList[-7:]:
+      patternList.append(domDict[sid])
+    patternDict[pid] = patternList
+  return patternDict

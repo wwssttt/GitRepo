@@ -15,7 +15,7 @@ sys.setdefaultencoding('utf-8')
 #write topic dict of Arima to file to avoid re-computation
 def writeTopicDictOfArimaToFile(playlistDict,songDict):
   print 'Begin tp write topic dict to file......'
-  filename = "../txt/%s_arima.txt" % const.DATASET_NAME
+  filename = "../txt/%s_arima_%d.txt" % (const.DATASET_NAME,const.TOPIC_NUM)
   if os.path.exists(filename):
     print '%s is existing......' % filename
     return
@@ -39,7 +39,7 @@ def writeTopicDictOfArimaToFile(playlistDict,songDict):
 #read Predicted Topic Dict Of Arima
 def readPredictedTopicDictOfArima():
   print 'I am reading predicted topic dict of arima......'
-  filename = "../txt/%s_arima.txt" % const.DATASET_NAME
+  filename = "../txt/%s_arima_%d.txt" % (const.DATASET_NAME,const.TOPIC_NUM)
   if not os.path.exists(filename):
     playlistDict = readPlaylistFromFile()
     songDict = readSongFromFile()
@@ -71,40 +71,23 @@ def readPredictedTopicDictOfArima():
 #output is a dict whose key is sid and value is song object
 def readSongFromFile():
   print 'I am reading songs from doc-topic file......'
-  filename = "../txt/%s_songs-doc-topics.txt" % const.DATASET_NAME
+  filename = "../txt/%s_songs-doc-topics_%d_%s.txt" % (const.DATASET_NAME,const.TOPIC_NUM,const.LDA_LIB)
   if os.path.exists(filename):
     songDict = {}
     dtFile = open(filename,"r")
     content = dtFile.readlines()
-    #remove the first extra info
-    del content[0]
     count = len(content)
     #loop all lines to construct all songs
     for i in range(0,count):
-      items = content[i].rstrip('\n').split()
-      rIndex = items[1].rfind('/')
-      sid = int(items[1][rIndex+1:])
-      del items[0]
-      del items[0]
-      num = len(items)
-      j = 0
+      items = content[i].rstrip('\n').split('>>')
+      sid = int(items[0])
+      topicList = eval(items[1])
       topicDict = {}
-      while 1:
-        #get tid
-        tid = int(items[j])
-        #move to next:topic pro
-        j = j + 1
-        #get topic pro
-        tpro = float(items[j])
-        if tpro == 0:
-          print 'pro of topic must bigger than 0......'
-          return
-        #move to next topic pair
+      for topic in topicList:
+        tid = int(topic[0])
+        tpro = float(topic[1])
         topicDict[tid] = tpro
-        j = j + 1
-        if j >= num:
-          break
-      song = model.Song(sid,topicDict)
+      song = model.Song(i,sid,topicDict)
       songDict[sid] = song
     print 'There are %d songs have been read.' % len(songDict)
     dtFile.close()
@@ -152,13 +135,54 @@ def readPlaylistFromFile():
   pFile = open(filename,"r")
   playlistDict = {}
   lines = pFile.readlines()
+  pIndex = 0
   for line in lines:
     line = line.rstrip('\n')
     items = line.split(":")
     pid = int(items[0])
     sids = items[1].split(",")
     pList = [int(sid) for sid in sids]
-    playlist = model.Playlist(pid,pList)
+    playlist = model.Playlist(pIndex,pid,pList)
     playlistDict[pid] = playlist
+    pIndex += 1
   print 'Thare are %d playlist have been read.' % len(playlistDict)
   return playlistDict
+
+if __name__ == "__main__":
+  dirname = '../../../eclipse_workspace/mallet/mallet-2.0.7/data/LDA/'
+  for dirpath, dirnames, filenames in os.walk(dirname):
+    for filename in filenames:
+      if filename.endswith('doc-topics.txt'):
+        subIndex = filename.rfind('.txt')
+        name = filename[:subIndex]
+        topicNum = -1
+        tFile = open('%s/%s' % (dirname,filename),'r')
+        lines = tFile.readlines()
+        count = len(lines)
+        for index in range(1,count):
+          line = lines[index].rstrip('\n')
+          items = line.split()
+          itemsCount = len(items)
+          sidText = items[1]
+          rIndex = sidText.rfind('/')
+          sid = int(sidText[rIndex+1:])
+          topicDict = {}
+          tIndex = 2
+          while tIndex < itemsCount:
+            tid = int(items[tIndex])
+            tIndex += 1
+            tpro = float(items[tIndex])
+            tIndex += 1
+            if tid not in topicDict:
+              topicDict[tid] = tpro
+          if topicNum == -1:
+            topicNum = len(topicDict)
+            rFile = open('../txt/%s_%d_mallet.txt' % (name,topicNum),'w')
+          if topicNum != len(topicDict):
+            print 'Topic Number is Error'
+            rFile.close()
+            sys.exit()
+          result = sorted(topicDict.iteritems(),key=lambda x:x[0],reverse=True)
+          rFile.write('%d>>%s\n' % (sid,str(result)))
+        rFile.close()
+        tFile.close()

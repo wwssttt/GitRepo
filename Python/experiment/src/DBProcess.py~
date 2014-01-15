@@ -15,6 +15,7 @@ import pylab as pl
 import logging
 import os
 import matplotlib.pyplot as plt
+import const
 
 # reload sys and set encoding to utf-8
 reload(sys)
@@ -23,12 +24,7 @@ sys.setdefaultencoding('utf-8')
 logging.basicConfig(filename=os.path.join(os.getcwd(),'../log/dbprocess_log.txt'),level=logging.DEBUG,format='%(asctime)s-%(levelname)s:%(message)s')
 
 # define some global varibale
-DBHOST = 'localhost'
-DBUSER = 'root'
-DBPWD = 'wst'
-DBPORT = 3306
-DBNAME = 'aotm'
-DBCHARSET = 'utf8'
+
 
 # get effective_playlists which part < 1
 # @return: two dictionaries
@@ -38,21 +34,14 @@ def genEffectivePlaylist():
   #init the dicts to be returned
   songDict = {}
   playlistDict = {}
-  #include global varibles
-  global DBHOST
-  global DBUSER
-  global DBPWD
-  global DBPORT
-  global DBNAME
-  global DBCHARSET
   
   try:
     #connect to db
-    conn = MySQLdb.Connect(host=DBHOST,user=DBUSER,passwd=DBPWD,port=DBPORT,charset=DBCHARSET)
+    conn = MySQLdb.Connect(host=const.DBHOST,user=const.DBUSER,passwd=const.DBPWD,port=const.DBPORT,charset=const.DBCHARSET)
     #get the cursor of db
     cur = conn.cursor()
     #select db
-    conn.select_db(DBNAME)
+    conn.select_db(const.DBNAME)
     #select effective playlists
     count = cur.execute('select id,count,songs from effective_playlists where part != -1 and part < 1')
     print 'there are %d playlists selected' % count
@@ -99,11 +88,11 @@ def getEffectivePlaylist():
 
   try:
     #connect to db
-    conn = MySQLdb.Connect(host=DBHOST,user=DBUSER,passwd=DBPWD,port=DBPORT,charset=DBCHARSET)
+    conn = MySQLdb.Connect(host=const.DBHOST,user=const.DBUSER,passwd=const.DBPWD,port=const.DBPORT,charset=const.DBCHARSET)
     #get the cursor of db
     cur = conn.cursor()
     #select db
-    conn.select_db(DBNAME)
+    conn.select_db(const.DBNAME)
     #select effective playlists
     count = cur.execute('select id,songs from effective_playlists where part != -1 and part < 1')
     if count == 0:
