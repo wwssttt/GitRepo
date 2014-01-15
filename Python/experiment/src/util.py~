@@ -368,6 +368,46 @@ def getPatternTrainingSet(playlistDict,songDict):
     patternList = []
     for sid in trainingList[-7:]:
       patternList.append(domDict[sid])
-    print len(patternList)
     patternDict[pid] = patternList
   return patternDict
+
+#construct markov chain database
+def getTransitionMatrix(playlistDict,songDict):
+  print 'I am in constructing transition matrix...'
+  sid2Index = {}
+  index2Id = {}
+  for sid in songDict.keys():
+    song = songDict[sid]
+    index = song.getIndex()
+    sid2Index[sid] = index  
+    index2Id[index] = sid
+
+  size = len(songDict)
+
+  matrix = [[0.0 for i in range(size)] for j in range(size)]
+  for pid in playlistDict.keys():
+    playlist = playlistDict[pid]
+    trainingList = playlist.getTrainingList()
+    length = len(trainingList)
+    #remove last sid
+    length -= 1
+    #construct frequency matrix
+    for index in range(length):
+      sid = trainingList[index]
+      nextSid = trainingList[index+1]
+      curIndex = sid2Index[sid]
+      nextIndex = sid2Index[nextSid]
+      matrix[curIndex][nextIndex] += 1.0
+  #construct transition matrix
+  count = 0
+  for oIndex in range(size):
+    total = sum(matrix[oIndex])
+    if total == 0:
+      print index2Id[oIndex]
+      count += 1
+      continue
+    for iIndex in range(size):
+      matrix[oIndex][iIndex] = matrix[oIndex][iIndex] / total
+  print 'count = ',count
+  print 'I am out constructing transition matrix...'
+  return sid2Index,index2Id,matrix

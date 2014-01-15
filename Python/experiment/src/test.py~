@@ -92,7 +92,7 @@ def testRecMethod(recType = 0):
   elif recType == const.LSA:
     recDict = predict.getRecDictOfLSA(songDict,playlistDict)
   elif recType == const.MARKOV:
-    recDict = predict.getRecDictOfLSA(songDict,playlistDict)
+    recDict = predict.getRecDictOfMostMarkov(songDict,playlistDict)
   elif recType == const.PATTERN:
     recDict = predict.getRecDictOfMostPattern(songDict,playlistDict)
   recall,precision,f1 = util.getTopNIndex(recDict,playlistDict)
@@ -144,7 +144,7 @@ def getErrorOfRecMethod(recType = 0):
   elif recType == const.MARKOV:
     recDict = predict.getRecDictOfLSA(songDict,playlistDict)
   elif recType == const.PATTERN:
-    recDict = predict.getRecDictOfLSA(songDict,playlistDict)
+    recDict = predict.getRecDictOfMostPattern(songDict,playlistDict)
   recalls = []
   precisions = []
   f1s = []

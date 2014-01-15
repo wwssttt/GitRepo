@@ -4,13 +4,13 @@
 #define some constant variables
 ##########################
 
-DATASET_NAME = 'Aotm'
+DATASET_NAME = 'Lastfm'
 
 DBHOST = 'localhost'
 DBUSER = 'root'
 DBPWD = 'wst'
 DBPORT = 3306
-DBNAME = 'aotm'
+DBNAME = 'lastfm'
 DBCHARSET = 'utf8'
 
 LDA_LIB = 'mallet'

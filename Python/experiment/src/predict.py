@@ -279,15 +279,37 @@ def getRecDictOfMostPopular(songDict,playlistDict,topN = const.TOP_N):
   return recDict
 
 def getRecDictOfMostMarkov(songDict,playlistDict,topN = const.TOP_N):
-  return None
+  sid2Index,index2Id,transitionMatrix = util.getTransitionMatrix(playlistDict,songDict)
+  recDict = {}
+  index = 0
+  playlistSize = len(playlistDict)
+  for pid in playlistDict.keys():
+    index += 1
+    print 'First Order Markov Chain:%d:%d' % (index,playlistSize)
+    playlist = playlistDict[pid]
+    trainingList = playlist.getTrainingList()
+    lastSid = trainingList[-1]
+    lastIndex = sid2Index[lastSid]
+    transList = transitionMatrix[lastIndex]
+    scoreDict = {}
+    for i in range(len(transList)):
+      sid = index2Id[i]
+      scoreDict[sid] = transList[i]
+    songList = sorted(scoreDict.iteritems(),key=lambda x:x[1],reverse=True)
+    result = []
+    for i in range(0,topN):
+      result.append(songList[i][0])
+    recDict[pid] = result
+  return recDict
 
 def getRecDictOfMostPattern(songDict,playlistDict,topN = const.TOP_N):
   predictTopicDict = PrefixSpan.getPredictTopicDict(playlistDict,songDict)
   recDict = {}
   index = 0
+  playlistSize = len(playlistDict)
   for pid in playlistDict.keys():
     index += 1
-    print 'ContextPattern:%d:%d' % (index,len(playlistDict))
+    print 'ContextPattern:%d:%d' % (index,playlistSize)
     predictTopic = predictTopicDict[pid]
     size = len(predictTopic)
     scoreDict = {}

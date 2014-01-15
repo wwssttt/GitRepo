@@ -18,6 +18,6 @@ if __name__ == "__main__":
   
   #test.showRecallTrendWithDifferentCoeff_AverageHybrid()
 
-  test.testRecMethod(const.ARIMA)
+  #test.testRecMethod(const.ARIMA)
   
-  #test.showResult()
+  test.showResult()
