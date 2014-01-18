@@ -133,16 +133,34 @@ def generateDocs(scale = 0):
     conn = MySQLdb.Connect(host=const.DBHOST,user=const.DBUSER,passwd=const.DBPWD,port=const.DBPORT,charset=const.DBCHARSET)
     cur = conn.cursor()
     conn.select_db(const.DBNAME)
-    count = cur.execute('select sid,name,aname,toptag from song where scale <= %d' % scale)
+    #get all songs in playlist whose scale < 10
+    print 'I am getting songs from playlist...'
+    cur.execute('select playlist from user where scale < 10 and scale != -1')
     results = cur.fetchall()
-    index = 0
+    playlists = [result[0] for result in results]
+    sids = []
+    for playlist in playlists:
+      items = playlist.split('==>')
+      for item in items:
+        value = item.split(':')
+        sid = value[0]
+        if sid not in sids:
+          sids.append(sid)
+    print '%d song are to be crawled...' % len(sids)
+    print 'Begin to generate docs...'
     sFile = open('../txt/%s_song_Docs.txt' % const.DATASET_NAME,'w')
     dirname = '../txt/%s_songs' % const.DATASET_NAME
     rmDir(dirname)
     os.mkdir(dirname)
-    for result in results:
+
+    size = len(sids)
+    index = 0
+    for songId in sids:
       index += 1
-      print '%d/%d' % (index,count)
+      print 'GenerateDocs:%d/%d' % (index,size)
+      sql = "select sid,name,aname,toptag from song where sid = '%s'" % songId
+      count = cur.execute(sql)
+      result = cur.fetchone()
       sid = result[0]
       sname = result[1]
       aname = result[2]
@@ -151,11 +169,12 @@ def generateDocs(scale = 0):
       text =  generateDocofSong(sid,tagDict)
       text = text.replace('\n',' ')
       sFile.write('%s>>%s\n' % (sid,text))
-      filename = '../%s/%s' % (const.DATASET_NAME,sid)
+      filename = '../%s/%s' % (dirname,sid)
       tmpFile = open(filename,'w')
       tmpFile.write(text)
       tmpFile.close()
     sFile.close()
+    print 'Finish generating docs...'
     conn.commit()
     cur.close()
     conn.close()

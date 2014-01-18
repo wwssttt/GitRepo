@@ -13,6 +13,7 @@ import persist
 import util
 import const
 import PrefixSpan
+import random
 
 #set default encoding
 reload(sys)
@@ -135,7 +136,7 @@ def getRecSongs(songDict,topN,tarDict):
 #3: Arima + Similar
 #4: Arima + Average
 #default: most similar
-def getRecDict(playlistDict,songDict,recType = 0,lamda = 0.45,topN = const.TOP_N):
+def getRecDict(playlistDict,songDict,recType = 0,scale = 0,lamda = 0.45,topN = const.TOP_N):
   recDict = {}
   if recType == const.ARIMA or recType == const.ARIMA_SIMILAR or recType == const.ARIMA_AVG:
     arimaDict = persist.readPredictedTopicDictOfArima()
@@ -151,6 +152,10 @@ def getRecDict(playlistDict,songDict,recType = 0,lamda = 0.45,topN = const.TOP_N
       tarDict = topicDictForNextSongByAverage(playlist,songDict)
     elif recType == const.ARIMA:
       tarDict = arimaDict[pid]
+      total = sum(tarDict.values())
+      for tid in tarDict.keys():
+        tarDict[tid] /= total
+      print sum(tarDict.values())
     elif recType == const.ARIMA_SIMILAR:
       tarDict = topicDictForNextSongByMostSimilarHybrid(playlist,songDict,arimaDict,lamda)
     elif recType == const.ARIMA_AVG:
@@ -283,7 +288,7 @@ def getRecDictOfMostMarkov(songDict,playlistDict,topN = const.TOP_N):
   recDict = {}
   index = 0
   playlistSize = len(playlistDict)
-  for pid in playlist.keys():
+  for pid in playlistDict.keys():
     index += 1
     print 'First Order Markov Chain:%d:%d' % (index,playlistSize)
     playlist = playlistDict[pid]
@@ -359,11 +364,11 @@ def getRecDictOfLSA(songDict,playlistDict,topN = const.TOP_N):
   #map every document to a vector of ids of words
   corpus = [dictionary.doc2bow(text) for text in texts]
   #make a TF-IDF model
-  tfidf = models.TfidfModel(corpus)
+  #tfidf = models.TfidfModel(corpus)
   #map every document to a vector of tf-idf
-  corpus_tfidf = tfidf[corpus]
+  #corpus_tfidf = tfidf[corpus]
   #make topic models
-  lsi = models.LsiModel(corpus_tfidf,id2word=dictionary,num_topics=const.TOPIC_NUM)
+  lsi = models.LsiModel(corpus,id2word=dictionary,num_topics=const.TOPIC_NUM)
   similarity = similarities.MatrixSimilarity(lsi[corpus])
 
   recDict = {} 
@@ -380,6 +385,26 @@ def getRecDictOfLSA(songDict,playlistDict,topN = const.TOP_N):
     result = []
     for i in range(0,topN):
       result.append(index2Id[sort_sims[i][0]])
+    recDict[pid] = result
+
+  return recDict
+
+#get recommend songs list of playlist by random
+def getRecDictOfRandom(songDict,playlistDict,topN = const.TOP_N):
+  recDict = {} 
+  index2Id = {}
+  for sid in songDict.keys():
+    song = songDict[sid]
+    index = song.getIndex()
+    index2Id[index] = sid
+
+  size = len(songDict) - 1
+
+  for pid in playlistDict.keys():
+    result = []
+    for i in range(0,topN):
+      randomIndex = random.randint(0,size)
+      result.append(index2Id[randomIndex])
     recDict[pid] = result
 
   return recDict

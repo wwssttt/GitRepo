@@ -34,7 +34,11 @@ LSA = 8
 MARKOV = 9
 PATTERN = 10
 
-locs = ['lower right','upper right','upper right','upper right','upper right']
+RANDOM = 11
+
+METHOD_SIZE = 12
+
+locs = ['upper right','upper right','upper right','upper right','upper right']
 
 #group of comparision
 #1:ARIMA +  Similar + Avergae + Popular(Pure)

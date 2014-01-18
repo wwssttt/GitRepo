@@ -15,32 +15,14 @@ import persist
 
 reload(sys)
 sys.setdefaultencoding('utf-8')
-#getHammingDict
-def getHammingDict(topicDict,baseDict):
-  hammingDict = {}
-  for topic in topicDict.keys():
-    delta = topicDict[topic] - baseDict[topic]
-    if delta >= 0:
-      hammingDict[topic] = 1
-    else:
-      hammingDict[topic] = 0
-  return hammingDict
-
-#calculate hamming distance of two signal vector
-def hammingDis(sigDict1,sigDict2):
-  count = 0
-  for key in sigDict1.keys():
-    if sigDict1[key] != sigDict2[key]:
-      count = count + 1
-  return count
 
 #calculate cosine similarity of two distribution
 #input are two topic dicts
 #output is the cosine similarity
 def cosineSim(topicDict1,topicDict2):
-  dotProduct = 0
-  dictPower1 = 0
-  dictPower2 = 0
+  dotProduct = 0.0
+  dictPower1 = 0.0
+  dictPower2 = 0.0
   for key in topicDict1.keys():
     if key not in topicDict2:
       print '%d is not in another dict...' % key
@@ -49,9 +31,12 @@ def cosineSim(topicDict1,topicDict2):
       dotProduct = dotProduct + topicDict1[key] * topicDict2[key]
       dictPower1 = dictPower1 + topicDict1[key]**2
       dictPower2 = dictPower2 + topicDict2[key]**2
-  similarity = dotProduct / (math.sqrt(dictPower1) * math.sqrt(dictPower2))
-  return similarity
+  cosSimilarity = dotProduct / (math.sqrt(dictPower1) * math.sqrt(dictPower2))
+  return cosSimilarity
 
+#calculate cosine similarity of two users
+#input are history list of user
+#output is similarity of the two users
 def cosineSimOfUser(list1,list2):
   dotProduct = 0.0
   dictPower1 = 0.0
@@ -110,7 +95,7 @@ def HellDis(topicDict1,topicDict2):
         topicDict2[key] = 1.0 / 10000000
       hellDis += (math.sqrt(topicDict1[key]) - math.sqrt(topicDict2[key]))**2
   hellDis = math.sqrt(hellDis)
-  hellDis *= 1/math.sqrt(2)
+  hellDis = hellDis * (1.0/math.sqrt(2))
   return hellDis
 
 #universe interface to calculate similarity of two distributions
@@ -181,28 +166,30 @@ def getMAEandRMSE(recDict,playlistDict,songDict,topN = const.TOP_N):
 
 #return text info of method
 def getMethodName(mid):
-  if mid == 0:
+  if mid == const.ARIMA:
     return "Arima"
-  elif mid == 1:
+  elif mid == const.SIMILAR:
     return "MostSimilar"
-  elif mid == 2:
+  elif mid == const.AVG:
     return "Average"
-  elif mid == 3:
+  elif mid == const.POPULAR:
     return "MostPopular"
-  elif mid == 4:
+  elif mid == const.ARIMA_SIMILAR:
     return "Arima+Similar"
-  elif mid == 5:
+  elif mid == const.ARIMA_AVG:
     return "Arima+Average"
-  elif mid == 6:
-    return "Matrix_Factorization"
-  elif mid == 7:
-    return "User_KNN"
-  elif mid == 8:
+  elif mid == const.MF:
+    return "MF"
+  elif mid == const.KNN:
+    return "UserKNN"
+  elif mid == const.LSA:
     return "LSA"
-  elif mid == 9:
+  elif mid == const.MARKOV:
     return "Markov"
-  elif mid == 10:
+  elif mid == const.PATTERN:
     return "Pattern"
+  elif mid == const.RANDOM:
+    return "Random"
   else:
     print '%d does not exist......' % mid
     return

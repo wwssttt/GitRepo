@@ -9,6 +9,7 @@ import model
 import predict
 import sys
 import const
+import MySQLdb
 
 reload(sys)
 sys.setdefaultencoding('utf-8')
@@ -115,14 +116,36 @@ def writePlaylistsToFile():
   else:
     print 'Begin to write playlists......'
     pFile = open(filename,"w")
-    effectivePlaylist = DBProcess.getEffectivePlaylist()
-    for pid in effectivePlaylist.keys():
-      pList = effectivePlaylist[pid]
-      content = "%d:" % pid
-      count = len(pList)
-      for i in range(0,count-1):
-        content = "%s%d," % (content,pList[i])
-      content = "%s%d" % (content,pList[count-1])
+    
+    conn = MySQLdb.Connect(host=const.DBHOST,user=const.DBUSER,passwd=const.DBPWD,port=const.DBPORT,charset=const.DBCHARSET)
+    cur = conn.cursor()
+    conn.select_db(const.DBNAME)
+    cur.execute('select uid,playlist,scale from user where scale < 10 and scale != -1')
+    results = cur.fetchall()
+    playlistDict = {}
+    scaleDict = {}
+    for result in results:
+      pid = result[0]
+      playlist = result[1]
+      scale = result[2]
+      scaleDict[pid] = scale
+      items = playlist.split('==>')
+      pList = []
+      for item in items:
+        value = item.split(':')
+        sid = value[0]
+        pList.append(sid)
+      playlistDict[pid] = pList
+
+    cur.close()
+    conn.close()
+
+    for pid in playlistDict.keys():
+      pList = playlistDict[pid]
+      scale = scaleDict[pid]
+      content = "%d>>%s:" % (scale,pid)
+      pListStr = ','.join(pList)
+      content = "%s%s" % (content,pListStr)
       pFile.write(content+'\n')
     pFile.close()
     print 'End of writing playlists......'
@@ -133,22 +156,25 @@ def readPlaylistFromFile():
   if not os.path.exists(filename):
     writePlaylistsToFile()
   pFile = open(filename,"r")
-  playlistDict = {}
+  allPlaylist = [{} for scale in range(10)]
   lines = pFile.readlines()
   pIndex = 0
   for line in lines:
     line = line.rstrip('\n')
     items = line.split(":")
-    pid = int(items[0])
+    pidStr = items[0]
+    value = pidStr.split('>>')
+    scale = int(value[0])
+    pid = int(value[1])
     sids = items[1].split(",")
     pList = [int(sid) for sid in sids]
-    playlist = model.Playlist(pIndex,pid,pList)
-    playlistDict[pid] = playlist
+    playlist = model.Playlist(pid,scale,pList)
+    allPlaylist[scale][pid] = playlist
     pIndex += 1
-  print 'Thare are %d playlist have been read.' % len(playlistDict)
-  return playlistDict
+  print 'Thare are %d playlist have been read.' % (pIndex+1)
+  return allPlaylist
 
-if __name__ == "__main__":
+def mvFileFromMalletToTxt():
   dirname = '../../../eclipse_workspace/mallet/mallet-2.0.7/data/LDA/'
   for dirpath, dirnames, filenames in os.walk(dirname):
     for filename in filenames:
@@ -186,3 +212,6 @@ if __name__ == "__main__":
           rFile.write('%d>>%s\n' % (sid,str(result)))
         rFile.close()
         tFile.close()
+if __name__ == "__main__":
+  #mvFileFromMalletToTxt()
+  readPlaylistFromFile()
