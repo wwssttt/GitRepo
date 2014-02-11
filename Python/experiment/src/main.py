@@ -18,7 +18,7 @@ if __name__ == "__main__":
   
   #test.showRecallTrendWithDifferentCoeff_AverageHybrid()
 
-  test.testRecMethod(const.SIMILAR)
+  #test.testRecMethod(const.SIMILAR)
   
-  #test.showResult()
-
+  test.showResult()
+  #test.getErrorOfRecMethod(const.MARKOV)

@@ -14,9 +14,9 @@ import MySQLdb
 reload(sys)
 sys.setdefaultencoding('utf-8')
 #write topic dict of Arima to file to avoid re-computation
-def writeTopicDictOfArimaToFile(playlistDict,songDict):
+def writeTopicDictOfArimaToFile(playlistDict,songDict,scale):
   print 'Begin tp write topic dict to file......'
-  filename = "../txt/%s_arima_%d.txt" % (const.DATASET_NAME,const.TOPIC_NUM)
+  filename = "../txt/%s_arima_%d_%d.txt" % (const.DATASET_NAME,const.TOPIC_NUM,scale)
   if os.path.exists(filename):
     print '%s is existing......' % filename
     return
@@ -25,7 +25,7 @@ def writeTopicDictOfArimaToFile(playlistDict,songDict):
   index = 0
   many = len(playlistDict)
   for pid in playlistDict.keys():
-    print '%d/%d' % (index,many)
+    print 'scale = %d >> %d/%d' % (scale,index,many)
     index += 1
     playlist = playlistDict[pid]
     predictTopicDict = predict.topicDictForNextSongByArima(playlist,songDict)
@@ -38,13 +38,11 @@ def writeTopicDictOfArimaToFile(playlistDict,songDict):
   print 'End of writing topic dict to file......'
 
 #read Predicted Topic Dict Of Arima
-def readPredictedTopicDictOfArima():
+def readPredictedTopicDictOfArima(playlistDict,songDict,scale):
   print 'I am reading predicted topic dict of arima......'
-  filename = "../txt/%s_arima_%d.txt" % (const.DATASET_NAME,const.TOPIC_NUM)
+  filename = "../txt/%s_arima_%d_%d.txt" % (const.DATASET_NAME,const.TOPIC_NUM,scale)
   if not os.path.exists(filename):
-    playlistDict = readPlaylistFromFile()
-    songDict = readSongFromFile()
-    writeTopicDictOfArimaToFile(playlistDict,songDict)
+    writeTopicDictOfArimaToFile(playlistDict,songDict,scale)
   predictDict = {}
   aFile = open(filename,"r")
   lines = aFile.readlines()
@@ -156,7 +154,7 @@ def readPlaylistFromFile():
   if not os.path.exists(filename):
     writePlaylistsToFile()
   pFile = open(filename,"r")
-  playlistList = [{} for scale in range(10)]
+  allPlaylist = [{} for scale in range(10)]
   lines = pFile.readlines()
   pIndex = 0
   for line in lines:
@@ -169,10 +167,10 @@ def readPlaylistFromFile():
     sids = items[1].split(",")
     pList = [int(sid) for sid in sids]
     playlist = model.Playlist(pid,scale,pList)
-    playlistList[scale][pid] = playlist
+    allPlaylist[scale][pid] = playlist
     pIndex += 1
   print 'Thare are %d playlist have been read.' % (pIndex+1)
-  return playlistList
+  return allPlaylist
 
 def mvFileFromMalletToTxt():
   dirname = '../../../eclipse_workspace/mallet/mallet-2.0.7/data/LDA/'

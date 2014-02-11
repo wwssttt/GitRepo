@@ -78,7 +78,22 @@ def testRecMethod(recType = 0):
   f1Total = 0.0
   maeTotal = 0.0
   rmseTotal = 0.0
+  if recType == const.KNN:
+    simFilename = '../txt/simMatrix.txt'
+    pid2Index,index2Pid,countMatrix = util.getUserSongMatrix(allPlaylist,songDict)
+    if os.path.exists(simFilename):
+      print '......'
+      simFile = open(simFilename,'r')
+      line = simFile.readline().rstrip('\n')
+      simMatrix = eval(line)
+      print len(simMatrix)
+      print len(simMatrix[1234])
+      simFile.close()
+    else:
+      print '++++++'
+      simMatrix = util.getUserSimMatrix(countMatrix,pid2Index)
   for scale in range(10):
+    playlistDict = allPlaylist[scale]
     playlistDict = allPlaylist[scale]
     if recType == const.ARIMA:
       recDict = predict.getRecDict(playlistDict,songDict,recType,scale)
@@ -86,24 +101,18 @@ def testRecMethod(recType = 0):
       recDict = predict.getRecDict(playlistDict,songDict,recType,scale)
     elif recType == const.AVG:
       recDict = predict.getRecDict(playlistDict,songDict,recType,scale)
-    elif recType == const.POPULAR:
-      recDict = predict.getRecDictOfMostPopular(songDict,playlistDict,scale)
     elif recType == const.ARIMA_SIMILAR:
       recDict = predict.getRecDict(playlistDict,songDict,recType,scale)
     elif recType == const.ARIMA_AVG:
       recDict = predict.getRecDict(playlistDict,songDict,recType,scale)
-    elif recType == const.MF:
-      recDict = predict.getRecDictOfMF(songDict,playlistDict,scale)
     elif recType == const.KNN:
-      recDict = predict.getRecDictOfUserKNN(songDict,playlistDict,scale)
-    elif recType == const.LSA:
-      recDict = predict.getRecDictOfLSA(songDict,playlistDict,scale)
+      recDict = predict.getRecDictOfUserKNN(playlistDict,songDict,scale,pid2Index,countMatrix,simMatrix)
     elif recType == const.MARKOV:
-      recDict = predict.getRecDictOfMostMarkov(songDict,playlistDict,scale)
+      recDict = predict.getRecDictOfMostMarkov(allPlaylist,songDict,scale)
+    elif recType == const.MARKOV_3:
+      recDict = predict.getRecDictOfThreeOrderMarkov(allPlaylist,songDict,scale)
     elif recType == const.PATTERN:
-      recDict = predict.getRecDictOfMostPattern(songDict,playlistDict,scale)
-    elif recType == const.RANDOM:
-      recDict = predict.getRecDictOfRandom(songDict,playlistDict,scale)
+      recDict = predict.getRecDictOfMostPattern(allPlaylist,songDict,scale)
     recall,precision,f1 = util.getTopNIndex(recDict,playlistDict)
     mae,rmse = util.getMAEandRMSE(recDict,playlistDict,songDict)
     recallTotal += recall
@@ -149,6 +158,20 @@ def getErrorOfRecMethod(recType = 0):
   f1s = []
   maes = []
   rmses = []
+  if recType == const.KNN:
+    pid2Index,index2Pid,countMatrix = util.getUserSongMatrix(allPlaylist,songDict)
+    simFilename = '../txt/simMatrix.txt'
+    if os.path.exists(simFilename):
+      print '......'
+      simFile = open(simFilename,'r')
+      line = simFile.readline().rstrip('\n')
+      simMatrix = eval(line)
+      print len(simMatrix)
+      print len(simMatrix[1234])
+      simFile.close()
+    else:
+      print '++++++'
+      simMatrix = util.getUserSimMatrix(countMatrix,pid2Index)
   for scale in range(10):
     playlistDict = allPlaylist[scale]
     if recType == const.ARIMA:
@@ -157,24 +180,18 @@ def getErrorOfRecMethod(recType = 0):
       recDict = predict.getRecDict(playlistDict,songDict,recType,scale)
     elif recType == const.AVG:
       recDict = predict.getRecDict(playlistDict,songDict,recType,scale)
-    elif recType == const.POPULAR:
-      recDict = predict.getRecDictOfMostPopular(songDict,playlistDict,scale)
     elif recType == const.ARIMA_SIMILAR:
       recDict = predict.getRecDict(playlistDict,songDict,recType,scale)
     elif recType == const.ARIMA_AVG:
       recDict = predict.getRecDict(playlistDict,songDict,recType,scale)
-    elif recType == const.MF:
-      recDict = predict.getRecDictOfMF(songDict,playlistDict,scale)
     elif recType == const.KNN:
-      recDict = predict.getRecDictOfUserKNN(songDict,playlistDict,scale)
-    elif recType == const.LSA:
-      recDict = predict.getRecDictOfLSA(songDict,playlistDict,scale)
+      recDict = predict.getRecDictOfUserKNN(playlistDict,songDict,scale,pid2Index,countMatrix,simMatrix)
     elif recType == const.MARKOV:
-      recDict = predict.getRecDictOfMostMarkov(songDict,playlistDict,scale)
+      recDict = predict.getRecDictOfMostMarkov(allPlaylist,songDict,scale)
+    elif recType == const.MARKOV_3:
+      recDict = predict.getRecDictOfThreeOrderMarkov(allPlaylist,songDict,scale)
     elif recType == const.PATTERN:
-      recDict = predict.getRecDictOfMostPattern(songDict,playlistDict,scale)
-    elif recType == const.RANDOM:
-      recDict = predict.getRecDictOfRandom(songDict,playlistDict,scale)
+      recDict = predict.getRecDictOfMostPattern(allPlaylist,songDict,scale)
     index = 0
     for topN in range(1,const.TOP_N,1):
       recall,precision,f1 = util.getTopNIndex(recDict,playlistDict,topN)
@@ -187,7 +204,7 @@ def getErrorOfRecMethod(recType = 0):
         rmses.append(rmse)
       else:
         recalls[index] += recall
-        precision2[index] += precision
+        precisions[index] += precision
         f1s[index] += f1
         maes[index] += mae
         rmses[index] += rmse
@@ -251,25 +268,18 @@ def showResult():
       result[mid][3] = maes
       result[mid][4] = rmses
 
-  for index in range(const.METHOD_SIZE):
-    for no in range(len(result[const.RANDOM][1])):
-      if result[const.RANDOM][1][no] == 0:
-        result[index][1][no] = 1.0
-      else:
-        result[index][1][no] = (result[index][1][no] - result[const.RANDOM][1][no]) / result[const.RANDOM][1][no]
-
-      if result[const.RANDOM][2][no] == 0:
-        result[index][2][no] = 1.0
-      else:
-        result[index][2][no] = (result[index][2][no] - result[const.RANDOM][2][no]) / result[const.RANDOM][2][no]
-
   #plt img of comparing with pure method
   for index in range(5):
     plt.figure(index)
     indexName = util.getIndexName(index)
-    mids = [const.ARIMA,const.SIMILAR,const.AVG,const.POPULAR]
+    mids = [const.ARIMA,const.SIMILAR,const.AVG,const.ARIMA_SIMILAR,const.ARIMA_AVG]
+    markerIndex = 0
     for mid in mids:
-      plt.plot(x,result[mid][index],label=util.getMethodName(mid))
+      if index == 1 or index == 2:
+        plt.plot(x[20:],result[mid][index][20:],label=util.getMethodName(mid))
+      else:
+        plt.plot(x,result[mid][index],label=util.getMethodName(mid))
+      markerIndex += 1
     plt.title("%s of Different Recommend Algorithms" % indexName)
     plt.xlabel("Number of recommendations")
     plt.ylabel(indexName)
@@ -278,49 +288,61 @@ def showResult():
     plt.savefig("../img/pure_%s_%s_%d_%d.png" % (const.DATASET_NAME,indexName,const.TOPIC_NUM,const.TOP_N))
     #plt.show()
 
+
   #plt img of comparing with pure method
   for index in range(5):
     plt.figure(index+5)
     indexName = util.getIndexName(index)
-    mids = [const.ARIMA,const.ARIMA_SIMILAR,const.ARIMA_AVG]
+    mids = [const.ARIMA,const.KNN,const.PATTERN,const.MARKOV,const.MARKOV_3]
+    markerIndex = 0
     for mid in mids:
-      plt.plot(x,result[mid][index],label=util.getMethodName(mid))
+      if index == 1 or index == 2:
+        plt.plot(x[20:],result[mid][index][20:],const.marker[markerIndex],label=util.getMethodName(mid))
+      else:
+        plt.plot(x,result[mid][index],const.marker[markerIndex],label=util.getMethodName(mid))
+      markerIndex += 1
     plt.title("%s of Different Recommend Algorithms" % indexName)
     plt.xlabel("Number of recommendations")
     plt.ylabel(indexName)
     plt.legend()
     plt.xlim(1,160)
-    plt.savefig("../img/hybrid_%s_%s_%d_%d.png" % (const.DATASET_NAME,indexName,const.TOPIC_NUM,const.TOP_N))
+    plt.savefig("../img/seq_%s_%s_%d_%d.png" % (const.DATASET_NAME,indexName,const.TOPIC_NUM,const.TOP_N))
     #plt.show()
+  
+  plt.figure(19)
+  improvement = []
+  for i in range(len(result[const.ARIMA][1])):
+    improvement.append((result[const.ARIMA][1][i]-result[const.KNN][1][i]) / result[const.KNN][1][i])
+  plt.plot(x[10:],improvement[10:],'k',label='Improvement over UserKNN Recommender')
+  plt.title('Average Precision Improvement over UserKNN Recommender')
+  plt.xlabel('Number of recommendations')
+  plt.ylabel('Improvement in Average Precision (times)')
+  plt.legend()
+  indexName = util.getIndexName(1)
+  plt.savefig("../img/improvement_knn_%s_%s_%d_%d.png" % (const.DATASET_NAME,indexName,const.TOPIC_NUM,const.TOP_N))
 
-  #plt img of comparing with pure method
-  for index in range(5):
-    plt.figure(index+10)
-    indexName = util.getIndexName(index)
-    mids = [const.ARIMA,const.KNN,const.MF,const.PATTERN,const.MARKOV]
-    for mid in mids:
-      plt.plot(x,result[mid][index],label=util.getMethodName(mid))
-    plt.title("%s of Different Recommend Algorithms" % indexName)
-    plt.xlabel("Number of recommendations")
-    plt.ylabel(indexName)
-    plt.legend()
-    plt.xlim(1,160)
-    plt.savefig("../img/cf_%s_%s_%d_%d.png" % (const.DATASET_NAME,indexName,const.TOPIC_NUM,const.TOP_N))
-    #plt.show()
+  plt.figure(20)
+  improvement = []
+  for i in range(len(result[const.ARIMA][1])):
+    improvement.append((result[const.ARIMA][1][i]-result[const.PATTERN][1][i]) / result[const.PATTERN][1][i])
+  plt.plot(x[10:],improvement[10:],'k',label='Improvement over Pattern Mining Recommender')
+  plt.title('Average Precision Improvement over Pattern Mining Recommender')
+  plt.xlabel('Number of recommendations')
+  plt.ylabel('Improvement in Average Precision (times)')
+  plt.legend()
+  indexName = util.getIndexName(1)
+  plt.savefig("../img/improvement_pattern_%s_%s_%d_%d.png" % (const.DATASET_NAME,indexName,const.TOPIC_NUM,const.TOP_N))
 
-  #plt img of comparing with pure method
-  for index in range(5):
-    plt.figure(index+15)
-    indexName = util.getIndexName(index)
-    mids = [const.ARIMA,const.PATTERN,const.LSA,const.MARKOV]
-    for mid in mids:
-      plt.plot(x,result[mid][index],label=util.getMethodName(mid))
-    plt.title("%s of Different Recommend Algorithms" % indexName)
-    plt.xlabel("Number of recommendations")
-    plt.ylabel(indexName)
-    plt.legend()
-    plt.xlim(1,160)
-    plt.savefig("../img/sequential_%s_%s_%d_%d.png" % (const.DATASET_NAME,indexName,const.TOPIC_NUM,const.TOP_N))
-    #plt.show()
-
+  plt.figure(21)
+  improvement = []
+  for i in range(len(result[const.ARIMA][2])):
+    improvement.append((result[const.ARIMA][2][i]-result[const.PATTERN][2][i]) / result[const.PATTERN][2][i])
+  plt.plot(x[10:],improvement[10:],'k',label='Improvement over Pattern Mining Recommender')
+  plt.title('Average F1-Score Improvement over Pattern Mining Recommender')
+  plt.xlabel('Number of recommendations')
+  plt.ylabel('Improvement in Average F1-Score (times)')
+  plt.legend()
+  indexName = util.getIndexName(2)
+  plt.savefig("../img/improvement_pattern_%s_%s_%d_%d.png" % (const.DATASET_NAME,indexName,const.TOPIC_NUM,const.TOP_N))
+  #plt.show()
   logging.info('I am out showResult......')

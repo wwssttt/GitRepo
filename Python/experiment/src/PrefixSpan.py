@@ -217,26 +217,32 @@ def getPredictTopic(patterns,targetPattern):
   return predictTopic
           
 #get predict topics of pid
-def getPredictTopicDict(playlistDict,songDict):
+def getPredictTopicDict(allPlaylist,songDict,scale):
+  print 'I am in getPredictTopicDict......'
   predictTopicDict = {}
-  patternDict = util.getPatternTrainingSet(playlistDict,songDict)
-  allPattern = []
-  for pid in patternDict.keys():
-    allPattern.append(patternDict[pid])
+  allTrainingPattern,testingPatternDict = util.getPatternTrainingSet(allPlaylist,songDict,scale)
+  print 'get trainingPatterns and testingPatterns...'
   #print allPattern
   #print len(allPattern)
   #S = read("../txt/PrefixSpan.txt")
-  patterns = prefixSpan(SquencePattern([], sys.maxint), allPattern, 5)
+  print 'get frequent pattern...'
+  patterns = prefixSpan(SquencePattern([], sys.maxint), allTrainingPattern, 30)
+  print 'Finish getting frequent pattern...'
   #print_patterns(patterns)
   #print len(patterns)
   #count = 0
-  for pid in patternDict.keys():
+  size = len(testingPatternDict)
+  index = 0
+  for pid in testingPatternDict.keys():
     #print '======%d======' % pid
-    pattern = patternDict[pid]      
+    index += 1
+    print 'scale=%d > %d/%d:%d' % (scale,index,size,pid)
+    pattern = testingPatternDict[pid]      
     predictTopic = getPredictTopic(patterns,pattern)
     predictTopicDict[pid] = predictTopic
     #count += len(predictTopic)
   #print 'avg = ',count*2.0/len(patternDict)
+  print 'I am out getPredictTopicDict......'
   return predictTopicDict
  
 if __name__ == "__main__":

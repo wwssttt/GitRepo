@@ -14,9 +14,9 @@ import MySQLdb
 reload(sys)
 sys.setdefaultencoding('utf-8')
 #write topic dict of Arima to file to avoid re-computation
-def writeTopicDictOfArimaToFile(playlistDict,songDict):
+def writeTopicDictOfArimaToFile(playlistDict,songDict,scale):
   print 'Begin tp write topic dict to file......'
-  filename = "../txt/%s_arima_%d.txt" % (const.DATASET_NAME,const.TOPIC_NUM)
+  filename = "../txt/%s_arima_%d_%d.txt" % (const.DATASET_NAME,const.TOPIC_NUM,scale)
   if os.path.exists(filename):
     print '%s is existing......' % filename
     return
@@ -25,7 +25,7 @@ def writeTopicDictOfArimaToFile(playlistDict,songDict):
   index = 0
   many = len(playlistDict)
   for pid in playlistDict.keys():
-    print '%d/%d' % (index,many)
+    print 'Write Arima: scale = %d >> %d/%d' % (scale,index,many)
     index += 1
     playlist = playlistDict[pid]
     predictTopicDict = predict.topicDictForNextSongByArima(playlist,songDict)
@@ -38,13 +38,11 @@ def writeTopicDictOfArimaToFile(playlistDict,songDict):
   print 'End of writing topic dict to file......'
 
 #read Predicted Topic Dict Of Arima
-def readPredictedTopicDictOfArima():
+def readPredictedTopicDictOfArima(playlistDict,songDict,scale):
   print 'I am reading predicted topic dict of arima......'
-  filename = "../txt/%s_arima_%d.txt" % (const.DATASET_NAME,const.TOPIC_NUM)
+  filename = "../txt/%s_arima_%d_%d.txt" % (const.DATASET_NAME,const.TOPIC_NUM,scale)
   if not os.path.exists(filename):
-    playlistDict = readPlaylistFromFile()
-    songDict = readSongFromFile()
-    writeTopicDictOfArimaToFile(playlistDict,songDict)
+    writeTopicDictOfArimaToFile(playlistDict,songDict,scale)
   predictDict = {}
   aFile = open(filename,"r")
   lines = aFile.readlines()

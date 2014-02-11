@@ -110,34 +110,24 @@ def crawlRecentTracksFromLastfm():
   conn=MySQLdb.connect(host="localhost",user="root",passwd="wst",db="lastfm")
   cur = conn.cursor()
   #get uids in table record
-  count = cur.execute('select distinct(uid) from record')
-  print 'There are records of %d users in table record...' % count
+  uCount = cur.execute('select uid from user where scale = -1 and uid % 50 = 1')
+  print 'There are %d users in table record...' % uCount
   results = cur.fetchall()
   uids = [result[0] for result in results]
-  #get uids in table user
-  cur.execute('select uid,username from user where scale != -1')
-  results = cur.fetchall()
-  userDict = {}
-  for result in results:
-    userDict[result[0]] = result[1]
-  userCount = len(userDict)
   index = 0
-  for key in userDict.keys():
+  for uid in uids:
     index += 1
-    #ignore uid in uids
-    if key in uids:
-      continue
     #get 4 pages of am user
-    for page in range(1,4,1):
+    for page in range(1,5,1):
       try:
         values = []
-        print '%d/%d >>> %d/4' % (index,userCount,page)
-        trackDict = crawlInfoOfUser(userDict[key],1,page)
+        print '%d/%d >>> %d/5' % (index,uCount,page)
+        trackDict = crawlInfoOfUser(uid,1,page)
         tracks = trackDict['recenttracks']['track']
         count = len(tracks)
         for i in range(count):
           value = []
-          value.append(key)
+          value.append(uid)
           mbid = tracks[i]['mbid']
           value.append(mbid)
           uts = tracks[i]['date']['uts']
@@ -147,7 +137,7 @@ def crawlRecentTracksFromLastfm():
           values.append(value)
         #insert into db
         for value in values:
-          cur.execute('insert ignore into record values(0,%s,%s,%s,%s,2)',value)
+          cur.execute('insert ignore into record values(0,%s,%s,%s,%s,-2)',value)
         conn.commit()
         #check total pages
         attr = trackDict['recenttracks']['@attr']
@@ -155,7 +145,7 @@ def crawlRecentTracksFromLastfm():
         if totalPages < (page+1):
           break
       except:
-        print '%s(%d/%d) causes exception in page %d......' % (userDict[key],index,userCount,page)
+        print '%s(%d/%d) causes exception in page %d......' % (uid,index,uCount,page)
   conn.commit()
   cur.close()
   conn.close()
@@ -231,58 +221,37 @@ def crawlSongFromLastfm():
   results = cur.fetchall()
   sids = [result[0] for result in results]
   #get uids in table user
-  count = cur.execute('select distinct(mbid) from record where scale = 1')
+  count = cur.execute('select distinct(mbid) from record where scale = -2')
   print 'There are %d songs in table record to be cralwed...' % count
   results = cur.fetchall()
   allSids = [result[0] for result in results]
-  error = 0
-  existis = 0
-  crawl = 0
-  left = []
-  exception = 0
-  for sid in allSids:
-    if sid not in sids:
-      left.append(sid)
-      sql = "delete from record where mbid = '%s'" % sid
-      cur.execute(sql)
-      conn.commit()
-  count = len(left)
-  print 'left = ',count
-  return
-  for index in range(count):
-    try:
-      mbid = left[index]
-      #print 'crawlSongFromLastfm:%d/%d:%s...' % (index,count,mbid)
-      if mbid in sids:
-        existis += 1
-        continue
-      else:
+  for mbid in allSids:
+    if mbid in sids:
+      print 'crawlSongFromLastfm:%d/%d:%s...Exsiting' % (index,count,mbid)
+      continue
+    else:
+      try:
         contentList = getContentOfSong(mbid)
         if len(contentList) < 10:
-          error += 1
+          print 'crawlSongFromLastfm:%d/%d:%s...Error' % (index,count,mbid)
           sql = "delete from record where mbid = '%s'" % mbid
           cur.execute(sql)
           conn.commit()
           continue
         else:
-          crawl += 1
+          cur.execute('insert ignore into song values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)',contentList)
           sids.append(mbid)
-          print 'crawlSongFromLastfm:%d/%d:%s...' % (index,count,mbid)
-          cur.execute('insert ignore into song values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,1)',contentList)
-    except:
-      exception += 1
-      sql = "delete from record where mbid = '%s'" % mbid
-      cur.execute(sql)
-      conn.commit()
-      continue
+          print 'crawlSongFromLastfm:%d/%d:%s...OK' % (index,count,mbid)
+      except:
+        print 'crawlSongFromLastfm:%d/%d:%s...Exception' % (index,count,mbid)
+        sql = "delete from record where mbid = '%s'" % mbid
+        cur.execute(sql)
+        conn.commit()
+        continue
 
   conn.commit()
   cur.close()
   conn.close()
-  print 'Error = ',error
-  print 'Existis = ',existis
-  print 'Crawl = ',crawl
-  print 'Exception = ',exception
 
 #get content text of mbid
 def getContentOfSong(mbid):
@@ -646,27 +615,7 @@ if __name__ == "__main__":
   #crawlUsersFromLastfm()
   #crawlRecentTracksFromLastfm()
   #selectRecordsInOneSession()
-  #crawlSongFromLastfm()
+  crawlSongFromLastfm()
   #insertPlaylistToTableUser()
   #crawlArtistsFromLastfm()
   #crawlTagFromLastfm()
-  conn=MySQLdb.connect(host="localhost",user="root",passwd="wst",db="lastfm")
-  cur = conn.cursor()
-  cur.execute('select sid from song')
-  results = cur.fetchall()
-  sids = [result[0] for result in results]
-  for scale in range(30):
-    print 'I am in scale = %d' % scale
-    cur.execute('select playlist from user where scale = %d' % scale)
-    results = cur.fetchall()
-    playlists = [result[0] for result in results]
-    for playlist in playlists:
-      items = playlist.split('==>')
-      for item in items:
-        value = item.split(':')
-        sid = value[0]
-        if sid not in sids:
-          print 'sid not in sids'
-          sys.exit()
-  cur.close()
-  conn.close()

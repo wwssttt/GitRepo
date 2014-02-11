@@ -22,23 +22,19 @@ ARIMA = 0
 
 SIMILAR = 1
 AVG = 2
-POPULAR = 3
 
-ARIMA_SIMILAR = 4
-ARIMA_AVG = 5
+ARIMA_SIMILAR = 3
+ARIMA_AVG = 4
 
-MF = 6
-KNN = 7
+KNN = 5
+MARKOV = 6
+PATTERN = 7
+MARKOV_3 = 8
 
-LSA = 8
-MARKOV = 9
-PATTERN = 10
-
-RANDOM = 11
-
-METHOD_SIZE = 12
+METHOD_SIZE = 9
 
 locs = ['upper right','upper right','upper right','upper right','upper right']
+marker = ['k','k-.','k+','k--','k:']
 
 #group of comparision
 #1:ARIMA +  Similar + Avergae + Popular(Pure)

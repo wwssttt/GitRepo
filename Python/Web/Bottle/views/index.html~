@@ -1,0 +1,10 @@
+<html>
+<head>
+<title>HomePage</title>
+<meta charset='utf-8' />
+</head>
+<body>
+<p>This is a cool website, isn't guys?</p>
+<img src='./static/1.png' alt='1.png' />
+</body>
+</html>

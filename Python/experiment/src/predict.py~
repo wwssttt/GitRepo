@@ -139,12 +139,12 @@ def getRecSongs(songDict,topN,tarDict):
 def getRecDict(playlistDict,songDict,recType = 0,scale = 0,lamda = 0.45,topN = const.TOP_N):
   recDict = {}
   if recType == const.ARIMA or recType == const.ARIMA_SIMILAR or recType == const.ARIMA_AVG:
-    arimaDict = persist.readPredictedTopicDictOfArima()
+    arimaDict = persist.readPredictedTopicDictOfArima(playlistDict,songDict,scale)
   index = 0
   count = len(playlistDict)
   typeName = util.getMethodName(recType)
   for pid in playlistDict.keys():
-    print '%s:%d/%d' % (typeName,index,count)
+    print 'scale = %d >> %s:%d/%d' % (scale,typeName,index,count)
     playlist = playlistDict[pid]
     if recType == const.SIMILAR:
       tarDict = topicDictForNextSongByMostSimilar(playlist,songDict)
@@ -169,23 +169,23 @@ def getRecDict(playlistDict,songDict,recType = 0,scale = 0,lamda = 0.45,topN = c
   return recDict
 
 #get recommend songs list of playlist by MF
-def getRecDictOfMF(songDict,playlistDict,topN = const.TOP_N):
-  print 'I am in getRecDictOfMF....'
+def getRecDictOfMF(playlistDict,songDict,scale,pid2Index,countMatrix,predictMatrix,topN = const.TOP_N):
   index2Id = {}
   for sid in songDict.keys():
     song = songDict[sid]
     sIndex = song.getIndex()
     index2Id[sIndex] = sid
 
-  countMatrix = util.getUserSongMatrix(songDict,playlistDict)
-  predictMatrix = util.predictMatrix(countMatrix,const.TOPIC_NUM)
   print 'Begin to generate rec list...'
   recDict = {}
-  
+  size = len(playlistDict)
+  step = 0
   for pid in playlistDict.keys():
+    step += 1
+    print 'scale = %d >> MF:%d/%d' % (scale,step,size)
     scoreDict = {}
     playlist = playlistDict[pid]
-    pIndex = playlist.getIndex()
+    pIndex = pid2Index[pid]
     trainingList = playlist.getTrainingList()
     predictList = predictMatrix[pIndex]
     count = len(predictList)
@@ -200,24 +200,14 @@ def getRecDictOfMF(songDict,playlistDict,topN = const.TOP_N):
       result.append(recList[i][0])
     
     recDict[pid] = result
-  print 'I am out getRecDictOfMF....'
   return recDict
 
 
 #get recommend songs list of playlist by MF
-def getRecDictOfUserKNN(songDict,playlistDict,topN = const.TOP_N):
-  print 'I am in getRecDictOfUserKNN....'
-  countMatrix = util.getUserSongMatrix(songDict,playlistDict)
-  simMatrix = util.getUserSimMatrix(songDict,playlistDict)
+def getRecDictOfUserKNN(playlistDict,songDict,scale,pid2Index,countMatrix,simMatrix,topN = const.TOP_N):
   print 'Begin to generate rec list...'
 
   recDict = {}
-  
-  pid2Index = {}
-  for pid in playlistDict.keys():
-    playlist = playlistDict[pid]
-    pIndex = playlist.getIndex()
-    pid2Index[pid] = pIndex
 
   sid2Index = {}
   for sid in songDict.keys():
@@ -229,22 +219,24 @@ def getRecDictOfUserKNN(songDict,playlistDict,topN = const.TOP_N):
   count = len(playlistDict)
   for oPid in playlistDict.keys():
     step += 1
-    print 'UserKNN:%d/%d...' % (step,count)
+    print 'scale = %d >> UserKNN:%d/%d...' % (scale,step,count)
     scoreDict = {}
     oPindex = pid2Index[oPid] 
     for sid in songDict.keys():
       sIndex = sid2Index[sid]
-      totalSim = 0
-      total = 0
-      for iPid in playlistDict.keys():
-        iPindex = pid2Index[iPid]
+      totalSim = 0.0
+      total = 0.0
+      for iPindex in range(len(pid2Index)):
         if oPindex == iPindex:
           continue
-        sim = simMatrix[oPindex][iPindex]
+        if oPindex >= iPindex:
+          sim = simMatrix[oPindex][iPindex]
+        else:
+          sim = simMatrix[iPindex][oPindex]
         total = total + sim * countMatrix[iPindex][sIndex]
         totalSim += sim
       if totalSim == 0:
-        print 'pid = %s,sid = %s,total = %f,totalSim = %f' % (oPid,sid,total,totalSim)
+        #print 'pid = %s,sid = %s,total = %f,totalSim = %f' % (oPid,sid,total,totalSim)
         totalSim = 1
       total = total / totalSim
       scoreDict[sid] = total
@@ -261,45 +253,60 @@ def getRecDictOfUserKNN(songDict,playlistDict,topN = const.TOP_N):
   return recDict
 
 #get recommend songs list of playlist by MF
-def getRecDictOfMostPopular(songDict,playlistDict,topN = const.TOP_N):
+def getRecDictOfMostPopular(allPlaylist,songDict,scale = 0,topN = const.TOP_N):
   songFreq = {}
-  for pid in playlistDict.keys():
-    playlist = playlistDict[pid]
-    trainingList = playlist.getTrainingList()
-    for sid in trainingList:
-      if sid not in songFreq:
-        songFreq[sid] = 1
-      else:
-        songFreq[sid] += 1
+  #training set
+  for part in range(10):
+    if part != scale:
+      playlistDict = allPlaylist[part]
+      for pid in playlistDict.keys():
+        playlist = playlistDict[pid]
+        trainingList = playlist.getTrainingList()
+        for sid in trainingList:
+          if sid not in songFreq:
+            songFreq[sid] = 1
+          else:
+            songFreq[sid] += 1
 
   songSeq = sorted(songFreq.iteritems(),key=lambda x:x[1],reverse=True)
+
+  #get result or by most popular
   result = []
   for i in range(0,topN):
     result.append(songSeq[i][0])
   
   recDict = {}
+  playlistDict = allPlaylist[scale]
   for pid in playlistDict.keys():
     recDict[pid] = result
 
   return recDict
 
-def getRecDictOfMostMarkov(songDict,playlistDict,topN = const.TOP_N):
-  sid2Index,index2Id,transitionMatrix = util.getTransitionMatrix(playlistDict,songDict)
+def getRecDictOfMostMarkov(allPlaylist,songDict,scale,topN = const.TOP_N):
+  domDict,transMatrix = util.getTransitionMatrix(allPlaylist,songDict,scale)
   recDict = {}
   index = 0
+  playlistDict = allPlaylist[scale]
   playlistSize = len(playlistDict)
   for pid in playlistDict.keys():
     index += 1
-    print 'First Order Markov Chain:%d:%d' % (index,playlistSize)
+    print 'scale = %d >> First Order Markov Chain:%d:%d' % (scale,index,playlistSize)
     playlist = playlistDict[pid]
     trainingList = playlist.getTrainingList()
     lastSid = trainingList[-1]
-    lastIndex = sid2Index[lastSid]
-    transList = transitionMatrix[lastIndex]
+    topicList = domDict[lastSid]
     scoreDict = {}
-    for i in range(len(transList)):
-      sid = index2Id[i]
-      scoreDict[sid] = transList[i]
+    for sid in songDict.keys():
+      song = songDict[sid]
+      topicDict = song.getTopicDict()
+      curTopicList = domDict[sid]
+      if sid not in scoreDict:
+        scoreDict[sid] = 0.0
+      for i in range(len(topicList)):
+        oTid = topicList[i]
+        for j in range(len(curTopicList)):
+          iTid = curTopicList[j]
+          scoreDict[sid] = scoreDict[sid] + transMatrix[oTid][iTid]*topicDict[iTid]
     songList = sorted(scoreDict.iteritems(),key=lambda x:x[1],reverse=True)
     result = []
     for i in range(0,topN):
@@ -307,14 +314,62 @@ def getRecDictOfMostMarkov(songDict,playlistDict,topN = const.TOP_N):
     recDict[pid] = result
   return recDict
 
-def getRecDictOfMostPattern(songDict,playlistDict,topN = const.TOP_N):
-  predictTopicDict = PrefixSpan.getPredictTopicDict(playlistDict,songDict)
+def getRecDictOfThreeOrderMarkov(allPlaylist,songDict,scale,topN = const.TOP_N):
+  domDict,transDict = util.getThreeOrderTransitionMatrix(allPlaylist,songDict,scale)
   recDict = {}
   index = 0
+  playlistDict = allPlaylist[scale]
   playlistSize = len(playlistDict)
   for pid in playlistDict.keys():
     index += 1
-    print 'ContextPattern:%d:%d' % (index,playlistSize)
+    print 'scale = %d >> Three Order Markov Chain:%d:%d' % (scale,index,playlistSize)
+    playlist = playlistDict[pid]
+    trainingList = playlist.getTrainingList()
+    sidList = trainingList[-3:]
+    startTopicList = domDict[sidList[0]]
+    secondTopicList = domDict[sidList[1]]
+    threeTopicList = domDict[sidList[2]]
+    topicList = []
+    for i in range(len(startTopicList)):
+      for j in range(len(secondTopicList)):
+        for s in range(len(threeTopicList)):
+          key = '%d#%d#%d' % (startTopicList[i],secondTopicList[j],threeTopicList[s])
+          if key not in topicList:
+            topicList.append(key)
+
+    scoreDict = {}
+    for sid in songDict.keys():
+      song = songDict[sid]
+      topicDict = song.getTopicDict()
+      curTopicList = domDict[sid]
+      if sid not in scoreDict:
+        scoreDict[sid] = 0.0
+      for i in range(len(topicList)):
+        topicKey = topicList[i]
+        if topicKey not in transDict:
+          continue
+        for j in range(len(curTopicList)):
+          tid = curTopicList[j]
+          if tid not in transDict[topicKey]:
+            scoreDict[sid] += 0.0
+          else:
+            scoreDict[sid] = scoreDict[sid] + topicDict[tid]*transDict[topicKey][tid]
+    songList = sorted(scoreDict.iteritems(),key=lambda x:x[1],reverse=True)
+    result = []
+    for i in range(0,topN):
+      result.append(songList[i][0])
+    recDict[pid] = result
+  return recDict
+
+def getRecDictOfMostPattern(allPlaylist,songDict,scale,topN = const.TOP_N):
+  predictTopicDict = PrefixSpan.getPredictTopicDict(allPlaylist,songDict,scale)
+  recDict = {}
+  index = 0
+  playlistDict = allPlaylist[scale]
+  playlistSize = len(playlistDict)
+  for pid in playlistDict.keys():
+    index += 1
+    print 'scale = %d >> ContextPattern:%d:%d' % (scale,index,playlistSize)
     predictTopic = predictTopicDict[pid]
     size = len(predictTopic)
     scoreDict = {}
@@ -390,21 +445,16 @@ def getRecDictOfLSA(songDict,playlistDict,topN = const.TOP_N):
   return recDict
 
 #get recommend songs list of playlist by random
-def getRecDictOfRandom(songDict,playlistDict,topN = const.TOP_N):
-  recDict = {} 
-  index2Id = {}
-  for sid in songDict.keys():
-    song = songDict[sid]
-    index = song.getIndex()
-    index2Id[index] = sid
-
-  size = len(songDict) - 1
+def getRecDictOfRandom(playlistDict,songDict,scale,topN = const.TOP_N):
+  recDict = {}
+  keys = songDict.keys()
+  size = len(keys) - 1
 
   for pid in playlistDict.keys():
     result = []
     for i in range(0,topN):
       randomIndex = random.randint(0,size)
-      result.append(index2Id[randomIndex])
+      result.append(keys[randomIndex])
     recDict[pid] = result
 
   return recDict

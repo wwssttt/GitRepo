@@ -167,29 +167,23 @@ def getMAEandRMSE(recDict,playlistDict,songDict,topN = const.TOP_N):
 #return text info of method
 def getMethodName(mid):
   if mid == const.ARIMA:
-    return "Arima"
+    return "MTSA"
   elif mid == const.SIMILAR:
     return "MostSimilar"
   elif mid == const.AVG:
     return "Average"
-  elif mid == const.POPULAR:
-    return "MostPopular"
   elif mid == const.ARIMA_SIMILAR:
     return "Arima+Similar"
   elif mid == const.ARIMA_AVG:
     return "Arima+Average"
-  elif mid == const.MF:
-    return "Matrix_Factorization"
   elif mid == const.KNN:
-    return "User_KNN"
-  elif mid == const.LSA:
-    return "LSA"
+    return "UserKNN"
   elif mid == const.MARKOV:
-    return "Markov"
+    return "1st-Markov"
   elif mid == const.PATTERN:
     return "Pattern"
-  elif mid == const.RANDOM:
-    return "Random"
+  elif mid == const.MARKOV_3:
+    return "3rd-Markov"
   else:
     print '%d does not exist......' % mid
     return
@@ -244,7 +238,7 @@ def sendMail(to,subtitle,content):
         print 'false'
 
 #matrix factorization 
-def matrix_factorization(R, P, Q, K, steps=5000, alpha=0.0002, beta=0.02):
+def matrix_factorization(R, P, Q, K, steps=1000, alpha=0.02, beta=0.02):
     print 'I am in matrix_factorization....'
     Q = Q.T
     for step in xrange(steps):
@@ -286,37 +280,44 @@ def predictMatrix(R,K):
   return nR
 
 #construct matrix with songDict and playlistDict
-def getUserSongMatrix(songDict,playlistDict):
+def getUserSongMatrix(allPlaylist,songDict):
   print 'I am in getUserSongMatrix......'
   #map id to index
   id2Index = {}
+  pid2Index = {}
+  index2Pid = {}
   for sid in songDict.keys():
     song = songDict[sid]
     id2Index[sid] = song.getIndex()
   sCount = len(songDict)
-  pCount = len(playlistDict)
+  pCount = 0 
+  for scale in range(10):
+    pCount += len(allPlaylist[scale])
+
   print 'There are %d users and %d songs.' % (pCount,sCount)
+
   #initail all element to zero
   matrix =[[0 for i in range(sCount)] for j in range(pCount)]
-  #fill matrix using playlistDict
-  index = 0
-  for pid in playlistDict.keys():
-    index += 1
-    print 'construct count matrix:%d/%d.' % (index,pCount)
-    playlist = playlistDict[pid]
-    pIndex = playlist.getIndex()
-    trainingList = playlist.getTrainingList()
-    for sid in trainingList:
-      sIndex = id2Index[sid]
-      matrix[pIndex][sIndex] += 1
+  #construct the matrix
+  pIndex = 0
+  for scale in range(10):
+    playlistDict = allPlaylist[scale]
+    for pid in playlistDict.keys():
+      playlist = playlistDict[pid]
+      trainingList = playlist.getTrainingList()
+      pid2Index[pid] = pIndex
+      index2Pid[pIndex] = pid
+      for sid in trainingList:
+        sIndex = id2Index[sid]
+        matrix[pIndex][sIndex] += 1
+      pIndex += 1
   print 'I am out getUserSongMatrix......'
-  return matrix
+  return pid2Index,index2Pid,matrix
 
 #construct sim matrix of users
-def getUserSimMatrix(songDict,playlistDict):
+def getUserSimMatrix(countMatrix,pid2Index):
   print 'I am in getUserSimMatrix....'
-  countMatrix = getUserSongMatrix(songDict,playlistDict)
-  pCount = len(playlistDict)
+  pCount = len(pid2Index)
   simMatrix = [[-1 for i in range(pCount)] for j in range(pCount)]
   for i in range(pCount):
     for j in range(pCount):
@@ -346,55 +347,157 @@ def getDominantTopicDict(songDict):
   return domDict
 
 #construct training set of playlist to mining frequent mining
-def getPatternTrainingSet(playlistDict,songDict):
+def getPatternTrainingSet(allPlaylist,songDict,scale):
   domDict = getDominantTopicDict(songDict)
-  patternDict = {}
+  allTrainingPattern = []
+  testingPatternDict = {}
+  for part in range(10):
+    if part == scale:
+      continue
+    playlistDict = allPlaylist[part]
+    for pid in playlistDict.keys():
+      playlist = playlistDict[pid]
+      trainingList = playlist.getTrainingList()
+      patternList = []
+      for sid in trainingList:
+        patternList.append(domDict[sid])
+      lastSid = playlist.getLastSid()
+      patternList.append(domDict[lastSid])
+
+      allTrainingPattern.append(patternList)
+     
+  #testing
+  playlistDict = allPlaylist[scale]
   for pid in playlistDict.keys():
     playlist = playlistDict[pid]
     trainingList = playlist.getTrainingList()
     patternList = []
-    for sid in trainingList[-7:]:
+    for sid in trainingList[-8:]:
       patternList.append(domDict[sid])
-    patternDict[pid] = patternList
-  return patternDict
+    
+    testingPatternDict[pid] = patternList  
+
+  return allTrainingPattern,testingPatternDict
 
 #construct markov chain database
-def getTransitionMatrix(playlistDict,songDict):
+def getTransitionMatrix(allPlaylist,songDict,scale):
+  domDict = getDominantTopicDict(songDict)
   print 'I am in constructing transition matrix...'
-  sid2Index = {}
-  index2Id = {}
-  for sid in songDict.keys():
-    song = songDict[sid]
-    index = song.getIndex()
-    sid2Index[sid] = index  
-    index2Id[index] = sid
+  transMatrix = [[1.0 for i in range(const.TOPIC_NUM)] for j in range(const.TOPIC_NUM)]
 
   size = len(songDict)
-
-  matrix = [[0.0 for i in range(size)] for j in range(size)]
-  for pid in playlistDict.keys():
-    playlist = playlistDict[pid]
-    trainingList = playlist.getTrainingList()
-    length = len(trainingList)
-    #remove last sid
-    length -= 1
-    #construct frequency matrix
-    for index in range(length):
-      sid = trainingList[index]
-      nextSid = trainingList[index+1]
-      curIndex = sid2Index[sid]
-      nextIndex = sid2Index[nextSid]
-      matrix[curIndex][nextIndex] += 1.0
-  #construct transition matrix
-  count = 0
-  for oIndex in range(size):
-    total = sum(matrix[oIndex])
-    if total == 0:
-      #print index2Id[oIndex]
-      count += 1
+  
+  for part in range(10):
+    if part == scale:
       continue
-    for iIndex in range(size):
-      matrix[oIndex][iIndex] = matrix[oIndex][iIndex] / total
-  print 'count = ',count
+    playlistDict = allPlaylist[part]
+    for pid in playlistDict.keys():
+      playlist = playlistDict[pid]
+      trainingList = playlist.getTrainingList()
+      length = len(trainingList)
+      #remove last sid
+      length -= 1
+      #construct frequency matrix
+      for index in range(length):
+        sid = trainingList[index]
+        topicList = domDict[sid]
+        nextSid = trainingList[index+1]
+        nextTopicList = domDict[nextSid]
+        for i in range(len(topicList)):
+          tid = topicList[i]
+          for j in range(len(nextTopicList)):
+            nextTid = nextTopicList[j]
+            transMatrix[tid][nextTid] += 1.0
+
+      sid = trainingList[length]
+      topicList = domDict[sid]
+      nextSid = playlist.getLastSid()
+      nextTopicList = domDict[nextSid]
+      for i in range(len(topicList)):
+        tid = topicList[i]
+        for j in range(len(nextTopicList)):
+          nextTid = nextTopicList[j]
+          transMatrix[tid][nextTid] += 1.0
+
+  #construct transition matrix
+  for tidIndex in range(const.TOPIC_NUM):
+    total = sum(transMatrix[tidIndex])
+    for nextTidIndex in range(const.TOPIC_NUM):
+      transMatrix[tidIndex][nextTidIndex] = transMatrix[tidIndex][nextTidIndex] / total
+
+  #print transMatrix
+
   print 'I am out constructing transition matrix...'
-  return sid2Index,index2Id,matrix
+  return domDict,transMatrix
+
+#construct markov chain database:3-order
+def getThreeOrderTransitionMatrix(allPlaylist,songDict,scale):
+  domDict = getDominantTopicDict(songDict)
+  print 'I am in constructing transition matrix...'
+  transDict = {}
+
+  size = len(songDict)
+  
+  for part in range(10):
+    if part == scale:
+      continue
+    playlistDict = allPlaylist[part]
+    for pid in playlistDict.keys():
+      playlist = playlistDict[pid]
+      trainingList = playlist.getTrainingList()
+      length = len(trainingList)
+      #remove last sid
+      length -= 3
+      #construct frequency matrix
+      for index in range(length):
+        startSid = trainingList[index]
+        startTopicList = domDict[startSid]
+        secondSid = trainingList[index+1]
+        secondTopicList = domDict[secondSid]
+        threeSid = trainingList[index+2]
+        threeTopicList = domDict[threeSid]
+        targetSid = trainingList[index+3]
+        targetTopicList = domDict[targetSid]
+        for i in range(len(startTopicList)):
+          for j in range(len(secondTopicList)):
+            for s in range(len(threeTopicList)):
+              key = '%d#%d#%d' % (startTopicList[i],secondTopicList[j],threeTopicList[s])
+              if key not in transDict:
+                transDict[key] = {}
+              for t in range(len(targetTopicList)):
+                tid = targetTopicList[t]
+                if tid not in transDict[key]:
+                  transDict[key][tid] = 1.0
+                transDict[key][tid] += 1.0
+
+
+      startSid = trainingList[length]
+      startTopicList = domDict[startSid]
+      secondSid = trainingList[length+1]
+      secondTopicList = domDict[secondSid]
+      threeSid = trainingList[length+2]
+      threeTopicList = domDict[threeSid]
+      targetSid = playlist.getLastSid()
+      targetTopicList = domDict[targetSid]
+      for i in range(len(startTopicList)):
+        for j in range(len(secondTopicList)):
+          for s in range(len(threeTopicList)):
+            key = '%d#%d#%d' % (startTopicList[i],secondTopicList[j],threeTopicList[s])
+            if key not in transDict:
+              transDict[key] = {}
+            for t in range(len(targetTopicList)):
+              tid = targetTopicList[t]
+              if tid not in transDict[key]:
+                transDict[key][tid] = 1.0
+              transDict[key][tid] += 1.0
+
+  #construct transition matrix
+  for key in transDict.keys():
+    total = sum(transDict[key].values())
+    for subKey in transDict[key].keys():
+      transDict[key][subKey] = transDict[key][subKey] / total
+
+  #print transMatrix
+
+  print 'I am out constructing transition matrix...'
+  return domDict,transDict
