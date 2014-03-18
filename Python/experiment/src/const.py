@@ -31,10 +31,12 @@ MARKOV = 6
 PATTERN = 7
 MARKOV_3 = 8
 
-METHOD_SIZE = 9
+ARIMA_SIMILAR_AVG = 9
+
+METHOD_SIZE = 10
 
 locs = ['upper right','upper right','upper right','upper right','upper right']
-marker = ['k','k-.','k+','k--','k:']
+marker = ['k','k-.','k1','k--','k:']
 
 #group of comparision
 #1:ARIMA +  Similar + Avergae + Popular(Pure)

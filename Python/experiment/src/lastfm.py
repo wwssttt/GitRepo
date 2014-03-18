@@ -547,7 +547,7 @@ def insertPlaylistToTableUser():
       print '%s is in dict now...' % mbid
       return
   print 'There are %d songs in table song' % len(songDict)
-  cur.execute('select uid from record where scale <= 1 group by uid')
+  cur.execute('select uid from record where scale >= 30 group by uid')
   results = cur.fetchall()
   users = [result[0] for result in results]
   userCount = len(users)
@@ -566,6 +566,9 @@ def insertPlaylistToTableUser():
       playlists.append(mbid)
       utss.append(uts)
     count = len(playlists)
+    curSessionStart = -1
+    curSessionStartSid = -1;
+    curSessionStartRaio = -1;
     for index in range(count):
       mbid = playlists[index]
       sid = songDict[mbid]
@@ -575,11 +578,18 @@ def insertPlaylistToTableUser():
           ratio = 1.0
         else:
           ratio = uts / durationDict[mbid]
+        #3 hour
+        if uts > 10800:
+          curSessionStart = index
+          curSessionStartSid = sid
+          curSessionStartRatio = ratio
       else:
         ratio = 1.0
       result.append('%s:%.2f' % (sid,ratio))
+    if curSessionStart != -1:
+      result[curSessionStart] = '%s:%.2f>>' % (curSessionStartSid,curSessionStartRatio)
     playlistStr = "==>".join(result)
-    sql = "update user set playlist = '%s',scale = 1 where uid = '%s'" % (playlistStr,user)
+    sql = "update user set playlist = '%s' where uid = '%s'" % (playlistStr,user)
     cur.execute(sql)
   conn.commit()
   cur.close()
@@ -587,26 +597,45 @@ def insertPlaylistToTableUser():
 
 #write playlists to file
 def readPlaylistFromDB():
-  filename = '../txt/Lastfm_playlists.txt'
+  filename = '../txt/Lastfm_playlists_MultiSession_one.txt'
   conn=MySQLdb.connect(host="localhost",user="root",passwd="wst",db="lastfm")
   cur = conn.cursor()
   pFile = open(filename,'w')
-  count = cur.execute('select uid,playlist from user where scale = 0')
+  count = cur.execute('select uid,playlist from user where scale >= 30')
   print 'There are %d playlists...' % count
   results = cur.fetchall()
   allSids = []
   for result in results:
     uid = result[0]
     playlistStr = result[1]
+    #print '%s:%s' % (uid,playlistStr)
     sids = []
     items = playlistStr.split('==>')
-    for item in items:
+    count = len(items)
+    target = count
+    flag = False
+    for index in range(count):
+      item = items[index]
+      if item.find('>>') != -1:
+        item = item.replace('>>','')
+        flag = True
       value = item.split(':')
       sid = value[0]
       if sid not in allSids:
         allSids.append(sid)
       sids.append(sid)
-    sidStr = ",".join(sids)
+
+      if flag:
+        index += 1
+        item = items[index]
+        value = item.split(':')
+        sid = value[0]
+        if sid not in allSids:
+          allSids.append(sid)
+        sids.append(sid)
+        break
+    #print '%s:%d' % (uid,len(sids))
+    sidStr = ",".join(sids)  
     pFile.write('%s:%s\n' % (uid,sidStr))
   pFile.close()
   print 'There are %d unique songs...' % len(allSids)
@@ -617,7 +646,8 @@ if __name__ == "__main__":
   #crawlUsersFromLastfm()
   #crawlRecentTracksFromLastfm()
   #selectRecordsInOneSession()
-  crawlSongFromLastfm()
+  #crawlSongFromLastfm()
   #insertPlaylistToTableUser()
   #crawlArtistsFromLastfm()
   #crawlTagFromLastfm()
+  readPlaylistFromDB()

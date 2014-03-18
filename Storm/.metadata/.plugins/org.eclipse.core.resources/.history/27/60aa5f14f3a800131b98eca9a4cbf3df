@@ -1,0 +1,13 @@
+library(Storm)
+
+storm = Storm$new();
+
+storm$lambda = function(s) {
+  t = s$tuple;
+  s$ack(t);
+  s$log(c("processing tuple=",t$id));
+  words = strsplit(t$input[0]," ");
+  t$output = vector(mode="character",length=1);
+};
+
+storm$run();

@@ -1,0 +1,24 @@
+1394328140282	Rename package 'bolt'
+1394328154392	Rename package 'model'
+1394328166466	Rename package 'spout'
+1394328186098	Rename package 'topology'
+1394330908237	Rename type 'MTSA_DRPC_TopicCobineBolt'
+1394330922654	Rename type 'MTSA_DRPC_AnalyzeBolt'
+1394330937781	Rename type 'MTSA_DPRC_ReduceBolt'
+1394336134494	Rename type 'MTSA_DRPC_SimilarityCalculationBolt'
+1394526931695	Rename resource 'splitsentence.py'
+1394526938302	Rename resource 'arima'
+1394526998998	Copy compilation unit
+1394527945448	Delete element
+1394533934304	Delete element
+1394534660586	Rename type 'CopyOfMTSA_DRPC_SeriesAnalyzeBolt'
+1394543594581	Delete element
+1394543629118	Rename resource 'simple.R'
+1394543649840	Copy compilation unit
+1394601632885	Delete element
+1394602888140	Delete element
+1394603544330	Delete element
+1394606688965	Delete element
+1394606991491	Delete element
+1394626316123	Rename type 'MTSA_DRPC_DistanceClaculationBatchBolt'
+1394690184728	Rename type 'MTSA_DRPC_DistanceReduceBolt'

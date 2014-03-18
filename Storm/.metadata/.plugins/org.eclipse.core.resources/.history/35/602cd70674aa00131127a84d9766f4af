@@ -1,0 +1,88 @@
+package com.wst.sweetfm.bolt;
+
+import java.util.Comparator;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
+import com.wst.sweetfm.util.MTSA_Const;
+
+import backtype.storm.coordination.BatchOutputCollector;
+import backtype.storm.task.TopologyContext;
+import backtype.storm.topology.BasicOutputCollector;
+import backtype.storm.topology.OutputFieldsDeclarer;
+import backtype.storm.topology.base.BaseBasicBolt;
+import backtype.storm.topology.base.BaseBatchBolt;
+import backtype.storm.tuple.Fields;
+import backtype.storm.tuple.Tuple;
+import backtype.storm.tuple.Values;
+
+public class MTSA_DRPC_DistanceReduceBolt extends BaseBatchBolt{
+	private BatchOutputCollector _collector;
+	private HashMap<Integer,Double> _distanceMap = new HashMap<Integer,Double>();
+	private Object _id;
+	@Override
+	public void prepare(Map conf, TopologyContext context,
+			BatchOutputCollector collector, Object id) {
+		// TODO Auto-generated method stub
+		_collector = collector;
+	}
+
+	@Override
+	public void execute(Tuple tuple) {
+		// TODO Auto-generated method stub
+		_id = tuple.getValue(0);
+		String str = tuple.getString(1);
+		String[] items = str.split(":");
+		Integer sid = Integer.valueOf(items[0]);
+		Double distance = Double.valueOf(items[1]);
+		
+		if (!this.distanceMap.containsKey(sid)){
+			this.distanceMap.put(sid, distance);
+		}
+	}
+
+	@Override
+	public void finishBatch() {
+		// TODO Auto-generated method stub
+		StringBuffer sb = new StringBuffer();
+		
+		List<Map.Entry<Integer, Double>> disInfos =
+			    new ArrayList<Map.Entry<Integer, Double>>(this.distanceMap.entrySet());
+		
+		//排序
+		Collections.sort(disInfos, new Comparator<Map.Entry<Integer, Double>>() {   
+		    public int compare(Map.Entry<Integer, Double> o1, Map.Entry<Integer, Double> o2) {      
+		    	if ((o1.getValue() - o2.getValue())>0)  
+		            return 1;  
+		        else if((o1.getValue() - o2.getValue())==0)  
+		            return 0;  
+		        else   
+		            return -1; 
+		    }
+		}); 
+		
+		int recNum = MTSA_Const.REC_NUM;
+		
+		for(int i = 0; i < recNum; i++){
+			System.err.println(disInfos.get(i).getKey()+":"+disInfos.get(i).getValue());
+			sb.append(disInfos.get(i).getKey());
+			sb.append(",");
+		}
+		
+		sb.deleteCharAt(sb.length()-1);
+		
+		collector.emit(new Values(input.getValue(0),sb.toString()));
+	}
+
+	@Override
+	public void declareOutputFields(OutputFieldsDeclarer declarer) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	//TODO Auto-generated method stub
+			
+}

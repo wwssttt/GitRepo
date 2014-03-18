@@ -1,0 +1,5 @@
+package com.wst.sweetfm.bolt;
+
+public class MTSA_DRPC_DistanceClaculationBatchBolt {
+
+}

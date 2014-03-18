@@ -1,0 +1,12 @@
+library(Storm)
+
+storm = Storm$new();
+
+storm$lambda = function(s) {
+  t = s$tuple;
+  #t$output = vector(mode="character",length=1);
+  #t$output[1] = 'a';
+  s$emit(t);
+};
+
+storm$run();

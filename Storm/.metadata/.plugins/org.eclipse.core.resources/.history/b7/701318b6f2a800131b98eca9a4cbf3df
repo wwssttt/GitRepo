@@ -1,0 +1,15 @@
+library(Storm)
+
+storm = Storm$new();
+
+storm$lambda = function(s) {
+  t = s$tuple;
+  s$ack(t);
+  s$log(c("processing tuple=",t$id));
+  words = strsplit(t$input[0]," ");
+  for(word in words){
+    storm$emit(word);
+  }
+};
+
+storm$run();

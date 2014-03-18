@@ -1,0 +1,18 @@
+#!/usr/bin/Rscript
+library(Storm,quietly=TRUE)
+
+storm = Storm$new();
+
+storm$lambda = function(s) {
+  t = s$tuple;
+  #s$log(c("processing tuple=",t$id));
+
+  words = strsplit(t$input[0]," ");
+  for(i in 0:length(words)){
+    storm$emit([words[[i]]])
+  }
+  #alternative/optional: mark the tuple as failed.
+  #s$fail(t);
+};
+
+storm$run();

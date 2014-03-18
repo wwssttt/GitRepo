@@ -25,7 +25,7 @@ def writeTopicDictOfArimaToFile(playlistDict,songDict,scale):
   index = 0
   many = len(playlistDict)
   for pid in playlistDict.keys():
-    print 'scale = %d >> %d/%d' % (scale,index,many)
+    print 'Write Arima: scale = %d >> %d/%d' % (scale,index,many)
     index += 1
     playlist = playlistDict[pid]
     predictTopicDict = predict.topicDictForNextSongByArima(playlist,songDict)
@@ -148,6 +148,60 @@ def writePlaylistsToFile():
     pFile.close()
     print 'End of writing playlists......'
 
+#write playlists to file
+def writePlaylistsToFileSession():
+  conn = MySQLdb.Connect(host=const.DBHOST,user=const.DBUSER,passwd=const.DBPWD,port=const.DBPORT,charset=const.DBCHARSET)
+  cur = conn.cursor()
+  conn.select_db(const.DBNAME)
+
+  filename = "../txt/%s_playlists.txt" % const.DATASET_NAME
+  filename_b = "../txt/%s_playlists_backup.txt" % const.DATASET_NAME
+  if not os.path.exists(filename):
+    print '%s is not existing......' % filename
+    return
+  else:
+    sFile = open(filename,'r')
+    tFile = open(filename_b,'w')
+    lines = sFile.readlines()
+    for line in lines:
+      line = line.strip('\n')
+      line = line.strip('\r\n')
+      items = line.split(':')
+      uid = items[0]
+      cur.execute("select scale from user where uid = '%s'" % uid)
+      result = cur.fetchone()
+      scale = result[0]
+      content = '%d>>%s' % (scale,line)
+      tFile.write(content+'\n')
+    tFile.close()
+    sFile.close()
+  cur.close()
+  conn.close()
+
+#read playlists from file and construct dict of playlists
+def readPlaylistFromFile_Session():
+  filename = "../txt/two_Lastfm_playlists.txt"
+  if not os.path.exists(filename):
+    writePlaylistsToFile()
+  pFile = open(filename,"r")
+  allPlaylist = [{} for scale in range(10)]
+  lines = pFile.readlines()
+  pIndex = 0
+  for line in lines:
+    line = line.rstrip('\n')
+    items = line.split(":")
+    pidStr = items[0]
+    value = pidStr.split('>>')
+    scale = int(value[0]) - 30
+    pid = int(value[1])
+    sids = items[1].split(",")
+    pList = [int(sid) for sid in sids]
+    playlist = model.Playlist(pid,scale,pList)
+    allPlaylist[scale][pid] = playlist
+    pIndex += 1
+  print 'Thare are %d playlist have been read.' % (pIndex+1)
+  return allPlaylist
+
 #read playlists from file and construct dict of playlists
 def readPlaylistFromFile():
   filename = "../txt/%s_playlists.txt" % const.DATASET_NAME
@@ -212,4 +266,5 @@ def mvFileFromMalletToTxt():
         tFile.close()
 if __name__ == "__main__":
   #mvFileFromMalletToTxt()
-  readPlaylistFromFile()
+  #readPlaylistFromFile()
+  writePlaylistsToFileSession()

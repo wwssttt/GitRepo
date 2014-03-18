@@ -1,0 +1,38 @@
+package storm.starter;
+
+import storm.starter.bolt.SentenceAnalyzeBolt;
+import storm.starter.bolt.SentencePrintBolt;
+import storm.starter.spout.SentenceSpout;
+import backtype.storm.Config;
+import backtype.storm.LocalCluster;
+import backtype.storm.StormSubmitter;
+import backtype.storm.topology.TopologyBuilder;
+import backtype.storm.utils.Utils;
+
+public class SentenceTopology {
+	public static void main(String[] args){
+		try{
+			TopologyBuilder builder = new TopologyBuilder();
+			
+			builder.setSpout("spout", new SentenceSpout(),3);
+			builder.setBolt("analyze", new SentenceAnalyzeBolt(),5).shuffleGrouping("spout");
+			builder.setBolt("print", new SentencePrintBolt(),7).shuffleGrouping("analyze");
+			
+			Config conf = new Config();
+			conf.setDebug(true);
+			conf.setNumWorkers(3);
+			
+			LocalCluster cluster = new LocalCluster();
+			
+			cluster.submitTopology("test", conf, builder.createTopology());
+			
+			Utils.sleep(1000);
+			
+			cluster.killTopology("test");
+			cluster.shutdown();
+			
+		}catch(Exception e){
+			System.err.println(e.getMessage());
+		}
+	}
+}

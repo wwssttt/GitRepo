@@ -1,0 +1,5 @@
+package storm.starter.bolt;
+
+public class MTSA_DRPC_InputBolt {
+
+}

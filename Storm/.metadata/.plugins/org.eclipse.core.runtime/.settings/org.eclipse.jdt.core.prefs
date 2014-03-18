@@ -1,0 +1,13 @@
+eclipse.preferences.version=1
+org.eclipse.jdt.core.classpathVariable.JRE_LIB=/usr/lib/jdk1.6.0_35/jre/lib/rt.jar
+org.eclipse.jdt.core.classpathVariable.JRE_SRC=/usr/lib/jdk1.6.0_35/src.zip
+org.eclipse.jdt.core.classpathVariable.JRE_SRCROOT=
+org.eclipse.jdt.core.classpathVariable.JUNIT_HOME=/home/wst/Development/adt-bundle-linux-x86-20131030/eclipse/plugins/org.junit_3.8.2.v3_8_2_v20100427-1100/
+org.eclipse.jdt.core.classpathVariable.M2_REPO=/home/wst/ThirdRepo/Storm/repository
+org.eclipse.jdt.core.codeComplete.visibilityCheck=enabled
+org.eclipse.jdt.core.compiler.codegen.inlineJsrBytecode=enabled
+org.eclipse.jdt.core.compiler.codegen.targetPlatform=1.6
+org.eclipse.jdt.core.compiler.compliance=1.6
+org.eclipse.jdt.core.compiler.problem.assertIdentifier=error
+org.eclipse.jdt.core.compiler.problem.enumIdentifier=error
+org.eclipse.jdt.core.compiler.source=1.6

@@ -1,0 +1,5 @@
+package storm.starter.spout;
+
+public class SentenceSpout {
+
+}

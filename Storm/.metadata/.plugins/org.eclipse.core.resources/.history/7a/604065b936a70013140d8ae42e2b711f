@@ -1,0 +1,5 @@
+package com.wst.sweetfm.bolt;
+
+public class MTSA_DPRC_SplitBolt extends BaseBasicBolt{
+
+}

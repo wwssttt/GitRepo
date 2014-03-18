@@ -1,0 +1,50 @@
+package storm.starter;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.thrift7.TException;
+
+import backtype.storm.generated.DRPCExecutionException;
+import backtype.storm.utils.DRPCClient;
+
+public class DRPCDemo {
+	public static void main(String[] args) throws TException, DRPCExecutionException{
+		
+		HashMap<Integer,Double> distanceMap = new HashMap<Integer,Double>();
+		
+		distanceMap.put(1, 0.6);
+		distanceMap.put(2, 0.16);
+		distanceMap.put(3, 0.65);
+		distanceMap.put(4, 0.56);
+		distanceMap.put(5, 0.16);
+		distanceMap.put(6, 0.16);
+		distanceMap.put(7, 1.6);
+		distanceMap.put(8, 6.0);
+		distanceMap.put(9, 0.06);
+		distanceMap.put(10, 10000.0);
+		
+		List<Map.Entry<Integer, Double>> disInfos =
+			    new ArrayList<Map.Entry<Integer, Double>>(distanceMap.entrySet());
+		
+		//排序
+		Collections.sort(disInfos, new Comparator<Map.Entry<Integer, Double>>() {   
+		    public int compare(Map.Entry<Integer, Double> o1, Map.Entry<Integer, Double> o2) {      
+		        return  (int) (o1.getValue() - o2.getValue()); 
+		    }
+		}); 
+		
+		
+		for(int i = 0; i < disInfos.size(); i++){
+			System.out.println(disInfos.get(i).getKey()+"\t"+disInfos.get(i).getValue());
+		}
+		
+		DRPCClient client = new DRPCClient("127.0.0.1", 3772);
+		String result = client.execute("exclamation","http://twitter.com");
+		System.err.println(result);
+	}
+}

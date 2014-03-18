@@ -1,0 +1,11 @@
+/**
+ * MTSA_AnalyzeSpout.java
+ * 版权所有(C) 2014 
+ * 创建:wwssttt 2014-03-07 22:41:00
+ * 描述:得到上游数据，进行时序分析
+ */
+package storm.starter;
+
+public class MTSATopology {
+
+}

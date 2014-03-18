@@ -1,0 +1,11 @@
+/**
+ * MTSA_ReduceBolt.java
+ * 版权所有(C) 2014 
+ * 创建:wwssttt 2014-03-08 20:29:00
+ * 描述:配置并启动Topology
+ */
+package storm.starter.bolt;
+
+public class MTSA_ReduceBolt {
+
+}

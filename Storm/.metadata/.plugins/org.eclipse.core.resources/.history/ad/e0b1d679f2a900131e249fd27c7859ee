@@ -1,0 +1,42 @@
+public class ExSmoothExample {
+	
+	private static double exponentSmoothingSingle(double[] series){
+		int arrSize = 6;
+        double s[] = new double[arrSize];
+        double sse = 0, mse = 2E16, alpha = 0;
+        s[0] = 0;
+        // ac - different values of alpha
+        for(double ac=0;ac<=1;ac+=0.1)
+        {
+            s[1] = y[0];
+            sse = 0;
+            double temp = 0;
+            for(int i =2;i<arrSize;i++)
+            {
+                s[i] = (ac * y[i-1]) + ((1-ac)*s[i-1]);
+                sse += Math.pow(s[i] - y[i],2);
+            }
+            temp = sse/ arrSize;
+            if(temp < mse)
+            {
+                mse = temp;
+                alpha = ac;
+            }
+        }
+        System.out.println("alpha :: "+ alpha);
+        System.out.println("mse :: "+ mse);
+        System.out.println("f(7) = "+ predict(y[arrSize-1],s[arrSize-1],alpha));
+	}
+	
+	public static void main(String[] args) {
+        double dates[] = {1,2,3,4,5,6};
+
+        double[] y = { -36.72662900,3.57038300,
+                14.38958000,35.91506000,40.39876700,67.24089900};
+        
+    }
+
+    private static double predict(double y, double s, double alpha) {
+        return (alpha * y) + ((1-alpha)*s);
+    }
+}

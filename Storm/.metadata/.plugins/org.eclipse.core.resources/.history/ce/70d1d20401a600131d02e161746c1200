@@ -1,0 +1,40 @@
+/**
+ * MTSA_Song.java
+ * 版权所有(C) 2014 
+ * 创建:wwssttt 2014-03-7 22:00:00
+ */
+package storm.starter.model;
+
+import java.util.HashMap;
+
+public class MTSA_Song {
+	private long sid;
+	HashMap<Integer,Double> topicMap;
+	
+	public long getSid() {
+		return sid;
+	}
+	
+	public void setSid(long sid) {
+		this.sid = sid;
+	}
+	
+	public HashMap<Integer, Double> getTopicMap() {
+		return topicMap;
+	}
+	
+	public void setTopicMap(HashMap<Integer, Double> topicMap) {
+		this.topicMap = topicMap;
+	}
+	
+	public MTSA_Song(long sid, HashMap<Integer, Double> topicMap) {
+		super();
+		this.sid = sid;
+		this.topicMap = topicMap;
+	}
+	
+	@Override
+	public String toString() {
+		return "MTSA_Song [sid=" + sid + ", topicMap=" + topicMap + "]";
+	}
+}

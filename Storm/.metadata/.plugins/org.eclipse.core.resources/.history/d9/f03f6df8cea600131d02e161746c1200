@@ -1,0 +1,89 @@
+package storm.starter.bolt;
+
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Queue;
+
+import backtype.storm.topology.BasicOutputCollector;
+import backtype.storm.topology.OutputFieldsDeclarer;
+import backtype.storm.topology.base.BaseBasicBolt;
+import backtype.storm.tuple.Fields;
+import backtype.storm.tuple.Tuple;
+import backtype.storm.tuple.Values;
+
+public class MTSA_DRPC_InputBolt extends BaseBasicBolt{
+	
+	private static HashMap<Integer,HashMap<Integer,Double>> songMap = new HashMap<Integer,HashMap<Integer,Double>>(){
+		{
+		  put(0,new HashMap<Integer,Double>(){
+			  {
+			    put(0,0.5);
+			    put(1,0.2);
+			    put(2,0.3);
+			  }
+		   });
+		  put(1,new HashMap<Integer,Double>(){
+			  {
+			    put(0,0.1);
+			    put(1,0.4);
+			    put(2,0.5);
+			  }
+		   });
+		  put(2,new HashMap<Integer,Double>(){
+			  {
+			    put(0,0.15);
+			    put(1,0.4);
+			    put(2,0.45);
+			  }
+		   });
+		  put(3,new HashMap<Integer,Double>(){
+			  {
+			    put(0,0.25);
+			    put(1,0.4);
+			    put(2,0.35);
+			  }
+		   });
+		}
+	};
+	private Queue<String> queue;
+	
+	@Override
+    public void execute(Tuple tuple, BasicOutputCollector collector) {
+      //String input = tuple.getString(1);
+      //collector.emit(new Values(tuple.getValue(0), input + "!"));
+      if (!this.queue.isEmpty()){
+		String seqStr = this.queue.poll();
+		System.err.println("spoutIndex = "+this.spoutIndex+" seqStr = "+seqStr);
+		collector.emit(new Values(seqStr));
+		}
+    }
+
+    @Override
+    public void declareOutputFields(OutputFieldsDeclarer declarer) {
+      declarer.declare(new Fields("id", "result"));
+    }
+    
+  //construction method
+  	//parse original sequence to sub sequences of different topics
+  	public MTSA_DRPC_InputBolt(String originalSeq){
+  		this.queue = new LinkedList<String>();
+  		String[] items = originalSeq.split(">");
+  		Integer[] sids = new Integer[items.length];
+  		for(int i = 0; i < sids.length; i++){
+  			sids[i] = Integer.valueOf(items[i]);
+  		}
+  		for(int tid = 0; tid < 3; tid++){
+  			StringBuffer subSeq = new StringBuffer();
+  			subSeq.append(tid+"#");
+  			for(int sIndex = 0; sIndex < sids.length; sIndex++){
+  				Integer sid = sids[sIndex];
+  				if (sIndex == (sids.length - 1)){
+  					subSeq.append(songMap.get(sid).get(tid));
+  				}else{
+  					subSeq.append(songMap.get(sid).get(tid)+">");
+  				}
+  			}
+  			this.queue.add(subSeq.toString());
+  		}
+  	}
+}

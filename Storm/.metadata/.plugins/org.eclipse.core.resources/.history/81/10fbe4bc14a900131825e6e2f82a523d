@@ -1,0 +1,12 @@
+library(Storm,quietly=TRUE)
+
+storm = Storm$new();
+
+storm$lambda = function(s) {
+  t = s$tuple;
+  word = t$input[1]
+  t$output[1] = word
+  s$emit(t)
+};
+
+storm$run();

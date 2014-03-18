@@ -1,0 +1,14 @@
+library(rjson)
+library(Storm)
+
+storm = Storm$new();
+
+storm$lambda = function(s) {
+  t = s$tuple;
+  word = paste(t$input[0],"###");
+  t$output[0] = word;
+  json = toJSON(t$output);
+  s$emit(t);
+};
+
+storm$run();

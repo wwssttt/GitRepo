@@ -1,0 +1,300 @@
+0	0.00333	
+1	0.00333	
+2	0.00333	vae 
+3	0.00333	danny ep 
+4	0.00333	
+5	0.00333	girlsgeneration sm 
+6	0.00333	avrillavigne 
+7	0.00333	karen 
+8	0.00333	
+9	0.00333	
+10	0.00333	
+11	0.00333	eminem rap hop hip dido stan 
+12	0.00333	
+13	0.00333	ep girlsgeneration 
+14	0.00333	ylvis 
+15	0.00333	dragon bigbang yg 
+16	0.00333	
+17	0.00333	
+18	0.00333	avrillavigne punk avril complicated nobodys demo 
+19	0.00333	stefanie 
+20	0.00333	clarkson kelly 
+21	0.00333	
+22	0.00333	katyperry katy perry 
+23	0.00333	
+24	0.00333	ne lollipop 
+25	0.00333	
+26	0.00333	
+27	0.00333	
+28	0.00333	ost 
+29	0.00333	karen 
+30	0.00333	hardcore 
+31	0.00333	faye 
+32	0.00333	songwriter singer 
+33	0.00333	
+34	0.00333	jacky 
+35	0.00333	super star 
+36	0.00333	gaga 
+37	0.00333	pitbull rap 
+38	0.00333	eminem rap hip hop 
+39	0.00333	hk 
+40	0.00333	cocolee closet 
+41	0.00333	
+42	0.00333	newage 
+43	0.00333	beyonce beyonc 
+44	0.00333	mavis 
+45	0.00333	
+46	0.00333	mirror ost 
+47	0.00333	michaeljackson invincible michael 
+48	0.00333	eminem rap hop hip 
+49	0.00333	angela 
+50	0.00333	
+51	0.00333	katyperry katy missyelliott 
+52	0.00333	
+53	0.00333	bossanova jazz lisaono bossa nova lisa ono 
+54	0.00333	live 
+55	0.00333	
+56	0.00333	justintimberlake 
+57	0.00333	avrillavigne avril punk 
+58	0.00333	
+59	0.00333	onerepubic 
+60	0.00333	themoment 
+61	0.00333	
+62	0.00333	
+63	0.00333	
+64	0.00333	
+65	0.00333	sarabareilles hebe 
+66	0.00333	remix 
+67	0.00333	stefanie 
+68	0.00333	
+69	0.00333	salute 
+70	0.00333	
+71	0.00333	jay umbrella hip hop 
+72	0.00333	kelly american punk clarkson 
+73	0.00333	
+74	0.00333	piano 
+75	0.00333	
+76	0.00333	tanya 
+77	0.00333	mayday 
+78	0.00333	maroon 
+79	0.00333	leehom 
+80	0.00333	drenched ost 
+81	0.00333	cloudsong chimneycrow caca indie 
+82	0.00333	number lucky 
+83	0.00333	kanyewest jay hop hip 
+84	0.00333	maroon poprock softrock 
+85	0.00333	ladygaga dance 
+86	0.00333	yo ne 
+87	0.00333	westlife youraisemeup 
+88	0.00333	dance chinablue 
+89	0.00333	ep 
+90	0.00333	
+91	0.00333	
+92	0.00333	ost 
+93	0.00333	remix 
+94	0.00333	
+95	0.00333	ara 
+96	0.00333	dont remix 
+97	0.00333	
+98	0.00333	ep 
+99	0.00333	
+100	0.00333	ep 
+101	0.00333	jj 
+102	0.00333	avrillavigne punk avril girlfriend 
+103	0.00333	
+104	0.00333	girlsgeneration kpop 
+105	0.00333	
+106	0.00333	
+107	0.00333	hebe 
+108	0.00333	ep 
+109	0.00333	love christmas xmas 
+110	0.00333	
+111	0.00333	china blue 
+112	0.00333	
+113	0.00333	drdre skylargrey 
+114	0.00333	cyndi 
+115	0.00333	acoustic 
+116	0.00333	ladygaga dance 
+117	0.00333	
+118	0.00333	
+119	0.00333	kellyclarkson thankful ep xmas 
+120	0.00333	
+121	0.00333	
+122	0.00333	
+123	0.00333	ladygaga dance lady gaga disco 
+124	0.00333	
+125	0.00333	hk 
+126	0.00333	sunrise 
+127	0.00333	
+128	0.00333	
+129	0.00333	
+130	0.00333	onerepublic apologize 
+131	0.00333	adultalternativepop alternative band 
+132	0.00333	
+133	0.00333	
+134	0.00333	sos hop hip 
+135	0.00333	mockingbird hiphop 
+136	0.00333	timbaland onerepublic apologize 
+137	0.00333	ep 
+138	0.00333	mei 
+139	0.00333	
+140	0.00333	jazz bossanova 
+141	0.00333	
+142	0.00333	stefanie 
+143	0.00333	honey cyndi 
+144	0.00333	
+145	0.00333	
+146	0.00333	jacky 
+147	0.00333	darling mavis 
+148	0.00333	rise 
+149	0.00333	live 
+150	0.00333	
+151	0.00333	
+152	0.00333	folk 
+153	0.00333	beyonc ep 
+154	0.00333	
+155	0.00333	
+156	0.00333	
+157	0.00333	
+158	0.00333	classic 
+159	0.00333	
+160	0.00333	encore 
+161	0.00333	soul 
+162	0.00333	mayday 
+163	0.00333	jj 
+164	0.00333	angela 
+165	0.00333	onerepublic ep 
+166	0.00333	bandari newage 
+167	0.00333	
+168	0.00333	
+169	0.00333	magic 
+170	0.00333	westlife turnaround classic 
+171	0.00333	
+172	0.00333	indie sodagreen demo 
+173	0.00333	
+174	0.00333	gee 
+175	0.00333	girlsgeneration 
+176	0.00333	ep 
+177	0.00333	faye 
+178	0.00333	katyperry 
+179	0.00333	
+180	0.00333	chinablue 
+181	0.00333	
+182	0.00333	faye 
+183	0.00333	
+184	0.00333	onerepublic alternative 
+185	0.00333	vae 
+186	0.00333	
+187	0.00333	beyonce dance dreamgirl 
+188	0.00333	
+189	0.00333	jazz 
+190	0.00333	newage girlsgeneration 
+191	0.00333	faye dar di 
+192	0.00333	moment stefanie 
+193	0.00333	
+194	0.00333	
+195	0.00333	maroon christinaaguilera 
+196	0.00333	
+197	0.00333	
+198	0.00333	
+199	0.00333	
+200	0.00333	
+201	0.00333	yoga ep 
+202	0.00333	ep karen 
+203	0.00333	
+204	0.00333	shakira 
+205	0.00333	
+206	0.00333	
+207	0.00333	eason 
+208	0.00333	
+209	0.00333	michaeljackson jackson michael dangerous 
+210	0.00333	leave stefanie 
+211	0.00333	indie mavis 
+212	0.00333	
+213	0.00333	eminem rap hip hop hiphop soldiers thewayiam 
+214	0.00333	leslie 
+215	0.00333	onerepublic poprock 
+216	0.00333	mayday 
+217	0.00333	danny 
+218	0.00333	
+219	0.00333	bandari newage 
+220	0.00333	
+221	0.00333	
+222	0.00333	
+223	0.00333	
+224	0.00333	live indie 
+225	0.00333	
+226	0.00333	
+227	0.00333	avril avrillavigne punk lavigne 
+228	0.00333	lose 
+229	0.00333	katyperry ep 
+230	0.00333	shin beyondce 
+231	0.00333	tanya 
+232	0.00333	
+233	0.00333	davidguetta ep 
+234	0.00333	
+235	0.00333	
+236	0.00333	
+237	0.00333	indie sodagreen 
+238	0.00333	
+239	0.00333	oaoa 
+240	0.00333	
+241	0.00333	
+242	0.00333	
+243	0.00333	hop hip crazy ost 
+244	0.00333	
+245	0.00333	
+246	0.00333	
+247	0.00333	avrillavigne ep 
+248	0.00333	
+249	0.00333	coco 
+250	0.00333	sandy 
+251	0.00333	stefanie 
+252	0.00333	
+253	0.00333	
+254	0.00333	
+255	0.00333	
+256	0.00333	hebe 
+257	0.00333	eyes 
+258	0.00333	cent folk 
+259	0.00333	jay deja 
+260	0.00333	avrillavigne lavigne avril 
+261	0.00333	
+262	0.00333	tanya 
+263	0.00333	
+264	0.00333	shero 
+265	0.00333	dance 
+266	0.00333	
+267	0.00333	clarkson 
+268	0.00333	
+269	0.00333	
+270	0.00333	girl 
+271	0.00333	play 
+272	0.00333	fish 
+273	0.00333	
+274	0.00333	jolin 
+275	0.00333	
+276	0.00333	dangerous 
+277	0.00333	disturbia folk 
+278	0.00333	kellyclarkson breakaway country kelly 
+279	0.00333	
+280	0.00333	rain 
+281	0.00333	
+282	0.00333	
+283	0.00333	ost dreamgirl 
+284	0.00333	avrillavigne punk avril 
+285	0.00333	psy 
+286	0.00333	band 
+287	0.00333	
+288	0.00333	
+289	0.00333	coco 
+290	0.00333	indie 
+291	0.00333	bigbang yg hop hip rdminiablum 
+292	0.00333	
+293	0.00333	kitaro newage 
+294	0.00333	
+295	0.00333	ep 
+296	0.00333	folk 
+297	0.00333	westlife ireland 
+298	0.00333	jj 
+299	0.00333	mei 

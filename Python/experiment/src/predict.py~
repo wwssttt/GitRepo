@@ -88,30 +88,37 @@ def topicDictForNextSongByArima(playlist,songDict):
   return topicDict
 
 #get predicted topic dict of next song by most similar hybrid method
-def topicDictForNextSongByMostSimilarHybrid(playlist,songDict,arimaDict,lamda):
+def topicDictForNextSongByMostSimilarHybrid(playlist,songDict,arimaDict):
   trainingList = playlist.getTrainingList()
   pid = playlist.getPid()
   count = len(trainingList)
+
+  val = math.sqrt(count)
+  lamda = val / (val + 8.0)
+
   sid = trainingList[count-1]
   lastTopicDict =  songDict[sid].getTopicDict()
   arima = arimaDict[pid]
   topicDict = {}
   for topic in lastTopicDict.keys():
-    pro = lamda*lastTopicDict[topic] + (1 - lamda)*arima[topic]
+    pro = (1.0 - lamda)*lastTopicDict[topic] + lamda*arima[topic]
     topicDict[topic] = pro
   return topicDict
 
 #get predicted topic dict of next song by average hybrid method
-def topicDictForNextSongByAverageHybrid(playlist,songDict,arimaDict,lamda):
+def topicDictForNextSongByAverageHybrid(playlist,songDict,arimaDict):
   trainingList = playlist.getTrainingList()
   pid = playlist.getPid()
   count = len(trainingList)
+
+  lamda = count / (count + 5.0)
+
   sid = trainingList[count-1]
   avgTopicDict = topicDictForNextSongByAverage(playlist,songDict)
   arima = arimaDict[pid]
   topicDict = {}
   for topic in avgTopicDict.keys():
-    pro = lamda*avgTopicDict[topic] + (1 - lamda)*arima[topic]
+    pro = (1.0 - lamda)*avgTopicDict[topic] + lamda*arima[topic]
     topicDict[topic] = pro
   return topicDict
 
@@ -136,7 +143,7 @@ def getRecSongs(songDict,topN,tarDict):
 #3: Arima + Similar
 #4: Arima + Average
 #default: most similar
-def getRecDict(playlistDict,songDict,recType = 0,scale = 0,lamda = 0.45,topN = const.TOP_N):
+def getRecDict(playlistDict,songDict,recType = 0,scale = 0,topN = const.TOP_N):
   recDict = {}
   if recType == const.ARIMA or recType == const.ARIMA_SIMILAR or recType == const.ARIMA_AVG:
     arimaDict = persist.readPredictedTopicDictOfArima(playlistDict,songDict,scale)
@@ -157,9 +164,9 @@ def getRecDict(playlistDict,songDict,recType = 0,scale = 0,lamda = 0.45,topN = c
         tarDict[tid] /= total
       print sum(tarDict.values())
     elif recType == const.ARIMA_SIMILAR:
-      tarDict = topicDictForNextSongByMostSimilarHybrid(playlist,songDict,arimaDict,lamda)
+      tarDict = topicDictForNextSongByMostSimilarHybrid(playlist,songDict,arimaDict)
     elif recType == const.ARIMA_AVG:
-      tarDict = topicDictForNextSongByAverageHybrid(playlist,songDict,arimaDict,lamda)
+      tarDict = topicDictForNextSongByAverageHybrid(playlist,songDict,arimaDict)
     else:
       print '%d is an Error Type......' % recType
       return
@@ -449,8 +456,11 @@ def getRecDictOfRandom(playlistDict,songDict,scale,topN = const.TOP_N):
   recDict = {}
   keys = songDict.keys()
   size = len(keys) - 1
-
+  index = 0
+  length = len(playlistDict)
   for pid in playlistDict.keys():
+    index += 1
+    print 'scale = %d >> Random:%d/%d' % (scale,index,length)
     result = []
     for i in range(0,topN):
       randomIndex = random.randint(0,size)

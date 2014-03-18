@@ -1,0 +1,108 @@
+package com.wst.sweetfm.util;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
+
+public class SongTopicReader {
+	private static SongTopicReader instance = null;
+	private static HashMap<Integer,HashMap<Integer,Double>> songMap = null;
+	private static HashMap<Integer,HashMap<Integer,Double>> topicStatsMap = null;
+	public static int count = 0;
+	 
+	//这个synchronized很重要
+	public static synchronized SongTopicReader getInstance() {
+		// 第一次使用时生成实例
+	    if (instance == null){
+	    	instance = new SongTopicReader();
+	    }
+	    return instance;
+	}
+	
+	private SongTopicReader(){
+	}
+	
+	public static synchronized HashMap<Integer,HashMap<Integer,Double>> getSongMap(){
+		if (songMap != null){
+			return songMap;
+		}
+		count += 1;
+		songMap = new HashMap<Integer,HashMap<Integer,Double>>();
+		try{
+			BufferedReader br = new BufferedReader(new FileReader(new File("/home/wst/GitRepo/Storm/SweetFM/song-topic.txt")));
+			String line = null;
+			line = br.readLine();
+			while((line = br.readLine()) != null){
+				String[] items = line.split("\t");
+				int size = items.length;
+				Integer index = Integer.valueOf(items[0]);
+				String filePath = items[1];
+				int lastIndex = filePath.lastIndexOf('/');
+				String sidStr = filePath.substring(lastIndex+1);
+				Integer sid = Integer.valueOf(sidStr);
+				HashMap<Integer,Double> topicMap = new HashMap<Integer,Double>();
+				for(int i = 2; i < size;){
+					Integer tid = Integer.valueOf(items[i]);
+					i = i + 1;
+					Double probability = Double.valueOf(items[i]);
+					i = i + 1;
+					if (!topicMap.containsKey(tid)){
+						topicMap.put(tid, probability);
+					}
+				}
+				if(!songMap.containsKey(sid)){
+					songMap.put(sid, topicMap);
+				}
+			}
+			br.close();
+		}catch(Exception e){
+			e.printStackTrace();
+			return null;
+		}
+		return songMap;
+	}
+	
+	public static synchronized HashMap<Integer,HashMap<Integer,Double>> getTopicStatsMap(){
+		if (topicStatsMap != null){
+			return topicStatsMap;
+		}
+		topicStatsMap = new HashMap<Integer,HashMap<Integer,Double>>();
+		if(songMap == null){
+			getSongMap();
+		}
+		for(int tid = 0; tid < MTSA_Const.TOPIC_NUM; tid++){
+			//System.out.print("tid = "+tid);
+			double maxProbability = -1;
+			Integer maxSid = 0;
+			Iterator<Entry<Integer, HashMap<Integer, Double>>> iter = songMap.entrySet().iterator();
+			while(iter.hasNext()){
+				Entry<Integer, HashMap<Integer, Double>> sMap = iter.next();
+				Integer sid = sMap.getKey();
+				double probability = sMap.getValue().get(tid);
+				//System.out.println(tid+"\t"+sid+"\t"+probability);
+				if(probability > maxProbability){
+					maxProbability = probability;
+					maxSid = sid;
+				}
+			}
+			HashMap<Integer,Double> maxMap = new HashMap<Integer,Double>();
+			maxMap.put(maxSid, maxProbability);
+			topicStatsMap.put(tid, maxMap);
+		}
+		return topicStatsMap;
+	}
+	
+	public static void main(String[] args) throws FileNotFoundException{
+		getTopicStatsMap();
+		System.out.println(topicStatsMap);
+		System.out.println(songMap.get(1689).get(0));
+		System.out.println(songMap.get(1632).get(1));
+		pw.close();
+	}
+}

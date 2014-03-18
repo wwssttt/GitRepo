@@ -1,0 +1,40 @@
+package storm.starter;
+
+import java.util.Map;
+
+import backtype.storm.coordination.BatchOutputCollector;
+import backtype.storm.coordination.IBatchBolt;
+import backtype.storm.task.ShellBolt;
+import backtype.storm.task.TopologyContext;
+import backtype.storm.topology.OutputFieldsDeclarer;
+
+public class BatchTopology {
+	public static class MyBatchBolt extends ShellBolt implements IBatchBolt{
+
+		@Override
+		public void declareOutputFields(OutputFieldsDeclarer declarer) {
+			// TODO Auto-generated method stub
+			declarer.declare(new Fields("word"));
+		}
+
+		@Override
+		public Map<String, Object> getComponentConfiguration() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public void prepare(Map conf, TopologyContext context,
+				BatchOutputCollector collector, Object id) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void finishBatch() {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	}
+}

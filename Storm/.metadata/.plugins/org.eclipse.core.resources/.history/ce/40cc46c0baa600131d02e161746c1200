@@ -1,0 +1,61 @@
+/**
+ * MTSA_AnalyzeSpout.java
+ * 版权所有(C) 2014 
+ * 创建:wwssttt 2014-03-07 22:41:00
+ * 描述:得到上游数据，进行时序分析
+ */
+package storm.starter.bolt;
+
+import RList;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import backtype.storm.task.OutputCollector;
+import backtype.storm.task.TopologyContext;
+import backtype.storm.topology.OutputFieldsDeclarer;
+import backtype.storm.topology.base.BaseRichBolt;
+import backtype.storm.tuple.Tuple;
+
+public class MTSA_AnalyzeBolt extends BaseRichBolt{
+	
+	private OutputCollector collector;
+	private int boltIndex;
+	@Override
+	public void prepare(Map stormConf, TopologyContext context,
+			OutputCollector collector) {
+		// TODO Auto-generated method stub
+		this.collector = collector;
+		this.boltIndex = context.getThisTaskIndex();
+	}
+
+	@Override
+	public void execute(Tuple input) {
+		// TODO Auto-generated method stub
+		String subSeq = input.getString(0);
+		System.err.println("boltIndex = "+this.boltIndex+" subSeq = "+subSeq);
+		String[] items = subSeq.split("#");
+		Integer tid = Integer.valueOf(items[0]);
+		String topicStr = items[1];
+		String[] topicItems = topicStr.split(">");
+		double[] topicDistribution = new double[topicItems.length];
+		for(int i = 0; i < topicItems.length; i++){
+			topicDistribution[i] = Double.valueOf(topicItems[i]);
+		}
+		//arima预测
+		rc.assign("distribution", topicDistribution);
+		rc.voidEval("xseries <- ts(distribution)");
+		rc.voidEval("fit<-auto.arima(xseries,trace=T)");
+		RList rl = rc.eval("xfore<-forecast(fit,h=1,fan=T)").asList();
+		
+		double[] result = rl.at("mean").asDoubles();
+		
+		double nextSim =  result[0];
+	}
+
+	@Override
+	public void declareOutputFields(OutputFieldsDeclarer declarer) {
+		// TODO Auto-generated method stub
+	}
+
+}

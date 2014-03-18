@@ -1,0 +1,11 @@
+/**
+ * MTSATopology.java
+ * 版权所有(C) 2014 
+ * 创建:wwssttt 2014-03-08 19:38:00
+ * 描述:得到上游数据，进行时序分析
+ */
+package storm.starter;
+
+public class MTSATopology {
+
+}

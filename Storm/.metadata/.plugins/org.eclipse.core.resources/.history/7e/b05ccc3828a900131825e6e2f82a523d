@@ -1,0 +1,30 @@
+library(rjson)
+library(Storm)
+library(forecast)
+
+storm = Storm$new();
+
+storm$lambda = function(s) {
+  t = s$tuple;
+  subSeq = t$input[2];
+  items = strsplit(subSeq,"#");
+  tid = as.numeric(items[[1]][[1]]);
+  #topicStr = items[[1]][[2]];
+  #topicItems = strsplit(topicStr,">");
+  #topicProbability = c();
+  #size = length(topicItems[[1]]);
+  #for(i in 1:size){
+  #  probability = as.numeric(topicItems[[1]][[i]]);
+  #  topicProbability = c(topicProbability,probability);
+  #}
+  #pts = ts(topicProbability);
+  #fit = auto.arima(pts);
+  #pro = forecast(fit,h=1);
+  #result = pro$mean;
+  resultStr = paste(tid,0.25,sep=":");
+  t$output[1] = t$input[1];
+  t$output[2] = resultStr;
+  s$emit(t);
+};
+
+storm$run();

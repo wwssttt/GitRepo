@@ -1,0 +1,94 @@
+package storm.starter.spout;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Map;
+import java.util.Queue;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import storm.starter.model.Person;
+
+import backtype.storm.spout.SpoutOutputCollector;
+import backtype.storm.task.TopologyContext;
+import backtype.storm.topology.IRichSpout;
+import backtype.storm.topology.OutputFieldsDeclarer;
+import backtype.storm.tuple.Fields;
+import backtype.storm.tuple.Values;
+
+public class PersonSpout implements IRichSpout{
+	private static final long serializationUID = 398024243252476937L;
+	private static Log log = (Log) LogFactory.getLog(PersonSpout.class.getName());
+	Queue<Person> queues = new LinkedList<Person>();
+	ArrayList<Person> list = null;
+	
+	private SpoutOutputCollector collector;
+	private Map conf;
+	private TopologyContext context;
+	
+	@Override
+	public void ack(Object arg0){
+		log.debug("ack---->"+arg0);
+	}
+	
+	@Override
+	public void close(){
+		log.debug("close---->");
+	}
+	
+	@Override
+	public void fail(Object arg0){
+		log.debug("fail----->"+arg0);
+	}
+	
+	@Override
+	public void nextTuple(){
+		Person p = queues.poll();
+		if (p != null){
+			log.debug("nextTuple---->Send Message, UserId="+p.getId());
+			collector.emit(new Values(p), p);
+		}
+	}
+	
+	@Override
+	public void open(Map conf, TopologyContext context, SpoutOutputCollector colelctor){
+		log.debug("spout----> add dara to queues");
+		this.collector = collector;
+		this.conf = conf;
+		this.context = context;
+		
+		Iterator<Person> it = list.iterator();
+		while(it.hasNext()){
+			Person p = it.next();
+			queues.add(p);
+		}
+	}
+	
+	@Override
+	public void declareOutputFields(OutputFieldsDeclarer declarer){
+		log.debug("declareOutputFields---->set output fields");
+		declarer.declare(new Fields("person"));
+	}
+	
+	public PersonSpout(ArrayList<Person> list){
+		super();
+		this.list = list;
+	}
+	
+	@Override
+	public void activate(){
+		
+	}
+	
+	@Override
+	public void deactivate(){
+		
+	}
+	
+	@Override
+	public Map<String,Object> getComponentConfiguration(){
+		return null;
+	}
+}

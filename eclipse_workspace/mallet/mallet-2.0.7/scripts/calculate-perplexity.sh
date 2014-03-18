@@ -27,9 +27,9 @@ do
 	# Since projects such as eclipse, drools, etc. are quite bigger, we run LDA for greater range of number of topics
 	if [[ $project == "eclipse" || $project == "drools" || $project == "coffeemud" || $project == "netbeans" ]]
 	then
-		numTopics=({20..200..15})
+		numTopics=({5..100..15})
 	else
-		numTopics=({50..500..10})
+		numTopics=({10..500..10})
 	fi
 
 	# Iterate over major project versions

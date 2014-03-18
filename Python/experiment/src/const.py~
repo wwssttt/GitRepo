@@ -34,7 +34,7 @@ MARKOV_3 = 8
 METHOD_SIZE = 9
 
 locs = ['upper right','upper right','upper right','upper right','upper right']
-marker = ['k','g','k+','k--','k:']
+marker = ['k','k-.','k1','k--','k:']
 
 #group of comparision
 #1:ARIMA +  Similar + Avergae + Popular(Pure)

@@ -1,0 +1,5 @@
+package com.wst.sweetfm.util;
+
+public class MTSA_Const {
+	public static int TOPIC_NUM = 3;
+}

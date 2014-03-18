@@ -1,0 +1,80 @@
+/**
+ * MTSA_DRPC_AnalyzeSpout.java
+ * 版权所有(C) 2014 
+ * 创建:wwssttt 2014-03-08 22:13:00
+ * 描述:接收DRPCServer传来的参数进行计算
+ */
+package com.wst.sweetfm.bolt;
+
+import org.rosuda.REngine.RList;
+import org.rosuda.REngine.Rserve.RConnection;
+
+import com.numericalmethod.suanshu.stats.timeseries.datastructure.univariate.realtime.inttime.SimpleTimeSeries;
+import com.numericalmethod.suanshu.stats.timeseries.linear.univariate.arima.ARIMAForecastMultiStep;
+import com.numericalmethod.suanshu.stats.timeseries.linear.univariate.arima.ARIMAModel;
+import com.numericalmethod.suanshu.stats.timeseries.linear.univariate.stationaryprocess.arma.ConditionalSumOfSquares;
+
+import backtype.storm.topology.BasicOutputCollector;
+import backtype.storm.topology.OutputFieldsDeclarer;
+import backtype.storm.topology.base.BaseBasicBolt;
+import backtype.storm.tuple.Fields;
+import backtype.storm.tuple.Tuple;
+import backtype.storm.tuple.Values;
+
+public class MTSA_DRPC_SeriesAnalyzeBolt extends BaseBasicBolt{
+	
+	@Override
+    public void execute(Tuple tuple, BasicOutputCollector collector) {
+      //String input = tuple.getString(1);
+      //collector.emit(new Values(tuple.getValue(0), input + "!"));
+      
+      // TODO Auto-generated method stub
+      String subSeq = tuple.getString(1);
+   	  String[] items = subSeq.split("#");
+      Integer tid = Integer.valueOf(items[0]);
+   	  String topicStr = items[1];
+   	  String[] topicItems = topicStr.split(">");
+   	  double[] topicProbability = new double[topicItems.length];
+   	  for(int i = 0; i < topicItems.length; i++){
+   		topicProbability[i] = Double.valueOf(topicItems[i]);
+   	  }
+   	  try{
+   		//arima预测
+   		/*RConnection rc = new RConnection();
+   		rc.voidEval("library('forecast')");
+   		
+   		rc.assign("probability", topicProbability);
+   		rc.voidEval("xseries <- ts(probability)");
+   		rc.voidEval("fit<-auto.arima(xseries,trace=T)");
+   		RList rl = rc.eval("xfore<-forecast(fit,h=1,fan=T)").asList();
+   			
+   		double[] result = rl.at("mean").asDoubles();*/
+   		  
+		//build ARIMA model and then forecast next value
+		ConditionalSumOfSquares instance = new ConditionalSumOfSquares(topicProbability, 1, 1, 1);
+		ARIMAModel arima = instance.getModel();
+		ARIMAForecastMultiStep forecast = new ARIMAForecastMultiStep(new SimpleTimeSeries(topicProbability), arima, 1);
+		System.out.println("prediction = "+forecast.xHat());
+   			
+   		double nextProbability =  result[0];
+   			
+   		rc.close();
+   			
+   		String resultStr = tid+":"+nextProbability;
+   			
+   		System.err.println(" origin = "+subSeq+" result = "+resultStr);
+   			
+   		collector.emit(new Values(tuple.getValue(0),resultStr));
+   			
+   		}catch(Exception e){
+   			System.out.println(e.getMessage());
+   		}
+   		
+    }
+
+    @Override
+    public void declareOutputFields(OutputFieldsDeclarer declarer) {
+      declarer.declare(new Fields("id", "result"));
+    }
+
+}

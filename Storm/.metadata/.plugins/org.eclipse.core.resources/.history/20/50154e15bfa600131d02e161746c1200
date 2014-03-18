@@ -1,0 +1,58 @@
+/**
+ * MTSA_ReduceBolt.java
+ * 版权所有(C) 2014 
+ * 创建:wwssttt 2014-03-08 20:29:00
+ * 描述:接收上游计算结果并组装成新的概率分布
+ */
+package storm.starter.bolt;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import backtype.storm.task.OutputCollector;
+import backtype.storm.task.TopologyContext;
+import backtype.storm.topology.OutputFieldsDeclarer;
+import backtype.storm.topology.base.BaseRichBolt;
+import backtype.storm.tuple.Tuple;
+
+public class MTSA_ReduceBolt extends BaseRichBolt{
+
+	private OutputCollector collector;
+	private int reduceIndex;
+	private HashMap<Integer,Double> predictedTopicMap = new HashMap<Integer,Double>();
+	
+	@Override
+	public void prepare(Map stormConf, TopologyContext context,
+			OutputCollector collector) {
+		// TODO Auto-generated method stub
+		this.collector = collector;
+		this.reduceIndex = context.getThisTaskIndex();
+	}
+
+	@Override
+	public void execute(Tuple input) {
+		// TODO Auto-generated method stub
+		String nextStr = input.getString(0);
+		String[] items = nextStr.split("#");
+		Integer tid = Integer.valueOf(items[0]);
+		Double probability = Double.valueOf(items[1]);
+		if(!this.predictedTopicMap.containsKey(tid)){
+			this.predictedTopicMap.put(tid, probability);
+		}
+		System.err.println("reduceIndex = "+this.reduceIndex+" length = "+this.predictedTopicMap.size());
+		
+		Iterator iter = map.entrySet().iterator();
+		while (iter.hasNext()) {
+		    Map.Entry entry = (Map.Entry) iter.next();
+		    Object key = entry.getKey();
+		    Object val = entry.getValue();
+		} 
+	}
+
+	@Override
+	public void declareOutputFields(OutputFieldsDeclarer declarer) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

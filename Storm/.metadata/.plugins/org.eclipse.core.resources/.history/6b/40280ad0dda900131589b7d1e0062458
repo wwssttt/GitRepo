@@ -1,0 +1,7 @@
+package com.wst.sweetfm.bolt;
+
+import backtype.storm.topology.base.BaseBatchBolt;
+
+public class MTSA_DRPC_DistanceClaculationBatchBolt extends BaseBatchBolt{
+
+}

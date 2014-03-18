@@ -1,0 +1,55 @@
+package com.wst.sweetfm.bolt;
+
+import java.util.Comparator;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
+import com.wst.sweetfm.util.MTSA_Const;
+
+import backtype.storm.topology.BasicOutputCollector;
+import backtype.storm.topology.OutputFieldsDeclarer;
+import backtype.storm.topology.base.BaseBasicBolt;
+import backtype.storm.tuple.Fields;
+import backtype.storm.tuple.Tuple;
+
+public class MTSA_DRPC_DistanceReduceBolt extends BaseBasicBolt{
+
+	private HashMap<Integer,Double> distanceMap = new HashMap<Integer,Double>();
+	
+	@Override
+	public void execute(Tuple input, BasicOutputCollector collector) {
+		// TODO Auto-generated method stub
+		String str = input.getString(1);
+		String[] items = str.split(":");
+		Integer sid = Integer.valueOf(items[0]);
+		Double distance = Double.valueOf(items[1]);
+		
+		if (!this.distanceMap.containsKey(sid)){
+			this.distanceMap.put(sid, distance);
+		}
+		
+		if(this.distanceMap.size() == MTSA_Const.SONG_NUM){
+			
+			List<Map.Entry<Integer, Double>> disInfos =
+				    new ArrayList<Map.Entry<Integer, Double>>(this.distanceMap.entrySet());
+			
+			//排序
+			Collections.sort(disInfos, new Comparator<Map.Entry<Integer, Double>>() {   
+			    public int compare(Map.Entry<Integer, Double> o1, Map.Entry<Integer, Double> o2) {      
+			        return (int) (o2.getValue() - o1.getValue()); 
+			    }
+			}); 
+		}
+		
+	}
+
+	@Override
+	public void declareOutputFields(OutputFieldsDeclarer declarer) {
+		// TODO Auto-generated method stub
+		declarer.declare(new Fields("id", "result"));
+	}
+
+}

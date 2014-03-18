@@ -1,0 +1,46 @@
+/**
+ * MTSATopology.java
+ * 版权所有(C) 2014 
+ * 创建:wwssttt 2014-03-08 19:38:00
+ * 描述:配置并启动Topology
+ */
+package com.wst.sweetfm.topology;
+
+import org.rosuda.REngine.Rserve.RConnection;
+
+import storm.starter.bolt.MTSA_AnalyzeBolt;
+import storm.starter.bolt.MTSA_ReduceBolt;
+import storm.starter.spout.MTSA_TopicSpout;
+import backtype.storm.Config;
+import backtype.storm.LocalCluster;
+import backtype.storm.topology.TopologyBuilder;
+import backtype.storm.utils.Utils;
+
+public class MTSATopology {
+	public static void main(String[] args){
+		try{
+			//System.err.println(args.length);
+			
+			TopologyBuilder builder = new TopologyBuilder();
+			
+			builder.setSpout("spout", new MTSA_TopicSpout("0>1>2>3"),1);
+			builder.setBolt("analyze", new MTSA_AnalyzeBolt(),3).shuffleGrouping("spout");
+			builder.setBolt("reduce", new MTSA_ReduceBolt(),1).shuffleGrouping("analyze");
+			
+			Config conf = new Config();
+			conf.setDebug(true);
+			
+			LocalCluster cluster = new LocalCluster();
+			cluster.submitTopology("mtsa", conf, builder.createTopology());
+			
+			Utils.sleep(5000);
+			
+			cluster.killTopology("mtsa");
+			cluster.shutdown();
+			
+		}catch(Exception e){
+			System.err.println(e.getMessage());
+			System.exit(0);
+		}
+	}
+}

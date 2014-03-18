@@ -152,7 +152,7 @@ def getMAEandRMSE(recDict,playlistDict,songDict,topN = const.TOP_N):
     for i in range(0,recNum):
       recSid = recList[i]
       recTopicDict = songDict[recSid].getTopicDict()
-      recError = KLSim(recTopicDict,tarDict)
+      recError = similarity(recTopicDict,tarDict)
       totalError = totalError + recError
     if recNum == 0:
       recNum = 0.0001
@@ -169,13 +169,13 @@ def getMethodName(mid):
   if mid == const.ARIMA:
     return "MTSA"
   elif mid == const.SIMILAR:
-    return "MostSimilar"
+    return "Local"
   elif mid == const.AVG:
-    return "Average"
+    return "Global"
   elif mid == const.ARIMA_SIMILAR:
-    return "Arima+Similar"
+    return "MTSA_Local"
   elif mid == const.ARIMA_AVG:
-    return "Arima+Average"
+    return "MTSA_Global"
   elif mid == const.KNN:
     return "UserKNN"
   elif mid == const.MARKOV:
@@ -184,6 +184,8 @@ def getMethodName(mid):
     return "PatternMining"
   elif mid == const.MARKOV_3:
     return "3rd-Markov"
+  elif mid == const.ARIMA_SIMILAR_AVG:
+    return "AllHybrid"
   else:
     print '%d does not exist......' % mid
     return

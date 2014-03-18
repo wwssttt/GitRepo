@@ -127,26 +127,29 @@ def generateDocofSong(sid,tagDict):
     result.append(tag*count)
   return " ".join(result)
 
-def generateDocs(scale = 0):  
+def generateDocs():  
   try:
     #connect db and select db name
     conn = MySQLdb.Connect(host=const.DBHOST,user=const.DBUSER,passwd=const.DBPWD,port=const.DBPORT,charset=const.DBCHARSET)
     cur = conn.cursor()
     conn.select_db(const.DBNAME)
-    #get all songs in playlist whose scale < 10
-    print 'I am getting songs from playlist...'
-    cur.execute('select playlist from user where scale < 10 and scale != -1')
-    results = cur.fetchall()
-    playlists = [result[0] for result in results]
+    
     sids = []
-    for playlist in playlists:
-      items = playlist.split('==>')
-      for item in items:
-        value = item.split(':')
-        sid = value[0]
-        if sid not in sids:
-          sids.append(sid)
+    sessionFile = open('../txt/%s_playlists.txt' % const.DATASET_NAME)
+    lines = sessionFile.readlines()
+    for line in lines:
+      line = line.strip('\n')
+      line = line.strip('\r\n')
+      items = line.split(':')
+      songStr = items[1]
+      songs = songStr.split(',')
+      for song in songs:
+        if song not in sids:
+          sids.append(song)
+    sessionFile.close()
+
     print '%d song are to be crawled...' % len(sids)
+    return
     print 'Begin to generate docs...'
     sFile = open('../txt/%s_song_Docs.txt' % const.DATASET_NAME,'w')
     dirname = '../txt/%s_songs' % const.DATASET_NAME
@@ -183,4 +186,5 @@ def generateDocs(scale = 0):
     logging.error('Mysql Error %d:%s' % (e.args[0],e.args[1]))
 
 if __name__ == "__main__":
-  generateDocs()
+   print stopwords
+  #generateDocs()

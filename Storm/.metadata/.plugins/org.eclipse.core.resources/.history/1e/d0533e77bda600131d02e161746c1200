@@ -1,0 +1,11 @@
+/**
+ * MTSA_ReduceBolt.java
+ * 版权所有(C) 2014 
+ * 创建:wwssttt 2014-03-08 20:29:00
+ * 描述:接收上游计算结果并组装成新的概率分布
+ */
+package storm.starter.bolt;
+
+public class MTSA_ReduceBolt {
+
+}

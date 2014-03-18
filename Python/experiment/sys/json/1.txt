@@ -1,0 +1,29 @@
+{
+	"id":"24885384",
+	"tags":[
+		{"count":1030,"name":"KatyPerry"},
+		{"count":499,"name":"Pop"},
+		{"count":359,"name":"欧美"},
+		{"count":302,"name":"2013"},
+		{"count":277,"name":"美国"},
+		{"count":167,"name":"Single"},
+		{"count":121,"name":"女声"},
+		{"count":82,"name":"Single/EP"}
+	],
+	"mobile_link":"http://m.douban.com/music/subject/24885384/",
+	"author":[{"name":"Katy Perry"}],
+	"title":"Roar",
+	"alt":"http://music.douban.com/subject/24885384/",
+	"attrs":{
+		"title":["Roar"],
+		"pubdate":["2013-08-12"],
+		"singer":["Katy Perry"],
+		"tracks":["01. Roar"],
+		"media":["数字(Digital)"],
+		"version":["单曲"],
+		"publisher":["Capitol"]
+	},
+	"image":"http://img3.douban.com/spic/s26954792.jpg",
+	"music_url":"http://zhangmenshiting.baidu.com/data2/music/68725468/68725468.mp3?xcode=29ee4fa3134a1b5de7c0ae7bf27ff3ad806e4c91c99d53ce&mid=0.23882427001131",
+	"rating":{"min":0,"max":10,"numRaters":3401,"average":"7.4"},"alt_title":""
+}

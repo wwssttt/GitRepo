@@ -1,0 +1,10 @@
+library(Storm)
+
+storm = Storm$new();
+
+storm$lambda = function(s) {
+  t = s$tuple;
+  s$emit(t);
+};
+
+storm$run();

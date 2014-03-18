@@ -1,0 +1,25 @@
+/**
+ * MTSATopology.java
+ * 版权所有(C) 2014 
+ * 创建:wwssttt 2014-03-08 19:38:00
+ * 描述:配置并启动Topology
+ */
+package storm.starter;
+
+import storm.starter.spout.MTSA_TopicSpout;
+import backtype.storm.topology.TopologyBuilder;
+
+public class MTSATopology {
+	public static void main(String[] args){
+		try{
+			System.err.println(args.length);
+			
+			TopologyBuilder builder = new TopologyBuilder();
+			builder.setSpout("spout", new MTSA_TopicSpout("0>1>2>3"));
+			builder.setBolt("bolt", new MTSA_AnalyzeBolt(),2);
+		}catch(Exception e){
+			System.err.println(e.getMessage());
+			System.exit(0);
+		}
+	}
+}

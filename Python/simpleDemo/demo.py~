@@ -1,19 +1,25 @@
 #!/usr/bin python
-#coding:utf-8
+#coding=utf-8
 
-import urllib 
-import urllib2 
-import requests 
+import sys
+from gensim import corpora, models, similarities
 
-def fun(index):
-  if index >= 0 and index < 10:
-    return "000%d" % index 
-  if index >= 10 and index < 100:
-    return "00%d" % index 
-  if index >= 100 and index < 1000:
-    return "0%d" % index 
+reload(sys)
+sys.setdefaultencoding('utf-8')
 
-page = 1
-url = "http://58.51.95.67:9896/dm13//ok-comic13/L/LiangRenShiJie/vol_01/dmeden-0001-11004.JPG" 
-path = '%d.jpg' % page
-urllib.urlretrieve(url, path)   
+documents = ["Shipment of gold damaged in a fire", "Delivery of silver arrived in a silver truck","Shipment of gold arrived in a truck"]
+texts = [[word for word in document.lower().split()] for document in documents]
+dictionary = corpora.Dictionary(texts)
+corpus = [dictionary.doc2bow(text) for text in texts]
+tfidf = models.TfidfModel(corpus)
+corpus_tfidf = tfidf[corpus]
+lda = models.LdaModel(corpus_tfidf, id2word=dictionary, num_topics=2)
+corpus_lda = lda[corpus_tfidf]
+index = similarities.Similarity('tmp/sim',lda[corpus],num_features=2)
+query = corpus[0]
+query_lda = lda[query]
+similarities = index[query_lda]
+print similarities
+#query_lda = lda[query]
+#sims = index[query_lda]
+#print list(enumerate(sims))
