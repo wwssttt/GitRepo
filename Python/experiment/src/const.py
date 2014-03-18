@@ -31,9 +31,7 @@ MARKOV = 6
 PATTERN = 7
 MARKOV_3 = 8
 
-ARIMA_SIMILAR_AVG = 9
-
-METHOD_SIZE = 10
+METHOD_SIZE = 9
 
 locs = ['upper right','upper right','upper right','upper right','upper right']
 marker = ['k','k-.','k1','k--','k:']

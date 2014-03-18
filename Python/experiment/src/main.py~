@@ -23,5 +23,6 @@ if __name__ == "__main__":
   #test.testRecMethod(const.SIMILAR)
   
   #test_session.showResult()
-  test.showResult()
+  #test.showResult()
   #test.getErrorOfRecMethod(const.MARKOV)
+  test.getErrorOfRecMethod(recType = const.ARIMA_SIMILAR_AVG)

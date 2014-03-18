@@ -192,58 +192,8 @@ def getErrorOfRecMethod(recType = 0):
       recDict = predict.getRecDictOfThreeOrderMarkov(allPlaylist,songDict,scale)
     elif recType == const.PATTERN:
       recDict = predict.getRecDictOfMostPattern(allPlaylist,songDict,scale)
-    elif recType == const.ARIMA_SIMILAR_AVG:
-      arimaDict = predict.getRecDict(playlistDict,songDict,const.ARIMA,scale)
-      similarDict = predict.getRecDict(playlistDict,songDict,const.SIMILAR,scale)
-      avgDict = predict.getRecDict(playlistDict,songDict,const.AVG,scale)
-      
     index = 0
     for topN in range(1,const.TOP_N,1):
-      if recType == const.ARIMA_SIMILAR_AVG:
-        recDict = {}
-        for pid in playlistDict:
-          recSongs = []
-          arimaRecSongs = arimaDict[pid]
-          similarRecSongs = similarDict[pid]
-          avgRecSongs = avgDict[pid]
-          arimaCount = int(0.75 * topN+0.5)
-          similarCount = int(0.75*(topN-arimaCount)+0.5)
-          avgCount = topN - arimaCount - similarCount
-
-          sCount = 0
-          i = 0
-          while sCount < arimaCount:
-            ssid = arimaRecSongs[i]
-            if ssid not in recSongs:
-              recSongs.append(ssid)
-              sCount += 1
-              i += 1
-            else:
-              i += 1
-
-          sCount = 0
-          i = 0
-          while sCount < similarCount:
-            ssid = similarRecSongs[i]
-            if ssid not in recSongs:
-              recSongs.append(ssid)
-              sCount += 1
-              i += 1
-            else:
-              i += 1
-
-          sCount = 0
-          i = 0
-          while sCount < avgCount:
-            ssid = avgRecSongs[i]
-            if ssid not in recSongs:
-              recSongs.append(ssid)
-              sCount += 1
-              i += 1
-            else:
-              i += 1
-          #print len(recSongs),topN
-          recDict[pid] = recSongs
       recall,precision,f1 = util.getTopNIndex(recDict,playlistDict,topN)
       mae,rmse = util.getMAEandRMSE(recDict,playlistDict,songDict,topN)
       if scale == 0:

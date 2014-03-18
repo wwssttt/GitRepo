@@ -134,7 +134,8 @@ def cosineSimilarity(dict1,dict2):
   for key in dict1.keys():
     if key in dict2:
       fenzi += (dict1[key] * dict2[key])
-  result = fenzi / fenmu
+  cosSim = fenzi / fenmu
+  return cosSim
 
 #calculate Hellinger distance of two discrete distribution
 def hellSimilarity(topicDict1,topicDict2):
@@ -153,6 +154,8 @@ def hellSimilarity(topicDict1,topicDict2):
   hellDis = math.sqrt(hellDis)
   #distance
   hellDis = hellDis * (1.0/math.sqrt(2))
+  if hellDis == 0:
+    hellDis = 1.0 / 10000000
   #similarity
   hellSimilarity = 1.0 / hellDis
   return hellSimilarity
@@ -169,8 +172,17 @@ def getRecSongs(recType,songMap,tarSid,topN):
       else:
         sims[sid] = hellSimilarity(srcMap,tarMap)
     else:
-      sims[sid] = 1000;
-  recList = sorted(enumerate(sims), key=lambda item: -item[1])
+      if recType != 3:
+        sims[sid] = 0.0
+      else:
+        sims[sid] = 1000
+  
+  if recType != 3:
+    #big to small
+    recList = sorted(sims.items(), key=lambda item: -item[1])
+  else:
+    #small to big
+    recList = sorted(sims.items(), key=lambda item: item[1])
   result = []
   for i in range(0,topN):
     result.append(recList[i][0])
@@ -251,8 +263,8 @@ def getErrorOfRecMethod(recType = 0):
 
 
 logging.info('Begin......')
-#getErrorOfRecMethod(0)
-#getErrorOfRecMethod(1)
-getErrorOfRecMethod(2)
-#getErrorOfRecMethod(3)
+getErrorOfRecMethod(0)
+getErrorOfRecMethod(1)
+#getErrorOfRecMethod(2)
+getErrorOfRecMethod(3)
 logging.info('End......')

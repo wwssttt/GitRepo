@@ -206,8 +206,8 @@ def getErrorOfRecMethod(recType = 0):
           arimaRecSongs = arimaDict[pid]
           similarRecSongs = similarDict[pid]
           avgRecSongs = avgDict[pid]
-          arimaCount = int(0.5 * topN+0.5)
-          similarCount = int(0.75*(topN-arimaCount)+0.5)
+          arimaCount = int(0.25 * topN+0.5)
+          similarCount = int(0.8*(topN-arimaCount)+0.5)
           avgCount = topN - arimaCount - similarCount
 
           sCount = 0
