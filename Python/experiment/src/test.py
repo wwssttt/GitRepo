@@ -184,6 +184,8 @@ def getErrorOfRecMethod(recType = 0):
       recDict = predict.getRecDict(playlistDict,songDict,recType,scale)
     elif recType == const.ARIMA_AVG:
       recDict = predict.getRecDict(playlistDict,songDict,recType,scale)
+    elif recType == const.ALL_HYBRID:
+      recDict = predict.getRecDict(playlistDict,songDict,recType,scale)
     elif recType == const.KNN:
       recDict = predict.getRecDictOfUserKNN(playlistDict,songDict,scale,pid2Index,countMatrix,simMatrix)
     elif recType == const.MARKOV:
@@ -292,7 +294,7 @@ def showResult():
   for index in range(5):
     plt.figure(index+5)
     indexName = util.getIndexName(index)
-    mids = [const.ARIMA,const.ARIMA_SIMILAR,const.ARIMA_AVG]
+    mids = [const.ARIMA,const.ARIMA_SIMILAR,const.ARIMA_AVG,const.ALL_HYBRID]
     markerIndex = 0
     for mid in mids:
       if index == 1 or index == 2:
@@ -321,7 +323,7 @@ def showResult():
       else:
         plt.plot(x,result[mid][index],const.marker[markerIndex],label=util.getMethodName(mid))
       markerIndex += 1
-    plt.title("%s of Different Recommend Algorithms" % indexName)
+    plt.title("%s of Different Recommend Methods" % indexName)
     plt.xlabel("Number of recommendations")
     plt.ylabel(indexName)
     plt.legend()
@@ -332,7 +334,8 @@ def showResult():
   plt.figure(30)
   plt.plot(x,result[const.ARIMA_SIMILAR][3],'k-.',label=util.getMethodName(const.ARIMA_SIMILAR)) 
   plt.plot(x,result[const.ARIMA_AVG][3],'k+',label=util.getMethodName(const.ARIMA_AVG)) 
-  plt.title("MAE of MTSA_Local and MTSA_Global Recommend Algorithms")
+  plt.plot(x,result[const.ALL_HYBRID][3],'k',label=util.getMethodName(const.ALL_HYBRID)) 
+  plt.title("MAE of Hybrid Music Recommendation Methods")
   plt.xlabel("Number of recommendations")
   plt.ylabel("MAE")
   plt.legend()
@@ -342,7 +345,8 @@ def showResult():
   plt.figure(31)
   plt.plot(x,result[const.ARIMA_SIMILAR][4],'k-.',label=util.getMethodName(const.ARIMA_SIMILAR)) 
   plt.plot(x,result[const.ARIMA_AVG][4],'k+',label=util.getMethodName(const.ARIMA_AVG)) 
-  plt.title("RMSE of MTSA_Local and MTSA_Global Recommend Algorithms")
+  plt.plot(x,result[const.ALL_HYBRID][4],'k',label=util.getMethodName(const.ALL_HYBRID)) 
+  plt.title("RMSE of Hybrid Music Recommendation Methods")
   plt.xlabel("Number of recommendations")
   plt.ylabel("RMSE")
   plt.legend()

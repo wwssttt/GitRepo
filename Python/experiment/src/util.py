@@ -184,6 +184,8 @@ def getMethodName(mid):
     return "PatternMining"
   elif mid == const.MARKOV_3:
     return "3rd-Markov"
+  elif mid == const.ALL_HYBRID:
+    return "MTSA_ALL"
   else:
     print '%d does not exist......' % mid
     return

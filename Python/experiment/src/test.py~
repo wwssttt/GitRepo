@@ -184,6 +184,8 @@ def getErrorOfRecMethod(recType = 0):
       recDict = predict.getRecDict(playlistDict,songDict,recType,scale)
     elif recType == const.ARIMA_AVG:
       recDict = predict.getRecDict(playlistDict,songDict,recType,scale)
+    elif recType == const.ALL_HYBRID:
+      recDict = predict.getRecDict(playlistDict,songDict,recType,scale)
     elif recType == const.KNN:
       recDict = predict.getRecDictOfUserKNN(playlistDict,songDict,scale,pid2Index,countMatrix,simMatrix)
     elif recType == const.MARKOV:
@@ -192,58 +194,8 @@ def getErrorOfRecMethod(recType = 0):
       recDict = predict.getRecDictOfThreeOrderMarkov(allPlaylist,songDict,scale)
     elif recType == const.PATTERN:
       recDict = predict.getRecDictOfMostPattern(allPlaylist,songDict,scale)
-    elif recType == const.ARIMA_SIMILAR_AVG:
-      arimaDict = predict.getRecDict(playlistDict,songDict,const.ARIMA,scale)
-      similarDict = predict.getRecDict(playlistDict,songDict,const.SIMILAR,scale)
-      avgDict = predict.getRecDict(playlistDict,songDict,const.AVG,scale)
-      
     index = 0
     for topN in range(1,const.TOP_N,1):
-      if recType == const.ARIMA_SIMILAR_AVG:
-        recDict = {}
-        for pid in playlistDict:
-          recSongs = []
-          arimaRecSongs = arimaDict[pid]
-          similarRecSongs = similarDict[pid]
-          avgRecSongs = avgDict[pid]
-          arimaCount = int(0.25 * topN+0.5)
-          similarCount = int(0.8*(topN-arimaCount)+0.5)
-          avgCount = topN - arimaCount - similarCount
-
-          sCount = 0
-          i = 0
-          while sCount < arimaCount:
-            ssid = arimaRecSongs[i]
-            if ssid not in recSongs:
-              recSongs.append(ssid)
-              sCount += 1
-              i += 1
-            else:
-              i += 1
-
-          sCount = 0
-          i = 0
-          while sCount < similarCount:
-            ssid = similarRecSongs[i]
-            if ssid not in recSongs:
-              recSongs.append(ssid)
-              sCount += 1
-              i += 1
-            else:
-              i += 1
-
-          sCount = 0
-          i = 0
-          while sCount < avgCount:
-            ssid = avgRecSongs[i]
-            if ssid not in recSongs:
-              recSongs.append(ssid)
-              sCount += 1
-              i += 1
-            else:
-              i += 1
-          #print len(recSongs),topN
-          recDict[pid] = recSongs
       recall,precision,f1 = util.getTopNIndex(recDict,playlistDict,topN)
       mae,rmse = util.getMAEandRMSE(recDict,playlistDict,songDict,topN)
       if scale == 0:
@@ -342,7 +294,7 @@ def showResult():
   for index in range(5):
     plt.figure(index+5)
     indexName = util.getIndexName(index)
-    mids = [const.ARIMA,const.ARIMA_SIMILAR,const.ARIMA_AVG]
+    mids = [const.ARIMA,const.ARIMA_SIMILAR,const.ARIMA_AVG,const.ALL_HYBRID]
     markerIndex = 0
     for mid in mids:
       if index == 1 or index == 2:
@@ -382,7 +334,8 @@ def showResult():
   plt.figure(30)
   plt.plot(x,result[const.ARIMA_SIMILAR][3],'k-.',label=util.getMethodName(const.ARIMA_SIMILAR)) 
   plt.plot(x,result[const.ARIMA_AVG][3],'k+',label=util.getMethodName(const.ARIMA_AVG)) 
-  plt.title("MAE of MTSA_Local and MTSA_Global Recommend Algorithms")
+  plt.plot(x,result[const.ALL_HYBRID][3],'k',label=util.getMethodName(const.ALL_HYBRID)) 
+  plt.title("MAE of Hybrid Music Recommendation Methods")
   plt.xlabel("Number of recommendations")
   plt.ylabel("MAE")
   plt.legend()
@@ -392,7 +345,8 @@ def showResult():
   plt.figure(31)
   plt.plot(x,result[const.ARIMA_SIMILAR][4],'k-.',label=util.getMethodName(const.ARIMA_SIMILAR)) 
   plt.plot(x,result[const.ARIMA_AVG][4],'k+',label=util.getMethodName(const.ARIMA_AVG)) 
-  plt.title("RMSE of MTSA_Local and MTSA_Global Recommend Algorithms")
+  plt.plot(x,result[const.ALL_HYBRID][4],'k',label=util.getMethodName(const.ALL_HYBRID)) 
+  plt.title("RMSE of Hybrid Music Recommendation Methods")
   plt.xlabel("Number of recommendations")
   plt.ylabel("RMSE")
   plt.legend()
