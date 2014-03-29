@@ -41,7 +41,7 @@ class Song:
 #define model of playlist
 class Playlist:
   #constructor
-  def __init__(self,scale,pid,playlist):
+  def __init__(self,pid,scale,playlist):
     self.scale = scale
     self.pid = pid
     count = len(playlist)

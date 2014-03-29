@@ -1,0 +1,129 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module textAnylize</title>
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>textAnylize</strong></big></big> (version 1.0)</font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/wst/GitRepo/Python/experiment/src/textAnylize.py">/home/wst/GitRepo/Python/experiment/src/textAnylize.py</a></font></td></tr></table>
+    <p><tt>Test&nbsp;Different&nbsp;Recommenders&nbsp;of&nbsp;different&nbsp;text&nbsp;models.<br>
+Dependencies:<br>
+&nbsp;&nbsp;persist.<br>
+&nbsp;&nbsp;predict.<br>
+&nbsp;&nbsp;util.<br>
+&nbsp;&nbsp;const.</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="const.html">const</a><br>
+<a href="gensim.corpora.html">gensim.corpora</a><br>
+<a href="logging.html">logging</a><br>
+<a href="math.html">math</a><br>
+</td><td width="25%" valign=top><a href="gensim.models.html">gensim.models</a><br>
+<a href="os.html">os</a><br>
+<a href="persist.html">persist</a><br>
+<a href="matplotlib.pyplot.html">matplotlib.pyplot</a><br>
+</td><td width="25%" valign=top><a href="predict.html">predict</a><br>
+<a href="gensim.similarities.html">gensim.similarities</a><br>
+<a href="sys.html">sys</a><br>
+<a href="time.html">time</a><br>
+</td><td width="25%" valign=top><a href="util.html">util</a><br>
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-cosineSimilarity"><strong>cosineSimilarity</strong></a>(dict1, dict2)</dt><dd><tt>Calculate&nbsp;cosine&nbsp;similarity&nbsp;of&nbsp;two&nbsp;vectors.<br>
+Input:<br>
+&nbsp;&nbsp;dict1&nbsp;-&nbsp;the&nbsp;1st&nbsp;vector.<br>
+&nbsp;&nbsp;dict2&nbsp;-&nbsp;the&nbsp;2nd&nbsp;vector.<br>
+Output:<br>
+&nbsp;&nbsp;cosine&nbsp;similarity&nbsp;of&nbsp;two&nbsp;vectors.</tt></dd></dl>
+ <dl><dt><a name="-getErrorOfRecMethod"><strong>getErrorOfRecMethod</strong></a>(recType<font color="#909090">=0</font>)</dt><dd><tt>Get&nbsp;error&nbsp;of&nbsp;different&nbsp;recommemenders.<br>
+Input:<br>
+&nbsp;&nbsp;recType&nbsp;-&nbsp;type&nbsp;of&nbsp;recommender.<br>
+Output:<br>
+&nbsp;&nbsp;recalls&nbsp;-&nbsp;all&nbsp;hit&nbsp;ratios.</tt></dd></dl>
+ <dl><dt><a name="-getLDASpace"><strong>getLDASpace</strong></a>()</dt><dd><tt>Get&nbsp;the&nbsp;LDA&nbsp;Model&nbsp;of&nbsp;documents.<br>
+Input:<br>
+&nbsp;&nbsp;None.<br>
+Output:<br>
+&nbsp;&nbsp;songMap&nbsp;-&nbsp;lda&nbsp;model&nbsp;of&nbsp;songs.</tt></dd></dl>
+ <dl><dt><a name="-getLSASpace"><strong>getLSASpace</strong></a>()</dt><dd><tt>Get&nbsp;the&nbsp;LSA&nbsp;Model&nbsp;of&nbsp;documents.<br>
+Input:<br>
+&nbsp;&nbsp;None.<br>
+Output:<br>
+&nbsp;&nbsp;songMap&nbsp;-&nbsp;lsa&nbsp;model&nbsp;of&nbsp;songs.</tt></dd></dl>
+ <dl><dt><a name="-getRecDict"><strong>getRecDict</strong></a>(playlistDict, songMap, scale<font color="#909090">=0</font>, recType<font color="#909090">=0</font>, topN<font color="#909090">=100</font>)</dt><dd><tt>Get&nbsp;recommendations&nbsp;using&nbsp;different&nbsp;method.<br>
+Input:<br>
+&nbsp;&nbsp;playlistDict&nbsp;-&nbsp;dict&nbsp;of&nbsp;playlist&nbsp;of&nbsp;specific&nbsp;scale.<br>
+&nbsp;&nbsp;songMap&nbsp;-&nbsp;text&nbsp;model&nbsp;of&nbsp;songs.<br>
+&nbsp;&nbsp;recType&nbsp;-&nbsp;type&nbsp;of&nbsp;recommender.<br>
+&nbsp;&nbsp;scale&nbsp;-&nbsp;scale&nbsp;of&nbsp;current&nbsp;playlist.<br>
+&nbsp;&nbsp;topN&nbsp;-&nbsp;count&nbsp;of&nbsp;recommendations.<br>
+Output:<br>
+&nbsp;&nbsp;recDict&nbsp;-&nbsp;dict&nbsp;of&nbsp;recommendations&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with&nbsp;pid&nbsp;as&nbsp;key&nbsp;and&nbsp;recommendation&nbsp;list&nbsp;as&nbsp;value.</tt></dd></dl>
+ <dl><dt><a name="-getRecSongs"><strong>getRecSongs</strong></a>(recType, songMap, tarSid, topN)</dt><dd><tt>Get&nbsp;recommended&nbsp;songs&nbsp;list.<br>
+Input:<br>
+&nbsp;&nbsp;recType&nbsp;-&nbsp;recommender&nbsp;type.<br>
+&nbsp;&nbsp;songMap&nbsp;-&nbsp;text&nbsp;model&nbsp;of&nbsp;song.<br>
+&nbsp;&nbsp;tarSid&nbsp;-&nbsp;sid&nbsp;of&nbsp;target&nbsp;song.<br>
+&nbsp;&nbsp;topN&nbsp;-&nbsp;count&nbsp;of&nbsp;recommendations.<br>
+Output:<br>
+&nbsp;&nbsp;result&nbsp;-&nbsp;a&nbsp;list&nbsp;of&nbsp;songs.</tt></dd></dl>
+ <dl><dt><a name="-getSongTextInfo"><strong>getSongTextInfo</strong></a>()</dt><dd><tt>Get&nbsp;song&nbsp;text&nbsp;info.<br>
+Input:<br>
+&nbsp;&nbsp;None.<br>
+Output:<br>
+&nbsp;&nbsp;sids&nbsp;-&nbsp;list&nbsp;of&nbsp;sids.<br>
+&nbsp;&nbsp;documents&nbsp;-&nbsp;list&nbsp;of&nbsp;documents.</tt></dd></dl>
+ <dl><dt><a name="-getTF_IDFSpace"><strong>getTF_IDFSpace</strong></a>()</dt><dd><tt>Get&nbsp;the&nbsp;TF-IDF&nbsp;Model&nbsp;of&nbsp;documents.<br>
+Input:<br>
+&nbsp;&nbsp;None.<br>
+Output:<br>
+&nbsp;&nbsp;songMap&nbsp;-&nbsp;tf-idf&nbsp;model&nbsp;of&nbsp;songs.</tt></dd></dl>
+ <dl><dt><a name="-getVSMSpace"><strong>getVSMSpace</strong></a>()</dt><dd><tt>Get&nbsp;the&nbsp;VSM&nbsp;Model&nbsp;of&nbsp;documents.<br>
+Input:<br>
+&nbsp;&nbsp;None.<br>
+Output:<br>
+&nbsp;&nbsp;songMap&nbsp;-&nbsp;vsm&nbsp;model&nbsp;of&nbsp;songs.</tt></dd></dl>
+ <dl><dt><a name="-hellSimilarity"><strong>hellSimilarity</strong></a>(topicDict1, topicDict2)</dt><dd><tt>Calculate&nbsp;hellinger&nbsp;distance&nbsp;of&nbsp;two&nbsp;distributions.<br>
+Input:<br>
+&nbsp;&nbsp;topicDict1&nbsp;-&nbsp;the&nbsp;1st&nbsp;distribution.<br>
+&nbsp;&nbsp;topicDict2&nbsp;-&nbsp;the&nbsp;2nd&nbsp;distribution.<br>
+Output:<br>
+&nbsp;&nbsp;hellinger&nbsp;siatance&nbsp;of&nbsp;two&nbsp;distributions.</tt></dd></dl>
+ <dl><dt><a name="-hitRatio"><strong>hitRatio</strong></a>(recDict, playlistDict, topN<font color="#909090">=100</font>)</dt><dd><tt>Calculate&nbsp;hit&nbsp;ratio&nbsp;of&nbsp;different&nbsp;recommender.<br>
+Input:<br>
+&nbsp;&nbsp;recDict&nbsp;-&nbsp;dict&nbsp;of&nbsp;recommendations&nbsp;from&nbsp;getRectDict.<br>
+&nbsp;&nbsp;playlistDict&nbsp;-&nbsp;dict&nbsp;of&nbsp;all&nbsp;playlists.<br>
+&nbsp;&nbsp;topN&nbsp;-&nbsp;count&nbsp;of&nbsp;recommendations.<br>
+Output:<br>
+&nbsp;&nbsp;recall&nbsp;-&nbsp;hit&nbsp;ratio.</tt></dd></dl>
+</td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>__author__</strong> = 'Jason Wong'<br>
+<strong>__version__</strong> = '1.0'</td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#7799ee">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Author</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#7799ee"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%">Jason&nbsp;Wong</td></tr></table>
+</body></html>

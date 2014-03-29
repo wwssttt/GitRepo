@@ -1,3 +1,15 @@
+#!/usr/bin/python
+# -*- coding:utf-8 -*-
+"""Test Different Recommenders of different text models.
+   Dependencies:
+     persist.
+     predict.
+     util.
+     const.
+"""
+__author__ = 'Jason Wong'
+__version__ = '1.0'
+
 from gensim import corpora, models, similarities
 import math
 import time
@@ -18,6 +30,13 @@ sys.setdefaultencoding('utf-8')
 logging.basicConfig(filename=os.path.join(os.getcwd(),'../log/test_log_text_analysis.txt'),level=logging.DEBUG,format='%(asctime)s-%(levelname)s:%(message)s')
 
 def getSongTextInfo():  
+  """Get song text info.
+     Input:
+       None.
+     Output:
+       sids - list of sids.
+       documents - list of documents.
+  """
   sids = []
   documents = []
   sFile = open('../txt/two__Lastfm_song_Docs.txt')
@@ -31,14 +50,18 @@ def getSongTextInfo():
     text = items[1]
     documents.append(text)
     sids.append(sid)
-    if sid == 62695513:
-      print 'blabla......'
   sFile.close()
   print 'len = ',len(sids)
   print 'len = ',len(documents)
   return sids,documents
 
 def getVSMSpace():
+  """Get the VSM Model of documents.
+     Input:
+       None.
+     Output:
+       songMap - vsm model of songs.
+  """
   sids,documents = getSongTextInfo()
   texts = [[word for word in document.lower().split()] for document in documents]
   dictionary = corpora.Dictionary(texts)
@@ -57,6 +80,12 @@ def getVSMSpace():
   return songMap
 
 def getTF_IDFSpace():
+  """Get the TF-IDF Model of documents.
+     Input:
+       None.
+     Output:
+       songMap - tf-idf model of songs.
+  """
   sids,documents = getSongTextInfo()
   texts = [[word for word in document.lower().split()] for document in documents]
   dictionary = corpora.Dictionary(texts)
@@ -77,6 +106,12 @@ def getTF_IDFSpace():
   return songMap
 
 def getLSASpace():
+  """Get the LSA Model of documents.
+     Input:
+       None.
+     Output:
+       songMap - lsa model of songs.
+  """
   sids,documents = getSongTextInfo()
   texts = [[word for word in document.lower().split()] for document in documents]
   dictionary = corpora.Dictionary(texts)
@@ -99,6 +134,12 @@ def getLSASpace():
   return songMap
 
 def getLDASpace():
+  """Get the LDA Model of documents.
+     Input:
+       None.
+     Output:
+       songMap - lda model of songs.
+  """
   sids,documents = getSongTextInfo()
   texts = [[word for word in document.lower().split()] for document in documents]
   dictionary = corpora.Dictionary(texts)
@@ -121,6 +162,13 @@ def getLDASpace():
   return songMap
 
 def cosineSimilarity(dict1,dict2):
+  """Calculate cosine similarity of two vectors.
+     Input:
+       dict1 - the 1st vector.
+       dict2 - the 2nd vector.
+     Output:
+       cosine similarity of two vectors.
+  """
   product1 = 0.0
   product2 = 0.0
   for key in dict1.keys():
@@ -137,8 +185,14 @@ def cosineSimilarity(dict1,dict2):
   cosSim = fenzi / fenmu
   return cosSim
 
-#calculate Hellinger distance of two discrete distribution
 def hellSimilarity(topicDict1,topicDict2):
+  """Calculate hellinger distance of two distributions.
+     Input:
+       topicDict1 - the 1st distribution.
+       topicDict2 - the 2nd distribution.
+     Output:
+       hellinger siatance of two distributions.
+  """
   K = len(topicDict1)
   hellDis = 0
   for key in topicDict1.keys():
@@ -161,6 +215,15 @@ def hellSimilarity(topicDict1,topicDict2):
   return hellSimilarity
 
 def getRecSongs(recType,songMap,tarSid,topN):
+  """Get recommended songs list.
+     Input:
+       recType - recommender type.
+       songMap - text model of song.
+       tarSid - sid of target song.
+       topN - count of recommendations.
+     Output:
+       result - a list of songs.
+  """
   recDict = {}
   sims = {}
   for sid in songMap.keys():
@@ -189,6 +252,17 @@ def getRecSongs(recType,songMap,tarSid,topN):
   return result
 
 def getRecDict(playlistDict,songMap,scale = 0,recType = 0, topN = const.TOP_N):
+  """Get recommendations using different method.
+     Input:
+       playlistDict - dict of playlist of specific scale.
+       songMap - text model of songs.
+       recType - type of recommender.
+       scale - scale of current playlist.
+       topN - count of recommendations.
+     Output:
+       recDict - dict of recommendations 
+                 with pid as key and recommendation list as value.
+  """
   recDict = {}
   index = 0
   count = len(playlistDict)
@@ -203,8 +277,15 @@ def getRecDict(playlistDict,songMap,scale = 0,recType = 0, topN = const.TOP_N):
     index = index + 1
   return recDict
 
-#calculate recall,preision and F1-Score
 def hitRatio(recDict,playlistDict,topN = const.TOP_N):
+  """Calculate hit ratio of different recommender.
+     Input:
+       recDict - dict of recommendations from getRectDict.
+       playlistDict - dict of all playlists.
+       topN - count of recommendations.
+     Output:
+       recall - hit ratio.
+  """
   if topN < 0:
     print 'topN should be > 0'
     return 0
@@ -225,6 +306,12 @@ def hitRatio(recDict,playlistDict,topN = const.TOP_N):
   return recall
 
 def getErrorOfRecMethod(recType = 0):
+  """Get error of different recommemenders.
+     Input:
+       recType - type of recommender.
+     Output:
+       recalls - all hit ratios.
+  """
   start_time = time.time()
   if recType == 0:
     songMap = getVSMSpace()
@@ -263,8 +350,8 @@ def getErrorOfRecMethod(recType = 0):
 
 
 logging.info('Begin......')
-getErrorOfRecMethod(0)
-getErrorOfRecMethod(1)
+#getErrorOfRecMethod(0)
+#getErrorOfRecMethod(1)
 #getErrorOfRecMethod(2)
-getErrorOfRecMethod(3)
+#getErrorOfRecMethod(3)
 logging.info('End......')

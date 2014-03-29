@@ -1,9 +1,13 @@
-#!/usr/bin python
-#coding:utf-8
-############################
-#give some useful function
-############################
+#!/usr/bin/python
+# -*- coding:utf-8 -*-
+"""Define some useful functions.
+   Dependecies:
+     const.
+"""
+__author__ = 'Jason Wong(wwssttt@163.com)'
+__version__ = '1.0'
 
+# import modules
 import math
 import smtplib
 from email.mime.text import MIMEText
@@ -13,13 +17,20 @@ import numpy
 import const
 import persist
 
+# reload sys config and set default encoding as utf-8
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
-#calculate cosine similarity of two distribution
-#input are two topic dicts
-#output is the cosine similarity
 def cosineSim(topicDict1,topicDict2):
+  """Calculate cosine similarity of two songs.
+     Each song can be represented as a dictionary with topic index as
+     key and probability as value. 
+     Input:
+       topicDict1 - the topic probability distribution of first song
+       topicDict2 - the topic probability distribution of second song
+     Output:
+       cosine similarity of two songs
+  """
   dotProduct = 0.0
   dictPower1 = 0.0
   dictPower2 = 0.0
@@ -38,6 +49,15 @@ def cosineSim(topicDict1,topicDict2):
 #input are history list of user
 #output is similarity of the two users
 def cosineSimOfUser(list1,list2):
+  """Calculate cosine similarity of two users.
+  Each user can be represented as a list and the element in 
+  teh list is the count of specific item. 
+  Input:
+    list1 - the history of first user
+    list2 - the history of second user
+  Output:
+    cosine similarity of two users.
+  """
   dotProduct = 0.0
   dictPower1 = 0.0
   dictPower2 = 0.0
@@ -53,10 +73,17 @@ def cosineSimOfUser(list1,list2):
   similarity = dotProduct / (math.sqrt(dictPower1) * math.sqrt(dictPower2))
   return similarity
 
-#calculate KL distance of two distribution
-#input are two topic dicts
-#output is the cosine similarity
 def KLDis(topicDict1,topicDict2):
+  """Calculate KL distance of the first song to the second song.
+     Each song can be represented as a dictionary with topic index as
+     key and probability as value. 
+     Note: KL distance is directed.
+     Input:
+       topicDict1 - the topic probability distribution of first song
+       topicDict2 - the topic probability distribution of second song
+     Output:
+       KL distance of the first song to the second song.
+  """
   distance = 0
   for key in topicDict1.keys():
     if key not in topicDict2:
@@ -65,6 +92,8 @@ def KLDis(topicDict1,topicDict2):
     else:
       pro1 = topicDict1[key]
       pro2 = topicDict2[key]
+      # zero is not legal probability
+      # so set it to a small value
       if pro1 <= 0:
         pro1 = 1.0 / 10000000
       if pro2 <= 0:
@@ -72,16 +101,32 @@ def KLDis(topicDict1,topicDict2):
       distance = distance + pro1 * math.log(pro1 / pro2)
   return distance
 
-#calculate KL similarity of two distribution
-#input are two topic dicts
-#output is the cosine similarity
-def KLSim(topicDict1,topicDict2):
+def KLDis(topicDict1,topicDict2):
+  """Calculate the average KL distance of two songs.
+     Each song can be represented as a dictionary with topic index as
+     key and probability as value. 
+     Note: KL distance is directed, that's why we do an average operation.
+     Input:
+       topicDict1 - the topic probability distribution of first song
+       topicDict2 - the topic probability distribution of second song
+     Output:
+       KL distance of two songs.
+  """
   dis1 = KLDis(topicDict1,topicDict2)
   dis2 = KLDis(topicDict2,topicDict1)
   return (dis1 + dis2) / 2.0
 
-#calculate Hellinger distance of two discrete distribution
 def HellDis(topicDict1,topicDict2):
+  """Calculate the Hellinger distance of two songs.
+     Each song can be represented as a dictionary with topic index as
+     key and probability as value. 
+     Note: Hellinger distance is undirected.
+     Input:
+       topicDict1 - the topic probability distribution of first song
+       topicDict2 - the topic probability distribution of second song
+     Output:
+       KL distance of two songs.
+  """
   K = len(topicDict1)
   hellDis = 0
   for key in topicDict1.keys():
@@ -89,6 +134,8 @@ def HellDis(topicDict1,topicDict2):
       print '%d is not in another dict...' % key
       return
     else:
+      # zero is not legal probability
+      # so set it to a small value
       if topicDict1[key] < 0:
         topicDict1[key] = 1.0 / 10000000
       if topicDict2[key] < 0:
@@ -98,12 +145,30 @@ def HellDis(topicDict1,topicDict2):
   hellDis = hellDis * (1.0/math.sqrt(2))
   return hellDis
 
-#universe interface to calculate similarity of two distributions
-def similarity(topicDict1,topicDict2):
-  return HellDis(topicDict1,topicDict2)
+def similarity(topicDict1,topicDict2,disType = 0):
+  """Get distance of two songs.
+  Each song can be represented as a dictionary with topic index as
+  key and probability as value. 
+  Input:
+    topicDict1 - the topic probability distribution of first song
+    topicDict2 - the topic probability distribution of second song
+    disType - distance type:Hellinger(0),KL(1) and default is 0.
+  """
+  if disType == 0:
+    return HellDis(topicDict1,topicDict2)
+  if disType == 1:
+    return KLDis(topicDict1,topicDict2)
 
 #calculate recall,preision and F1-Score
 def getTopNIndex(recDict,playlistDict,topN = const.TOP_N):
+  """ Calculate hit ration, precision and f1 score of playlists in specific scale.
+  Input:
+    recDict - recommend dictionaries with pid as key and recommend list as value
+    playlistDict - playlist dictionaries with pid as key and Playlist as value
+    topN - recommend how many songs to user
+  Output:
+    Hit Ration, Precision, F1 Score.
+  """
   if topN < 0:
     print 'topN should be > 0'
     return 0
@@ -112,14 +177,14 @@ def getTopNIndex(recDict,playlistDict,topN = const.TOP_N):
   total = 0
   for pid in playlistDict.keys():
     playlist = playlistDict[pid]
-    lastSid = playlist.getLastSid()
-    recList = recDict[pid]
+    lastSid = playlist.getLastSid() # get real song
+    recList = recDict[pid] # get recommend songs
     recNum = len(recList)
     if recNum >= topN:
       recNum = topN
-    newList = recList[0:recNum]
+    newList = recList[0:recNum] # recomend topN songs to user
     total = total + recNum
-    if lastSid in newList:
+    if lastSid in newList: # if real song in recommend list, a hit got.
       hit = hit + 1
   recall = float(hit * 1.0) / testNum
   if total == 0:
@@ -132,8 +197,15 @@ def getTopNIndex(recDict,playlistDict,topN = const.TOP_N):
     f1 = 2 * ((recall * precision) / (recall + precision))
   return recall,precision,f1
 
-#calculate mae and rmse
 def getMAEandRMSE(recDict,playlistDict,songDict,topN = const.TOP_N):
+  """ Calculate mae and rmse of playlists in specific scale.
+  Input:
+    recDict - recommend dictionaries with pid as key and recommend list as value
+    playlistDict - playlist dictionaries with pid as key and Playlist as value
+    topN - recommend how many songs to user
+  Output:
+    MAE,RMSE.
+  """
   if topN < 0:
     print 'topN should be > 0'
     return 0
@@ -142,20 +214,22 @@ def getMAEandRMSE(recDict,playlistDict,songDict,topN = const.TOP_N):
   testNum = len(playlistDict)
   for pid in playlistDict.keys():
     playlist = playlistDict[pid]
-    lastSid = playlist.getLastSid()
-    tarDict = songDict[lastSid].getTopicDict()
-    recList = recDict[pid]
+    lastSid = playlist.getLastSid() # get the real song
+    tarDict = songDict[lastSid].getTopicDict() # get the topic dictionary of real song
+    recList = recDict[pid] # get recommend lists
     recNum = len(recList)
     if recNum >= topN:
       recNum = topN
     totalError = 0
+    # calculate total distances between songs in recommend list and real song
     for i in range(0,recNum):
       recSid = recList[i]
       recTopicDict = songDict[recSid].getTopicDict()
       recError = similarity(recTopicDict,tarDict)
-      totalError = totalError + recError
+      totalError += recError
     if recNum == 0:
       recNum = 0.0001
+    # get average distance and mae, rmse
     avgError = float(totalError*1.0) / recNum
     mae = mae + math.fabs(avgError)
     rmse = rmse + avgError**2
@@ -164,8 +238,13 @@ def getMAEandRMSE(recDict,playlistDict,songDict,topN = const.TOP_N):
   rmse = math.sqrt(rmse)
   return mae,rmse
 
-#return text info of method
 def getMethodName(mid):
+  """Get method name according to method id.
+     Input:
+       mid - method id(ids are defined in module const).
+     Output:
+       method name
+  """
   if mid == const.ARIMA:
     return "MTSA"
   elif mid == const.SIMILAR:
@@ -190,8 +269,18 @@ def getMethodName(mid):
     print '%d does not exist......' % mid
     return
 
-#return text info of validation
 def getIndexName(index):
+  """Get validation name according to index.
+     Input:
+       index - validation index.
+       0 : Hit Ration
+       1 : Precision
+       2 : F1-Score
+       3 : MAE
+       4 : RMSE
+     Output:
+       validation name.
+  """
   if index == 0:
     return "Hit Ratio"
   elif index == 1:
@@ -206,14 +295,28 @@ def getIndexName(index):
     print '%d does not exist......' % index
     return
 
-#get MD5
 def getMD5(string):
+  """Get md5 string of a string.
+     Input:
+       string - source string.
+     Output:
+       md5 of source string.
+  """
   m = md5()
   m.update(string)
   return m.hexdigest()
 
-#send email to me
 def sendMail(to,subtitle,content):
+    """Send mail to somebody with subject title and content.
+       Input:
+         to - target email address.
+         subtitle - subject title of the email.
+         content - content of the email.
+       Output:
+         Status of operation.
+         True - success.
+         False - fail.
+    """
     #定义发送列表
     #mailto_list = ['wwssttt@163.com']
     #设置服务器
@@ -238,51 +341,20 @@ def sendMail(to,subtitle,content):
     except Exception as e:
         print(str(e))
         print 'false'
+        return False
 
-#matrix factorization 
-def matrix_factorization(R, P, Q, K, steps=1000, alpha=0.02, beta=0.02):
-    print 'I am in matrix_factorization....'
-    Q = Q.T
-    for step in xrange(steps):
-        for i in xrange(len(R)):
-            for j in xrange(len(R[i])):
-                if R[i][j] > 0:
-                    eij = R[i][j] - numpy.dot(P[i,:],Q[:,j])
-                    for k in xrange(K):
-                        P[i][k] = P[i][k] + alpha * (2 * eij * Q[k][j] - beta * P[i][k])
-                        Q[k][j] = Q[k][j] + alpha * (2 * eij * P[i][k] - beta * Q[k][j])
-        eR = numpy.dot(P,Q)
-        e = 0
-        for i in xrange(len(R)):
-            for j in xrange(len(R[i])):
-                if R[i][j] > 0:
-                    e = e + pow(R[i][j] - numpy.dot(P[i,:],Q[:,j]), 2)
-                    for k in xrange(K):
-                        e = e + (beta/2) * (pow(P[i][k],2) + pow(Q[k][j],2))
-        print 'MF:%d/%d:%f...' % (step,steps,e)
-        if e < 0.001:
-            break
-    print 'I am out matrix_factorization....'
-    return P, Q.T
-
-#given a maxtrix R an then user matrix fatorization to make a predicted Matrix
-#K is feature number
-def predictMatrix(R,K):
-  print 'I am in predictMatrix....'
-  R1 = numpy.array(R)
-  N = len(R1)
-  M = len(R1[0])
-  
-  P = numpy.random.rand(N,K)
-  Q = numpy.random.rand(M,K)
- 
-  nP, nQ = matrix_factorization(R1, P, Q, K)
-  nR = numpy.dot(nP, nQ.T)
-  print 'I am out predictMatrix....'
-  return nR
-
-#construct matrix with songDict and playlistDict
+#
 def getUserSongMatrix(allPlaylist,songDict):
+  """Construct user-song matrix with songDict and playlistDict.
+     Input:
+       allPlaylist - all playlists in dataset.
+       songDict - all songs in dataset.
+     Output:
+       pid2Index - a dictionary with pid as key and index in matrix as value.
+       index2Pid - a dictionary with index in matrix as key and pid as value.
+       matrix - the user-song matrix and the value is
+                how many times the user listened to the song.
+  """
   print 'I am in getUserSongMatrix......'
   #map id to index
   id2Index = {}
@@ -293,6 +365,7 @@ def getUserSongMatrix(allPlaylist,songDict):
     id2Index[sid] = song.getIndex()
   sCount = len(songDict)
   pCount = 0 
+  # get all users
   for scale in range(10):
     pCount += len(allPlaylist[scale])
 
@@ -316,10 +389,17 @@ def getUserSongMatrix(allPlaylist,songDict):
   print 'I am out getUserSongMatrix......'
   return pid2Index,index2Pid,matrix
 
-#construct sim matrix of users
 def getUserSimMatrix(countMatrix,pid2Index):
+  """Get user similarity matrix.
+     Input:
+       countMatrix - the user-song matrix get from getUserSongMatrix.
+       pid2Index - the pid2Index dictionary get from getUserSongMatrix.
+     Output:
+       simMatrix - user similarity matrix.
+  """
   print 'I am in getUserSimMatrix....'
   pCount = len(pid2Index)
+  # initialize the similarity matrix
   simMatrix = [[-1 for i in range(pCount)] for j in range(pCount)]
   for i in range(pCount):
     for j in range(pCount):
@@ -329,9 +409,16 @@ def getUserSimMatrix(countMatrix,pid2Index):
   print 'I am out getUserSimMatrix....'
   return simMatrix
 
-#construct a dict to represent a song by its dominant topics
 def getDominantTopicDict(songDict):
+  """Get teh dominant topics of all songs.
+     Input:
+       songDict - all songs in database.
+     Output:
+       domDict - dominant topic dictionaries with sid as key 
+                 and dominant topics as value.
+  """
   domDict = {}
+
   for sid in songDict.keys():
     song = songDict[sid]
     topicDict = song.getTopicDict()
@@ -340,6 +427,7 @@ def getDominantTopicDict(songDict):
     for index in range(len(topicList)):
       tid = int(topicList[index][0])
       tpro = float(topicList[index][1])
+      #set threshold to 0.20
       if tpro >= 0.20:
         result.append(tid)
     if len(result) == 0:
@@ -350,6 +438,16 @@ def getDominantTopicDict(songDict):
 
 #construct training set of playlist to mining frequent mining
 def getPatternTrainingSet(allPlaylist,songDict,scale):
+  """Get frequent patterns of playlists.
+     Input:
+       allPlaylist - all playlists in database.
+       songDict - all songs in database.
+       scale - scale number of playlist.
+     Output:
+       allTrainingPattern - frequent patterns in training set.
+       testingPatternDict - frequent patterns in testing set 
+                            with pid as key and pattern as value.
+  """
   domDict = getDominantTopicDict(songDict)
   allTrainingPattern = []
   testingPatternDict = {}
@@ -381,8 +479,17 @@ def getPatternTrainingSet(allPlaylist,songDict,scale):
 
   return allTrainingPattern,testingPatternDict
 
-#construct markov chain database
 def getTransitionMatrix(allPlaylist,songDict,scale):
+  """Get first order markov transition matrix of playlists.
+     Input:
+       allPlaylist - all playlists in database.
+       songDict - all songs in database.
+       scale - scale number of playlist.
+     Output:
+       domDict - dominant topic dictionaries 
+                 with sid as key and dominant topics as value.
+       transMatrix - first order markov transition matrix.
+  """
   domDict = getDominantTopicDict(songDict)
   print 'I am in constructing transition matrix...'
   transMatrix = [[1.0 for i in range(const.TOPIC_NUM)] for j in range(const.TOPIC_NUM)]
@@ -432,8 +539,17 @@ def getTransitionMatrix(allPlaylist,songDict,scale):
   print 'I am out constructing transition matrix...'
   return domDict,transMatrix
 
-#construct markov chain database:3-order
 def getThreeOrderTransitionMatrix(allPlaylist,songDict,scale):
+  """Get third order markov transition matrix of playlists.
+     Input:
+       allPlaylist - all playlists in database.
+       songDict - all songs in database.
+       scale - scale number of playlist.
+     Output:
+       domDict - dominant topic dictionaries 
+                 with sid as key and dominant topics as value.
+       transMatrix - third order markov transition matrix.
+  """
   domDict = getDominantTopicDict(songDict)
   print 'I am in constructing transition matrix...'
   transDict = {}

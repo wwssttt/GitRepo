@@ -1,8 +1,14 @@
-#!/usr/bin python
-#coding:utf-8
-############################
-#give some test function
-############################
+#!/usr/bin/python
+# -*- coding:utf-8 -*-
+"""Test Different Recommender.
+   Dependencies:
+     persist.
+     predict.
+     util.
+     const.
+"""
+__author__ = 'Jason Wong'
+__version__ = '1.0'
 
 import time
 import persist
@@ -15,60 +21,20 @@ import matplotlib.pyplot as plt
 import sys
 import const
 
+# set default encoding
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
 # set log's localtion and level
 logging.basicConfig(filename=os.path.join(os.getcwd(),'../log/test_log_%s.txt' % const.DATASET_NAME),level=logging.DEBUG,format='%(asctime)s-%(levelname)s:%(message)s')
 
-#show mae and rmse trends of most similarhybrid methods with different coefficients
-def showRecallTrendWithDifferentCoeff_MostSimilarHybrid():
-  songDict = persist.readSongFromFile()
-  playlistDict = persist.readPlaylistFromFile()
-  coeffs = [float(x) / 10 for x in range(0,11,1)]
-  print coeffs
-  recalls = []
-  for coeff in coeffs:
-    print 'hybrid  coeff = %f' % coeff
-    recDict = predict.getRecDict(playlistDict,songDict,4,coeff)
-    recall,precision,f1 = util.getTopNIndex(recDict,playlistDict)
-    recalls.append(recall)
-  plt.plot(coeffs,recalls,label="Recall")
-  plt.title("Recall trends of Different Hybrid Coefficients")
-  plt.xlabel("lambda")
-  plt.ylabel("Recall")
-  plt.legend(loc="upper right")
-  plt.savefig("../img/%s_arima_similar_%d_%d.png" % (const.DATASET_NAME,const.TOPIC_NUM,const.TOP_N))
-  plt.show()
-
-#show mae and rmse trends of average hybrid methods with different coefficients
-def showRecallTrendWithDifferentCoeff_AverageHybrid():
-  songDict = persist.readSongFromFile()
-  playlistDict = persist.readPlaylistFromFile()
-  coeffs = [float(x) / 10 for x in range(0,11,1)]
-  print coeffs
-  recalls = []
-  for coeff in coeffs:
-    print 'hybrid  coeff = %f' % coeff
-    recDict = predict.getRecDict(playlistDict,songDict,5,coeff)
-    recall,precision,f1 = util.getTopNIndex(recDict,playlistDict)
-    recalls.append(recall)
-  plt.plot(coeffs,recalls,label="Recall")
-  plt.title("Recall trends of Different Hybrid Coefficients")
-  plt.xlabel("lambda")
-  plt.ylabel("Recall")
-  plt.legend(loc="upper right")
-  plt.savefig("../img/%s_arima_average_%d_%d.png" % (const.DATASET_NAME,const.TOPIC_NUM,const.TOP_N))
-  plt.show()
-
-#test traditional method
-#0: most similar
-#1: average
-#2: Arima
-#3: Arima + Similar
-#4: Arima + Average
-#5: Matrix Factorization
 def testRecMethod(recType = 0):
+  """Test single recommender.
+     Input:
+       recType - id of recommender.
+     Output:
+       None.
+  """
   info = '############%s#############' % util.getMethodName(recType)
   start_time = time.time()
   songDict = persist.readSongFromFile()
@@ -142,14 +108,13 @@ def testRecMethod(recType = 0):
   print 'Consumed: %ds' % (time.time()-start_time)
   logging.info('Consumed: %ds' % (time.time()-start_time))
 
-#test traditional method
-#0: most similar
-#1: average
-#2: Arima
-#3: Arima + Similar
-#4: Arima + Average
-#5: Matrix Factorization
 def getErrorOfRecMethod(recType = 0):
+  """Get error of all recommender.
+     Input:
+       recType - id of recommender.
+     Output:
+       recalls,precisions,f1s,maes,rmses.
+  """
   start_time = time.time()
   songDict = persist.readSongFromFile()
   allPlaylist = persist.readPlaylistFromFile()
@@ -229,8 +194,13 @@ def getErrorOfRecMethod(recType = 0):
   print 'Consumed:%d' % (end_time-start_time)
   return recalls,precisions,f1s,maes,rmses  
 
-#show all recommend results with different methods
 def showResult():
+  """Using pyplot to plot the experiment results.
+     Input:
+       None.
+     Output:
+       None.
+  """
   logging.info('I am in showResult......')
   filename = "../txt/%s_testall_%d_%d.txt" % (const.DATASET_NAME,const.TOPIC_NUM,const.TOP_N)
   x = range(1,const.TOP_N,1)

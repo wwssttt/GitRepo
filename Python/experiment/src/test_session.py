@@ -1,8 +1,14 @@
-#!/usr/bin python
-#coding:utf-8
-############################
-#give some test function
-############################
+#!/usr/bin/python
+# -*- coding:utf-8 -*-
+"""Test Different Recommender for cold start problem and long sequence.
+   Dependencies:
+     persist.
+     predict.
+     util.
+     const.
+"""
+__author__ = 'Jason Wong'
+__version__ = '1.0'
 
 import time
 import persist
@@ -26,6 +32,12 @@ logging.basicConfig(filename=os.path.join(os.getcwd(),'../log/test_log_%s.txt' %
 #1: average
 #2: Arima
 def getErrorOfRecMethod(recType = 0):
+  """Get error of all recommender.
+     Input:
+       recType - id of recommender.
+     Output:
+       recalls,precisions,f1s,maes,rmses.
+  """
   start_time = time.time()
   songDict = persist.readSongFromFile()
   allPlaylist = persist.readPlaylistFromFile_Session()
@@ -79,6 +91,12 @@ def getErrorOfRecMethod(recType = 0):
 
 #show all recommend results with different methods
 def showResult():
+  """Using pyplot to plot the experiment results.
+     Input:
+       None.
+     Output:
+       None.
+  """
   logging.info('I am in showResult......')
   filename = "../txt/%s_testall_%d_%d.txt" % (const.DATASET_NAME,const.TOPIC_NUM,const.TOP_N)
   x = range(1,const.TOP_N,1)

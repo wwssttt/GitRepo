@@ -1,8 +1,13 @@
-#!/usr/bin python
-#coding:utf-8
-############################
-#store sth to file or read sth from file
-############################
+#!/usr/bin/python
+# -*- coding:utf-8 -*-
+"""Store sth to file or Read sth from file.
+   Dependencies:
+     model.
+     predict.
+     const.
+"""
+__author__ = 'Jason Wong'
+__version__ = '1.0'
 
 import os
 import model
@@ -11,12 +16,29 @@ import sys
 import const
 import MySQLdb
 
+# set default encoding
 reload(sys)
 sys.setdefaultencoding('utf-8')
-#write topic dict of Arima to file to avoid re-computation
-def writeTopicDictOfArimaToFile(playlistDict,songDict,scale):
+
+def writeTopicDictOfArimaToFile(playlistDict,songDict,scale,maxLength):
+  """Write topic dictionary of predicted song to file to avoid re-computation.
+     Input:
+       playlistDict - playlist dict with pid as key and Playlist as value.
+       songDict - song dict with sid as key and Song as value.
+       scale - scale of playlists.
+       maxLength - max length of source sequence.
+     Output:
+       None.
+  """
   print 'Begin tp write topic dict to file......'
-  filename = "../txt/%s_arima_%d_%d.txt" % (const.DATASET_NAME,const.TOPIC_NUM,scale)
+  # -1 means all songs.
+  if maxLength != -1:
+    filename = "../txt/length_%d_%s_arima_%d_%d.txt" \
+               % (maxLength,const.DATASET_NAME,const.TOPIC_NUM,scale)
+  else:
+    filename = "../txt/%s_arima_%d_%d.txt" \
+               % (const.DATASET_NAME,const.TOPIC_NUM,scale)
+  # if the file exists in disk then return.
   if os.path.exists(filename):
     print '%s is existing......' % filename
     return
@@ -24,11 +46,14 @@ def writeTopicDictOfArimaToFile(playlistDict,songDict,scale):
   aFile = open(filename,"w")
   index = 0
   many = len(playlistDict)
+  # predict all playlists' next songs and store them into file.
   for pid in playlistDict.keys():
     print 'Write Arima: scale = %d >> %d/%d' % (scale,index,many)
     index += 1
     playlist = playlistDict[pid]
-    predictTopicDict = predict.topicDictForNextSongByArima(playlist,songDict)
+    predictTopicDict = predict.topicDictForNextSongByArima(playlist,
+                                                           songDict,
+                                                           maxLength)
     content = '%d#' % pid
     for topic in predictTopicDict.keys():
       content = '%s%d:%f,' % (content,topic,predictTopicDict[topic])
@@ -37,12 +62,26 @@ def writeTopicDictOfArimaToFile(playlistDict,songDict,scale):
   aFile.close()
   print 'End of writing topic dict to file......'
 
-#read Predicted Topic Dict Of Arima
-def readPredictedTopicDictOfArima(playlistDict,songDict,scale):
+def readPredictedTopicDictOfArima(playlistDict,songDict,scale,maxLength):
+  """Read topic dictionary of predicted song from file.
+     Input:
+       playlistDict - playlist dict with pid as key and Playlist as value.
+       songDict - song dict with sid as key and Song as value.
+       scale - scale of playlists.
+       maxLength - max length of source sequence.
+     Output:
+       predictDict - topic dict of predicted songs 
+                     with pid as key and topic dict as value.
+  """
   print 'I am reading predicted topic dict of arima......'
-  filename = "../txt/%s_arima_%d_%d.txt" % (const.DATASET_NAME,const.TOPIC_NUM,scale)
+  # -1 means all songs
+  if maxLength != -1:
+    filename = "../txt/length_%d_%s_arima_%d_%d.txt" % (maxLength,const.DATASET_NAME,const.TOPIC_NUM,scale)
+  else:
+    filename = "../txt/%s_arima_%d_%d.txt" % (const.DATASET_NAME,const.TOPIC_NUM,scale)
+  # if file doesn't exist then recompute.
   if not os.path.exists(filename):
-    writeTopicDictOfArimaToFile(playlistDict,songDict,scale)
+    writeTopicDictOfArimaToFile(playlistDict,songDict,scale,maxLength)
   predictDict = {}
   aFile = open(filename,"r")
   lines = aFile.readlines()
@@ -61,16 +100,24 @@ def readPredictedTopicDictOfArima(playlistDict,songDict,scale):
     #make sum of pro equals to 1
     proSum = sum(topicDict.values())
     for tid in topicDict.keys():
-      topicDict[tid] = topicDict[tid] / proSum
+      if proSum != 0:
+        topicDict[tid] = topicDict[tid] / proSum
+      else:
+        topicDict[tid] = 1.0 / 30.0
     predictDict[pid] = topicDict
   print 'Finish reading predicted topic dict of arima......'
   return predictDict
 
-#read all songs from file and construct them
-#output is a dict whose key is sid and value is song object
 def readSongFromFile():
+  """Read all songs from file and construct song dictionary.
+     Input:
+       None.
+     Output:
+       songDict - song dict with sid as key and Song as value.
+  """
   print 'I am reading songs from doc-topic file......'
-  filename = "../txt/%s_songs-doc-topics_%d_%s.txt" % (const.DATASET_NAME,const.TOPIC_NUM,const.LDA_LIB)
+  filename = "../txt/%s_songs-doc-topics_%d_%s.txt" \
+             % (const.DATASET_NAME,const.TOPIC_NUM,const.LDA_LIB)
   if os.path.exists(filename):
     songDict = {}
     dtFile = open(filename,"r")
@@ -95,18 +142,13 @@ def readSongFromFile():
   else:
     print 'cannot find doc-topic file......'
 
-#read playlists from db and construct dict of playlists
-def readPlaylistFromDB():
-  playlistDict = {}
-  effectivePlaylist = DBProcess.getEffectivePlaylist()
-  for pid in effectivePlaylist.keys():
-    pList = Playlist(pid,effectivePlaylist[pid])
-    playlistDict[pid] = pList
-  print 'Thare are %d playlist have been read.' % len(playlistDict)
-  return playlistDict
-
-#write playlists to file
 def writePlaylistsToFile():
+  """Write playlists of users to file.
+     Input:
+       None.
+     Output:
+       None.
+  """
   filename = "../txt/%s_playlists.txt" % const.DATASET_NAME
   if os.path.exists(filename):
     print '%s is existing......' % filename
@@ -148,8 +190,13 @@ def writePlaylistsToFile():
     pFile.close()
     print 'End of writing playlists......'
 
-#write playlists to file
 def writePlaylistsToFileSession():
+  """Write playlists with scale of users to file.
+     Input:
+       None.
+     Output:
+       None.
+  """
   conn = MySQLdb.Connect(host=const.DBHOST,user=const.DBUSER,passwd=const.DBPWD,port=const.DBPORT,charset=const.DBCHARSET)
   cur = conn.cursor()
   conn.select_db(const.DBNAME)
@@ -178,8 +225,15 @@ def writePlaylistsToFileSession():
   cur.close()
   conn.close()
 
-#read playlists from file and construct dict of playlists
 def readPlaylistFromFile_Session():
+  """Read session playlists from file.
+     Input:
+       None.
+     Output:
+       allPlaylist - two-dimension array of playlists
+                     with scale as the 1st dim and pid as the 2nd
+                     and the value is Playlist.
+  """
   filename = "../txt/two_Lastfm_playlists.txt"
   if not os.path.exists(filename):
     writePlaylistsToFile()
@@ -202,8 +256,15 @@ def readPlaylistFromFile_Session():
   print 'Thare are %d playlist have been read.' % (pIndex+1)
   return allPlaylist
 
-#read playlists from file and construct dict of playlists
 def readPlaylistFromFile():
+  """Read normal playlists from file.
+     Input:
+       None.
+     Output:
+       allPlaylist - two-dimension array of playlists
+                     with scale as the 1st dim and pid as the 2nd
+                     and the value is Playlist.
+  """
   filename = "../txt/%s_playlists.txt" % const.DATASET_NAME
   if not os.path.exists(filename):
     writePlaylistsToFile()
@@ -227,6 +288,14 @@ def readPlaylistFromFile():
   return allPlaylist
 
 def mvFileFromMalletToTxt():
+  """Move song file from mallet to txt dir.
+     Firstly, we do LDA using mallet and get the song file in mallet dir.
+     Secondly, we parse the song file and get a new file in txt dir.
+     Input:
+       None.
+     Output:
+       None.
+  """
   dirname = '../../../eclipse_workspace/mallet/mallet-2.0.7/data/LDA/'
   for dirpath, dirnames, filenames in os.walk(dirname):
     for filename in filenames:

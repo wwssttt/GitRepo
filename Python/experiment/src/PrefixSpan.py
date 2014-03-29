@@ -1,6 +1,12 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-#author: Tianming Lu
+"""Mining Frequent Patterns Using PrefixSpan.
+   Dependencies:
+     persist.
+     util.
+"""
+__author__ = 'Tianming Lu & Jason Wong'
+__version__ = '1.0'
 
 import sys
 import persist
@@ -9,8 +15,13 @@ import util
 
 PLACE_HOLDER = '_'
 
-
 def read(filename):
+    """Read patterns from file.
+       Input:
+         filename - file contains topic sequences.
+       Output:
+         S - sequence list.
+    """
     S = []
     with open(filename, 'r') as input:
         for line in input.readlines():
@@ -24,13 +35,28 @@ def read(filename):
 
 
 class SquencePattern:
+    """Definition of SequencePattern.
+    """
     def __init__(self, squence, support):
+        """Initialize SequencePattern.
+           Input:
+             sequence - source sequence.
+             support - support of sequence.
+           Output:
+             None.
+        """
         self.squence = []
         for s in squence:
             self.squence.append(list(s))
         self.support = support
 
     def append(self, p):
+        """Append another SequencePattern to self.
+           Input:
+             p - another sequence pattern.
+           Output:
+             None.
+        """
         if p.squence[0][0] == PLACE_HOLDER:
             first_e = p.squence[0]
             first_e.remove(PLACE_HOLDER)
@@ -40,8 +66,13 @@ class SquencePattern:
             self.squence.extend(p.squence)
         self.support = min(self.support, p.support)
 
-
 def prefixSpan(pattern, S, threshold):
+    """Do PrefixSpan.
+       Input:
+         pattern - source pattern.
+         S - seqeunce database.
+         threshold - support threshold.
+    """
     patterns = []
     f_list = frequent_items(S, pattern, threshold)
 
@@ -160,8 +191,15 @@ def print_patterns(patterns):
     for p in patterns:
         print("pattern:{0}, support:{1}".format(p.squence, p.support))
 
-#check whether targetPattern matchs prefix of pattern
 def checkTargetInPattern(targetPattern,pattern):
+  """Check whether targetPattern matchs prefix of pattern.
+     Input:
+       targetPattern - target pattern.
+       pattern - source pattern to be matched.
+     Output:
+       True - match.
+       False - unmathch.
+  """
   tarSize = len(targetPattern)
   size = len(pattern) - 1
   if tarSize != size:
@@ -179,8 +217,14 @@ def checkTargetInPattern(targetPattern,pattern):
       return False
   return True
 
-#get predict topic of given pattern
 def getPredictTopic(patterns,targetPattern):
+  """Get predict topic of given pattern.
+     Input:
+       patterns - source patterns.
+       targetPattern - target pattern.
+     Output:
+       predictTopic - predicted  topic list.
+  """
   predictTopic = []
   #cut window size
   start = 0
@@ -199,7 +243,8 @@ def getPredictTopic(patterns,targetPattern):
         if checkTargetInPattern(cutPattern,pattern.squence) == True:
           #check prefix of pattern to cal coff
           for prefix in patterns:
-            if len(prefix.squence) == size and prefix.squence ==  pattern.squence[:-1]:
+            if len(prefix.squence) == size \
+               and prefix.squence ==  pattern.squence[:-1]:
               coff = pattern.support * 1.0 / prefix.support * 1.0
               if coff >= 0.3:
                 #print pattern.squence
@@ -216,11 +261,21 @@ def getPredictTopic(patterns,targetPattern):
         predictTopic.append(tid)
   return predictTopic
           
-#get predict topics of pid
 def getPredictTopicDict(allPlaylist,songDict,scale):
+  """Get predict topics.
+     Input:
+       allPLaylist - all playlists.
+       songDict - dict of all songs.
+       scale - scale of current playlists.
+     Output:
+       predictTopicDict - predicted topic dict 
+                          with pid as key and topic list as value.
+  """
   print 'I am in getPredictTopicDict......'
   predictTopicDict = {}
-  allTrainingPattern,testingPatternDict = util.getPatternTrainingSet(allPlaylist,songDict,scale)
+  allTrainingPattern,testingPatternDict = util.getPatternTrainingSet(allPlaylist,
+                                                                    songDict,
+                                                                    scale)
   print 'get trainingPatterns and testingPatterns...'
   #print allPattern
   #print len(allPattern)

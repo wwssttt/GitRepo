@@ -1,8 +1,13 @@
-#!/usr/bin python
-#coding:utf-8
-############################
-#give some test function
-############################
+#!/usr/bin/python
+# -*- coding:utf-8 -*-
+"""Main class to do any experiments.
+Dependecies:
+  Any modules you want.
+  module 'test' may be needed.
+"""
+__author__ = 'Jason Wong(wwssttt@163.com)'
+__version__ = '1.0'
+
 
 import test
 import test_session

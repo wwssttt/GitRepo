@@ -1,0 +1,11 @@
+2014-01-02 17:35:52,021-ERROR:Mysql Error 1146:Table 'aotm.song' doesn't exist
+2014-01-08 16:38:11,274-ERROR:Mysql Error 1146:Table 'lastfm.effective_playlists' doesn't exist
+2014-01-08 16:38:57,543-ERROR:Mysql Error 1146:Table 'lastfm.effective_playlists' doesn't exist
+2014-01-08 16:39:12,713-ERROR:Mysql Error 1146:Table 'lastfm.effective_playlists' doesn't exist
+2014-01-08 16:39:32,801-ERROR:Mysql Error 1146:Table 'lastfm.effective_playlists' doesn't exist
+2014-01-08 16:41:12,988-ERROR:Mysql Error 1146:Table 'lastfm.effective_playlists' doesn't exist
+2014-01-08 16:41:32,365-ERROR:Mysql Error 1146:Table 'lastfm.effective_playlists' doesn't exist
+2014-01-08 16:41:55,395-DEBUG:there are 340 playlists selected
+2014-01-08 16:41:55,405-DEBUG:There are 5402 songs in 340 playlists
+2014-01-08 16:43:11,529-DEBUG:there are 340 playlists selected
+2014-01-08 16:43:11,541-DEBUG:There are 5402 songs in 340 playlists

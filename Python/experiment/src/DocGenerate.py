@@ -1,12 +1,13 @@
-#!/usr/bin python
-#coding=utf-8
-############################
-# @author Jason Wong
-# @date 2013-12-08
-############################
-# connect to aotm db
-# generate documents of songs
-############################
+#!/usr/bin/python
+# -*- coding:utf-8 -*-
+"""Connect to database and Generate documents of songs in database.
+   Dependencies:
+     const.
+     util.
+     lastfm.
+"""
+__author__ = 'Jason Wong'
+__version__ = '1.0'
 
 import MySQLdb
 import sys
@@ -15,7 +16,6 @@ import pylab as pl
 import logging
 import os
 from nltk.stem.lancaster import LancasterStemmer
-import DBProcess
 import matplotlib.pyplot as plt
 import util
 import const
@@ -25,18 +25,22 @@ import lastfm
 reload(sys)
 sys.setdefaultencoding('utf-8')
 # set log's localtion and level
-logging.basicConfig(filename=os.path.join(os.getcwd(),'log/docgenerate_log.txt'),level=logging.DEBUG,format='%(asctime)s-%(levelname)s:%(message)s')
+logging.basicConfig(filename=os.path.join(os.getcwd(),
+                                         '../log/docgenerate_log.txt'),
+                    level=logging.DEBUG,
+                    format='%(asctime)s-%(levelname)s:%(message)s')
 
-#read stop words from stop words file
-# return stop words list
 def readStopwordsFromFile(filename):
+  """Read stop words from stopwords file.
+     Input:
+       filename - stopwords filename.
+     Output:
+       words - stop words list.
+  """
   words = []
-
   stopfile = open(filename,"r")
-  while 1:
-    line = stopfile.readline()
-    if not line:
-      break
+  lines = stopfile.readlines()
+  for line in lines:
     line = line.rstrip('\n')
     line = line.strip()
     line = line.lower()
@@ -45,29 +49,21 @@ def readStopwordsFromFile(filename):
   stopfile.close()
   return words
 
-#combine two stop words lists
-#return a combined stopwords list/file
-def combineTwoStopwordsFile():
-  if os.path.exists("../txt/stopwords.txt"):
-    print "stop words file is existing......"
-    return
-  first = readStopwordsFromFile("EnglishStopWords_datatang.txt")
-  second = readStopwordsFromFile("EnglishStopWords_url.txt")
-  result = list(set(first).union(set(second)))
-  rFile = open("stopwords.txt","w")
-  for word in result:
-    rFile.write(word+'\n')
-  rFile.close()
-  return result
-
-#get stopwords list
+# get stopwords list
 stopwords = readStopwordsFromFile("../txt/stopwords.txt")
 
-#rm dir,no matter it is empty or not
 def rmDir(whichdir):
+  """Remove directory,no matter it is empty or not.
+     Input: 
+       whichdir - path of directory.
+     Output:
+       None.
+  """
+  # if directory does not exist then return.
   if not os.path.exists(whichdir):
     return
   print 'begin to rm dir %s' % whichdir
+  # remove all files under the directory
   for dirpath,dirname,filenames in os.walk(whichdir):
     for filename in filenames:
       filepath = os.path.join(dirpath,filename)
@@ -76,17 +72,22 @@ def rmDir(whichdir):
   os.rmdir(whichdir)
   print 'end of rming dir %s' % whichdir
 
-#add word to word dictionary
-#tagDict:word dictionary of a song(word:count)
-#tagStr:tag string
-#tagCount:the count of tag's appearance
 def addItemToDict(tagDict,tagStr,tagCount):
-  #stemmer
+  """Add word info to word dictionary of a song.
+     Input:
+       tagDict - word dictionary of a song with word as key and count as value.
+       tagStr - string of input tag.
+       tagCount - how many times the tag was used to describe the song.
+     Output:
+       None.
+       Note:the function can change the tagDict of the song.
+  """
+  # stemmer
   st = LancasterStemmer()
-  #split tagStr
+  # split tagStr
   for item in tagStr.split():
     item = item.lower()
-    #stem
+    # stem
     item = st.stem(item)
     #remove stopwords and too short words
     if item not in stopwords:
@@ -95,14 +96,21 @@ def addItemToDict(tagDict,tagStr,tagCount):
       else:
         tagDict[item] = tagDict[item] + tagCount
 
-#generate tag dictionary of given song
 def generateTagDictofSong(sname,aname,toptag):
+  """Generate tag dictionary of a song.
+     Input:
+       sname - title of the song.
+       aname - name of the artist.
+       toptag - top tags of the song(str).
+     Output:
+       tagDict - tag dictionary of the song with word as key, count as value.
+  """
   tagDict = {}
-  #add sname to tagDict
+  # add sname to tagDict
   addItemToDict(tagDict,sname,100)
-  #add aname to tagDict
+  # add aname to tagDict
   addItemToDict(tagDict,aname,100)
-  #split tags<tag:count>
+  # split tags<tag:count>
   tagInfos = eval(toptag)
   #loop every tag Information
   for tag in tagInfos.keys():
@@ -117,8 +125,14 @@ def generateTagDictofSong(sname,aname,toptag):
       addItemToDict(tagDict,tag,int(tagCount))
   return tagDict
 
-#generate document of given song from its tagDict
 def generateDocofSong(sid,tagDict):
+  """Generate document of a song.
+     Input:
+       sid - id of the song.
+       tagDict - tag dictionary of the song with word as key, count as value.
+     Output:
+       final string of the song.
+  """
   result = []
   #repeat: write tag into file
   for tag in tagDict.keys():
@@ -128,8 +142,14 @@ def generateDocofSong(sid,tagDict):
   return " ".join(result)
 
 def generateDocs():  
+  """Generate documents of songs in database.
+     Input:
+       None.
+     Output:
+       None.
+  """
   try:
-    #connect db and select db name
+    # connect db and select db name
     conn = MySQLdb.Connect(host=const.DBHOST,user=const.DBUSER,passwd=const.DBPWD,port=const.DBPORT,charset=const.DBCHARSET)
     cur = conn.cursor()
     conn.select_db(const.DBNAME)
@@ -187,4 +207,4 @@ def generateDocs():
 
 if __name__ == "__main__":
    print stopwords
-  #generateDocs()
+   generateDocs()

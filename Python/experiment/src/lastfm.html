@@ -1,0 +1,142 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module lastfm</title>
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>lastfm</strong></big></big> (version 1.0)</font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/wst/GitRepo/Python/experiment/src/lastfm.py">/home/wst/GitRepo/Python/experiment/src/lastfm.py</a></font></td></tr></table>
+    <p><tt>Useful&nbsp;Methods&nbsp;to&nbsp;crawl&nbsp;datas&nbsp;from&nbsp;last.fm.<br>
+Dependencies:<br>
+&nbsp;&nbsp;util.</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="MySQLdb.html">MySQLdb</a><br>
+<a href="json.html">json</a><br>
+<a href="os.html">os</a><br>
+</td><td width="25%" valign=top><a href="random.html">random</a><br>
+<a href="sys.html">sys</a><br>
+<a href="time.html">time</a><br>
+</td><td width="25%" valign=top><a href="types.html">types</a><br>
+<a href="urllib.html">urllib</a><br>
+<a href="util.html">util</a><br>
+</td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-crawlArtistsFromLastfm"><strong>crawlArtistsFromLastfm</strong></a>()</dt><dd><tt>Crawl&nbsp;information&nbsp;of&nbsp;artists&nbsp;from&nbsp;lastfm&nbsp;and&nbsp;store&nbsp;them&nbsp;into&nbsp;db.<br>
+Input:<br>
+&nbsp;&nbsp;None.<br>
+Output:<br>
+&nbsp;&nbsp;None.</tt></dd></dl>
+ <dl><dt><a name="-crawlInfoOfSong"><strong>crawlInfoOfSong</strong></a>(mbid, infoType<font color="#909090">=0</font>)</dt><dd><tt>Function&nbsp;to&nbsp;crawl&nbsp;information&nbsp;of&nbsp;a&nbsp;song.<br>
+Input:<br>
+&nbsp;&nbsp;mbid&nbsp;-&nbsp;mbid&nbsp;of&nbsp;the&nbsp;song..<br>
+&nbsp;&nbsp;infoType&nbsp;-&nbsp;0&nbsp;is&nbsp;base&nbsp;info&nbsp;of&nbsp;the&nbsp;song,&nbsp;default.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;is&nbsp;top&nbsp;tags&nbsp;of&nbsp;the&nbsp;song.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2&nbsp;is&nbsp;the&nbsp;base&nbsp;info&nbsp;the&nbsp;artist&nbsp;of&nbsp;the&nbsp;song.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3&nbsp;is&nbsp;top&nbsp;tags&nbsp;of&nbsp;the&nbsp;artist.<br>
+Output:<br>
+&nbsp;&nbsp;ddata&nbsp;-&nbsp;dictionary&nbsp;of&nbsp;the&nbsp;song's&nbsp;information.</tt></dd></dl>
+ <dl><dt><a name="-crawlInfoOfTag"><strong>crawlInfoOfTag</strong></a>(tagname)</dt><dd><tt>Crawl&nbsp;info&nbsp;of&nbsp;a&nbsp;tag&nbsp;with&nbsp;specific&nbsp;name&nbsp;from&nbsp;lastfm.<br>
+Input:<br>
+&nbsp;&nbsp;tagname&nbsp;-&nbsp;name&nbsp;of&nbsp;the&nbsp;tag.<br>
+Output:<br>
+&nbsp;&nbsp;ddata&nbsp;-&nbsp;dictionary&nbsp;of&nbsp;the&nbsp;tag.</tt></dd></dl>
+ <dl><dt><a name="-crawlInfoOfUser"><strong>crawlInfoOfUser</strong></a>(username, infoType<font color="#909090">=0</font>, page<font color="#909090">=1</font>)</dt><dd><tt>Function&nbsp;to&nbsp;crawl&nbsp;information&nbsp;of&nbsp;users'&nbsp;friends&nbsp;or&nbsp;recent&nbsp;tracks.<br>
+Input:<br>
+&nbsp;&nbsp;username&nbsp;-&nbsp;name&nbsp;of&nbsp;the&nbsp;user.<br>
+&nbsp;&nbsp;infoType&nbsp;-&nbsp;0&nbsp;is&nbsp;friends&nbsp;of&nbsp;the&nbsp;user,&nbsp;default.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;is&nbsp;recent&nbsp;tracks&nbsp;the&nbsp;user&nbsp;listened&nbsp;to.<br>
+&nbsp;&nbsp;page&nbsp;-&nbsp;which&nbsp;page&nbsp;to&nbsp;be&nbsp;crawled,&nbsp;1&nbsp;is&nbsp;default.<br>
+Output:<br>
+&nbsp;&nbsp;ddata&nbsp;-&nbsp;dictionary&nbsp;of&nbsp;information.</tt></dd></dl>
+ <dl><dt><a name="-crawlRecentTracksFromLastfm"><strong>crawlRecentTracksFromLastfm</strong></a>()</dt><dd><tt>Crawl&nbsp;recent&nbsp;tracks&nbsp;from&nbsp;lastfm&nbsp;and&nbsp;then&nbsp;store&nbsp;them&nbsp;into&nbsp;db.<br>
+Input:<br>
+&nbsp;&nbsp;None.<br>
+Output:<br>
+&nbsp;&nbsp;None.</tt></dd></dl>
+ <dl><dt><a name="-crawlSongFromLastfm"><strong>crawlSongFromLastfm</strong></a>()</dt><dd><tt>Crawl&nbsp;information&nbsp;of&nbsp;songs&nbsp;from&nbsp;lastfm&nbsp;and&nbsp;then&nbsp;store&nbsp;them&nbsp;into&nbsp;db.<br>
+Input:<br>
+&nbsp;&nbsp;None.<br>
+Output:<br>
+&nbsp;&nbsp;None.</tt></dd></dl>
+ <dl><dt><a name="-crawlTagFromLastfm"><strong>crawlTagFromLastfm</strong></a>()</dt><dd><tt>Crawl&nbsp;information&nbsp;of&nbsp;tags&nbsp;from&nbsp;lastfm&nbsp;and&nbsp;store&nbsp;them&nbsp;into&nbsp;db.<br>
+Input:<br>
+&nbsp;&nbsp;None.<br>
+Output:<br>
+&nbsp;&nbsp;None.</tt></dd></dl>
+ <dl><dt><a name="-crawlUsersFromLastfm"><strong>crawlUsersFromLastfm</strong></a>()</dt><dd><tt>Crawl&nbsp;users&nbsp;from&nbsp;lastfm&nbsp;and&nbsp;then&nbsp;store&nbsp;them&nbsp;into&nbsp;db.<br>
+Input:<br>
+&nbsp;&nbsp;None.<br>
+Output:<br>
+&nbsp;&nbsp;None.</tt></dd></dl>
+ <dl><dt><a name="-filterShortRecords"><strong>filterShortRecords</strong></a>()</dt><dd><tt>Filter&nbsp;users&nbsp;with&nbsp;too&nbsp;short&nbsp;records.<br>
+Input:<br>
+&nbsp;&nbsp;None.<br>
+Output:<br>
+&nbsp;&nbsp;None.</tt></dd></dl>
+ <dl><dt><a name="-getAllTags"><strong>getAllTags</strong></a>()</dt><dd><tt>Get&nbsp;all&nbsp;tags&nbsp;that&nbsp;are&nbsp;used&nbsp;to&nbsp;describe&nbsp;songs&nbsp;and&nbsp;artists.<br>
+Input:<br>
+&nbsp;&nbsp;None.<br>
+Output:<br>
+&nbsp;&nbsp;alltags&nbsp;-&nbsp;list&nbsp;of&nbsp;all&nbsp;tags.</tt></dd></dl>
+ <dl><dt><a name="-getContentOfArtist"><strong>getContentOfArtist</strong></a>(mbid)</dt><dd><tt>Get&nbsp;text&nbsp;content&nbsp;of&nbsp;an&nbsp;artist.<br>
+Input:<br>
+&nbsp;&nbsp;mbid&nbsp;-&nbsp;the&nbsp;mbid&nbsp;of&nbsp;the&nbsp;artist.<br>
+Output:<br>
+&nbsp;&nbsp;content&nbsp;-&nbsp;text&nbsp;content&nbsp;of&nbsp;the&nbsp;artist.</tt></dd></dl>
+ <dl><dt><a name="-getContentOfSong"><strong>getContentOfSong</strong></a>(mbid)</dt><dd><tt>Get&nbsp;text&nbsp;content&nbsp;of&nbsp;a&nbsp;song.<br>
+Input:<br>
+&nbsp;&nbsp;mbid&nbsp;-&nbsp;the&nbsp;mbid&nbsp;of&nbsp;the&nbsp;song.<br>
+Output:<br>
+&nbsp;&nbsp;content&nbsp;-&nbsp;text&nbsp;content&nbsp;of&nbsp;the&nbsp;song.</tt></dd></dl>
+ <dl><dt><a name="-getContentOfTag"><strong>getContentOfTag</strong></a>(tagname)</dt><dd><tt>Get&nbsp;text&nbsp;content&nbsp;of&nbsp;a&nbsp;tag.<br>
+Input:<br>
+&nbsp;&nbsp;tagname&nbsp;-&nbsp;name&nbsp;of&nbsp;the&nbsp;tag.<br>
+Output:<br>
+&nbsp;&nbsp;content&nbsp;-&nbsp;text&nbsp;content&nbsp;of&nbsp;the&nbsp;tag.</tt></dd></dl>
+ <dl><dt><a name="-insertPlaylistToTableUser"><strong>insertPlaylistToTableUser</strong></a>()</dt><dd><tt>Get&nbsp;playlists&nbsp;of&nbsp;a&nbsp;user&nbsp;and&nbsp;update&nbsp;the&nbsp;user&nbsp;in&nbsp;user&nbsp;table.<br>
+Input:<br>
+&nbsp;&nbsp;None.<br>
+Output:<br>
+&nbsp;&nbsp;None.</tt></dd></dl>
+ <dl><dt><a name="-readPlaylistFromDB"><strong>readPlaylistFromDB</strong></a>()</dt><dd><tt>Read&nbsp;playlists&nbsp;from&nbsp;databse&nbsp;directly&nbsp;and&nbsp;store&nbsp;them&nbsp;into&nbsp;file&nbsp;in&nbsp;disk.<br>
+Input:<br>
+&nbsp;&nbsp;None.<br>
+Output:<br>
+&nbsp;&nbsp;None.</tt></dd></dl>
+ <dl><dt><a name="-selectRecordsInOneSession"><strong>selectRecordsInOneSession</strong></a>()</dt><dd><tt>Filter&nbsp;records&nbsp;with&nbsp;session&nbsp;or&nbsp;pause&nbsp;and&nbsp;all&nbsp;songs&nbsp;must&nbsp;be&nbsp;listenered&nbsp;to<br>
+in&nbsp;n*8*60s,that&nbsp;is,length&nbsp;of&nbsp;per&nbsp;song&nbsp;is&nbsp;8&nbsp;min.<br>
+Input:<br>
+&nbsp;&nbsp;None.<br>
+Output:<br>
+&nbsp;&nbsp;None.</tt></dd></dl>
+</td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>__author__</strong> = 'Jason Wong'<br>
+<strong>__version__</strong> = '1.0'</td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#7799ee">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Author</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#7799ee"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%">Jason&nbsp;Wong</td></tr></table>
+</body></html>

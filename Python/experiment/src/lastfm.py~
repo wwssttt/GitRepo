@@ -1,8 +1,11 @@
-#!/usr/bin python
-#-coding:utf-8-------
-#############################
-#some methods to crawl data from lastfm
-#############################
+#!/usr/bin/python
+# -*- coding:utf-8 -*-
+"""Useful Methods to crawl datas from last.fm.
+   Dependencies:
+     util.
+"""
+__author__ = 'Jason Wong'
+__version__ = '1.0'
 
 import urllib
 import json
@@ -14,17 +17,30 @@ import types
 import sys
 import random
 
+# set default encoding as utf-8.
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
-#define function to crawl friends of user with specific username from lastfm
 def crawlInfoOfUser(username,infoType = 0,page = 1):
+  """Function to crawl information of users' friends or recent tracks.
+     Input:
+       username - name of the user.
+       infoType - 0 is friends of the user, default.
+                  1 is recent tracks the user listened to.
+       page - which page to be crawled, 1 is default.
+     Output:
+       ddata - dictionary of information.
+  """
   if infoType == 0:
-    #get friends
-    url = 'http://ws.audioscrobbler.com/2.0/?method=user.getfriends&user=%s&api_key=550633c179112c8002bc6a0942d55b2a&format=json&page=%d' % (username,page)
+    # get friends
+    url = 'http://ws.audioscrobbler.com/2.0/?method=user.getfriends&user=%s \
+           &api_key=550633c179112c8002bc6a0942d55b2a&format=json&page=%d' \
+           % (username,page)
   elif infoType == 1:
-    #get recent tracks
-    url = 'http://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=%s&api_key=550633c179112c8002bc6a0942d55b2a&format=json&page=%d' % (username,page)
+    # get recent tracks
+    url = 'http://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks \
+           &user=%s&api_key=550633c179112c8002bc6a0942d55b2a&format=json \
+           &page=%d' % (username,page)
   #url = url.replace('&','%26')
   #url = url.replace('+','%2b')
   page = urllib.urlopen(url)
@@ -32,11 +48,16 @@ def crawlInfoOfUser(username,infoType = 0,page = 1):
   ddata = json.loads(data)
   return ddata
 
-#crawl users from lastfm and then store them into db
 def crawlUsersFromLastfm():
+  """Crawl users from lastfm and then store them into db.
+     Input:
+       None.
+     Output:
+       None.
+  """
   conn=MySQLdb.connect(host="localhost",user="root",passwd="wst",db="lastfm")
   cur = conn.cursor()
-  #get existing users
+  # get existing users
   count = cur.execute('select uid,username from user')
   print 'There are %d  users in table user now...' % count
   users = cur.fetchall()
@@ -48,7 +69,7 @@ def crawlUsersFromLastfm():
   index = count - 1
   step = 0
   total = count
-  #max is 30000
+  # max is 30000
   while total <= 30000:
     if index == -1:
       username = 'rj'
@@ -89,12 +110,14 @@ def crawlUsersFromLastfm():
         value.append('')
         value.append('2')
         if not uid in allUserId:
-          cur.execute('insert ignore into user values(%s,%s,%s,%s,%s,%s,%s,%s,%s)',value)
+          cur.execute('insert ignore into user values(%s,%s,%s,%s,%s,%s,%s, \
+                       %s,%s)',value)
           allUserId.append(uid)
           allUserName.append(name)
           total += 1
           if step % 50 == 0:
-            print 'To be update database. There are %d users now...' % len(allUserId)
+            print 'To be update database. There are %d users now...' \
+                  % len(allUserId)
             conn.commit()
     except:
       print '%s causes exception......' % username
@@ -105,12 +128,18 @@ def crawlUsersFromLastfm():
   cur.close()
   conn.close()
   
-#crawl recent tracks from lastfm and then store them into db
 def crawlRecentTracksFromLastfm():
+  """Crawl recent tracks from lastfm and then store them into db.
+     Input:
+       None.
+     Output:
+       None.
+  """
   conn=MySQLdb.connect(host="localhost",user="root",passwd="wst",db="lastfm")
   cur = conn.cursor()
-  #get uids in table record
-  uCount = cur.execute('select uid from user where scale = -1 and uid % 50 = 1')
+  # get uids in table record
+  sql = 'select uid from user where scale = -1 and uid % 50 = 1'
+  uCount = cur.execute(sql)
   print 'There are %d users in table record...' % uCount
   results = cur.fetchall()
   uids = [result[0] for result in results]
@@ -137,7 +166,8 @@ def crawlRecentTracksFromLastfm():
           values.append(value)
         #insert into db
         for value in values:
-          cur.execute('insert ignore into record values(0,%s,%s,%s,%s,-2)',value)
+          cur.execute('insert ignore into record values(0,%s,%s,%s,%s,-2)',
+                      value)
         conn.commit()
         #check total pages
         attr = trackDict['recenttracks']['@attr']
@@ -150,10 +180,14 @@ def crawlRecentTracksFromLastfm():
   cur.close()
   conn.close()
 
-#filter records with session or pause
-#all songs must be listenered in n*8*60s
-#that is, length of per song is 8 min
 def selectRecordsInOneSession():
+  """Filter records with session or pause and all songs must be listenered to
+     in n*8*60s,that is,length of per song is 8 min.
+     Input:
+       None.
+     Output:
+       None.
+  """
   effective = []
   conn=MySQLdb.connect(host="localhost",user="root",passwd="wst",db="lastfm")
   cur = conn.cursor()
@@ -165,7 +199,9 @@ def selectRecordsInOneSession():
   userCount = len(userList)
   for index in range(userCount):
     uid = userList[index]
-    rCount = cur.execute('select max(uts),min(uts),count(uts) from record where uid=%s',uid)
+    # get oldest and newest timestamp.
+    sql = 'select max(uts),min(uts),count(uts) from record where uid=%s' % uid
+    rCount = cur.execute(sql)
     results = cur.fetchall()
     new = int(results[0][0])
     old = int(results[0][1])
@@ -178,7 +214,7 @@ def selectRecordsInOneSession():
       print 'selectRecordsInOneSession:%d/%d:Good' % (index,userCount) 
     else:
       print 'selectRecordsInOneSession:%d/%d:Bad' % (index,userCount)
-  #set scale to 1 for middle records
+  # set scale to 1 for middle records
   eCount = len(effective)
   for index in range(eCount):
     print 'selectRecordsInOneSession/setScale=1:%d/%d' % (index,eCount)
@@ -190,20 +226,37 @@ def selectRecordsInOneSession():
   print 'There are %d middle users.' % len(effective)
   return effective
 
-#define function to crawl info of songs with specific mbid from lastfm
 def crawlInfoOfSong(mbid,infoType = 0):
+  """Function to crawl information of a song.
+     Input:
+       mbid - mbid of the song..
+       infoType - 0 is base info of the song, default.
+                  1 is top tags of the song.
+                  2 is the base info the artist of the song.
+                  3 is top tags of the artist.
+     Output:
+       ddata - dictionary of the song's information.
+  """
   if infoType == 0:
-    #get base info of song
-    url = 'http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=550633c179112c8002bc6a0942d55b2a&mbid=%s&format=json' % mbid
+    # get base info of song
+    url = 'http://ws.audioscrobbler.com/2.0/?method=track.getInfo \
+           &api_key=550633c179112c8002bc6a0942d55b2a&mbid=%s \
+           &format=json' % mbid
   elif infoType == 1:
-    #get top tags of song
-    url = 'http://ws.audioscrobbler.com/2.0/?method=track.gettoptags&mbid=%s&api_key=550633c179112c8002bc6a0942d55b2a&format=json' % mbid
+    # get top tags of song
+    url = 'http://ws.audioscrobbler.com/2.0/?method=track.gettoptags \
+          &mbid=%s&api_key=550633c179112c8002bc6a0942d55b2a \
+          &format=json' % mbid
   elif infoType == 2:
-    #get base info of artist
-    url = 'http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&mbid=%s&api_key=550633c179112c8002bc6a0942d55b2a&format=json' % mbid
+    # get base info of artist
+    url = 'http://ws.audioscrobbler.com/2.0/?method=artist.getinfo \
+          &mbid=%s&api_key=550633c179112c8002bc6a0942d55b2a \
+          &format=json' % mbid
   elif infoType == 3:
-    #get top tags of artist
-    url = 'http://ws.audioscrobbler.com/2.0/?method=artist.gettoptags&mbid=%s&api_key=550633c179112c8002bc6a0942d55b2a&format=json' % mbid
+    # get top tags of artist
+    url = 'http://ws.audioscrobbler.com/2.0/?method=artist.gettoptags \
+          &mbid=%s&api_key=550633c179112c8002bc6a0942d55b2a \
+          &format=json' % mbid
   #url = url.replace('&','%26')
   #url = url.replace('+','%2b')
   page = urllib.urlopen(url)
@@ -211,11 +264,16 @@ def crawlInfoOfSong(mbid,infoType = 0):
   ddata = json.loads(data)
   return ddata
 
-#crawl recent tracks from lastfm and then store them into db
 def crawlSongFromLastfm():
+  """Crawl information of songs from lastfm and then store them into db.
+     Input:
+       None.
+     Output:
+       None.
+  """
   conn=MySQLdb.connect(host="localhost",user="root",passwd="wst",db="lastfm")
   cur = conn.cursor()
-  #get uids in table record
+  # get uids in table record
   count = cur.execute('select distinct(mbid) from song')
   print 'There are %d songs in table song...' % count
   results = cur.fetchall()
@@ -255,8 +313,13 @@ def crawlSongFromLastfm():
   cur.close()
   conn.close()
 
-#get content text of mbid
 def getContentOfSong(mbid):
+  """Get text content of a song.
+     Input:
+       mbid - the mbid of the song.
+     Output:
+       content - text content of the song.
+  """
   infoDict = crawlInfoOfSong(mbid,0)
   if 'track' not in infoDict:
     print '%s is not found...' % mbid
@@ -294,11 +357,17 @@ def getContentOfSong(mbid):
         sTags[tagName] = tagCount
   tagStr = str(sTags)
       
-  content = [sid,mbid,name,duration,artistId,artistName,album,listeners,playcount,tagStr]
+  content = [sid,mbid,name,duration,artistId,artistName,album,listeners,
+             playcount,tagStr]
   return content
 
-#get content text of mbid
 def getContentOfArtist(mbid):
+  """Get text content of an artist.
+     Input:
+       mbid - the mbid of the artist.
+     Output:
+       content - text content of the artist.
+  """
   infoDict = crawlInfoOfSong(mbid,2)
   if 'artist' not in infoDict:
     print '%s is not found...' % mbid
@@ -349,8 +418,13 @@ def getContentOfArtist(mbid):
   #print content
   return content
 
-#crawl artist infos from lastfm
 def crawlArtistsFromLastfm():
+  """Crawl information of artists from lastfm and store them into db.
+     Input:
+       None.
+     Output:
+       None.
+  """
   #target file
   #get all songs' artists' mbid
   conn=MySQLdb.connect(host="localhost",user="root",passwd="wst",db="lastfm")
@@ -388,8 +462,13 @@ def crawlArtistsFromLastfm():
   print 'Exception = ',exception
   print 'Null = ',null
 
-#get all tags
 def getAllTags():
+  """Get all tags that are used to describe songs and artists.
+     Input:
+       None.
+     Output:
+       alltags - list of all tags.
+  """
   alltags = []
   conn=MySQLdb.connect(host="localhost",user="root",passwd="wst",db="lastfm")
   cur = conn.cursor()
@@ -415,9 +494,15 @@ def getAllTags():
   conn.close()
   return alltags
 
-#define function to crawl info of tags with specific mbid from lastfm
 def crawlInfoOfTag(tagname):
-  url = 'http://ws.audioscrobbler.com/2.0/?method=tag.getinfo&tag=%s&api_key=550633c179112c8002bc6a0942d55b2a&format=json' % tagname
+  """Crawl info of a tag with specific name from lastfm.
+     Input:
+       tagname - name of the tag.
+     Output:
+       ddata - dictionary of the tag.
+  """
+  url = 'http://ws.audioscrobbler.com/2.0/?method=tag.getinfo&tag=%s \
+         &api_key=550633c179112c8002bc6a0942d55b2a&format=json' % tagname
   #url = url.replace('&','%26')
   #url = url.replace('+','%2b')
   page = urllib.urlopen(url)
@@ -426,6 +511,12 @@ def crawlInfoOfTag(tagname):
   return ddata
 
 def getContentOfTag(tagname):
+  """Get text content of a tag.
+     Input:
+       tagname - name of the tag.
+     Output:
+       content - text content of the tag.
+  """
   tagDict = crawlInfoOfTag(tagname)
   if 'tag' not in tagDict:
     print '%s is not existing...' % tag
@@ -451,6 +542,12 @@ def getContentOfTag(tagname):
 
 #store tag into db
 def crawlTagFromLastfm():
+  """Crawl information of tags from lastfm and store them into db.
+     Input:
+       None.
+     Output:
+       None.
+  """
   conn=MySQLdb.connect(host="localhost",user="root",passwd="wst",db="lastfm")
   cur = conn.cursor()
   count = cur.execute('select id from tag')
@@ -486,8 +583,13 @@ def crawlTagFromLastfm():
   cur.close()
   conn.close()
 
-#filter users with too short records
 def filterShortRecords():
+  """Filter users with too short records.
+     Input:
+       None.
+     Output:
+       None.
+  """
   conn=MySQLdb.connect(host="localhost",user="root",passwd="wst",db="lastfm")
   cur = conn.cursor()
   cur.execute('select uid from record group by uid having count(mbid) < 10')
@@ -504,32 +606,13 @@ def filterShortRecords():
   cur.close()
   conn.close()
 
-#filter songs 
-def filterSongs():
-  conn=MySQLdb.connect(host="localhost",user="root",passwd="wst",db="lastfm")
-  cur = conn.cursor()
-  cur.execute('select distinct(mbid) from record where scale = 0')
-  results = cur.fetchall()
-  mbids = [result[0] for result in results]
-  count = len(mbids)
-  print 'There are %d unique songs in record where scale = 0.' % count
-  cur.execute('select mbid from song where scale = 0')
-  songs = cur.fetchall()
-  sids = [song[0] for song in songs]
-  sCount = len(sids)
-  print 'There are %d songs in song where scale = 0.' % len(sids)
-  for index in range(sCount):
-    #print '%d/%d...' % (index,sCount)
-    sid = sids[index]
-    if sid not in mbids:
-      sql = "update song set scale = 2 where mbid = '%s'" % sid
-      cur.execute(sql)
-  conn.commit()
-  cur.close()
-  conn.close()
-
-#generate playlist
 def insertPlaylistToTableUser():
+  """Get playlists of a user and update the user in user table.
+     Input:
+       None.
+     Output:
+       None.
+  """
   conn=MySQLdb.connect(host="localhost",user="root",passwd="wst",db="lastfm")
   cur = conn.cursor()
   cur.execute('select sid,mbid,duration from song')
@@ -597,6 +680,12 @@ def insertPlaylistToTableUser():
 
 #write playlists to file
 def readPlaylistFromDB():
+  """Read playlists from databse directly and store them into file in disk.
+     Input:
+       None.
+     Output:
+       None.
+  """
   filename = '../txt/Lastfm_playlists_MultiSession_one.txt'
   conn=MySQLdb.connect(host="localhost",user="root",passwd="wst",db="lastfm")
   cur = conn.cursor()
@@ -633,18 +722,6 @@ def readPlaylistFromDB():
         if sid not in allSids:
           allSids.append(sid)
         sids.append(sid)
-
-        
-        index += 1
-        if index >= count:
-          break
-        item = items[index]
-        value = item.split(':')
-        sid = value[0]
-        if sid not in allSids:
-          allSids.append(sid)
-        sids.append(sid)
-
         break
     #print '%s:%d' % (uid,len(sids))
     sidStr = ",".join(sids)  
