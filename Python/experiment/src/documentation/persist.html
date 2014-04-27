@@ -1,0 +1,106 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module persist</title>
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>persist</strong></big></big> (version 1.0)</font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/wst/GitRepo/Python/experiment/src/persist.py">/home/wst/GitRepo/Python/experiment/src/persist.py</a></font></td></tr></table>
+    <p><tt>Store&nbsp;sth&nbsp;to&nbsp;file&nbsp;or&nbsp;Read&nbsp;sth&nbsp;from&nbsp;file.<br>
+Dependencies:<br>
+&nbsp;&nbsp;model.<br>
+&nbsp;&nbsp;predict.<br>
+&nbsp;&nbsp;const.</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="MySQLdb.html">MySQLdb</a><br>
+<a href="const.html">const</a><br>
+</td><td width="25%" valign=top><a href="model.html">model</a><br>
+<a href="os.html">os</a><br>
+</td><td width="25%" valign=top><a href="predict.html">predict</a><br>
+<a href="sys.html">sys</a><br>
+</td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-mvFileFromMalletToTxt"><strong>mvFileFromMalletToTxt</strong></a>()</dt><dd><tt>Move&nbsp;song&nbsp;file&nbsp;from&nbsp;mallet&nbsp;to&nbsp;txt&nbsp;dir.<br>
+Firstly,&nbsp;we&nbsp;do&nbsp;LDA&nbsp;using&nbsp;mallet&nbsp;and&nbsp;get&nbsp;the&nbsp;song&nbsp;file&nbsp;in&nbsp;mallet&nbsp;dir.<br>
+Secondly,&nbsp;we&nbsp;parse&nbsp;the&nbsp;song&nbsp;file&nbsp;and&nbsp;get&nbsp;a&nbsp;new&nbsp;file&nbsp;in&nbsp;txt&nbsp;dir.<br>
+Input:<br>
+&nbsp;&nbsp;None.<br>
+Output:<br>
+&nbsp;&nbsp;None.</tt></dd></dl>
+ <dl><dt><a name="-readPlaylistFromFile"><strong>readPlaylistFromFile</strong></a>()</dt><dd><tt>Read&nbsp;normal&nbsp;playlists&nbsp;from&nbsp;file.<br>
+Input:<br>
+&nbsp;&nbsp;None.<br>
+Output:<br>
+&nbsp;&nbsp;allPlaylist&nbsp;-&nbsp;two-dimension&nbsp;array&nbsp;of&nbsp;playlists<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with&nbsp;scale&nbsp;as&nbsp;the&nbsp;1st&nbsp;dim&nbsp;and&nbsp;pid&nbsp;as&nbsp;the&nbsp;2nd<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;and&nbsp;the&nbsp;value&nbsp;is&nbsp;Playlist.</tt></dd></dl>
+ <dl><dt><a name="-readPlaylistFromFile_Session"><strong>readPlaylistFromFile_Session</strong></a>()</dt><dd><tt>Read&nbsp;session&nbsp;playlists&nbsp;from&nbsp;file.<br>
+Input:<br>
+&nbsp;&nbsp;None.<br>
+Output:<br>
+&nbsp;&nbsp;allPlaylist&nbsp;-&nbsp;two-dimension&nbsp;array&nbsp;of&nbsp;playlists<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with&nbsp;scale&nbsp;as&nbsp;the&nbsp;1st&nbsp;dim&nbsp;and&nbsp;pid&nbsp;as&nbsp;the&nbsp;2nd<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;and&nbsp;the&nbsp;value&nbsp;is&nbsp;Playlist.</tt></dd></dl>
+ <dl><dt><a name="-readPredictedTopicDictOfArima"><strong>readPredictedTopicDictOfArima</strong></a>(playlistDict, songDict, scale, maxLength)</dt><dd><tt>Read&nbsp;topic&nbsp;dictionary&nbsp;of&nbsp;predicted&nbsp;song&nbsp;from&nbsp;file.<br>
+Input:<br>
+&nbsp;&nbsp;playlistDict&nbsp;-&nbsp;playlist&nbsp;dict&nbsp;with&nbsp;pid&nbsp;as&nbsp;key&nbsp;and&nbsp;Playlist&nbsp;as&nbsp;value.<br>
+&nbsp;&nbsp;songDict&nbsp;-&nbsp;song&nbsp;dict&nbsp;with&nbsp;sid&nbsp;as&nbsp;key&nbsp;and&nbsp;Song&nbsp;as&nbsp;value.<br>
+&nbsp;&nbsp;scale&nbsp;-&nbsp;scale&nbsp;of&nbsp;playlists.<br>
+&nbsp;&nbsp;maxLength&nbsp;-&nbsp;max&nbsp;length&nbsp;of&nbsp;source&nbsp;sequence.<br>
+Output:<br>
+&nbsp;&nbsp;predictDict&nbsp;-&nbsp;topic&nbsp;dict&nbsp;of&nbsp;predicted&nbsp;songs&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with&nbsp;pid&nbsp;as&nbsp;key&nbsp;and&nbsp;topic&nbsp;dict&nbsp;as&nbsp;value.</tt></dd></dl>
+ <dl><dt><a name="-readSongFromFile"><strong>readSongFromFile</strong></a>()</dt><dd><tt>Read&nbsp;all&nbsp;songs&nbsp;from&nbsp;file&nbsp;and&nbsp;construct&nbsp;song&nbsp;dictionary.<br>
+Input:<br>
+&nbsp;&nbsp;None.<br>
+Output:<br>
+&nbsp;&nbsp;songDict&nbsp;-&nbsp;song&nbsp;dict&nbsp;with&nbsp;sid&nbsp;as&nbsp;key&nbsp;and&nbsp;Song&nbsp;as&nbsp;value.</tt></dd></dl>
+ <dl><dt><a name="-writePlaylistsToFile"><strong>writePlaylistsToFile</strong></a>()</dt><dd><tt>Write&nbsp;playlists&nbsp;of&nbsp;users&nbsp;to&nbsp;file.<br>
+Input:<br>
+&nbsp;&nbsp;None.<br>
+Output:<br>
+&nbsp;&nbsp;None.</tt></dd></dl>
+ <dl><dt><a name="-writePlaylistsToFileSession"><strong>writePlaylistsToFileSession</strong></a>()</dt><dd><tt>Write&nbsp;playlists&nbsp;with&nbsp;scale&nbsp;of&nbsp;users&nbsp;to&nbsp;file.<br>
+Input:<br>
+&nbsp;&nbsp;None.<br>
+Output:<br>
+&nbsp;&nbsp;None.</tt></dd></dl>
+ <dl><dt><a name="-writeTopicDictOfArimaToFile"><strong>writeTopicDictOfArimaToFile</strong></a>(playlistDict, songDict, scale, maxLength)</dt><dd><tt>Write&nbsp;topic&nbsp;dictionary&nbsp;of&nbsp;predicted&nbsp;song&nbsp;to&nbsp;file&nbsp;to&nbsp;avoid&nbsp;re-computation.<br>
+Input:<br>
+&nbsp;&nbsp;playlistDict&nbsp;-&nbsp;playlist&nbsp;dict&nbsp;with&nbsp;pid&nbsp;as&nbsp;key&nbsp;and&nbsp;Playlist&nbsp;as&nbsp;value.<br>
+&nbsp;&nbsp;songDict&nbsp;-&nbsp;song&nbsp;dict&nbsp;with&nbsp;sid&nbsp;as&nbsp;key&nbsp;and&nbsp;Song&nbsp;as&nbsp;value.<br>
+&nbsp;&nbsp;scale&nbsp;-&nbsp;scale&nbsp;of&nbsp;playlists.<br>
+&nbsp;&nbsp;maxLength&nbsp;-&nbsp;max&nbsp;length&nbsp;of&nbsp;source&nbsp;sequence.<br>
+Output:<br>
+&nbsp;&nbsp;None.</tt></dd></dl>
+</td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>__author__</strong> = 'Jason Wong'<br>
+<strong>__version__</strong> = '1.0'</td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#7799ee">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Author</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#7799ee"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%">Jason&nbsp;Wong</td></tr></table>
+</body></html>

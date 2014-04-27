@@ -360,3 +360,43 @@ def showResult():
   plt.savefig("../img/improvement_knn_%s_%s_%d_%d.png" % (const.DATASET_NAME,indexName,const.TOPIC_NUM,const.TOP_N))
   #plt.show()
   logging.info('I am out showResult......')
+
+  #plt img of comparing with pure method
+  for index in range(5):
+    plt.figure(index+50)
+    indexName = util.getIndexName(index)
+    print indexName
+    mids = [const.ARIMA,const.SIMILAR,const.KNN,const.AVG,const.PATTERN,const.MARKOV]
+    markerIndex = 0
+    for mid in mids:
+      if index == 1 or index == 2:
+        plt.plot(x[10:],result[mid][index][10:],const.marker1[markerIndex],label=util.getMethodName(mid))
+      else:
+        plt.plot(x,result[mid][index],const.marker1[markerIndex],label=util.getMethodName(mid))
+      markerIndex += 1
+    plt.title("%s of Different Recommend Algorithms" % indexName)
+    plt.xlabel("Number of recommendations")
+    plt.ylabel(indexName)
+    plt.legend()
+    plt.xlim(1,160)
+    plt.savefig("../img/all_%s_%s_%d_%d.png" % (const.DATASET_NAME,indexName,const.TOPIC_NUM,const.TOP_N))
+
+  #plt img of comparing with hybrid method
+  for index in range(5):
+    plt.figure(index+75)
+    indexName = util.getIndexName(index)
+    mids = [const.ARIMA,const.ALL_HYBRID]
+    markerIndex = 0
+    for mid in mids:
+      if index == 1 or index == 2:
+        plt.plot(x[10:],result[mid][index][10:],const.marker[markerIndex],label=util.getMethodName(mid))
+      else:
+        plt.plot(x,result[mid][index],const.marker[markerIndex],label=util.getMethodName(mid))
+      markerIndex += 1
+    plt.title("%s of Different Recommend Algorithms" % indexName)
+    plt.xlabel("Number of recommendations")
+    plt.ylabel(indexName)
+    plt.legend()
+    plt.xlim(1,160)
+    plt.savefig("../img/hybrid_only_%s_%s_%d_%d.png" % (const.DATASET_NAME,indexName,const.TOPIC_NUM,const.TOP_N))
+    #plt.show()

@@ -38,6 +38,7 @@ METHOD_SIZE = 10
 #lengend info
 locs = ['upper right','upper right','upper right','upper right','upper right']
 marker = ['k','k-.','k1','k--','k:']
+marker1 = ['b','k','k-.','k--','k:','k1']
 
 #group of comparision
 #1:ARIMA +  Similar + Avergae + Popular(Pure)

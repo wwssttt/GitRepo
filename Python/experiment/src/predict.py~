@@ -389,14 +389,17 @@ def getRecDictOfThreeOrderMarkov(allPlaylist,
        recDict - dict of recommendations 
                  with pid as key and recommendation list as value.
   """
-  domDict,transDict = util.getThreeOrderTransitionMatrix(allPlaylist,songDict,scale)
+  domDict,transDict = util.getThreeOrderTransitionMatrix(allPlaylist,
+                                                         songDict,
+                                                         scale)
   recDict = {}
   index = 0
   playlistDict = allPlaylist[scale]
   playlistSize = len(playlistDict)
   for pid in playlistDict.keys():
     index += 1
-    print 'scale = %d >> Three Order Markov Chain:%d:%d' % (scale,index,playlistSize)
+    print 'scale = %d >> Three Order Markov Chain:%d:%d' \
+           % (scale,index,playlistSize)
     playlist = playlistDict[pid]
     trainingList = playlist.getTrainingList()
     sidList = trainingList[-3:]
@@ -407,7 +410,8 @@ def getRecDictOfThreeOrderMarkov(allPlaylist,
     for i in range(len(startTopicList)):
       for j in range(len(secondTopicList)):
         for s in range(len(threeTopicList)):
-          key = '%d#%d#%d' % (startTopicList[i],secondTopicList[j],threeTopicList[s])
+          key = '%d#%d#%d' \
+                % (startTopicList[i],secondTopicList[j],threeTopicList[s])
           if key not in topicList:
             topicList.append(key)
 
@@ -427,7 +431,8 @@ def getRecDictOfThreeOrderMarkov(allPlaylist,
           if tid not in transDict[topicKey]:
             scoreDict[sid] += 0.0
           else:
-            scoreDict[sid] = scoreDict[sid] + topicDict[tid]*transDict[topicKey][tid]
+            scoreDict[sid] = scoreDict[sid] \
+                             + topicDict[tid]*transDict[topicKey][tid]
     songList = sorted(scoreDict.iteritems(),key=lambda x:x[1],reverse=True)
     result = []
     for i in range(0,topN):

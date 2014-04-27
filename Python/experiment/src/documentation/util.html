@@ -1,0 +1,184 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module util</title>
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>util</strong></big></big> (version 1.0)</font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/wst/GitRepo/Python/experiment/src/util.py">/home/wst/GitRepo/Python/experiment/src/util.py</a></font></td></tr></table>
+    <p><tt>Define&nbsp;some&nbsp;useful&nbsp;functions.<br>
+Dependecies:<br>
+&nbsp;&nbsp;const.</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="const.html">const</a><br>
+<a href="math.html">math</a><br>
+</td><td width="25%" valign=top><a href="numpy.html">numpy</a><br>
+<a href="persist.html">persist</a><br>
+</td><td width="25%" valign=top><a href="smtplib.html">smtplib</a><br>
+<a href="sys.html">sys</a><br>
+</td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-HellDis"><strong>HellDis</strong></a>(topicDict1, topicDict2)</dt><dd><tt>Calculate&nbsp;the&nbsp;Hellinger&nbsp;distance&nbsp;of&nbsp;two&nbsp;songs.<br>
+Each&nbsp;song&nbsp;can&nbsp;be&nbsp;represented&nbsp;as&nbsp;a&nbsp;dictionary&nbsp;with&nbsp;topic&nbsp;index&nbsp;as<br>
+key&nbsp;and&nbsp;probability&nbsp;as&nbsp;value.&nbsp;<br>
+Note:&nbsp;Hellinger&nbsp;distance&nbsp;is&nbsp;undirected.<br>
+Input:<br>
+&nbsp;&nbsp;topicDict1&nbsp;-&nbsp;the&nbsp;topic&nbsp;probability&nbsp;distribution&nbsp;of&nbsp;first&nbsp;song<br>
+&nbsp;&nbsp;topicDict2&nbsp;-&nbsp;the&nbsp;topic&nbsp;probability&nbsp;distribution&nbsp;of&nbsp;second&nbsp;song<br>
+Output:<br>
+&nbsp;&nbsp;KL&nbsp;distance&nbsp;of&nbsp;two&nbsp;songs.</tt></dd></dl>
+ <dl><dt><a name="-KLDis"><strong>KLDis</strong></a>(topicDict1, topicDict2)</dt><dd><tt>Calculate&nbsp;the&nbsp;average&nbsp;KL&nbsp;distance&nbsp;of&nbsp;two&nbsp;songs.<br>
+Each&nbsp;song&nbsp;can&nbsp;be&nbsp;represented&nbsp;as&nbsp;a&nbsp;dictionary&nbsp;with&nbsp;topic&nbsp;index&nbsp;as<br>
+key&nbsp;and&nbsp;probability&nbsp;as&nbsp;value.&nbsp;<br>
+Note:&nbsp;KL&nbsp;distance&nbsp;is&nbsp;directed,&nbsp;that's&nbsp;why&nbsp;we&nbsp;do&nbsp;an&nbsp;average&nbsp;operation.<br>
+Input:<br>
+&nbsp;&nbsp;topicDict1&nbsp;-&nbsp;the&nbsp;topic&nbsp;probability&nbsp;distribution&nbsp;of&nbsp;first&nbsp;song<br>
+&nbsp;&nbsp;topicDict2&nbsp;-&nbsp;the&nbsp;topic&nbsp;probability&nbsp;distribution&nbsp;of&nbsp;second&nbsp;song<br>
+Output:<br>
+&nbsp;&nbsp;KL&nbsp;distance&nbsp;of&nbsp;two&nbsp;songs.</tt></dd></dl>
+ <dl><dt><a name="-cosineSim"><strong>cosineSim</strong></a>(topicDict1, topicDict2)</dt><dd><tt>Calculate&nbsp;cosine&nbsp;similarity&nbsp;of&nbsp;two&nbsp;songs.<br>
+Each&nbsp;song&nbsp;can&nbsp;be&nbsp;represented&nbsp;as&nbsp;a&nbsp;dictionary&nbsp;with&nbsp;topic&nbsp;index&nbsp;as<br>
+key&nbsp;and&nbsp;probability&nbsp;as&nbsp;value.&nbsp;<br>
+Input:<br>
+&nbsp;&nbsp;topicDict1&nbsp;-&nbsp;the&nbsp;topic&nbsp;probability&nbsp;distribution&nbsp;of&nbsp;first&nbsp;song<br>
+&nbsp;&nbsp;topicDict2&nbsp;-&nbsp;the&nbsp;topic&nbsp;probability&nbsp;distribution&nbsp;of&nbsp;second&nbsp;song<br>
+Output:<br>
+&nbsp;&nbsp;cosine&nbsp;similarity&nbsp;of&nbsp;two&nbsp;songs</tt></dd></dl>
+ <dl><dt><a name="-cosineSimOfUser"><strong>cosineSimOfUser</strong></a>(list1, list2)</dt><dd><tt>Calculate&nbsp;cosine&nbsp;similarity&nbsp;of&nbsp;two&nbsp;users.<br>
+Each&nbsp;user&nbsp;can&nbsp;be&nbsp;represented&nbsp;as&nbsp;a&nbsp;list&nbsp;and&nbsp;the&nbsp;element&nbsp;in&nbsp;<br>
+teh&nbsp;list&nbsp;is&nbsp;the&nbsp;count&nbsp;of&nbsp;specific&nbsp;item.&nbsp;<br>
+Input:<br>
+&nbsp;&nbsp;list1&nbsp;-&nbsp;the&nbsp;history&nbsp;of&nbsp;first&nbsp;user<br>
+&nbsp;&nbsp;list2&nbsp;-&nbsp;the&nbsp;history&nbsp;of&nbsp;second&nbsp;user<br>
+Output:<br>
+&nbsp;&nbsp;cosine&nbsp;similarity&nbsp;of&nbsp;two&nbsp;users.</tt></dd></dl>
+ <dl><dt><a name="-getDominantTopicDict"><strong>getDominantTopicDict</strong></a>(songDict)</dt><dd><tt>Get&nbsp;teh&nbsp;dominant&nbsp;topics&nbsp;of&nbsp;all&nbsp;songs.<br>
+Input:<br>
+&nbsp;&nbsp;songDict&nbsp;-&nbsp;all&nbsp;songs&nbsp;in&nbsp;database.<br>
+Output:<br>
+&nbsp;&nbsp;domDict&nbsp;-&nbsp;dominant&nbsp;topic&nbsp;dictionaries&nbsp;with&nbsp;sid&nbsp;as&nbsp;key&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;and&nbsp;dominant&nbsp;topics&nbsp;as&nbsp;value.</tt></dd></dl>
+ <dl><dt><a name="-getIndexName"><strong>getIndexName</strong></a>(index)</dt><dd><tt>Get&nbsp;validation&nbsp;name&nbsp;according&nbsp;to&nbsp;index.<br>
+Input:<br>
+&nbsp;&nbsp;index&nbsp;-&nbsp;validation&nbsp;index.<br>
+&nbsp;&nbsp;0&nbsp;:&nbsp;Hit&nbsp;Ration<br>
+&nbsp;&nbsp;1&nbsp;:&nbsp;Precision<br>
+&nbsp;&nbsp;2&nbsp;:&nbsp;F1-Score<br>
+&nbsp;&nbsp;3&nbsp;:&nbsp;MAE<br>
+&nbsp;&nbsp;4&nbsp;:&nbsp;RMSE<br>
+Output:<br>
+&nbsp;&nbsp;validation&nbsp;name.</tt></dd></dl>
+ <dl><dt><a name="-getMAEandRMSE"><strong>getMAEandRMSE</strong></a>(recDict, playlistDict, songDict, topN<font color="#909090">=100</font>)</dt><dd><tt>Calculate&nbsp;mae&nbsp;and&nbsp;rmse&nbsp;of&nbsp;playlists&nbsp;in&nbsp;specific&nbsp;scale.<br>
+Input:<br>
+&nbsp;&nbsp;recDict&nbsp;-&nbsp;recommend&nbsp;dictionaries&nbsp;with&nbsp;pid&nbsp;as&nbsp;key&nbsp;and&nbsp;recommend&nbsp;list&nbsp;as&nbsp;value<br>
+&nbsp;&nbsp;playlistDict&nbsp;-&nbsp;playlist&nbsp;dictionaries&nbsp;with&nbsp;pid&nbsp;as&nbsp;key&nbsp;and&nbsp;Playlist&nbsp;as&nbsp;value<br>
+&nbsp;&nbsp;topN&nbsp;-&nbsp;recommend&nbsp;how&nbsp;many&nbsp;songs&nbsp;to&nbsp;user<br>
+Output:<br>
+&nbsp;&nbsp;MAE,RMSE.</tt></dd></dl>
+ <dl><dt><a name="-getMD5"><strong>getMD5</strong></a>(string)</dt><dd><tt>Get&nbsp;md5&nbsp;string&nbsp;of&nbsp;a&nbsp;string.<br>
+Input:<br>
+&nbsp;&nbsp;string&nbsp;-&nbsp;source&nbsp;string.<br>
+Output:<br>
+&nbsp;&nbsp;md5&nbsp;of&nbsp;source&nbsp;string.</tt></dd></dl>
+ <dl><dt><a name="-getMethodName"><strong>getMethodName</strong></a>(mid)</dt><dd><tt>Get&nbsp;method&nbsp;name&nbsp;according&nbsp;to&nbsp;method&nbsp;id.<br>
+Input:<br>
+&nbsp;&nbsp;mid&nbsp;-&nbsp;method&nbsp;id(ids&nbsp;are&nbsp;defined&nbsp;in&nbsp;module&nbsp;const).<br>
+Output:<br>
+&nbsp;&nbsp;method&nbsp;name</tt></dd></dl>
+ <dl><dt><a name="-getPatternTrainingSet"><strong>getPatternTrainingSet</strong></a>(allPlaylist, songDict, scale)</dt><dd><tt>Get&nbsp;frequent&nbsp;patterns&nbsp;of&nbsp;playlists.<br>
+Input:<br>
+&nbsp;&nbsp;allPlaylist&nbsp;-&nbsp;all&nbsp;playlists&nbsp;in&nbsp;database.<br>
+&nbsp;&nbsp;songDict&nbsp;-&nbsp;all&nbsp;songs&nbsp;in&nbsp;database.<br>
+&nbsp;&nbsp;scale&nbsp;-&nbsp;scale&nbsp;number&nbsp;of&nbsp;playlist.<br>
+Output:<br>
+&nbsp;&nbsp;allTrainingPattern&nbsp;-&nbsp;frequent&nbsp;patterns&nbsp;in&nbsp;training&nbsp;set.<br>
+&nbsp;&nbsp;testingPatternDict&nbsp;-&nbsp;frequent&nbsp;patterns&nbsp;in&nbsp;testing&nbsp;set&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with&nbsp;pid&nbsp;as&nbsp;key&nbsp;and&nbsp;pattern&nbsp;as&nbsp;value.</tt></dd></dl>
+ <dl><dt><a name="-getThreeOrderTransitionMatrix"><strong>getThreeOrderTransitionMatrix</strong></a>(allPlaylist, songDict, scale)</dt><dd><tt>Get&nbsp;third&nbsp;order&nbsp;markov&nbsp;transition&nbsp;matrix&nbsp;of&nbsp;playlists.<br>
+Input:<br>
+&nbsp;&nbsp;allPlaylist&nbsp;-&nbsp;all&nbsp;playlists&nbsp;in&nbsp;database.<br>
+&nbsp;&nbsp;songDict&nbsp;-&nbsp;all&nbsp;songs&nbsp;in&nbsp;database.<br>
+&nbsp;&nbsp;scale&nbsp;-&nbsp;scale&nbsp;number&nbsp;of&nbsp;playlist.<br>
+Output:<br>
+&nbsp;&nbsp;domDict&nbsp;-&nbsp;dominant&nbsp;topic&nbsp;dictionaries&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with&nbsp;sid&nbsp;as&nbsp;key&nbsp;and&nbsp;dominant&nbsp;topics&nbsp;as&nbsp;value.<br>
+&nbsp;&nbsp;transMatrix&nbsp;-&nbsp;third&nbsp;order&nbsp;markov&nbsp;transition&nbsp;matrix.</tt></dd></dl>
+ <dl><dt><a name="-getTopNIndex"><strong>getTopNIndex</strong></a>(recDict, playlistDict, topN<font color="#909090">=100</font>)</dt><dd><tt>Calculate&nbsp;hit&nbsp;ration,&nbsp;precision&nbsp;and&nbsp;f1&nbsp;score&nbsp;of&nbsp;playlists&nbsp;in&nbsp;specific&nbsp;scale.<br>
+Input:<br>
+&nbsp;&nbsp;recDict&nbsp;-&nbsp;recommend&nbsp;dictionaries&nbsp;with&nbsp;pid&nbsp;as&nbsp;key&nbsp;and&nbsp;recommend&nbsp;list&nbsp;as&nbsp;value<br>
+&nbsp;&nbsp;playlistDict&nbsp;-&nbsp;playlist&nbsp;dictionaries&nbsp;with&nbsp;pid&nbsp;as&nbsp;key&nbsp;and&nbsp;Playlist&nbsp;as&nbsp;value<br>
+&nbsp;&nbsp;topN&nbsp;-&nbsp;recommend&nbsp;how&nbsp;many&nbsp;songs&nbsp;to&nbsp;user<br>
+Output:<br>
+&nbsp;&nbsp;Hit&nbsp;Ration,&nbsp;Precision,&nbsp;F1&nbsp;Score.</tt></dd></dl>
+ <dl><dt><a name="-getTransitionMatrix"><strong>getTransitionMatrix</strong></a>(allPlaylist, songDict, scale)</dt><dd><tt>Get&nbsp;first&nbsp;order&nbsp;markov&nbsp;transition&nbsp;matrix&nbsp;of&nbsp;playlists.<br>
+Input:<br>
+&nbsp;&nbsp;allPlaylist&nbsp;-&nbsp;all&nbsp;playlists&nbsp;in&nbsp;database.<br>
+&nbsp;&nbsp;songDict&nbsp;-&nbsp;all&nbsp;songs&nbsp;in&nbsp;database.<br>
+&nbsp;&nbsp;scale&nbsp;-&nbsp;scale&nbsp;number&nbsp;of&nbsp;playlist.<br>
+Output:<br>
+&nbsp;&nbsp;domDict&nbsp;-&nbsp;dominant&nbsp;topic&nbsp;dictionaries&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with&nbsp;sid&nbsp;as&nbsp;key&nbsp;and&nbsp;dominant&nbsp;topics&nbsp;as&nbsp;value.<br>
+&nbsp;&nbsp;transMatrix&nbsp;-&nbsp;first&nbsp;order&nbsp;markov&nbsp;transition&nbsp;matrix.</tt></dd></dl>
+ <dl><dt><a name="-getUserSimMatrix"><strong>getUserSimMatrix</strong></a>(countMatrix, pid2Index)</dt><dd><tt>Get&nbsp;user&nbsp;similarity&nbsp;matrix.<br>
+Input:<br>
+&nbsp;&nbsp;countMatrix&nbsp;-&nbsp;the&nbsp;user-song&nbsp;matrix&nbsp;get&nbsp;from&nbsp;getUserSongMatrix.<br>
+&nbsp;&nbsp;pid2Index&nbsp;-&nbsp;the&nbsp;pid2Index&nbsp;dictionary&nbsp;get&nbsp;from&nbsp;getUserSongMatrix.<br>
+Output:<br>
+&nbsp;&nbsp;simMatrix&nbsp;-&nbsp;user&nbsp;similarity&nbsp;matrix.</tt></dd></dl>
+ <dl><dt><a name="-getUserSongMatrix"><strong>getUserSongMatrix</strong></a>(allPlaylist, songDict)</dt><dd><tt>Construct&nbsp;user-song&nbsp;matrix&nbsp;with&nbsp;songDict&nbsp;and&nbsp;playlistDict.<br>
+Input:<br>
+&nbsp;&nbsp;allPlaylist&nbsp;-&nbsp;all&nbsp;playlists&nbsp;in&nbsp;dataset.<br>
+&nbsp;&nbsp;songDict&nbsp;-&nbsp;all&nbsp;songs&nbsp;in&nbsp;dataset.<br>
+Output:<br>
+&nbsp;&nbsp;pid2Index&nbsp;-&nbsp;a&nbsp;dictionary&nbsp;with&nbsp;pid&nbsp;as&nbsp;key&nbsp;and&nbsp;index&nbsp;in&nbsp;matrix&nbsp;as&nbsp;value.<br>
+&nbsp;&nbsp;index2Pid&nbsp;-&nbsp;a&nbsp;dictionary&nbsp;with&nbsp;index&nbsp;in&nbsp;matrix&nbsp;as&nbsp;key&nbsp;and&nbsp;pid&nbsp;as&nbsp;value.<br>
+&nbsp;&nbsp;matrix&nbsp;-&nbsp;the&nbsp;user-song&nbsp;matrix&nbsp;and&nbsp;the&nbsp;value&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;how&nbsp;many&nbsp;times&nbsp;the&nbsp;user&nbsp;listened&nbsp;to&nbsp;the&nbsp;song.</tt></dd></dl>
+ <dl><dt><a name="-md5"><strong>md5</strong></a> = openssl_md5(...)</dt><dd><tt>Returns&nbsp;a&nbsp;md5&nbsp;hash&nbsp;object;&nbsp;optionally&nbsp;initialized&nbsp;with&nbsp;a&nbsp;string</tt></dd></dl>
+ <dl><dt><a name="-sendMail"><strong>sendMail</strong></a>(to, subtitle, content)</dt><dd><tt>Send&nbsp;mail&nbsp;to&nbsp;somebody&nbsp;with&nbsp;subject&nbsp;title&nbsp;and&nbsp;content.<br>
+Input:<br>
+&nbsp;&nbsp;to&nbsp;-&nbsp;target&nbsp;email&nbsp;address.<br>
+&nbsp;&nbsp;subtitle&nbsp;-&nbsp;subject&nbsp;title&nbsp;of&nbsp;the&nbsp;email.<br>
+&nbsp;&nbsp;content&nbsp;-&nbsp;content&nbsp;of&nbsp;the&nbsp;email.<br>
+Output:<br>
+&nbsp;&nbsp;Status&nbsp;of&nbsp;operation.<br>
+&nbsp;&nbsp;True&nbsp;-&nbsp;success.<br>
+&nbsp;&nbsp;False&nbsp;-&nbsp;fail.</tt></dd></dl>
+ <dl><dt><a name="-similarity"><strong>similarity</strong></a>(topicDict1, topicDict2, disType<font color="#909090">=0</font>)</dt><dd><tt>Get&nbsp;distance&nbsp;of&nbsp;two&nbsp;songs.<br>
+Each&nbsp;song&nbsp;can&nbsp;be&nbsp;represented&nbsp;as&nbsp;a&nbsp;dictionary&nbsp;with&nbsp;topic&nbsp;index&nbsp;as<br>
+key&nbsp;and&nbsp;probability&nbsp;as&nbsp;value.&nbsp;<br>
+Input:<br>
+&nbsp;&nbsp;topicDict1&nbsp;-&nbsp;the&nbsp;topic&nbsp;probability&nbsp;distribution&nbsp;of&nbsp;first&nbsp;song<br>
+&nbsp;&nbsp;topicDict2&nbsp;-&nbsp;the&nbsp;topic&nbsp;probability&nbsp;distribution&nbsp;of&nbsp;second&nbsp;song<br>
+&nbsp;&nbsp;disType&nbsp;-&nbsp;distance&nbsp;type:Hellinger(0),KL(1)&nbsp;and&nbsp;default&nbsp;is&nbsp;0.</tt></dd></dl>
+</td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>__author__</strong> = 'Jason Wong(wwssttt@163.com)'<br>
+<strong>__version__</strong> = '1.0'</td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#7799ee">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Author</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#7799ee"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%">Jason&nbsp;Wong(wwssttt@163.com)</td></tr></table>
+</body></html>

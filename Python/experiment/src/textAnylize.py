@@ -348,10 +348,47 @@ def getErrorOfRecMethod(recType = 0):
   print 'Consumed:%d' % (end_time-start_time)
   return recalls  
 
+def showResult():
+  x = []
+  vsm = []
+  tdidf = []
+  lda = []
+
+  resultFile = open('../txt/textResult.txt','r')
+  lines = resultFile.readlines()
+  for line in lines:
+    line = line.rstrip('\n')
+    line = line.split('INFO:')[1]
+    items = line.split('>')
+    midType = int(items[0])
+    step = items[1].split(":")[0]
+    recall = items[1].split(":")[1].split(" ")[0]
+    recall = float(recall)
+    if step not in x:
+      x.append(step)
+    if midType == 0:
+      vsm.append(recall)
+    elif midType == 1:
+      tdidf.append(recall)
+    else:
+      lda.append(recall)
+  resultFile.close()
+
+  plt.plot(x,lda,'k',label='LDA')
+  plt.plot(x,tdidf,'k-.',label='TD-IDF')
+  plt.plot(x,vsm,'k:',label='VSM')
+  plt.title('Hit Ratio of Different Recommenders with Different Text Models')
+  plt.xlabel('Number of Recommendations')
+  plt.ylabel('Hit Ratio')
+  plt.legend()
+  plt.xlim(1,160)
+  #plt.show()
+  plt.savefig("../img/textmodels_%s_%s_%d_%d.png" % (const.DATASET_NAME,'Hit Ratio',const.TOPIC_NUM,const.TOP_N))
 
 logging.info('Begin......')
 #getErrorOfRecMethod(0)
 #getErrorOfRecMethod(1)
 #getErrorOfRecMethod(2)
 #getErrorOfRecMethod(3)
+showResult()
 logging.info('End......')

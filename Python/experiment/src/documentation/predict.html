@@ -1,0 +1,159 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module predict</title>
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>predict</strong></big></big> (version 1.0)</font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/wst/GitRepo/Python/experiment/src/predict.py">/home/wst/GitRepo/Python/experiment/src/predict.py</a></font></td></tr></table>
+    <p><tt>Different&nbsp;methods&nbsp;to&nbsp;predict&nbsp;next&nbsp;song&nbsp;of&nbsp;a&nbsp;playlist.<br>
+Dependencies:<br>
+&nbsp;&nbsp;persist.<br>
+&nbsp;&nbsp;util.<br>
+&nbsp;&nbsp;const.<br>
+&nbsp;&nbsp;PrefixSpan.</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="PrefixSpan.html">PrefixSpan</a><br>
+<a href="const.html">const</a><br>
+<a href="gensim.corpora.html">gensim.corpora</a><br>
+</td><td width="25%" valign=top><a href="math.html">math</a><br>
+<a href="gensim.models.html">gensim.models</a><br>
+<a href="persist.html">persist</a><br>
+</td><td width="25%" valign=top><a href="random.html">random</a><br>
+<a href="rpy2.robjects.html">rpy2.robjects</a><br>
+<a href="gensim.similarities.html">gensim.similarities</a><br>
+</td><td width="25%" valign=top><a href="sys.html">sys</a><br>
+<a href="util.html">util</a><br>
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-getRecDict"><strong>getRecDict</strong></a>(playlistDict, songDict, recType<font color="#909090">=0</font>, scale<font color="#909090">=0</font>, topN<font color="#909090">=100</font>, maxLength<font color="#909090">=-1</font>)</dt><dd><tt>Get&nbsp;recommendations&nbsp;of&nbsp;all&nbsp;playlists&nbsp;using&nbsp;different&nbsp;method.<br>
+Input:<br>
+&nbsp;&nbsp;playlistDict&nbsp;-&nbsp;dict&nbsp;of&nbsp;playlist&nbsp;of&nbsp;specific&nbsp;scale.<br>
+&nbsp;&nbsp;songDict&nbsp;-&nbsp;all&nbsp;songs&nbsp;dicts.<br>
+&nbsp;&nbsp;recType&nbsp;-&nbsp;type&nbsp;of&nbsp;recommender.<br>
+&nbsp;&nbsp;scale&nbsp;-&nbsp;scale&nbsp;of&nbsp;current&nbsp;playlist.<br>
+&nbsp;&nbsp;topN&nbsp;-&nbsp;count&nbsp;of&nbsp;recommendations.<br>
+&nbsp;&nbsp;maxLength&nbsp;-&nbsp;max&nbsp;window&nbsp;size.<br>
+Output:<br>
+&nbsp;&nbsp;recDict&nbsp;-&nbsp;dict&nbsp;of&nbsp;recommendations&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with&nbsp;pid&nbsp;as&nbsp;key&nbsp;and&nbsp;recommendation&nbsp;list&nbsp;as&nbsp;value.</tt></dd></dl>
+ <dl><dt><a name="-getRecDictOfFirstMarkov"><strong>getRecDictOfFirstMarkov</strong></a>(allPlaylist, songDict, scale, topN<font color="#909090">=100</font>)</dt><dd><tt>Get&nbsp;recommendations&nbsp;of&nbsp;all&nbsp;playlists&nbsp;using&nbsp;1st-Markov&nbsp;recommender.<br>
+Input:<br>
+&nbsp;&nbsp;allPlaylist&nbsp;-&nbsp;all&nbsp;playlist.<br>
+&nbsp;&nbsp;songDict&nbsp;-&nbsp;dict&nbsp;of&nbsp;all&nbsp;songs.<br>
+&nbsp;&nbsp;scale&nbsp;-&nbsp;scale&nbsp;of&nbsp;current&nbsp;playlists.<br>
+&nbsp;&nbsp;topN&nbsp;-&nbsp;how&nbsp;many&nbsp;recommendations.<br>
+Output:<br>
+&nbsp;&nbsp;recDict&nbsp;-&nbsp;dict&nbsp;of&nbsp;recommendations&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with&nbsp;pid&nbsp;as&nbsp;key&nbsp;and&nbsp;recommendation&nbsp;list&nbsp;as&nbsp;value.</tt></dd></dl>
+ <dl><dt><a name="-getRecDictOfMostPattern"><strong>getRecDictOfMostPattern</strong></a>(allPlaylist, songDict, scale, topN<font color="#909090">=100</font>)</dt><dd><tt>Get&nbsp;recommendations&nbsp;of&nbsp;all&nbsp;playlists&nbsp;using&nbsp;PatternMining&nbsp;recommender.<br>
+Input:<br>
+&nbsp;&nbsp;allPlaylist&nbsp;-&nbsp;all&nbsp;playlist.<br>
+&nbsp;&nbsp;songDict&nbsp;-&nbsp;dict&nbsp;of&nbsp;all&nbsp;songs.<br>
+&nbsp;&nbsp;scale&nbsp;-&nbsp;scale&nbsp;of&nbsp;current&nbsp;playlists.<br>
+&nbsp;&nbsp;topN&nbsp;-&nbsp;how&nbsp;many&nbsp;recommendations.<br>
+Output:<br>
+&nbsp;&nbsp;recDict&nbsp;-&nbsp;dict&nbsp;of&nbsp;recommendations&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with&nbsp;pid&nbsp;as&nbsp;key&nbsp;and&nbsp;recommendation&nbsp;list&nbsp;as&nbsp;value.</tt></dd></dl>
+ <dl><dt><a name="-getRecDictOfThreeOrderMarkov"><strong>getRecDictOfThreeOrderMarkov</strong></a>(allPlaylist, songDict, scale, topN<font color="#909090">=100</font>)</dt><dd><tt>Get&nbsp;recommendations&nbsp;of&nbsp;all&nbsp;playlists&nbsp;using&nbsp;3rd-Markov&nbsp;recommender.<br>
+Input:<br>
+&nbsp;&nbsp;allPlaylist&nbsp;-&nbsp;all&nbsp;playlist.<br>
+&nbsp;&nbsp;songDict&nbsp;-&nbsp;dict&nbsp;of&nbsp;all&nbsp;songs.<br>
+&nbsp;&nbsp;scale&nbsp;-&nbsp;scale&nbsp;of&nbsp;current&nbsp;playlists.<br>
+&nbsp;&nbsp;topN&nbsp;-&nbsp;how&nbsp;many&nbsp;recommendations.<br>
+Output:<br>
+&nbsp;&nbsp;recDict&nbsp;-&nbsp;dict&nbsp;of&nbsp;recommendations&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with&nbsp;pid&nbsp;as&nbsp;key&nbsp;and&nbsp;recommendation&nbsp;list&nbsp;as&nbsp;value.</tt></dd></dl>
+ <dl><dt><a name="-getRecDictOfUserKNN"><strong>getRecDictOfUserKNN</strong></a>(playlistDict, songDict, scale, pid2Index, countMatrix, simMatrix, topN<font color="#909090">=100</font>)</dt><dd><tt>Get&nbsp;recommendations&nbsp;of&nbsp;all&nbsp;playlists&nbsp;using&nbsp;UserKNN&nbsp;recommender.<br>
+Input:<br>
+&nbsp;&nbsp;playlistDict&nbsp;-&nbsp;dict&nbsp;of&nbsp;playlist&nbsp;of&nbsp;specific&nbsp;scale.<br>
+&nbsp;&nbsp;songDict&nbsp;-&nbsp;dict&nbsp;of&nbsp;all&nbsp;songs.<br>
+&nbsp;&nbsp;scale&nbsp;-&nbsp;scale&nbsp;of&nbsp;current&nbsp;playlists.<br>
+&nbsp;&nbsp;pid2Index&nbsp;-&nbsp;dict&nbsp;with&nbsp;pid&nbsp;as&nbsp;key&nbsp;and&nbsp;index&nbsp;as&nbsp;value.<br>
+&nbsp;&nbsp;countMatrix&nbsp;-&nbsp;user-song&nbsp;matrix.<br>
+&nbsp;&nbsp;simMatrix&nbsp;-&nbsp;user&nbsp;similarity&nbsp;matrix.<br>
+&nbsp;&nbsp;topN&nbsp;-&nbsp;how&nbsp;many&nbsp;recommendations.<br>
+Output:<br>
+&nbsp;&nbsp;recDict&nbsp;-&nbsp;dict&nbsp;of&nbsp;recommendations&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with&nbsp;pid&nbsp;as&nbsp;key&nbsp;and&nbsp;recommendation&nbsp;list&nbsp;as&nbsp;value.</tt></dd></dl>
+ <dl><dt><a name="-getRecSongs"><strong>getRecSongs</strong></a>(songDict, topN, tarDict)</dt><dd><tt>Get&nbsp;recommended&nbsp;songs&nbsp;list&nbsp;of&nbsp;a&nbsp;playlist&nbsp;comparing&nbsp;with&nbsp;target&nbsp;dict.<br>
+Input:<br>
+&nbsp;&nbsp;songDict&nbsp;-&nbsp;song&nbsp;dictionaries&nbsp;with&nbsp;sid&nbsp;as&nbsp;key&nbsp;and&nbsp;Song&nbsp;as&nbsp;value.<br>
+&nbsp;&nbsp;topN&nbsp;-&nbsp;count&nbsp;of&nbsp;recommendation.<br>
+&nbsp;&nbsp;tarDict&nbsp;-&nbsp;predicted&nbsp;topic&nbsp;dict.<br>
+Output:<br>
+&nbsp;&nbsp;result&nbsp;-&nbsp;a&nbsp;list&nbsp;of&nbsp;songs.</tt></dd></dl>
+ <dl><dt><a name="-topicDictForNextSongByAllHybrid"><strong>topicDictForNextSongByAllHybrid</strong></a>(playlist, songDict, arimaDict)</dt><dd><tt>Predict&nbsp;topic&nbsp;dict&nbsp;of&nbsp;next&nbsp;song&nbsp;by&nbsp;combining&nbsp;sequential/local/global.<br>
+Input:<br>
+&nbsp;&nbsp;playlist&nbsp;-&nbsp;the&nbsp;playlist&nbsp;to&nbsp;be&nbsp;predicted.<br>
+&nbsp;&nbsp;songDict&nbsp;-&nbsp;song&nbsp;dictionaries&nbsp;with&nbsp;sid&nbsp;as&nbsp;key&nbsp;and&nbsp;Song&nbsp;as&nbsp;value.<br>
+&nbsp;&nbsp;arimaDict&nbsp;-&nbsp;predicted&nbsp;topic&nbsp;dict&nbsp;using&nbsp;auto_arima.<br>
+Output:<br>
+&nbsp;&nbsp;topicDict&nbsp;-&nbsp;predicted&nbsp;topic&nbsp;dict&nbsp;the&nbsp;next&nbsp;song.</tt></dd></dl>
+ <dl><dt><a name="-topicDictForNextSongByArima"><strong>topicDictForNextSongByArima</strong></a>(playlist, songDict, maxLength)</dt><dd><tt>Predict&nbsp;topic&nbsp;dict&nbsp;of&nbsp;next&nbsp;song&nbsp;using&nbsp;auto_arima.<br>
+Here,&nbsp;we&nbsp;treat&nbsp;it&nbsp;as&nbsp;the&nbsp;user's&nbsp;sequential&nbsp;preference.<br>
+Input:<br>
+&nbsp;&nbsp;playlist&nbsp;-&nbsp;the&nbsp;playlist&nbsp;to&nbsp;be&nbsp;predicted.<br>
+&nbsp;&nbsp;songDict&nbsp;-&nbsp;song&nbsp;dictionaries&nbsp;with&nbsp;sid&nbsp;as&nbsp;key&nbsp;and&nbsp;Song&nbsp;as&nbsp;value.<br>
+&nbsp;&nbsp;maxLength&nbsp;-&nbsp;max&nbsp;window&nbsp;size.<br>
+Output:<br>
+&nbsp;&nbsp;topicDict&nbsp;-&nbsp;predicted&nbsp;topic&nbsp;dict&nbsp;the&nbsp;next&nbsp;song.</tt></dd></dl>
+ <dl><dt><a name="-topicDictForNextSongByAverage"><strong>topicDictForNextSongByAverage</strong></a>(playlist, songDict)</dt><dd><tt>Predict&nbsp;topic&nbsp;dict&nbsp;of&nbsp;next&nbsp;song&nbsp;by&nbsp;averaging&nbsp;all&nbsp;songs'&nbsp;topic&nbsp;distribution.<br>
+Here,&nbsp;we&nbsp;treat&nbsp;it&nbsp;as&nbsp;the&nbsp;user's&nbsp;global&nbsp;preference.<br>
+Input:<br>
+&nbsp;&nbsp;playlist&nbsp;-&nbsp;the&nbsp;playlist&nbsp;to&nbsp;be&nbsp;predicted.<br>
+&nbsp;&nbsp;songDict&nbsp;-&nbsp;song&nbsp;dictionaries&nbsp;with&nbsp;sid&nbsp;as&nbsp;key&nbsp;and&nbsp;Song&nbsp;as&nbsp;value.<br>
+Output:<br>
+&nbsp;&nbsp;topicDict&nbsp;-&nbsp;predicted&nbsp;topic&nbsp;dict&nbsp;the&nbsp;next&nbsp;song.</tt></dd></dl>
+ <dl><dt><a name="-topicDictForNextSongByAverageHybrid"><strong>topicDictForNextSongByAverageHybrid</strong></a>(playlist, songDict, arimaDict)</dt><dd><tt>Predict&nbsp;topic&nbsp;dict&nbsp;of&nbsp;next&nbsp;song&nbsp;by&nbsp;combining&nbsp;sequential&nbsp;and&nbsp;global.<br>
+Input:<br>
+&nbsp;&nbsp;playlist&nbsp;-&nbsp;the&nbsp;playlist&nbsp;to&nbsp;be&nbsp;predicted.<br>
+&nbsp;&nbsp;songDict&nbsp;-&nbsp;song&nbsp;dictionaries&nbsp;with&nbsp;sid&nbsp;as&nbsp;key&nbsp;and&nbsp;Song&nbsp;as&nbsp;value.<br>
+&nbsp;&nbsp;arimaDict&nbsp;-&nbsp;predicted&nbsp;topic&nbsp;dict&nbsp;using&nbsp;auto_arima.<br>
+Output:<br>
+&nbsp;&nbsp;topicDict&nbsp;-&nbsp;predicted&nbsp;topic&nbsp;dict&nbsp;the&nbsp;next&nbsp;song.</tt></dd></dl>
+ <dl><dt><a name="-topicDictForNextSongByMostSimilar"><strong>topicDictForNextSongByMostSimilar</strong></a>(playlist, songDict)</dt><dd><tt>Predict&nbsp;topic&nbsp;dict&nbsp;of&nbsp;next&nbsp;song&nbsp;using&nbsp;most&nbsp;similar&nbsp;to&nbsp;last&nbsp;song.<br>
+Here,&nbsp;we&nbsp;treat&nbsp;it&nbsp;as&nbsp;the&nbsp;user's&nbsp;local&nbsp;preference.<br>
+Input:<br>
+&nbsp;&nbsp;playlist&nbsp;-&nbsp;the&nbsp;playlist&nbsp;to&nbsp;be&nbsp;predicted.<br>
+&nbsp;&nbsp;songDict&nbsp;-&nbsp;song&nbsp;dictionaries&nbsp;with&nbsp;sid&nbsp;as&nbsp;key&nbsp;and&nbsp;Song&nbsp;as&nbsp;value.<br>
+Output:<br>
+&nbsp;&nbsp;topicDict&nbsp;-&nbsp;predicted&nbsp;topic&nbsp;dict&nbsp;the&nbsp;next&nbsp;song.</tt></dd></dl>
+ <dl><dt><a name="-topicDictForNextSongByMostSimilarHybrid"><strong>topicDictForNextSongByMostSimilarHybrid</strong></a>(playlist, songDict, arimaDict)</dt><dd><tt>Predict&nbsp;topic&nbsp;dict&nbsp;of&nbsp;next&nbsp;song&nbsp;by&nbsp;combining&nbsp;sequential&nbsp;and&nbsp;local.<br>
+Input:<br>
+&nbsp;&nbsp;playlist&nbsp;-&nbsp;the&nbsp;playlist&nbsp;to&nbsp;be&nbsp;predicted.<br>
+&nbsp;&nbsp;songDict&nbsp;-&nbsp;song&nbsp;dictionaries&nbsp;with&nbsp;sid&nbsp;as&nbsp;key&nbsp;and&nbsp;Song&nbsp;as&nbsp;value.<br>
+&nbsp;&nbsp;arimaDict&nbsp;-&nbsp;predicted&nbsp;topic&nbsp;dict&nbsp;using&nbsp;auto_arima.<br>
+Output:<br>
+&nbsp;&nbsp;topicDict&nbsp;-&nbsp;predicted&nbsp;topic&nbsp;dict&nbsp;the&nbsp;next&nbsp;song.</tt></dd></dl>
+</td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>__author__</strong> = 'Jason Wong'<br>
+<strong>__version__</strong> = '1.0'</td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#7799ee">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Author</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#7799ee"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%">Jason&nbsp;Wong</td></tr></table>
+</body></html>

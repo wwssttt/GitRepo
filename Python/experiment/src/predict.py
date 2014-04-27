@@ -131,7 +131,7 @@ def topicDictForNextSongByMostSimilarHybrid(playlist,songDict,arimaDict):
   pid = playlist.getPid()
   count = len(trainingList)
 
-  lamda = count / (count + 15.0)
+  lamda = count / (count + 10.0)
 
   sid = trainingList[count-1]
   lastTopicDict =  songDict[sid].getTopicDict()
@@ -155,7 +155,7 @@ def topicDictForNextSongByAverageHybrid(playlist,songDict,arimaDict):
   pid = playlist.getPid()
   count = len(trainingList)
 
-  lamda = count / (count + 5.0)
+  lamda = count / (count + 10.0)
 
   sid = trainingList[count-1]
   avgTopicDict = topicDictForNextSongByAverage(playlist,songDict)
@@ -180,8 +180,8 @@ def topicDictForNextSongByAllHybrid(playlist,songDict,arimaDict):
   count = len(trainingList)
 
   lamda = count / (count + 10.0)
-  alpha = 0.9 * (1-lamda)
-  beta = 0.1 * (1-lamda)
+  alpha = 0.5 * (1-lamda)
+  beta = 0.5 * (1-lamda)
 
   sid = trainingList[count-1]
   avgTopicDict = topicDictForNextSongByAverage(playlist,songDict)

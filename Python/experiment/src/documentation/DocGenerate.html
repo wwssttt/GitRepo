@@ -1,0 +1,94 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module DocGenerate</title>
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>DocGenerate</strong></big></big> (version 1.0)</font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/wst/GitRepo/Python/experiment/src/DocGenerate.py">/home/wst/GitRepo/Python/experiment/src/DocGenerate.py</a></font></td></tr></table>
+    <p><tt>Connect&nbsp;to&nbsp;database&nbsp;and&nbsp;Generate&nbsp;documents&nbsp;of&nbsp;songs&nbsp;in&nbsp;database.<br>
+Dependencies:<br>
+&nbsp;&nbsp;const.<br>
+&nbsp;&nbsp;util.<br>
+&nbsp;&nbsp;lastfm.</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="MySQLdb.html">MySQLdb</a><br>
+<a href="const.html">const</a><br>
+<a href="lastfm.html">lastfm</a><br>
+</td><td width="25%" valign=top><a href="logging.html">logging</a><br>
+<a href="numpy.html">numpy</a><br>
+<a href="os.html">os</a><br>
+</td><td width="25%" valign=top><a href="pylab.html">pylab</a><br>
+<a href="matplotlib.pyplot.html">matplotlib.pyplot</a><br>
+<a href="sys.html">sys</a><br>
+</td><td width="25%" valign=top><a href="util.html">util</a><br>
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-addItemToDict"><strong>addItemToDict</strong></a>(tagDict, tagStr, tagCount)</dt><dd><tt>Add&nbsp;word&nbsp;info&nbsp;to&nbsp;word&nbsp;dictionary&nbsp;of&nbsp;a&nbsp;song.<br>
+Input:<br>
+&nbsp;&nbsp;tagDict&nbsp;-&nbsp;word&nbsp;dictionary&nbsp;of&nbsp;a&nbsp;song&nbsp;with&nbsp;word&nbsp;as&nbsp;key&nbsp;and&nbsp;count&nbsp;as&nbsp;value.<br>
+&nbsp;&nbsp;tagStr&nbsp;-&nbsp;string&nbsp;of&nbsp;input&nbsp;tag.<br>
+&nbsp;&nbsp;tagCount&nbsp;-&nbsp;how&nbsp;many&nbsp;times&nbsp;the&nbsp;tag&nbsp;was&nbsp;used&nbsp;to&nbsp;describe&nbsp;the&nbsp;song.<br>
+Output:<br>
+&nbsp;&nbsp;None.<br>
+&nbsp;&nbsp;Note:the&nbsp;function&nbsp;can&nbsp;change&nbsp;the&nbsp;tagDict&nbsp;of&nbsp;the&nbsp;song.</tt></dd></dl>
+ <dl><dt><a name="-generateDocofSong"><strong>generateDocofSong</strong></a>(sid, tagDict)</dt><dd><tt>Generate&nbsp;document&nbsp;of&nbsp;a&nbsp;song.<br>
+Input:<br>
+&nbsp;&nbsp;sid&nbsp;-&nbsp;id&nbsp;of&nbsp;the&nbsp;song.<br>
+&nbsp;&nbsp;tagDict&nbsp;-&nbsp;tag&nbsp;dictionary&nbsp;of&nbsp;the&nbsp;song&nbsp;with&nbsp;word&nbsp;as&nbsp;key,&nbsp;count&nbsp;as&nbsp;value.<br>
+Output:<br>
+&nbsp;&nbsp;final&nbsp;string&nbsp;of&nbsp;the&nbsp;song.</tt></dd></dl>
+ <dl><dt><a name="-generateDocs"><strong>generateDocs</strong></a>()</dt><dd><tt>Generate&nbsp;documents&nbsp;of&nbsp;songs&nbsp;in&nbsp;database.<br>
+Input:<br>
+&nbsp;&nbsp;None.<br>
+Output:<br>
+&nbsp;&nbsp;None.</tt></dd></dl>
+ <dl><dt><a name="-generateTagDictofSong"><strong>generateTagDictofSong</strong></a>(sname, aname, toptag)</dt><dd><tt>Generate&nbsp;tag&nbsp;dictionary&nbsp;of&nbsp;a&nbsp;song.<br>
+Input:<br>
+&nbsp;&nbsp;sname&nbsp;-&nbsp;title&nbsp;of&nbsp;the&nbsp;song.<br>
+&nbsp;&nbsp;aname&nbsp;-&nbsp;name&nbsp;of&nbsp;the&nbsp;artist.<br>
+&nbsp;&nbsp;toptag&nbsp;-&nbsp;top&nbsp;tags&nbsp;of&nbsp;the&nbsp;song(str).<br>
+Output:<br>
+&nbsp;&nbsp;tagDict&nbsp;-&nbsp;tag&nbsp;dictionary&nbsp;of&nbsp;the&nbsp;song&nbsp;with&nbsp;word&nbsp;as&nbsp;key,&nbsp;count&nbsp;as&nbsp;value.</tt></dd></dl>
+ <dl><dt><a name="-readStopwordsFromFile"><strong>readStopwordsFromFile</strong></a>(filename)</dt><dd><tt>Read&nbsp;stop&nbsp;words&nbsp;from&nbsp;stopwords&nbsp;file.<br>
+Input:<br>
+&nbsp;&nbsp;filename&nbsp;-&nbsp;stopwords&nbsp;filename.<br>
+Output:<br>
+&nbsp;&nbsp;words&nbsp;-&nbsp;stop&nbsp;words&nbsp;list.</tt></dd></dl>
+ <dl><dt><a name="-rmDir"><strong>rmDir</strong></a>(whichdir)</dt><dd><tt>Remove&nbsp;directory,no&nbsp;matter&nbsp;it&nbsp;is&nbsp;empty&nbsp;or&nbsp;not.<br>
+Input:&nbsp;<br>
+&nbsp;&nbsp;whichdir&nbsp;-&nbsp;path&nbsp;of&nbsp;directory.<br>
+Output:<br>
+&nbsp;&nbsp;None.</tt></dd></dl>
+</td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>__author__</strong> = 'Jason Wong'<br>
+<strong>__version__</strong> = '1.0'<br>
+<strong>stopwords</strong> = ['secondly', 'all', 'consider', 'pointing', 'four', 'oldest', 'causes', 'poorly', 'whose', 'ts', 'presents', 'to', 'they<font color="#c040c0">\xe2\x80\x99</font>re', 'those', 'th', 'under', 'sorry', 'far', 'every', "we'll", ...]</td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#7799ee">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Author</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#7799ee"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%">Jason&nbsp;Wong</td></tr></table>
+</body></html>
