@@ -2,7 +2,7 @@
 # -*- coding:utf-8 -*-
 """Define some useful functions.
    Dependecies:
-     None.
+     const.
 """
 __author__ = 'Jason Wong(wwssttt@163.com)'
 __version__ = '1.0'
@@ -16,10 +16,14 @@ import sys
 import numpy
 import const
 import persist
+import logging
+import os
 
 # reload sys config and set default encoding as utf-8
 reload(sys)
 sys.setdefaultencoding('utf-8')
+
+logging.basicConfig(filename=os.path.join(os.getcwd(),'../log/util_log_%s.txt' % const.DATASET_NAME),level=logging.DEBUG,format='%(asctime)s-%(levelname)s:%(message)s')
 
 def cosineSim(topicDict1,topicDict2):
   """Calculate cosine similarity of two songs.
@@ -226,7 +230,11 @@ def getMAEandRMSE(recDict,playlistDict,songDict,topN = const.TOP_N):
       recSid = recList[i]
       recTopicDict = songDict[recSid].getTopicDict()
       recError = similarity(recTopicDict,tarDict)
+      logging.info('recSid = %s' % str(recTopicDict))
+      logging.info('lastSid = %s' % str(tarDict))
+      logging.info('error between %d and %d = %f' % (recSid,lastSid,recError))
       totalError += recError
+    logging.info('recNum = %d' % recNum)
     if recNum == 0:
       recNum = 0.0001
     # get average distance and mae, rmse
