@@ -74,7 +74,7 @@ def testRecMethod(recType = 0):
     elif recType == const.KNN:
       recDict = predict.getRecDictOfUserKNN(playlistDict,songDict,scale,pid2Index,countMatrix,simMatrix)
     elif recType == const.MARKOV:
-      recDict = predict.getRecDictOfMostMarkov(allPlaylist,songDict,scale)
+      recDict = predict.getRecDictOfFirstMarkov(allPlaylist,songDict,scale)
     elif recType == const.MARKOV_3:
       recDict = predict.getRecDictOfThreeOrderMarkov(allPlaylist,songDict,scale)
     elif recType == const.PATTERN:
@@ -398,5 +398,5 @@ def showResult():
     plt.ylabel(indexName)
     plt.legend()
     plt.xlim(1,160)
-    plt.savefig("../img/hybrid_%s_%s_%d_%d.png" % (const.DATASET_NAME,indexName,const.TOPIC_NUM,const.TOP_N))
+    plt.savefig("../img/hybrid_only_%s_%s_%d_%d.png" % (const.DATASET_NAME,indexName,const.TOPIC_NUM,const.TOP_N))
     #plt.show()

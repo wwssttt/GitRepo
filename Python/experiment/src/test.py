@@ -74,7 +74,7 @@ def testRecMethod(recType = 0):
     elif recType == const.KNN:
       recDict = predict.getRecDictOfUserKNN(playlistDict,songDict,scale,pid2Index,countMatrix,simMatrix)
     elif recType == const.MARKOV:
-      recDict = predict.getRecDictOfMostMarkov(allPlaylist,songDict,scale)
+      recDict = predict.getRecDictOfFirstMarkov(allPlaylist,songDict,scale)
     elif recType == const.MARKOV_3:
       recDict = predict.getRecDictOfThreeOrderMarkov(allPlaylist,songDict,scale)
     elif recType == const.PATTERN:
@@ -154,7 +154,7 @@ def getErrorOfRecMethod(recType = 0):
     elif recType == const.KNN:
       recDict = predict.getRecDictOfUserKNN(playlistDict,songDict,scale,pid2Index,countMatrix,simMatrix)
     elif recType == const.MARKOV:
-      recDict = predict.getRecDictOfMostMarkov(allPlaylist,songDict,scale)
+      recDict = predict.getRecDictOfFirstMarkov(allPlaylist,songDict,scale)
     elif recType == const.MARKOV_3:
       recDict = predict.getRecDictOfThreeOrderMarkov(allPlaylist,songDict,scale)
     elif recType == const.PATTERN:
