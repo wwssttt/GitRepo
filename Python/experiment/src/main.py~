@@ -15,6 +15,7 @@ import util
 import sys
 import const
 import time
+import persist
 
 reload(sys)
 sys.setdefaultencoding('utf-8')
@@ -25,12 +26,25 @@ if __name__ == "__main__":
   
   #test.showRecallTrendWithDifferentCoeff_AverageHybrid()
 
-  test.testRecMethod(const.ARIMA)
+  #test.testRecMethod(const.ARIMA)
   
   #test_session.showResult()
   #test.showResult()
   #test.getErrorOfRecMethod(const.MARKOV)
 
+  songDict = persist.readSongFromFile()
+  print len(songDict)
+  disDict = {}
+  tarDict = songDict[672661981].getTopicDict()
+  for sid in songDict:
+    song = songDict[sid]
+    topicDict = song.getTopicDict()
+    dis = util.similarity(tarDict,topicDict)
+    disDict[sid] = dis
+
+  disList = sorted(disDict.iteritems(),key=lambda x:x[1])
+  for i in range(0,50):
+    print disList[i]
 
 
 ############Local#############
