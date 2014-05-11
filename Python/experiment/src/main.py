@@ -29,9 +29,10 @@ if __name__ == "__main__":
   #test.testRecMethod(const.ARIMA)
   
   #test_session.showResult()
-  #test.showResult()
+  test.showResult()
   #test.getErrorOfRecMethod(const.MARKOV)
 
+def errorTest():
   songDict = persist.readSongFromFile()
   print len(songDict)
   disDict = {}
