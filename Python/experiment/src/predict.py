@@ -20,10 +20,15 @@ import util
 import const
 import PrefixSpan
 import random
+import logging
+import os
 
 # set default encoding
 reload(sys)
 sys.setdefaultencoding("utf-8")
+
+# set log's localtion and level
+logging.basicConfig(filename=os.path.join(os.getcwd(),'../log/predict_log_%s.txt' % const.DATASET_NAME),level=logging.DEBUG,format='%(message)s')
 
 def topicDictForNextSongByAverage(playlist,songDict):
   """Predict topic dict of next song by averaging all songs' topic distribution.
@@ -179,14 +184,29 @@ def topicDictForNextSongByAllHybrid(playlist,songDict,arimaDict):
   pid = playlist.getPid()
   count = len(trainingList)
 
-  alpha = count / (count + 15.0)
-  lamda = 0.75 * (1-alpha)
-  beta = 0.25 * (1-alpha)
+  #lamda = (count - 5.0) / (count + 10.0)
+  lamda = math.log(count) - 0.75
+  if lamda > 1.0:
+    lamda = 1.0
+  alpha = 0.75 * (1-lamda)
+  beta = 0.25 * (1-lamda)
 
   sid = trainingList[count-1]
+  
   avgTopicDict = topicDictForNextSongByAverage(playlist,songDict)
   lastTopicDict =  songDict[sid].getTopicDict()
   arima = arimaDict[pid]
+  
+  lastSid = playlist.getLastSid()
+  trueDict = songDict[lastSid].getTopicDict()
+
+  logging.info("pid = %s" % pid)
+  logging.info("count = %s" % count)
+  logging.info("true = %s" % str(trueDict)) 
+  logging.info("arima = %s" % str(arima)) 
+  logging.info("avg = %s" % str(avgTopicDict)) 
+  logging.info("similar = %s" % str(lastTopicDict))  
+
   topicDict = {}
   for topic in avgTopicDict.keys():
     pro = alpha*lastTopicDict[topic] \
