@@ -184,12 +184,13 @@ def topicDictForNextSongByAllHybrid(playlist,songDict,arimaDict):
   pid = playlist.getPid()
   count = len(trainingList)
 
-  #lamda = (count - 5.0) / (count + 10.0)
-  lamda = math.log(count) - 0.75
-  if lamda > 1.0:
-    lamda = 1.0
-  alpha = 0.75 * (1-lamda)
-  beta = 0.25 * (1-lamda)
+  lamda = count / (count + 15.0)
+  alpha = 0.5*(1-lamda)
+  beta = 0.5*(1-lamda)
+  
+  #lamda = 0.5
+  #alpha = 0.33
+  #beta = 0.17
 
   sid = trainingList[count-1]
   
@@ -197,15 +198,15 @@ def topicDictForNextSongByAllHybrid(playlist,songDict,arimaDict):
   lastTopicDict =  songDict[sid].getTopicDict()
   arima = arimaDict[pid]
   
-  lastSid = playlist.getLastSid()
-  trueDict = songDict[lastSid].getTopicDict()
+  #lastSid = playlist.getLastSid()
+  #trueDict = songDict[lastSid].getTopicDict()
 
-  logging.info("pid = %s" % pid)
-  logging.info("count = %s" % count)
-  logging.info("true = %s" % str(trueDict)) 
-  logging.info("arima = %s" % str(arima)) 
-  logging.info("avg = %s" % str(avgTopicDict)) 
-  logging.info("similar = %s" % str(lastTopicDict))  
+  #logging.info("pid = %s" % pid)
+  #logging.info("count = %s" % count)
+  #logging.info("true = %s" % str(trueDict)) 
+  #logging.info("arima = %s" % str(arima)) 
+  #logging.info("avg = %s" % str(avgTopicDict)) 
+  #logging.info("similar = %s" % str(lastTopicDict))  
 
   topicDict = {}
   for topic in avgTopicDict.keys():
@@ -229,6 +230,36 @@ def getRecSongs(songDict,topN,tarDict):
     song = songDict[sid]
     topicDict = song.getTopicDict()
     sim = util.similarity(topicDict,tarDict)
+    recDict[sid] = sim
+  recList = sorted(recDict.iteritems(),key=lambda x:x[1])
+  result = []
+  for i in range(0,topN):
+    result.append(recList[i][0])
+  return result
+
+def getRecSongsForAllHybrid(songDict,topN,arimaDict,similarDict,avgDict,count):
+  """Get recommended songs list of a playlist for all hybrid comparing with three dicts.
+     Input:
+       songDict - song dictionaries with sid as key and Song as value.
+       topN - count of recommendation.
+       tarDict - predicted topic dict.
+     Output:
+       result - a list of songs.
+  """
+  print count
+
+  alpha = count / (count + 15.0)
+  beta = 0.5 * (1 - alpha)
+  lamda = 0.5 * (1 - alpha)
+
+  recDict = {}
+  for sid in songDict.keys():
+    song = songDict[sid]
+    topicDict = song.getTopicDict()
+    arimaSim = 0.37 * util.similarity(topicDict,arimaDict)
+    similarSim = 0.17 * util.similarity(topicDict,similarDict)
+    avgSim = 0.36 * util.similarity(topicDict,avgDict)
+    sim = arimaSim + similarSim + avgSim
     recDict[sid] = sim
   recList = sorted(recDict.iteritems(),key=lambda x:x[1])
   result = []
@@ -285,7 +316,13 @@ def getRecDict(playlistDict,songDict,recType = 0,scale = 0,topN = const.TOP_N
     else:
       print '%d is an Error Type......' % recType
       return
-    recSong = getRecSongs(songDict,topN,tarDict)
+    if recType != const.ALL_HYBRID:
+      recSong = getRecSongs(songDict,topN,tarDict)
+    else:
+      length = len(playlist.getTrainingList())
+      simlarDict = topicDictForNextSongByMostSimilar(playlist,songDict)
+      avgDict = topicDictForNextSongByAverage(playlist,songDict)
+      recSong = getRecSongsForAllHybrid(songDict,topN,arimaDict[pid],simlarDict,avgDict,length)
     recDict[pid] = recSong
     index = index + 1
   return recDict

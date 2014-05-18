@@ -3,23 +3,66 @@
 
 import sys
 from gensim import corpora, models, similarities
+import random
+import matplotlib.pyplot as plt
 
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
-documents = ["Shipment of gold damaged in a fire", "Delivery of silver arrived in a silver truck","Shipment of gold arrived in a truck"]
-texts = [[word for word in document.lower().split()] for document in documents]
-dictionary = corpora.Dictionary(texts)
-corpus = [dictionary.doc2bow(text) for text in texts]
-tfidf = models.TfidfModel(corpus)
-corpus_tfidf = tfidf[corpus]
-lda = models.LdaModel(corpus_tfidf, id2word=dictionary, num_topics=2)
-corpus_lda = lda[corpus_tfidf]
-index = similarities.Similarity('tmp/sim',lda[corpus],num_features=2)
-query = corpus[0]
-query_lda = lda[query]
-similarities = index[query_lda]
-print similarities
-#query_lda = lda[query]
-#sims = index[query_lda]
-#print list(enumerate(sims))
+def gensim():
+  documents = ["Shipment of gold damaged in a fire", "Delivery of silver arrived in a silver truck","Shipment of gold arrived in a truck"]
+  texts = [[word for word in document.lower().split()] for document in documents]
+  dictionary = corpora.Dictionary(texts)
+  corpus = [dictionary.doc2bow(text) for text in texts]
+  tfidf = models.TfidfModel(corpus)
+  corpus_tfidf = tfidf[corpus]
+  lda = models.LdaModel(corpus_tfidf, id2word=dictionary, num_topics=2)
+  corpus_lda = lda[corpus_tfidf]
+  index = similarities.Similarity('sim',lda[corpus],num_features=2)
+  query = corpus[0]
+  query_lda = lda[query]
+  similarities = index[query_lda]
+  print similarities
+  #query_lda = lda[query]
+  #sims = index[query_lda]
+  #print list(enumerate(sims))
+
+def showFigs():
+  x = range(20)
+  y1 = []
+  for i in x:
+    val = random.random()
+    y1.append(val)
+  y2 = []
+  for i in x:
+    val = random.random()
+    y2.append(val)
+  y3 = []
+  for i in x:
+    val = random.random()
+    y3.append(val)
+  y4= []
+  for i in x:
+    val = random.random()
+    y4.append(val)
+  y5 = []
+  for i in x:
+    val = random.random()
+    y5.append(val)
+  y6 = []
+  for i in x:
+    val = random.random()
+    y6.append(val)
+  
+  plt.plot(x,y1,'k-o',label='y1')
+  plt.plot(x,y2,'k',label='y2')
+  plt.plot(x,y3,'k-.',label='y3')
+  plt.plot(x,y4,'k--',label='y4')
+  plt.plot(x,y5,'k:',label='y5')
+  plt.plot(x,y6,'k1',label='y6')
+  plt.legend()
+  plt.show()
+
+
+if __name__ == "__main__":
+  showFigs()

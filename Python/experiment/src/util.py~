@@ -230,11 +230,11 @@ def getMAEandRMSE(recDict,playlistDict,songDict,topN = const.TOP_N):
       recSid = recList[i]
       recTopicDict = songDict[recSid].getTopicDict()
       recError = similarity(recTopicDict,tarDict)
-      logging.info('recSid = %s' % str(recTopicDict))
-      logging.info('lastSid = %s' % str(tarDict))
-      logging.info('error between %d and %d = %f' % (recSid,lastSid,recError))
+      #logging.info('recSid = %s' % str(recTopicDict))
+      #logging.info('lastSid = %s' % str(tarDict))
+      #logging.info('error between %d and %d = %f' % (recSid,lastSid,recError))
       totalError += recError
-    logging.info('recNum = %d' % recNum)
+    #logging.info('recNum = %d' % recNum)
     if recNum == 0:
       recNum = 0.0001
     # get average distance and mae, rmse
