@@ -17,6 +17,7 @@ import const
 import time
 import persist
 import numpy as np
+import matplotlib.pyplot as plt
 
 reload(sys)
 sys.setdefaultencoding('utf-8')
@@ -86,6 +87,22 @@ def bestParametersTraning():
 
   print F
   
+def showAlpha():
+  x = range(50)
+  y = []
+  for i in x:
+    tmp = i - 5.0
+    if tmp < 0:
+      y.append(0)
+    else:
+      val = (i - 5.0) / (i + 10.0)
+      y.append(val)
+
+  plt.plot(x,y,"k",label="Alpha")
+  plt.title("Trend of Alpha")
+  plt.legend(loc="center right")
+  plt.savefig("../img/trends of alpha.png")
+  plt.show()
 
 if __name__ == "__main__":
 
@@ -96,9 +113,10 @@ if __name__ == "__main__":
   #test.testRecMethod(const.ARIMA)
   
   #test_session.showResult()
-  test.showResult()
+  #test.showResult()
   #test.getErrorOfRecMethod(const.MARKOV)
   #bestParametersTraning()
+  showAlpha()
 
 ############Local#############
 #Recall =  0.327450980392
