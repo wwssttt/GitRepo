@@ -101,6 +101,7 @@ def showAlpha():
   plt.plot(x,y,"k",label="Alpha")
   plt.title("Trend of Alpha")
   plt.legend(loc="center right")
+  plt.grid()
   plt.savefig("../img/trends of alpha.png")
   plt.show()
 
@@ -113,10 +114,10 @@ if __name__ == "__main__":
   #test.testRecMethod(const.ARIMA)
   
   #test_session.showResult()
-  #test.showResult()
+  test.showResult()
   #test.getErrorOfRecMethod(const.MARKOV)
   #bestParametersTraning()
-  showAlpha()
+  #showAlpha()
 
 ############Local#############
 #Recall =  0.327450980392
